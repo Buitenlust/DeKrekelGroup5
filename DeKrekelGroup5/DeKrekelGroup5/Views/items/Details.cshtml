@@ -1,0 +1,90 @@
+﻿@model DeKrekelGroup5.item
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>item</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.titel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.titel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.uitgever)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.uitgever)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.omschrijving)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.omschrijving)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.jaar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.jaar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isbn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isbn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.auteur)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.auteur)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imdb)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imdb)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.genre.beschrijving)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.genre.beschrijving)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.type.beschrijving)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.type.beschrijving)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.exemplaar }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
