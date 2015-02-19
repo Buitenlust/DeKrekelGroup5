@@ -223,6 +223,7 @@
     <Compile Include="uitlening.cs">
       <DependentUpon>DeKrekel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ItemList.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -302,6 +303,7 @@
     <Content Include="Views\items\Details.cshtml" />
     <Content Include="Views\items\Edit.cshtml" />
     <Content Include="Views\items\Index.cshtml" />
+    <Content Include="Views\items\Type.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

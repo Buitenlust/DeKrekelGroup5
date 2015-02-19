@@ -7,18 +7,42 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DeKrekelGroup5;
+using DeKrekelGroup5.ViewModel;
+using WebGrease.Css.Extensions;
 
 namespace DeKrekelGroup5.Controllers
 {
     public class itemsController : Controller
     {
         private dekrekelEntities db = new dekrekelEntities();
+        private ItemList iList;
 
-        // GET: items
-        public ActionResult Index()
+
+        // GET: items/Index/5
+        [ActionName("Index")]
+        public ActionResult GetByType(int? id = 1, string zoekTitel = "")
         {
-            var item = db.item.Include(i => i.genre).Include(i => i.type);
-            return View(item.ToList());
+            iList = new ItemList();
+            iList.Types = db.type.ToList();
+            iList.zoekTitel = zoekTitel.Trim();
+            if (iList.zoekTitel == "")
+            {
+                iList.Items = db.item.Where(it => it.type_idtype == id).Include(i => i.genre).Include(i => i.type).ToList();
+            }
+            else
+            {
+                iList.Items  = db.item
+                        .Where(it => it.type_idtype == id)
+                        .Include(i => i.genre)
+                        .Include(i => i.type)
+                        .ToList()
+                        .Where(i => i.titel.Contains(iList.zoekTitel));
+ 
+            }
+            if (iList.Items == null){
+                return HttpNotFound();
+            }
+            return View(iList);
         }
 
         // GET: items/Details/5
@@ -35,6 +59,8 @@ namespace DeKrekelGroup5.Controllers
             }
             return View(item);
         }
+
+        
 
         // GET: items/Create
         public ActionResult Create()
