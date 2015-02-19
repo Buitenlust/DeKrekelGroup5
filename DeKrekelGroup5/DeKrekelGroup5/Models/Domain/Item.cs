@@ -12,5 +12,7 @@ namespace DeKrekelGroup5.Models.Domain
         public int Exemplaar { get; set; }
         public string Titel { get; set; }
         public string Omschrijving { get; set; }
+
+        public Thema Themaa { get; set; }
     }
 }

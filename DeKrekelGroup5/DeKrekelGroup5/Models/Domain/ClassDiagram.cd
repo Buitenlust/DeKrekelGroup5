@@ -34,16 +34,16 @@
       <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAIAAQAAA=</HashCode>
       <FileName>Models\Domain\Item.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Themaa" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="DeKrekelGroup5.Models.Domain.Thema">
     <Position X="3.25" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>Models\Domain\Thema.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Items" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="DeKrekelGroup5.Models.Domain.Uitlening">
     <Position X="9.5" Y="1" Width="1.5" />
