@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DeKrekelGroup5.Models.Domain.Boek">
+    <Position X="3.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACBAAAAAAAAAACAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\Boek.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeKrekelGroup5.Models.Domain.Spel">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\Spel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeKrekelGroup5.Models.Domain.VertelTas">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEIAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\VertelTas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeKrekelGroup5.Models.Domain.Uitlener">
+    <Position X="9.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAACAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\Uitlener.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeKrekelGroup5.Models.Domain.Item">
+    <Position X="6" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAIAAQAAA=</HashCode>
+      <FileName>Models\Domain\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeKrekelGroup5.Models.Domain.Thema">
+    <Position X="3.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Models\Domain\Thema.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Items" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DeKrekelGroup5.Models.Domain.Uitlening">
+    <Position X="9.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAIAAAAACAAAAAAAwAAAAAAAAA=</HashCode>
+      <FileName>Models\Domain\Uitlening.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Uitlenerr" />
+      <Property Name="Itemm" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
