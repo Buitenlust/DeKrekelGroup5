@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DeKrekelGroup5.Models.Domain
 {
-    public class ISpellenRepository
+    public interface ISpellenRepository
     {
         IQueryable<Spel> FindAll();
         Spel FindById(int id);

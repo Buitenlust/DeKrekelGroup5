@@ -10,6 +10,6 @@ namespace DeKrekelGroup5.Models.Domain
     public class Thema
     {
         public int IdThema { get; set; }
-        public String Thema { get; set; } 
+        public String Themaa { get; set; } 
     }
 }

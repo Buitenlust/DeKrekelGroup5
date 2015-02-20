@@ -5,10 +5,11 @@ using System.Web;
 
 namespace DeKrekelGroup5.Models.Domain
 {
-    public class IBoekenRepository
+    public interface IBoekenRepository
     {
         IQueryable<Boek> FindAll();
         Boek FindById(int id);
+        void Add(Boek boek);
         void SaveChanges();
     }
 }
