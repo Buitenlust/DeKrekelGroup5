@@ -178,6 +178,7 @@
     <Compile Include="Models\DAL\KrekelContext.cs" />
     <Compile Include="Models\DAL\Mappers\BoekMapper.cs" />
     <Compile Include="Models\DAL\Mappers\SpelMapper.cs" />
+    <Compile Include="Models\DAL\Mappers\ThemaMapper.cs" />
     <Compile Include="Models\DAL\SpellenRepository.cs" />
     <Compile Include="Models\Domain\Boek.cs" />
     <Compile Include="Controllers\AccountController.cs" />

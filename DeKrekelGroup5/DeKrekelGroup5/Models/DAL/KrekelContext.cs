@@ -23,6 +23,7 @@ namespace DeKrekelGroup5.Models.DAL
         {
             modelBuilder.Configurations.Add(new BoekMapper());
             modelBuilder.Configurations.Add(new SpelMapper());
+            modelBuilder.Configurations.Add(new ThemaMapper());
             
             base.OnModelCreating(modelBuilder);
         }
