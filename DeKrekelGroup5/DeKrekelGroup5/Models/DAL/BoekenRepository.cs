@@ -11,7 +11,7 @@ namespace DeKrekelGroup5.Models.DAL
     {
         private KrekelContext context;
         private DbSet<Boek> boeken;
-        public BoekenRepository(KrekelContext context)
+        public BoekenRepository(KrekelContext context) 
         {
             this.context = context;
             boeken = context.Boeken;
