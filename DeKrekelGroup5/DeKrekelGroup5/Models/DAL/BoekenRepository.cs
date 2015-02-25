@@ -36,5 +36,10 @@ namespace DeKrekelGroup5.Models.DAL
         {
             context.SaveChanges();
         }
+
+        public void Remove(Boek boek)
+        {
+            boeken.Remove(boek);
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace DeKrekelGroup5.Models.Domain
         [Display(Name = "Thema")]
         [Required(ErrorMessage = "Kies een Thema aub...")]
         [MaxLength(45)]
-        public Thema Themaa { get; set; }
+        public virtual Thema Themaa { get; set; }
 
     }
 }

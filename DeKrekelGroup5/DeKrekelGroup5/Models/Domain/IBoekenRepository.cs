@@ -11,5 +11,6 @@ namespace DeKrekelGroup5.Models.Domain
         Boek FindById(int id);
         void Add(Boek boek);
         void SaveChanges();
+        void Remove(Boek boek);
     }
 }

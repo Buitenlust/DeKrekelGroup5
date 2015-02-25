@@ -2,136 +2,149 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DeKrekelGroup5.Models.DAL;
 using DeKrekelGroup5.Models.Domain;
+using DeKrekelGroup5.ViewModel;
 
 namespace DeKrekelGroup5.Controllers
 {
-    public class ThemasController : Controller
+    public class BoeksController : Controller
     {
+        private IBoekenRepository br;
         private IThemasRepository tr;
 
-
-        public ThemasController(IThemasRepository themasRepository)
+        public BoeksController(IBoekenRepository boekenRepository, IThemasRepository themasRepository)
         {
+            br = boekenRepository;
             tr = themasRepository;
         }
 
-        // GET: Themas
+        // GET: Boeks
         public ActionResult Index()
         {
-            return View(tr.FindAll().ToList());
+            return View(br.FindAll().ToList());
         }
 
-        // GET: Themas/Details/5
+        // GET: Boeks/Details/5
         public ActionResult Details(int id = 0)
         {
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = tr.FindById(id);
-            if (thema == null)
+            Boek boek = br.FindById(id);
+            
+            if (boek == null)
             {
                 return HttpNotFound();
             }
-            return View(thema);
+            else
+            {
+                boek.Themaa = tr.FindById(boek.Themaa.IdThema);
+            }
+
+            return View(boek);
         }
 
-        // GET: Themas/Create
+        // GET: Boeks/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Themas/Create
+        // POST: Boeks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdThema,Themaa")] Thema thema)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Exemplaar,Auteur,Uitgever,Jaar,isbn,Titel,Omschrijving")] Boek boek)
         {
             if (ModelState.IsValid)
             {
-                tr.Add(thema);
-                tr.SaveChanges();
+                Thema th = new Thema();
+                th.IdThema = 1;
+                th.Themaa = "Roman";
+                boek.Themaa = th;
+                br.Add(boek);
+                br.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(thema);
+            return View(new BoekThemaCreateViewModel(tr.FindAll().OrderBy(n => n.Themaa), new Boek().ConvertToBrouwerCreateViewModel()) );
         }
 
-        // GET: Themas/Edit/5
-        public ActionResult Edit(int id = 0)
+        // GET: Boeks/Edit/5
+        public ActionResult Edit(int id=0)
         {
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = tr.FindById(id);
-            if (thema == null)
+            Boek boek = br.FindById(id);
+            if (boek == null)
             {
                 return HttpNotFound();
             }
-            return View(thema);
+            return View(boek);
         }
 
-        // POST: Themas/Edit/5
+        // POST: Boeks/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdThema,Themaa")] Thema thema)
+        public ActionResult Edit([Bind(Include = "Exemplaar,Auteur,Uitgever,Jaar,isbn,Titel,Omschrijving")] Boek boek)
         {
-            Thema th = tr.FindById(thema.IdThema);
+            Boek bk = br.FindById(boek.Exemplaar);
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    th.Update(thema.Themaa);
-                    tr.SaveChanges();
-                    TempData["Info"] = "Het thema werd aangepast...";
+                    bk.Update(boek);
+                    br.SaveChanges();
+                    TempData["Info"] = "Het boek werd aangepast...";
                     return RedirectToAction("Index");
                 }
                 catch (Exception e)
                 {
                     ModelState.AddModelError("", e.Message);
                 }
-                
+
                 return RedirectToAction("Index");
             }
-            return View(thema);
+            return View(boek);
         }
 
-        // GET: Themas/Delete/5
+        // GET: Boeks/Delete/5
         public ActionResult Delete(int id=0)
         {
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Thema thema = tr.FindById(id);
-            if (thema == null)
+            } 
+
+            Boek boek = br.FindById(id);
+            if (boek == null)
             {
                 return HttpNotFound();
             }
-            return View(thema);
+            return View(boek);
         }
 
-        // POST: Themas/Delete/5
+        // POST: Boeks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Thema thema = tr.FindById(id);
-            tr.Remove(thema);
-            tr.Remove(thema);
-            tr.SaveChanges();
+            Boek boek = br.FindById(id);
+            br.Remove(boek);
+            br.SaveChanges();
             return RedirectToAction("Index");
         }
     }
