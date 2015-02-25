@@ -16,12 +16,15 @@ namespace DeKrekelGroup5.Models.DAL
         public DbSet<Boek> Boeken { get; set; }
         public DbSet<Spel> Spellen { get; set; }
         public DbSet<Thema> Themas { get; set; }
+        public DbSet<VertelTas> VertelTassen { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new BoekMapper());
             modelBuilder.Configurations.Add(new SpelMapper());
             modelBuilder.Configurations.Add(new ThemaMapper());
+            modelBuilder.Configurations.Add(new VerteltasMapper());
+
             
             base.OnModelCreating(modelBuilder);
         }

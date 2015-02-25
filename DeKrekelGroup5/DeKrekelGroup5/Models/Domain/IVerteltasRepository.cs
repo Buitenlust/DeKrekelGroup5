@@ -5,11 +5,11 @@ using System.Web;
 
 namespace DeKrekelGroup5.Models.Domain
 {
-    public interface ISpellenRepository
+    public interface IVerteltasRepository
     {
-        IQueryable<Spel> FindAll();
-        Spel FindById(int id);
-        void Add(Spel spel);
+        IQueryable<VertelTas> FindAll();
+        VertelTas FindById(int id);
+        void Add(VertelTas vertelTas);
         void SaveChanges();
     }
 }
