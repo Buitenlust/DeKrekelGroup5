@@ -17,6 +17,7 @@ namespace DeKrekelGroup5.Controllers
         public HomeController()
         {
             db = new KrekelContext();
+            db.Database.Delete();
             db.Database.Initialize(true);
         }
   

@@ -15,7 +15,7 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
             ToTable("Boek");
 
             //props
-            Property(b => b.Omschrijving).HasMaxLength(45);
+            Property(b => b.Omschrijving).HasMaxLength(1023);
             Property(b => b.Titel).HasMaxLength(45).IsRequired();
             Property(b => b.Uitgever).HasMaxLength(45);
             Property(b => b.Auteur).HasMaxLength(45);

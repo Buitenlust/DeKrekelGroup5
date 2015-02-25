@@ -19,7 +19,7 @@ namespace DeKrekelGroup5
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            DbConfiguration.SetConfiguration(new MySqlEFConfiguration());
+            DbConfiguration.SetConfiguration(new MySqlEFConfiguration());   //Configuratie voor MySQL
         }
     }
 }

@@ -15,7 +15,7 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
             ToTable("Spel");
 
             //properties
-            Property(s => s.Omschrijving).HasMaxLength(45);
+            Property(s => s.Omschrijving).HasMaxLength(1023);
             Property(s => s.Titel).HasMaxLength(45).IsRequired();
             Property(s => s.Uitgever).HasMaxLength(45);
 
