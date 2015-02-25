@@ -11,15 +11,6 @@ namespace DeKrekelGroup5.Controllers
 {
     public class HomeController : Controller
     {
-        private KrekelContext db;
-        private IBoekenRepository boekenRepository;
-
-        public HomeController()
-        {
-            db = new KrekelContext();
-            db.Database.Delete();
-            db.Database.Initialize(true);
-        }
   
         public ActionResult Index()
         { 

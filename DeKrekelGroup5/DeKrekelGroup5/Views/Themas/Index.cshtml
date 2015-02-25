@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DeKrekelGroup5.Models.Domain.Thema>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Themaa)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Themaa)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdThema }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdThema }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdThema })
+        </td>
+    </tr>
+}
+
+</table>

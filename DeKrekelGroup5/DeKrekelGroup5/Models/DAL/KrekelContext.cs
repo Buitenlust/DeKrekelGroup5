@@ -15,6 +15,7 @@ namespace DeKrekelGroup5.Models.DAL
 
         public DbSet<Boek> Boeken { get; set; }
         public DbSet<Spel> Spellen { get; set; }
+        public DbSet<Thema> Themas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -24,5 +25,9 @@ namespace DeKrekelGroup5.Models.DAL
             
             base.OnModelCreating(modelBuilder);
         }
+
+        
+
+        
     }
 }
