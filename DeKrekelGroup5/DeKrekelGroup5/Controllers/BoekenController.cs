@@ -7,18 +7,19 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using DeKrekelGroup5.Models;
 using DeKrekelGroup5.Models.DAL;
 using DeKrekelGroup5.Models.Domain;
 using DeKrekelGroup5.ViewModel;
 
 namespace DeKrekelGroup5.Controllers
 {
-    public class BoeksController : Controller
+    public class BoekenController : Controller
     {
         private IBoekenRepository br;
         private IThemasRepository tr;
 
-        public BoeksController(IBoekenRepository boekenRepository, IThemasRepository themasRepository)
+        public BoekenController(IBoekenRepository boekenRepository, IThemasRepository themasRepository)
         {
             br = boekenRepository;
             tr = themasRepository;
@@ -27,7 +28,7 @@ namespace DeKrekelGroup5.Controllers
         // GET: Boeks
         public ActionResult Index()
         {
-            return View(br.FindAll().ToList());
+            return View(new BoeksIndexViewModel(br.FindAll().OrderBy(p => p.Exemplaar).ToList()));
         }
 
         // GET: Boeks/Details/5
@@ -54,7 +55,7 @@ namespace DeKrekelGroup5.Controllers
         // GET: Boeks/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new BoekThemaCreateViewModel(tr.FindAll().OrderBy(n => n.Themaa), new Boek().ConvertToBrouwerCreateViewModel()));
         }
 
         // POST: Boeks/Create
@@ -62,16 +63,25 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Exemplaar,Auteur,Uitgever,Jaar,isbn,Titel,Omschrijving")] Boek boek)
+        public ActionResult Create([Bind(Prefix = "Boek")] BoekCreateViewModel boek)
         {
             if (ModelState.IsValid)
             {
-                Thema th = new Thema();
-                th.IdThema = 1;
-                th.Themaa = "Roman";
-                boek.Themaa = th;
-                br.Add(boek);
+                Boek newBoek = new Boek
+                {
+                    Exemplaar = boek.Exemplaar,
+                    Auteur = boek.Auteur,
+                    Jaar =  boek.Jaar,
+                    Omschrijving = boek.Omschrijving,
+                    Titel = boek.Titel,
+                    Uitgever = boek.Uitgever,
+                    isbn = boek.Isbn,
+                    Themaa = (String.IsNullOrEmpty(boek.Thema) ? null : tr.FindBy(boek.Thema))
+                };
+
+                br.Add(newBoek);
                 br.SaveChanges();
+                TempData["Info"] = "Het boek werd toegevoegd...";
                 return RedirectToAction("Index");
             }
 

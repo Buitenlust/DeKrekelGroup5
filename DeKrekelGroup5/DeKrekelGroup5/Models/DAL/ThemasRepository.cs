@@ -39,5 +39,10 @@ namespace DeKrekelGroup5.Models.DAL
         {
             context.SaveChanges();
         }
+
+        public Thema FindBy(string thema)
+        {
+            return context.Themas.SingleOrDefault(t => t.Themaa == thema);
+        }
     }
 }

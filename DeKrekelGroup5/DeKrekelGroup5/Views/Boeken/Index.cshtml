@@ -1,0 +1,75 @@
+﻿@model DeKrekelGroup5.ViewModel.BoeksIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Exemplaar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Auteur)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Uitgever)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Jaar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Isbn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Titel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Omschrijving)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Thema)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Boeks) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Exemplaar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Auteur)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Uitgever)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Jaar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Isbn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Omschrijving)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Thema)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {id = item.Exemplaar}) |
+            @Html.ActionLink("Details", "Details", new {id = item.Exemplaar}) |
+            @Html.ActionLink("Delete", "Delete", new {id = item.Exemplaar})
+        </td>
+    </tr>
+}
+
+</table>

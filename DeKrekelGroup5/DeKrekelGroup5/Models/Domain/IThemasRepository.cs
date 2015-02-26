@@ -12,5 +12,6 @@ namespace DeKrekelGroup5.Models.Domain
         void Add(Thema thema);
         void Remove(Thema thema);
         void SaveChanges();
+        Thema FindBy(string thema);
     }
 }

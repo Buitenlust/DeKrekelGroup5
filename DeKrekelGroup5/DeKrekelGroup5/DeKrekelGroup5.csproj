@@ -187,7 +187,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\BoeksController.cs" />
+    <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Models\DAL\BoekenRepository.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
@@ -285,11 +285,11 @@
     <Content Include="Views\Themas\Details.cshtml" />
     <Content Include="Views\Themas\Edit.cshtml" />
     <Content Include="Views\Themas\Index.cshtml" />
-    <Content Include="Views\Boeks\Create.cshtml" />
-    <Content Include="Views\Boeks\Delete.cshtml" />
-    <Content Include="Views\Boeks\Details.cshtml" />
-    <Content Include="Views\Boeks\Edit.cshtml" />
-    <Content Include="Views\Boeks\Index.cshtml" />
+    <Content Include="Views\Boeken\Create.cshtml" />
+    <Content Include="Views\Boeken\Delete.cshtml" />
+    <Content Include="Views\Boeken\Details.cshtml" />
+    <Content Include="Views\Boeken\Edit.cshtml" />
+    <Content Include="Views\Boeken\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,7 +4,10 @@
     ViewBag.Title = "Create";
 }
 
+
+
 <h2>Create</h2>
+
 
 
 @using (Html.BeginForm()) 
@@ -62,13 +65,13 @@
                 @Html.ValidationMessageFor(model => model.Boek.Omschrijving, "", new {@class = "text-danger"})
             </div>
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Boek.Thema)
-        </div>
 
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.Boek.Thema, Model.Themas, " --Selecteer een Thema--")
-            @Html.ValidationMessageFor(model => model.Boek.Thema)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Boek.Thema, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Boek.Thema, Model.Themas, " --Selecteer een Thema--")
+                @Html.ValidationMessageFor(model => model.Boek.Thema)
+            </div>
         </div>
         
         <div class="form-group">
