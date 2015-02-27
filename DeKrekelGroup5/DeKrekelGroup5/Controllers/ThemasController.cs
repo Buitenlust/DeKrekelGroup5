@@ -13,22 +13,28 @@ namespace DeKrekelGroup5.Controllers
 {
     public class ThemasController : Controller
     {
-        private KrekelContext db = new KrekelContext();
+        private IThemasRepository tr;
+
+
+        public ThemasController(IThemasRepository themasRepository)
+        {
+            tr = themasRepository;
+        }
 
         // GET: Themas
         public ActionResult Index()
         {
-            return View(db.Themas.ToList());
+            return View(tr.FindAll().ToList());
         }
 
         // GET: Themas/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id = 0)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = db.Themas.Find(id);
+            Thema thema = tr.FindById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -51,8 +57,8 @@ namespace DeKrekelGroup5.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Themas.Add(thema);
-                db.SaveChanges();
+                tr.Add(thema);
+                tr.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -60,13 +66,13 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Themas/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id = 0)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = db.Themas.Find(id);
+            Thema thema = tr.FindById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -81,23 +87,35 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IdThema,Themaa")] Thema thema)
         {
+            Thema th = tr.FindById(thema.IdThema);
+
             if (ModelState.IsValid)
             {
-                db.Entry(thema).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    th.Update(thema.Themaa);
+                    tr.SaveChanges();
+                    TempData["Info"] = "Het thema werd aangepast...";
+                    return RedirectToAction("Index");
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", e.Message);
+                }
+                
                 return RedirectToAction("Index");
             }
             return View(thema);
         }
 
         // GET: Themas/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id=0)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = db.Themas.Find(id);
+            Thema thema = tr.FindById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -110,19 +128,11 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Thema thema = db.Themas.Find(id);
-            db.Themas.Remove(thema);
-            db.SaveChanges();
+            Thema thema = tr.FindById(id);
+            tr.Remove(thema);
+            tr.Remove(thema);
+            tr.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

@@ -188,8 +188,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Models\DAL\BoekenRepository.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
@@ -197,6 +199,7 @@
     <Compile Include="Models\DAL\Mappers\SpelMapper.cs" />
     <Compile Include="Models\DAL\Mappers\ThemaMapper.cs" />
     <Compile Include="Models\DAL\Mappers\VerteltasMapper.cs" />
+    <Compile Include="Models\DAL\ThemasRepository.cs" />
     <Compile Include="Models\DAL\SpellenRepository.cs" />
     <Compile Include="Models\DAL\VerteltasRepository.cs" />
     <Compile Include="Models\Domain\Boek.cs" />
@@ -206,6 +209,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Domain\IThemasRepository.cs" />
     <Compile Include="Models\Domain\IBoekenRepository.cs" />
     <Compile Include="Models\Domain\ISpellenRepository.cs" />
     <Compile Include="Models\Domain\Item.cs" />
@@ -220,7 +224,8 @@
     <Compile Include="Models\Domain\Thema.cs" />
     <Compile Include="Models\Domain\Uitlening.cs" />
     <Compile Include="Models\Domain\VertelTas.cs" />
-    <Compile Include="ViewModel\ItemList.cs" />
+    <Compile Include="ViewModel\BoekViewModel.cs" />
+    <Compile Include="ViewModel\Mapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -287,6 +292,11 @@
     <Content Include="Views\Themas\Details.cshtml" />
     <Content Include="Views\Themas\Edit.cshtml" />
     <Content Include="Views\Themas\Index.cshtml" />
+    <Content Include="Views\Boeken\Create.cshtml" />
+    <Content Include="Views\Boeken\Delete.cshtml" />
+    <Content Include="Views\Boeken\Details.cshtml" />
+    <Content Include="Views\Boeken\Edit.cshtml" />
+    <Content Include="Views\Boeken\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
