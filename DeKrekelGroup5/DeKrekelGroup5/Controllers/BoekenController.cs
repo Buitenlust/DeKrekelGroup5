@@ -11,6 +11,7 @@ using DeKrekelGroup5.Models;
 using DeKrekelGroup5.Models.DAL;
 using DeKrekelGroup5.Models.Domain;
 using DeKrekelGroup5.ViewModel;
+using Microsoft.Ajax.Utilities;
 
 namespace DeKrekelGroup5.Controllers
 {
@@ -55,7 +56,7 @@ namespace DeKrekelGroup5.Controllers
         // GET: Boeks/Create
         public ActionResult Create()
         {
-            return View(new BoekThemaCreateViewModel(tr.FindAll().OrderBy(n => n.Themaa), new Boek().ConvertToBrouwerCreateViewModel()));
+            return View(new BoekThemaCreateViewModel(tr.FindAll().OrderBy(n => n.Themaa), new Boek().ConvertToBoekCreateViewModel()));
         }
 
         // POST: Boeks/Create
@@ -80,12 +81,13 @@ namespace DeKrekelGroup5.Controllers
                 };
 
                 br.Add(newBoek);
-                br.SaveChanges();
+                
+                br.SaveChanges(newBoek);
                 TempData["Info"] = "Het boek werd toegevoegd...";
                 return RedirectToAction("Index");
             }
 
-            return View(new BoekThemaCreateViewModel(tr.FindAll().OrderBy(n => n.Themaa), new Boek().ConvertToBrouwerCreateViewModel()) );
+            return RedirectToAction("Create");
         }
 
         // GET: Boeks/Edit/5
@@ -100,7 +102,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 return HttpNotFound();
             }
-            return View(boek);
+            return View(new BoekThemaCreateViewModel(tr.FindAll().OrderBy(n => n.Themaa), boek.ConvertToBoekCreateViewModel()));
         }
 
         // POST: Boeks/Edit/5
@@ -108,16 +110,31 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Exemplaar,Auteur,Uitgever,Jaar,isbn,Titel,Omschrijving")] Boek boek)
+        public ActionResult Edit([Bind(Prefix = "Boek")] BoekCreateViewModel boek)
         {
-            Boek bk = br.FindById(boek.Exemplaar);
-
+            Boek bk = null;
             if (ModelState.IsValid)
             {
+                bk = br.FindById(boek.Exemplaar);
+
+                if (bk == null)
+                {
+                    return HttpNotFound();
+                }
+
                 try
                 {
-                    bk.Update(boek);
-                    br.SaveChanges();
+                    bk.Exemplaar = boek.Exemplaar;
+                    bk.Auteur = boek.Auteur;
+                    bk.Jaar = boek.Jaar;
+                    bk.Omschrijving = boek.Omschrijving;
+                    bk.Titel = boek.Titel;
+                    bk.Uitgever = boek.Uitgever;
+                    bk.isbn = boek.Isbn;
+                    bk.Themaa = (String.IsNullOrEmpty(boek.Thema) ? null : tr.FindBy(boek.Thema));
+
+                    bk.Update(bk);
+                    br.SaveChanges(bk);
                     TempData["Info"] = "Het boek werd aangepast...";
                     return RedirectToAction("Index");
                 }
@@ -154,7 +171,7 @@ namespace DeKrekelGroup5.Controllers
         {
             Boek boek = br.FindById(id);
             br.Remove(boek);
-            br.SaveChanges();
+            br.SaveChanges(boek);
             return RedirectToAction("Index");
         }
     }

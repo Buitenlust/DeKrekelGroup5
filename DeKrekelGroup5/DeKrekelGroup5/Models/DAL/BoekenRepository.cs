@@ -10,11 +10,10 @@ namespace DeKrekelGroup5.Models.DAL
     public class BoekenRepository : IBoekenRepository
     {
         private KrekelContext context;
-        //private DbSet<Boek> boeken;
+
         public BoekenRepository(KrekelContext context) 
         {
             this.context = context;
-            //boeken = context.Boeken;
         }
 
         public IQueryable<Boek> FindAll()
@@ -32,8 +31,9 @@ namespace DeKrekelGroup5.Models.DAL
             context.Boeken.Add(boek);
         }
 
-        public void SaveChanges()
+        public void SaveChanges(Boek boek)
         {
+            context.Entry(boek.Themaa).State = EntityState.Modified;    //Zorgt dat het thema niet aangemaakt wordt.
             context.SaveChanges();
         }
 

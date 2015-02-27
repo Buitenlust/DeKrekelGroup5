@@ -22,7 +22,7 @@ namespace DeKrekelGroup5.Models.DAL
 
         public Thema FindById(int id)
         {
-            return context.Themas.Find(id);
+            return context.Themas.SingleOrDefault(d => d.IdThema == id);
         }
 
         public void Add(Thema thema)

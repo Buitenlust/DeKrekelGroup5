@@ -10,7 +10,7 @@ namespace DeKrekelGroup5.Models.Domain
         IQueryable<Boek> FindAll();
         Boek FindById(int id);
         void Add(Boek boek);
-        void SaveChanges();
+        void SaveChanges(Boek boek);
         void Remove(Boek boek);
     }
 }
