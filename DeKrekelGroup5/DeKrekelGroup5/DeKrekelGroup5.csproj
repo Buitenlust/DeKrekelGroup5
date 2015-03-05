@@ -203,6 +203,8 @@
     <Compile Include="Models\DAL\Mappers\VerteltasMapper.cs" />
     <Compile Include="Models\DAL\ThemasRepository.cs" />
     <Compile Include="Models\DAL\SpellenRepository.cs" />
+    <Compile Include="Models\DAL\UitlenersRepository.cs" />
+    <Compile Include="Models\DAL\UitleningenRepository.cs" />
     <Compile Include="Models\DAL\VerteltasRepository.cs" />
     <Compile Include="Models\Domain\Boek.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -216,6 +218,8 @@
     <Compile Include="Models\Domain\ISpellenRepository.cs" />
     <Compile Include="Models\Domain\Item.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Domain\IUitlenersRepository.cs" />
+    <Compile Include="Models\Domain\IUitleningenRepository.cs" />
     <Compile Include="Models\Domain\IVerteltasRepository.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
