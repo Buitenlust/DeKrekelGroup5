@@ -198,6 +198,8 @@
     <Compile Include="Models\DAL\Mappers\BoekMapper.cs" />
     <Compile Include="Models\DAL\Mappers\SpelMapper.cs" />
     <Compile Include="Models\DAL\Mappers\ThemaMapper.cs" />
+    <Compile Include="Models\DAL\Mappers\UitlenerMapper.cs" />
+    <Compile Include="Models\DAL\Mappers\UitleningMapper.cs" />
     <Compile Include="Models\DAL\Mappers\VerteltasMapper.cs" />
     <Compile Include="Models\DAL\ThemasRepository.cs" />
     <Compile Include="Models\DAL\SpellenRepository.cs" />
