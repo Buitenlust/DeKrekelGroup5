@@ -72,11 +72,10 @@ namespace DeKrekelGroup5.Controllers
                 {
                     Exemplaar = boek.Exemplaar,
                     Auteur = boek.Auteur,
-                    Jaar =  boek.Jaar,
+                    Leeftijd =  boek.Leeftijd,
                     Omschrijving = boek.Omschrijving,
                     Titel = boek.Titel,
-                    Uitgever = boek.Uitgever,
-                    isbn = boek.Isbn,
+                    Uitgever = boek.Uitgever, 
                     Themaa = (String.IsNullOrEmpty(boek.Thema) ? null : tr.FindBy(boek.Thema))
                 };
 
@@ -126,11 +125,10 @@ namespace DeKrekelGroup5.Controllers
                 {
                     bk.Exemplaar = boek.Exemplaar;
                     bk.Auteur = boek.Auteur;
-                    bk.Jaar = boek.Jaar;
+                    bk.Leeftijd = boek.Leeftijd;
                     bk.Omschrijving = boek.Omschrijving;
                     bk.Titel = boek.Titel;
-                    bk.Uitgever = boek.Uitgever;
-                    bk.isbn = boek.Isbn;
+                    bk.Uitgever = boek.Uitgever; 
                     bk.Themaa = (String.IsNullOrEmpty(boek.Thema) ? null : tr.FindBy(boek.Thema));
 
                     bk.Update(bk);

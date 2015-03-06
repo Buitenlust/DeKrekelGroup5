@@ -21,6 +21,8 @@ namespace DeKrekelGroup5.Models.Domain
         [MaxLength(1023)]
         public string Omschrijving { get; set; }
 
+        public int Leeftijd { get; set; }
+
         public virtual Thema Themaa { get; set; }
 
     }

@@ -10,12 +10,10 @@ namespace DeKrekelGroup5.Models.DAL
     public class UitlenersRepository : IUitlenersRepository
     {
         private KrekelContext context;
-        private DbSet<Uitlener> uitleners;
 
         public UitlenersRepository(KrekelContext context)
         {
             this.context = context;
-            uitleners = context.Uitleners;
         }
 
         public IQueryable<Uitlener> FindAll()
@@ -30,7 +28,7 @@ namespace DeKrekelGroup5.Models.DAL
 
         public void Add(Uitlener uitlener)
         {
-            uitleners.Add(uitlener);
+            context.Uitleners.Add(uitlener);
         }
 
         public void SaveChanges()
