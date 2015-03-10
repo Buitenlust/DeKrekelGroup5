@@ -10,27 +10,6 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-@*@section scripts {
-    <script>
-        function showMessage(data) {
-            $("#added").html(data).show();
-        }
-        function clearMessage() {
-            $("#added").html("").hide();
-        }
-
-        function clearMessageAndSearch() {
-            clearMessage();
-            clearSearch();
-        }
-
-        function clearSearch() {
-            $("#search").val("");
-        }
-    </script>
-}*@
-<div id="added"></div>
-
 @using (Ajax.BeginForm("Index",
         new AjaxOptions
         {
