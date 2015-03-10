@@ -9,61 +9,42 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Exemplaar)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Auteur)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Uitgever)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Leeftijd)
-        </th> 
-        <th>
-            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Titel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Omschrijving)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Thema)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model.Boeks) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Exemplaar)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Auteur)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Uitgever)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Leeftijd)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Titel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Omschrijving)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Thema)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.Exemplaar}) |
-            @Html.ActionLink("Details", "Details", new {id = item.Exemplaar}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.Exemplaar})
-        </td>
-    </tr>
+@*@section scripts {
+    <script>
+        function showMessage(data) {
+            $("#added").html(data).show();
+        }
+        function clearMessage() {
+            $("#added").html("").hide();
+        }
+
+        function clearMessageAndSearch() {
+            clearMessage();
+            clearSearch();
+        }
+
+        function clearSearch() {
+            $("#search").val("");
+        }
+    </script>
+}*@
+<div id="added"></div>
+
+@using (Ajax.BeginForm("Index",
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "Get",
+            UpdateTargetId = "Boeken"//,
+            //OnComplete = "clearMessage"
+        }
+        ))
+{
+    <input type="search" name="search" id="search" />
+    <input type="submit" value="Search in all products" class="btn btn-default" />
 }
 
-</table>
+<div  id="Boeken">
+    @Html.Partial("BoekenLijst", Model)
+</div>

@@ -21,6 +21,15 @@ namespace DeKrekelGroup5.Models.DAL
             return context.Boeken;
         }
 
+        public IQueryable<Boek> Find(string search)
+        {
+            return context.Boeken.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
+                                             p.Uitgever.ToLower().Contains(search.ToLower()) ||
+                                             p.Auteur.ToLower().Contains(search.ToLower()) ||
+                                             p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
+                                             p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
+        }
+
         public Boek FindById(int id)
         {
             return context.Boeken.Find(id);

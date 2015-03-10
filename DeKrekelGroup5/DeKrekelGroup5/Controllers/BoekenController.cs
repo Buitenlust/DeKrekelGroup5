@@ -27,9 +27,25 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Boeks
-        public ActionResult Index()
+        public ActionResult Index(String search=null)
         {
-            return View(new BoeksIndexViewModel(br.FindAll().OrderBy(p => p.Exemplaar).ToList()));
+            IEnumerable<Boek> boeken;
+            if (!String.IsNullOrEmpty(search))
+            {
+                boeken = br.Find(search).ToList();
+                ViewBag.Selection = "Alle boeken met " + search;
+            }
+            else
+            {
+                boeken = br.FindAll().OrderBy(p => p.Titel).ToList().Take(25);
+                ViewBag.Selection = "Alle boeken";
+            }
+            if (Request.IsAjaxRequest())
+                return PartialView("BoekenLijst", new BoeksIndexViewModel(boeken));
+            return View(new BoeksIndexViewModel(boeken));
+
+
+            //return View(new BoeksIndexViewModel(br.FindAll().OrderBy(p => p.Exemplaar).ToList()));
         }
 
         // GET: Boeks/Details/5
