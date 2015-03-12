@@ -5,10 +5,11 @@ using System.Web.Services;
 using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Ajax.Utilities;
 
 namespace DeKrekelGroup5.Models.Domain
 {
-   
+
     public class Item
     {
         [Key]
@@ -24,6 +25,24 @@ namespace DeKrekelGroup5.Models.Domain
         public int Leeftijd { get; set; }
 
         public virtual Thema Themaa { get; set; }
+
+        public enum Beschikbaarheden
+        {
+            Beschikbaar , 
+            NietBeschikbaar , 
+            Uitgeleend
+        }
+
+        public void Beschikbaarheid(Beschikbaarheden beschikbaarheden)
+        {
+            if (beschikbaarheden == Beschikbaarheden.Beschikbaar) { }
+            else if (beschikbaarheden == Beschikbaarheden.NietBeschikbaar) { }
+            else if (beschikbaarheden == Beschikbaarheden.Uitgeleend) { }
+
+        }
+
+        public string Afbeelding { get; set; }
+
 
     }
 }

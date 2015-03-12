@@ -159,7 +159,7 @@ namespace DeKrekelGroup5.Controllers
 
                 return RedirectToAction("Index");
             }
-            return View(boek);
+            return View(new BoekThemaCreateViewModel(tr.FindAll().OrderBy(n => n.Themaa), boek));
         }
 
         // GET: Boeks/Delete/5
