@@ -4,13 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-@using (Ajax.BeginForm("Index",
+<div id="content">
+    <div id="searchBar">
+        @using (Ajax.BeginForm("Index",
         new AjaxOptions
         {
             InsertionMode = InsertionMode.Replace,
@@ -19,11 +15,15 @@
             //OnComplete = "clearMessage"
         }
         ))
-{
-    <input type="search" name="search" id="search" />
-    <input type="submit" value="Search in all products" class="btn btn-default" />
-}
+        {
+            <input type="search" name="search" id="search" value="zoek een boek" />
+            <input type="submit" value="Search in all products" class="btn btn-default" />
+        }
+            @Html.ActionLink("Create New", "Create")
+       
+    </div>
 
-<div  id="Boeken">
-    @Html.Partial("BoekenLijst", Model)
-</div>
+        <div id="Boeken">
+            @Html.Partial("BoekenLijst", Model)
+        </div>
+    </div>

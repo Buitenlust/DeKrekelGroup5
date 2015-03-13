@@ -1,8 +1,6 @@
 ﻿
 @model DeKrekelGroup5.ViewModel.BoeksIndexViewModel
 
-<h3>@ViewBag.Selection</h3>
-
 
 <table class="table">
     <tr>
@@ -10,7 +8,13 @@
             @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Exemplaar)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Titel)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Auteur)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Omschrijving)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Uitgever)
@@ -19,14 +23,12 @@
             @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Leeftijd)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Titel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Omschrijving)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Thema)
         </th>
+        <th>
+            Beschikbaar
+        </th>
+        <th>Uitlenen/Binnenbrengen</th>
         <th></th>
     </tr>
 
@@ -37,7 +39,13 @@
                 @Html.DisplayFor(modelItem => item.Exemplaar)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Titel)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Auteur)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Omschrijving)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Uitgever)
@@ -46,13 +54,14 @@
                 @Html.DisplayFor(modelItem => item.Leeftijd)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Titel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Omschrijving)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Thema)
+            </td>
+            <td>
+                Beschikbaar?
+            </td>
+            <td>
+                @*uitleenIcoonLink
+                BinnenBrengenIcoonLink*@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Exemplaar }) |
