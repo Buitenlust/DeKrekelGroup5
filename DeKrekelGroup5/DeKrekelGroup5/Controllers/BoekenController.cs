@@ -19,11 +19,14 @@ namespace DeKrekelGroup5.Controllers
     {
         private IBoekenRepository br;
         private IThemasRepository tr;
+        private IBeheerderRepository bhr;
 
-        public BoekenController(IBoekenRepository boekenRepository, IThemasRepository themasRepository)
+        [Ninject.Inject]
+        public BoekenController(IBoekenRepository boekenRepository, IThemasRepository themasRepository, IBeheerderRepository beheerderRepository)
         {
             br = boekenRepository;
             tr = themasRepository;
+            bhr = beheerderRepository;
         }
 
         // GET: Boeks
@@ -82,21 +85,21 @@ namespace DeKrekelGroup5.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Prefix = "Boek")] BoekCreateViewModel boek)
         {
+
             if (ModelState.IsValid)
             {
                 Boek newBoek = new Boek
                 {
                     Exemplaar = boek.Exemplaar,
                     Auteur = boek.Auteur,
-                    Leeftijd =  boek.Leeftijd,
+                    Leeftijd = boek.Leeftijd,
                     Omschrijving = boek.Omschrijving,
                     Titel = boek.Titel,
-                    Uitgever = boek.Uitgever, 
+                    Uitgever = boek.Uitgever,
                     Themaa = (String.IsNullOrEmpty(boek.Thema) ? null : tr.FindBy(boek.Thema))
                 };
 
                 br.Add(newBoek);
-                
                 br.SaveChanges(newBoek);
                 TempData["Info"] = "Het boek werd toegevoegd...";
                 return RedirectToAction("Index");
@@ -128,6 +131,7 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Edit([Bind(Prefix = "Boek")] BoekCreateViewModel boek)
         {
             Boek bk = null;
+            
             if (ModelState.IsValid)
             {
                 bk = br.FindById(boek.Exemplaar);
@@ -159,7 +163,7 @@ namespace DeKrekelGroup5.Controllers
 
                 return RedirectToAction("Index");
             }
-            return View(boek);
+            return View(new BoekThemaCreateViewModel(tr.FindAll().OrderBy(n => n.Themaa), boek));
         }
 
         // GET: Boeks/Delete/5

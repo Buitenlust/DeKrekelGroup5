@@ -20,6 +20,7 @@ namespace DeKrekelGroup5.Models.DAL
 
         public DbSet<Uitlening> Uitleningen { get; set; }
         public DbSet<Uitlener> Uitleners { get; set; }
+        public DbSet<Beheerder> Beheerders { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -30,7 +31,7 @@ namespace DeKrekelGroup5.Models.DAL
             modelBuilder.Configurations.Add(new VerteltasMapper());
             modelBuilder.Configurations.Add(new UitleningMapper());
             modelBuilder.Configurations.Add(new UitlenerMapper());
-
+            modelBuilder.Configurations.Add(new BeheerderMapper());
             
             base.OnModelCreating(modelBuilder);
         }
