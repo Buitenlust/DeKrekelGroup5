@@ -1,0 +1,79 @@
+﻿@using DeKrekelGroup5.ViewModel
+@using Microsoft.Ajax.Utilities
+@model DeKrekelGroup5.ViewModel.ItemViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+         
+        <dt>
+            @Html.DisplayNameFor(model => model.Exemplaar)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Exemplaar)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Titel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titel)
+        </dd>
+
+        @if (!Model.Auteur.IsNullOrWhiteSpace())
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Auteur)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Auteur)
+            </dd>
+        }
+        
+        @if (!Model.Uitgever.IsNullOrWhiteSpace())
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Uitgever)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Uitgever)
+            </dd>
+        }
+        
+        @if (!Model.Leeftijd.Equals(0))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Leeftijd)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Leeftijd)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Omschrijving)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Omschrijving)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Thema)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thema)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Exemplaar }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

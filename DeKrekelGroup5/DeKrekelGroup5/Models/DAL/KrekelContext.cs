@@ -17,6 +17,7 @@ namespace DeKrekelGroup5.Models.DAL
         public DbSet<Spel> Spellen { get; set; }
         public DbSet<Thema> Themas { get; set; }
         public DbSet<VertelTas> VertelTassen { get; set; }
+        public DbSet<Item> Items { get; set; }
 
         public DbSet<Uitlening> Uitleningen { get; set; }
         public DbSet<Uitlener> Uitleners { get; set; }
@@ -31,7 +32,7 @@ namespace DeKrekelGroup5.Models.DAL
             modelBuilder.Configurations.Add(new UitleningMapper());
             modelBuilder.Configurations.Add(new UitlenerMapper());
 
-            
+
             base.OnModelCreating(modelBuilder);
         }
 

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Discovery;
 using DeKrekelGroup5.Models;
 using DeKrekelGroup5.Models.DAL;
 using DeKrekelGroup5.Models.Domain;
@@ -15,93 +17,97 @@ using Microsoft.Ajax.Utilities;
 
 namespace DeKrekelGroup5.Controllers
 {
-    public class BoekenController : Controller
-    {
-        private IBoekenRepository br;
+    public class ItemsController : Controller
+    { 
+        private IItemRepository ii;
         private IThemasRepository tr;
+        private LetterTuin letterTuin;
+        private Beheerder beheerder;
 
-        public BoekenController(IBoekenRepository boekenRepository, IThemasRepository themasRepository)
+        public ItemsController(IItemRepository iitemRepository,IThemasRepository themasRepository)
         {
-            br = boekenRepository;
+            letterTuin = new LetterTuin(iitemRepository, themasRepository);
+            beheerder = new Beheerder(iitemRepository, themasRepository);
+            ii = iitemRepository;
             tr = themasRepository;
         }
 
-        // GET: Boeks
-        public ActionResult Index(String search=null)
+        // GET: Nada, Nothing, Njet
+        public ActionResult Index()
         {
-            IEnumerable<Boek> boeken;
-            if (!String.IsNullOrEmpty(search))
-            {
-                boeken = br.Find(search).ToList();
-                ViewBag.Selection = "Alle boeken met " + search;
-            }
-            else
-            {
-                boeken = br.FindAll().OrderBy(p => p.Titel).ToList().Take(25);
-                ViewBag.Selection = "Alle boeken";
-            }
-            if (Request.IsAjaxRequest())
-                return PartialView("BoekenLijst", new BoeksIndexViewModel(boeken));
-            return View(new BoeksIndexViewModel(boeken));
-
-
-            //return View(new BoeksIndexViewModel(br.FindAll().OrderBy(p => p.Exemplaar).ToList()));
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        // GET: Boeks/Details/5
+        // GET: Items/Boeken
+        public ActionResult Boeken(String search = null)
+        {
+            ViewBag.Selection = search == null ? "Alle boeken:" : "Alle boeken met " + search + ":";
+            if (Request.IsAjaxRequest())
+                return PartialView("ItemsLijst", new ItemsViewModel(letterTuin.GetBoeken(search)));
+
+            return View("Index", new ItemsViewModel(letterTuin.GetBoeken(search)));
+        }
+
+        // GET: Items/Spellen
+        public ActionResult Spellen(String search = null)
+        {
+            ViewBag.Selection = search == null ? "Alle spellen:" : "Alle spellen met " + search + ":";
+            if (Request.IsAjaxRequest())
+                return PartialView("ItemsLijst", new ItemsViewModel(letterTuin.GetSpellen(search)));
+            return View("Index", new ItemsViewModel(letterTuin.GetSpellen(search)));
+        }
+
+
+
+        // GET: items/Details/5
         public ActionResult Details(int id = 0)
         {
             if (id == 0)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Boek boek = br.FindById(id);
             
-            if (boek == null)
-            {
+            Item item = ii.FindById(id);
+            
+            if (item == null)
                 return HttpNotFound();
-            }
-            else
-            {
-                boek.Themaa = tr.FindById(boek.Themaa.IdThema);
-            }
+            
+            item.Themaa = letterTuin.GetThemabyId(item.Themaa.IdThema);
 
-            return View(boek);
+            return View(new ItemViewModel(item));
         }
 
-        // GET: Boeks/Create
-        public ActionResult Create()
+        // GET: Items/Create
+        public ActionResult Create(string item="boek")
         {
-            return View(new BoekThemaCreateViewModel(tr.FindAll().OrderBy(n => n.Themaa), new Boek().ConvertToBoekCreateViewModel()));
+            switch (item)
+            {
+                case "boek":
+                    return View(new CreateItem(letterTuin.GetThemas(), new Boek()));
+                case "spel":
+                    return View(new CreateItem(letterTuin.GetThemas(), new Spel()));
+                default: 
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            } 
         }
 
-        // POST: Boeks/Create
+        // POST: Items/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Prefix = "Boek")] BoekCreateViewModel boek)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(string item, [Bind(Prefix = "ItemVm")] ItemViewModel itemVm)
         {
             if (ModelState.IsValid)
             {
-                Boek newBoek = new Boek
+                switch (item)
                 {
-                    Exemplaar = boek.Exemplaar,
-                    Auteur = boek.Auteur,
-                    Leeftijd =  boek.Leeftijd,
-                    Omschrijving = boek.Omschrijving,
-                    Titel = boek.Titel,
-                    Uitgever = boek.Uitgever, 
-                    Themaa = (String.IsNullOrEmpty(boek.Thema) ? null : tr.FindBy(boek.Thema))
-                };
-
-                br.Add(newBoek);
-                
-                br.SaveChanges(newBoek);
-                TempData["Info"] = "Het boek werd toegevoegd...";
-                return RedirectToAction("Index");
+                    case "boek": 
+                        return View("Details", new ItemViewModel(beheerder.AddItem(itemVm, new Boek()))); 
+                    case "spel":
+                        return View("Details", new ItemViewModel(beheerder.AddItem(itemVm, new Spel()))); 
+                    default:
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
-
             return RedirectToAction("Create");
         }
 
@@ -112,7 +118,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Boek boek = br.FindById(id);
+            Boek boek = (Boek) ii.FindById(id);
             if (boek == null)
             {
                 return HttpNotFound();
@@ -130,7 +136,7 @@ namespace DeKrekelGroup5.Controllers
             Boek bk = null;
             if (ModelState.IsValid)
             {
-                bk = br.FindById(boek.Exemplaar);
+                bk = (Boek) ii.FindById(boek.Exemplaar);
 
                 if (bk == null)
                 {
@@ -148,7 +154,8 @@ namespace DeKrekelGroup5.Controllers
                     bk.Themaa = (String.IsNullOrEmpty(boek.Thema) ? null : tr.FindBy(boek.Thema));
 
                     bk.Update(bk);
-                    br.SaveChanges(bk);
+                    ii.ModifiedThema(bk);
+                    ii.SaveChanges();
                     TempData["Info"] = "Het boek werd aangepast...";
                     return RedirectToAction("Index");
                 }
@@ -170,7 +177,7 @@ namespace DeKrekelGroup5.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             } 
 
-            Boek boek = br.FindById(id);
+            Boek boek = (Boek) ii.FindById(id);
             if (boek == null)
             {
                 return HttpNotFound();
@@ -183,9 +190,10 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Boek boek = br.FindById(id);
-            br.Remove(boek);
-            br.SaveChanges(boek);
+            Boek boek = (Boek) ii.FindById(id);
+            ii.Remove(boek);
+            ii.ModifiedThema(boek);
+            ii.SaveChanges();
             return RedirectToAction("Index");
         }
     }

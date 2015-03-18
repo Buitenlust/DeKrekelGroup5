@@ -1,13 +1,11 @@
-﻿@model DeKrekelGroup5.ViewModel.BoeksIndexViewModel
+﻿@model DeKrekelGroup5.ViewModel.ItemsViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { item = "boek" })
 </p>
 
 @using (Ajax.BeginForm("Index",
@@ -15,7 +13,7 @@
         {
             InsertionMode = InsertionMode.Replace,
             HttpMethod = "Get",
-            UpdateTargetId = "Boeken"//,
+            UpdateTargetId = "Items"//,
             //OnComplete = "clearMessage"
         }
         ))
@@ -24,6 +22,6 @@
     <input type="submit" value="Search in all products" class="btn btn-default" />
 }
 
-<div  id="Boeken">
-    @Html.Partial("BoekenLijst", Model)
+<div>
+    @Html.Partial("ItemsLijst", Model)
 </div>

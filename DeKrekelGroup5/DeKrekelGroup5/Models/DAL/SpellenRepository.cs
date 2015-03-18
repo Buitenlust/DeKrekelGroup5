@@ -33,6 +33,11 @@ namespace DeKrekelGroup5.Models.DAL
             spellen.Add(spel);
         }
 
+        public void Remove(Spel spel)
+        {
+            spellen.Remove(spel);
+        }
+
         public void SaveChanges()
         {
             context.SaveChanges();

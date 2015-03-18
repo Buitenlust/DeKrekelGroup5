@@ -13,6 +13,10 @@ namespace DeKrekelGroup5.Models.Domain
         public string Auteur { get; set; }
         public string Uitgever { get; set; }
 
+        public Boek()
+        {
+            
+        }
 
         public void Update(Boek boek)
         {
