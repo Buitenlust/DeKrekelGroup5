@@ -206,6 +206,7 @@
     <Compile Include="Models\DAL\UitlenersRepository.cs" />
     <Compile Include="Models\DAL\UitleningenRepository.cs" />
     <Compile Include="Models\DAL\VerteltasRepository.cs" />
+    <Compile Include="Models\Domain\Beheerder.cs" />
     <Compile Include="Models\Domain\Boek.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -221,6 +222,7 @@
     <Compile Include="Models\Domain\IUitlenersRepository.cs" />
     <Compile Include="Models\Domain\IUitleningenRepository.cs" />
     <Compile Include="Models\Domain\IVerteltasRepository.cs" />
+    <Compile Include="Models\Domain\LetterTuin.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -230,8 +232,9 @@
     <Compile Include="Models\Domain\Thema.cs" />
     <Compile Include="Models\Domain\Uitlening.cs" />
     <Compile Include="Models\Domain\VertelTas.cs" />
+    <Compile Include="ViewModel\SpelViewModel.cs" />
     <Compile Include="ViewModel\BoekViewModel.cs" />
-    <Compile Include="ViewModel\Mapper.cs" />
+    <Compile Include="ViewModel\ItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

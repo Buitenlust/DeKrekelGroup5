@@ -1,0 +1,107 @@
+﻿@model DeKrekelGroup5.ViewModel.CreateItem
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<table style="border: 0px">
+    <tr>
+        <td style="border: 0px">
+            @Ajax.ActionLink("Ik maak een boek", "Create", new { item = "boek" }, new AjaxOptions()
+            {
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "POST",
+                UpdateTargetId = "routes"
+            })
+        </td><td></td>
+        <td style="border: 0px">
+            @Ajax.ActionLink("Ik maak een spel", "Create", new { item = "spel" }, new AjaxOptions()
+            {
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "POST",
+                UpdateTargetId = "routes"
+            })
+        </td>
+    </tr>
+</table>
+
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @if (Model.ItemVm.ItemType == "Boek")
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.ItemVm.Auteur, htmlAttributes: new {@class = "conTrol-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ItemVm.Auteur, new {htmlAttributes = new {@class = "form-conTrol"}})
+                    @Html.ValidationMessageFor(model => model.ItemVm.Auteur, "", new {@class = "text-danger"})
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemVm.Uitgever, htmlAttributes: new { @class = "conTrol-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ItemVm.Uitgever, new { htmlAttributes = new { @class = "form-conTrol" } })
+                @Html.ValidationMessageFor(model => model.ItemVm.Uitgever, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemVm.Leeftijd, htmlAttributes: new { @class = "conTrol-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ItemVm.Leeftijd, new { htmlAttributes = new { @class = "form-conTrol" } })
+                @Html.ValidationMessageFor(model => model.ItemVm.Leeftijd, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+ 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemVm.Titel, htmlAttributes: new { @class = "conTrol-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ItemVm.Titel, new { htmlAttributes = new { @class = "form-conTrol" } })
+                @Html.ValidationMessageFor(model => model.ItemVm.Titel, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemVm.Omschrijving, htmlAttributes: new { @class = "conTrol-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ItemVm.Omschrijving, new { htmlAttributes = new { @class = "form-conTrol" } })
+                @Html.ValidationMessageFor(model => model.ItemVm.Omschrijving, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemVm.Thema, htmlAttributes: new { @class = "conTrol-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ItemVm.Thema, Model.Themas, " --Selecteer een Thema--")
+                @Html.ValidationMessageFor(model => model.ItemVm.Thema)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

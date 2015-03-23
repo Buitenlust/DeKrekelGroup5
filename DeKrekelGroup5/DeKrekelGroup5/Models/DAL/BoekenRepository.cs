@@ -40,9 +40,13 @@ namespace DeKrekelGroup5.Models.DAL
             context.Boeken.Add(boek);
         }
 
-        public void SaveChanges(Boek boek)
+        public void DoNotDuplicateThema(Boek boek)
         {
-            context.Entry(boek.Themaa).State = EntityState.Modified;    //Zorgt dat het thema niet aangemaakt wordt.
+            context.Entry(boek.Themaa).State = EntityState.Modified;//Zorgt dat het thema niet aangemaakt wordt.
+        }
+
+        public void SaveChanges()
+        { 
             context.SaveChanges();
         }
 
