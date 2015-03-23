@@ -1,5 +1,5 @@
 ﻿
-@model DeKrekelGroup5.ViewModel.ItemsViewModel
+@model DeKrekelGroup5.ViewModel.BoeksIndexViewModel
 
 <h3>@ViewBag.Selection</h3>
 
@@ -7,30 +7,30 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Items.FirstOrDefault().Exemplaar)
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Exemplaar)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Items.FirstOrDefault().Auteur)
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Auteur)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Items.FirstOrDefault().Uitgever)
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Uitgever)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Items.FirstOrDefault().Leeftijd)
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Leeftijd)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Items.FirstOrDefault().Titel)
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Titel)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Items.FirstOrDefault().Omschrijving)
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Omschrijving)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Items.FirstOrDefault().Thema)
+            @Html.DisplayNameFor(model => model.Boeks.FirstOrDefault().Thema)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model.Items)
+    @foreach (var item in Model.Boeks)
     {
         <tr>
             <td>

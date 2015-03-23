@@ -10,7 +10,6 @@ namespace DeKrekelGroup5.Models.Domain
         IQueryable<Spel> FindAll();
         Spel FindById(int id);
         void Add(Spel spel);
-        void Remove(Spel spel);
         void SaveChanges();
     }
 }

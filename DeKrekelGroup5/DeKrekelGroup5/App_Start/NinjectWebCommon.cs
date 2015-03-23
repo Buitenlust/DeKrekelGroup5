@@ -67,7 +67,7 @@ namespace DeKrekelGroup5.App_Start
             kernel.Bind<IThemasRepository>().To<ThemasRepository>().InRequestScope();
             kernel.Bind<IBoekenRepository>().To<BoekenRepository>().InRequestScope();
             kernel.Bind<ISpellenRepository>().To<SpellenRepository>().InRequestScope();
-            kernel.Bind<IItemRepository>().To<ItemRepository>().InRequestScope();
+
         }        
     }
 }
