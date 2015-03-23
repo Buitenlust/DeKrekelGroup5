@@ -15,117 +15,117 @@ using Microsoft.Ajax.Utilities;
 
 namespace DeKrekelGroup5.Controllers
 {
-    public class BoekenController : Controller
+    public class SpellenController : Controller
     {
         private LetterTuin letterTuin;
         private Beheerder beheerder;
 
-        public BoekenController(IBoekenRepository boekenRepository, IThemasRepository themasRepository)
+        public SpellenController(ISpellenRepository spellenRepository, IThemasRepository themasRepository)
         {
-            letterTuin = new LetterTuin(boekenRepository,null,themasRepository);
-            beheerder = new Beheerder(boekenRepository, null, themasRepository);
+            letterTuin = new LetterTuin(){SpellenRepository = spellenRepository, ThemasRepository = themasRepository};
+            beheerder = new Beheerder(){ SpellenRepository = spellenRepository, ThemasRepository = themasRepository };
         }
 
-        // GET: Boeken
+        // GET: Spellen
         public ActionResult Index(String search=null)
         {
-            IEnumerable<Boek> boeken;
+            IEnumerable<Spel> spellen;
             if (!String.IsNullOrEmpty(search))
             {
-                boeken = letterTuin.GetBoeken(search);
-                ViewBag.Selection = "Alle boeken met " + search;
+                spellen = letterTuin.GetSpellen(search);
+                ViewBag.Selection = "Alle spellen met " + search;
             }
             else
             {
-                boeken = letterTuin.GetBoeken(search).Take(25);
-                ViewBag.Selection = "Alle boeken";
+                spellen = letterTuin.GetSpellen(search).Take(25);
+                ViewBag.Selection = "Alle spellen";
             }
             if (Request.IsAjaxRequest())
-                return PartialView("BoekenLijst", new BoekenLijstViewModel(boeken));
+                return PartialView("SpellenLijst", new SpellenLijstViewModel(spellen));
 
-            return View(new BoekenLijstViewModel(boeken));
+            return View(new SpellenLijstViewModel(spellen));
         }
 
-        // GET: Boeken/Details/5
+        // GET: Spellen/Details/5
         public ActionResult Details(int id = 0)
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Boek boek = letterTuin.GetBoek(id);
-            if (boek == null)
+            Spel spel = letterTuin.GetSpel(id);
+            if (spel == null)
                 return HttpNotFound();
-            return View(boek);
+            return View(spel);
         }
 
-        // GET: Boeken/Create
+        // GET: Spellen/Create
         public ActionResult Create()
         {
-            return View(new BoekCreateViewModel(beheerder.GetThemas(), new Boek()));
+            return View(new SpelCreateViewModel(beheerder.GetThemas(), new Spel()));
         }
 
-        // POST: Boeken/Create
+        // POST: Spellen/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Prefix = "Boek")] BoekViewModel boek)
+        public ActionResult Create([Bind(Prefix = "Spel")] SpelViewModel spel)
         {
             if (ModelState.IsValid)
             {
-                beheerder.AddBoek(boek);
-                TempData["Info"] = "Het boek werd toegevoegd...";
+                beheerder.AddSpel(spel);
+                TempData["Info"] = "Het spel werd toegevoegd...";
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Create");
         }
 
-        // GET: Boeken/Edit/5
+        // GET: Spellen/Edit/5
         public ActionResult Edit(int id=0)
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Boek boek = beheerder.GetBoek(id);
-            if (boek == null)
+            Spel spel = beheerder.GetSpel(id);
+            if (spel == null)
                 return HttpNotFound();
-            return View(new BoekCreateViewModel(beheerder.GetThemas(), boek));
+            return View(new SpelCreateViewModel(beheerder.GetThemas(), spel));
         }
 
-        // POST: Boeken/Edit/5
+        // POST: Spellen/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Prefix = "Boek")] BoekViewModel boek)
+        public ActionResult Edit([Bind(Prefix = "Spel")] SpelViewModel spel)
         {
             if (ModelState.IsValid)
             {
-                beheerder.EditBoek(boek);
+                beheerder.EditSpel(spel);
 
                 return RedirectToAction("Index");
             }
-            return View(boek);
+            return View(spel);
         }
 
-        // GET: Boeken/Delete/5
+        // GET: Spellen/Delete/5
         public ActionResult Delete(int id=0)
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Boek boek = beheerder.GetBoek(id);
-            if (boek == null)
+            Spel spel = beheerder.GetSpel(id);
+            if (spel == null)
             {
                 return HttpNotFound();
             }
-            return View(boek);
+            return View(spel);
         }
 
-        // POST: Boeken/Delete/5
+        // POST: Spellen/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         { 
-            beheerder.VerwijderBoek(id);
+            beheerder.VerwijderSpel(id);
             return RedirectToAction("Index");
         }
     }

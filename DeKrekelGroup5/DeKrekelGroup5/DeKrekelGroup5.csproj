@@ -191,6 +191,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\SpellenController.cs" />
     <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Models\DAL\BoekenRepository.cs" />
@@ -307,6 +308,12 @@
     <Content Include="Views\Boeken\Edit.cshtml" />
     <Content Include="Views\Boeken\Index.cshtml" />
     <Content Include="Views\Boeken\BoekenLijst.cshtml" />
+    <Content Include="Views\Spellen\SpellenLijst.cshtml" />
+    <Content Include="Views\Spellen\Create.cshtml" />
+    <Content Include="Views\Spellen\Delete.cshtml" />
+    <Content Include="Views\Spellen\Details.cshtml" />
+    <Content Include="Views\Spellen\Edit.cshtml" />
+    <Content Include="Views\Spellen\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

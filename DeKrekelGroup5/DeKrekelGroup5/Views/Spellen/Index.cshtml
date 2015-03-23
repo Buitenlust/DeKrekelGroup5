@@ -1,9 +1,8 @@
-﻿@model DeKrekelGroup5.ViewModel.BoekenLijstViewModel
+﻿@model DeKrekelGroup5.ViewModel.SpellenLijstViewModel
 
 @{
-    ViewBag.Title = "Boekenlijst";
+    ViewBag.Title = "Spellenlijst";
 }
-
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -14,7 +13,7 @@
         {
             InsertionMode = InsertionMode.Replace,
             HttpMethod = "Get",
-            UpdateTargetId = "Boeken"//,
+            UpdateTargetId = "Spellen"//,
             //OnComplete = "clearMessage"
         }
         ))
@@ -23,6 +22,6 @@
     <input type="submit" value="Search in all products" class="btn btn-default" />
 }
 
-<div  id="Boeken">
-    @Html.Partial("BoekenLijst", Model)
+<div  id="Spellen">
+    @Html.Partial("SpellenLijst", Model)
 </div>

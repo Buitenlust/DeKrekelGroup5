@@ -14,6 +14,13 @@ namespace DeKrekelGroup5.Models.Domain
         public ISpellenRepository SpellenRepository { get; set; }
         public IThemasRepository ThemasRepository { get; set; }
 
+        public LetterTuin(IBoekenRepository boekenRepository, ISpellenRepository spellenRepository, IThemasRepository themasRepository)
+        {
+            BoekenRepository = boekenRepository;
+            SpellenRepository = spellenRepository;
+            ThemasRepository = themasRepository;
+        }
+
         public IEnumerable<Boek> GetBoeken(string search)
         { 
             return !String.IsNullOrEmpty(search) ? BoekenRepository.Find(search).ToList() : BoekenRepository.FindAll().Take(25).OrderBy(t => t.Titel).ToList();
@@ -34,11 +41,16 @@ namespace DeKrekelGroup5.Models.Domain
             return ThemasRepository.FindBy(thema);
         }
 
-        public Item GetItem(int id)
+        public Boek GetBoek(int id)
         {
-            Item item = BoekenRepository.FindById(id);
-            item.Themaa = ThemasRepository.FindById(item.Themaa.IdThema);
-            return item;
+            Boek boek = BoekenRepository.FindById(id);
+            return boek;
+        }
+
+        public Spel GetSpel(int id)
+        {
+            Spel spel = SpellenRepository.FindById(id);
+            return spel;
         }
     }
 }

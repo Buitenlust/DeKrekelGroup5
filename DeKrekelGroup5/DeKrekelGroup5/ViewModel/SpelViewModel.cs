@@ -10,9 +10,6 @@ namespace DeKrekelGroup5.ViewModel
 {
     public class SpelViewModel:ItemViewModel
     {
-        [Required(ErrorMessage = "Geef een auteur in aub...")]
-        [MaxLength(45, ErrorMessage = "De naam van de auteur is te lang (max. 45 tekens)")]
-        public string Auteur { get; set; }
         [Required(ErrorMessage = "Geef een uitgever in aub...")]
         [MaxLength(45, ErrorMessage = "De naam van de uitgever is te lang (max. 45 tekens)")]
         public string Uitgever { get; set; }
