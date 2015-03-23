@@ -22,8 +22,8 @@ namespace DeKrekelGroup5.Controllers
 
         public SpellenController(ISpellenRepository spellenRepository, IThemasRepository themasRepository)
         {
-            letterTuin = new LetterTuin(){SpellenRepository = spellenRepository, ThemasRepository = themasRepository};
-            beheerder = new Beheerder(){ SpellenRepository = spellenRepository, ThemasRepository = themasRepository };
+            letterTuin = new LetterTuin(null, spellenRepository, themasRepository);
+            beheerder = new Beheerder(null, spellenRepository, themasRepository);
         }
 
         // GET: Spellen
