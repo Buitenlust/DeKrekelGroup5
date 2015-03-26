@@ -20,6 +20,8 @@ namespace DeKrekelGroup5.Models.DAL
 
         public DbSet<Uitlening> Uitleningen { get; set; }
         public DbSet<Uitlener> Uitleners { get; set; }
+        public DbSet<CD> Cds { get; set; }
+        public DbSet<DVD> Dvds { get; set; } 
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
