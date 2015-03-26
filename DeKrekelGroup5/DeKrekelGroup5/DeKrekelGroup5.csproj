@@ -194,6 +194,8 @@
     <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Models\DAL\BoekenRepository.cs" />
+    <Compile Include="Models\DAL\CDsRepository.cs" />
+    <Compile Include="Models\DAL\DVDsRepository.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
     <Compile Include="Models\DAL\Mappers\BoekMapper.cs" />
     <Compile Include="Models\DAL\Mappers\SpelMapper.cs" />
@@ -213,6 +215,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Domain\CD.cs" />
+    <Compile Include="Models\Domain\DVD.cs" />
+    <Compile Include="Models\Domain\ICDsRepository.cs" />
+    <Compile Include="Models\Domain\IDVDsRepository.cs" />
     <Compile Include="Models\Domain\IThemasRepository.cs" />
     <Compile Include="Models\Domain\IBoekenRepository.cs" />
     <Compile Include="Models\Domain\ISpellenRepository.cs" />
