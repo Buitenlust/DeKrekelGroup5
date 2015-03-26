@@ -11,7 +11,7 @@ namespace DeKrekelGroup5.Models.DAL
     {
         private KrekelContext context;
 
-        public CDsRepository(KrekelContext context) 
+        public CDsRepository(KrekelContext context)
         {
             this.context = context;
         }
@@ -24,9 +24,9 @@ namespace DeKrekelGroup5.Models.DAL
         public IQueryable<CD> Find(string search)
         {
             return context.Cds.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
-                                             p.Uitgever.ToLower().Contains(search.ToLower()) ||
-                                             p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
-                                             p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
+                                          p.Uitgever.ToLower().Contains(search.ToLower()) ||
+                                          p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
+                                          p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
         }
 
         public CD FindById(int id)
@@ -41,7 +41,7 @@ namespace DeKrekelGroup5.Models.DAL
 
         public void SaveChanges(CD cd)
         {
-            context.Entry(cd.Themaa).State = EntityState.Modified;    //Zorgt dat het thema niet aangemaakt wordt.
+            context.Entry(cd.Themaa).State = EntityState.Modified; //Zorgt dat het thema niet aangemaakt wordt.
             context.SaveChanges();
         }
 
@@ -49,4 +49,5 @@ namespace DeKrekelGroup5.Models.DAL
         {
             context.Cds.Remove(cd);
         }
+    }
 }

@@ -9,15 +9,19 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
 {
     public class CDMapper : EntityTypeConfiguration<CD>
     {
-        //table
+        public CDMapper()
+        {
+
+            //table
             ToTable("CD");
 
-        //properties
-        Property(c => c.Omschrijving).HasMaxLength(1023);
-        Property(c => c.Titel).HasMaxLength(45).IsRequired();
-        Property(c => c.Uitgever).HasMaxLength(45)
+            //properties
+            Property(c => c.Omschrijving).HasMaxLength(1023);
+            Property(c => c.Titel).HasMaxLength(45).IsRequired();
+            Property(c => c.Uitgever).HasMaxLength(45);
 
-        //Primary Key
-        HasKey(c => c.Exemplaar);
+            //Primary Key
+            HasKey(c => c.Exemplaar);
+        }
     }
 }

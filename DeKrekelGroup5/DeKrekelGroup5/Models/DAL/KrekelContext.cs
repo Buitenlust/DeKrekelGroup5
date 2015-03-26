@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Antlr.Runtime;
 using DeKrekelGroup5.Models.DAL.Mappers;
 using DeKrekelGroup5.Models.Domain;
 
@@ -32,6 +33,8 @@ namespace DeKrekelGroup5.Models.DAL
             modelBuilder.Configurations.Add(new VerteltasMapper());
             modelBuilder.Configurations.Add(new UitleningMapper());
             modelBuilder.Configurations.Add(new UitlenerMapper());
+            modelBuilder.Configurations.Add(new CDMapper());
+            modelBuilder.Configurations.Add(new DVDMapper());
 
             
             base.OnModelCreating(modelBuilder);
