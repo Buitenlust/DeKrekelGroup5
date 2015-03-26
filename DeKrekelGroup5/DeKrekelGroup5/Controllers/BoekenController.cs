@@ -17,160 +17,102 @@ namespace DeKrekelGroup5.Controllers
 {
     public class BoekenController : Controller
     {
-        private IBoekenRepository br;
-        private IThemasRepository tr;
+        private LetterTuin letterTuin;
+        private Beheerder beheerder;
 
         public BoekenController(IBoekenRepository boekenRepository, IThemasRepository themasRepository)
         {
-            br = boekenRepository;
-            tr = themasRepository;
+            letterTuin = new LetterTuin(boekenRepository,null,themasRepository);
+            beheerder = new Beheerder(boekenRepository, null, themasRepository);
         }
 
-        // GET: Boeks
+        // GET: Boeken
         public ActionResult Index(String search=null)
         {
             IEnumerable<Boek> boeken;
             if (!String.IsNullOrEmpty(search))
             {
-                boeken = br.Find(search).ToList();
+                boeken = letterTuin.GetBoeken(search);
                 ViewBag.Selection = "Alle boeken met " + search;
             }
             else
             {
-                boeken = br.FindAll().OrderBy(p => p.Titel).ToList().Take(25);
+                boeken = letterTuin.GetBoeken(search).Take(25);
                 ViewBag.Selection = "Alle boeken";
             }
             if (Request.IsAjaxRequest())
-                return PartialView("BoekenLijst", new BoeksIndexViewModel(boeken));
-            return View(new BoeksIndexViewModel(boeken));
+                return PartialView("BoekenLijst", new BoekenLijstViewModel(boeken));
 
-
-            //return View(new BoeksIndexViewModel(br.FindAll().OrderBy(p => p.Exemplaar).ToList()));
+            return View(new BoekenLijstViewModel(boeken));
         }
 
-        // GET: Boeks/Details/5
+        // GET: Boeken/Details/5
         public ActionResult Details(int id = 0)
         {
             if (id == 0)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Boek boek = br.FindById(id);
-            
+            Boek boek = letterTuin.GetBoek(id);
             if (boek == null)
-            {
                 return HttpNotFound();
-            }
-            else
-            {
-                boek.Themaa = tr.FindById(boek.Themaa.IdThema);
-            }
-
             return View(boek);
         }
 
-        // GET: Boeks/Create
+        // GET: Boeken/Create
         public ActionResult Create()
         {
-            return View(new BoekThemaCreateViewModel(tr.FindAll().OrderBy(n => n.Themaa), new Boek().ConvertToBoekCreateViewModel()));
+            return View(new BoekCreateViewModel(beheerder.GetThemas(), new Boek()));
         }
 
-        // POST: Boeks/Create
+        // POST: Boeken/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Prefix = "Boek")] BoekCreateViewModel boek)
+        public ActionResult Create([Bind(Prefix = "Boek")] BoekViewModel boek)
         {
             if (ModelState.IsValid)
             {
-                Boek newBoek = new Boek
-                {
-                    Exemplaar = boek.Exemplaar,
-                    Auteur = boek.Auteur,
-                    Leeftijd =  boek.Leeftijd,
-                    Omschrijving = boek.Omschrijving,
-                    Titel = boek.Titel,
-                    Uitgever = boek.Uitgever, 
-                    Themaa = (String.IsNullOrEmpty(boek.Thema) ? null : tr.FindBy(boek.Thema))
-                };
-
-                br.Add(newBoek);
-                
-                br.SaveChanges(newBoek);
+                beheerder.AddBoek(boek);
                 TempData["Info"] = "Het boek werd toegevoegd...";
                 return RedirectToAction("Index");
             }
-
             return RedirectToAction("Create");
         }
 
-        // GET: Boeks/Edit/5
+        // GET: Boeken/Edit/5
         public ActionResult Edit(int id=0)
         {
             if (id == 0)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Boek boek = br.FindById(id);
+            Boek boek = beheerder.GetBoek(id);
             if (boek == null)
-            {
                 return HttpNotFound();
-            }
-            return View(new BoekThemaCreateViewModel(tr.FindAll().OrderBy(n => n.Themaa), boek.ConvertToBoekCreateViewModel()));
+            return View(new BoekCreateViewModel(beheerder.GetThemas(), boek));
         }
 
-        // POST: Boeks/Edit/5
+        // POST: Boeken/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Prefix = "Boek")] BoekCreateViewModel boek)
+        public ActionResult Edit([Bind(Prefix = "Boek")] BoekViewModel boek)
         {
-            Boek bk = null;
             if (ModelState.IsValid)
             {
-                bk = br.FindById(boek.Exemplaar);
-
-                if (bk == null)
-                {
-                    return HttpNotFound();
-                }
-
-                try
-                {
-                    bk.Exemplaar = boek.Exemplaar;
-                    bk.Auteur = boek.Auteur;
-                    bk.Leeftijd = boek.Leeftijd;
-                    bk.Omschrijving = boek.Omschrijving;
-                    bk.Titel = boek.Titel;
-                    bk.Uitgever = boek.Uitgever; 
-                    bk.Themaa = (String.IsNullOrEmpty(boek.Thema) ? null : tr.FindBy(boek.Thema));
-
-                    bk.Update(bk);
-                    br.SaveChanges(bk);
-                    TempData["Info"] = "Het boek werd aangepast...";
-                    return RedirectToAction("Index");
-                }
-                catch (Exception e)
-                {
-                    ModelState.AddModelError("", e.Message);
-                }
+                beheerder.EditBoek(boek);
 
                 return RedirectToAction("Index");
             }
             return View(boek);
         }
 
-        // GET: Boeks/Delete/5
+        // GET: Boeken/Delete/5
         public ActionResult Delete(int id=0)
         {
             if (id == 0)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            } 
 
-            Boek boek = br.FindById(id);
+            Boek boek = beheerder.GetBoek(id);
             if (boek == null)
             {
                 return HttpNotFound();
@@ -178,14 +120,12 @@ namespace DeKrekelGroup5.Controllers
             return View(boek);
         }
 
-        // POST: Boeks/Delete/5
+        // POST: Boeken/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
-        {
-            Boek boek = br.FindById(id);
-            br.Remove(boek);
-            br.SaveChanges(boek);
+        { 
+            beheerder.VerwijderBoek(id);
             return RedirectToAction("Index");
         }
     }

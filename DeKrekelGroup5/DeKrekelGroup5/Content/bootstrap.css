@@ -228,7 +228,7 @@ table {
   * {
     color: #000 !important;
     text-shadow: none !important;
-    background: transparent !important;
+    background: ThemasRepositoryansparent !important;
     box-shadow: none !important;
   }
   a,
@@ -747,7 +747,7 @@ pre code {
   font-size: inherit;
   color: inherit;
   white-space: pre-wrap;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
   border: 0;
 }
 
@@ -1406,7 +1406,7 @@ pre code {
 
 table {
   max-width: 100%;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
 }
 
 th {
@@ -2008,7 +2008,7 @@ textarea.input-lg {
   white-space: nowrap;
   vertical-align: middle;
   cursor: pointer;
-  border: 1px solid transparent;
+  border: 1px solid ThemasRepositoryansparent;
   border-radius: 4px;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -2305,7 +2305,7 @@ fieldset[disabled] .btn-info.active {
 .btn-link:active,
 .btn-link[disabled],
 fieldset[disabled] .btn-link {
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -2314,14 +2314,14 @@ fieldset[disabled] .btn-link {
 .btn-link:hover,
 .btn-link:focus,
 .btn-link:active {
-  border-color: transparent;
+  border-color: ThemasRepositoryansparent;
 }
 
 .btn-link:hover,
 .btn-link:focus {
   color: #2a6496;
   text-decoration: underline;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
 }
 
 .btn-link[disabled]:hover,
@@ -2397,7 +2397,7 @@ input[type="button"].btn-block {
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('ThemasRepositoryuetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
 
 .glyphicon {
@@ -3218,9 +3218,9 @@ input[type="button"].btn-block {
   margin-left: 2px;
   vertical-align: middle;
   border-top: 4px solid #000000;
-  border-right: 4px solid transparent;
+  border-right: 4px solid ThemasRepositoryansparent;
   border-bottom: 0 dotted;
-  border-left: 4px solid transparent;
+  border-left: 4px solid ThemasRepositoryansparent;
   content: "";
 }
 
@@ -3301,7 +3301,7 @@ input[type="button"].btn-block {
 .dropdown-menu > .disabled > a:focus {
   text-decoration: none;
   cursor: not-allowed;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
   background-image: none;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
@@ -3836,7 +3836,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   color: #999999;
   text-decoration: none;
   cursor: not-allowed;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
 }
 
 .nav .open > a,
@@ -3869,7 +3869,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li > a {
   margin-right: 2px;
   line-height: 1.428571429;
-  border: 1px solid transparent;
+  border: 1px solid ThemasRepositoryansparent;
   border-radius: 4px 4px 0 0;
 }
 
@@ -3884,7 +3884,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   cursor: default;
   background-color: #ffffff;
   border: 1px solid #dddddd;
-  border-bottom-color: transparent;
+  border-bottom-color: ThemasRepositoryansparent;
 }
 
 .nav-tabs.nav-justified {
@@ -4027,7 +4027,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   z-index: 1000;
   min-height: 50px;
   margin-bottom: 20px;
-  border: 1px solid transparent;
+  border: 1px solid ThemasRepositoryansparent;
 }
 
 .navbar:before,
@@ -4087,7 +4087,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   padding-right: 15px;
   padding-left: 15px;
   overflow-x: visible;
-  border-top: 1px solid transparent;
+  border-top: 1px solid ThemasRepositoryansparent;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   -webkit-overflow-scrolling: touch;
 }
@@ -4216,8 +4216,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-top: 8px;
   margin-right: 15px;
   margin-bottom: 8px;
-  background-color: transparent;
-  border: 1px solid transparent;
+  background-color: ThemasRepositoryansparent;
+  border: 1px solid ThemasRepositoryansparent;
   border-radius: 4px;
 }
 
@@ -4254,7 +4254,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
     float: none;
     width: auto;
     margin-top: 0;
-    background-color: transparent;
+    background-color: ThemasRepositoryansparent;
     border: 0;
     box-shadow: none;
   }
@@ -4300,8 +4300,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-right: -15px;
   margin-bottom: 8px;
   margin-left: -15px;
-  border-top: 1px solid transparent;
-  border-bottom: 1px solid transparent;
+  border-top: 1px solid ThemasRepositoryansparent;
+  border-bottom: 1px solid ThemasRepositoryansparent;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
 }
@@ -4395,7 +4395,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
   color: #5e5e5e;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
 }
 
 .navbar-default .navbar-text {
@@ -4409,7 +4409,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #333333;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
 }
 
 .navbar-default .navbar-nav > .active > a,
@@ -4423,7 +4423,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .disabled > a:hover,
 .navbar-default .navbar-nav > .disabled > a:focus {
   color: #cccccc;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
 }
 
 .navbar-default .navbar-toggle {
@@ -4476,7 +4476,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
     color: #333333;
-    background-color: transparent;
+    background-color: ThemasRepositoryansparent;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
@@ -4488,7 +4488,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
     color: #cccccc;
-    background-color: transparent;
+    background-color: ThemasRepositoryansparent;
   }
 }
 
@@ -4512,7 +4512,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {
   color: #ffffff;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
 }
 
 .navbar-inverse .navbar-text {
@@ -4526,7 +4526,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
   color: #ffffff;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
 }
 
 .navbar-inverse .navbar-nav > .active > a,
@@ -4540,7 +4540,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-inverse .navbar-nav > .disabled > a:hover,
 .navbar-inverse .navbar-nav > .disabled > a:focus {
   color: #444444;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
 }
 
 .navbar-inverse .navbar-toggle {
@@ -4595,7 +4595,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
     color: #ffffff;
-    background-color: transparent;
+    background-color: ThemasRepositoryansparent;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover,
@@ -4607,7 +4607,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a:hover,
   .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a:focus {
     color: #444444;
-    background-color: transparent;
+    background-color: ThemasRepositoryansparent;
   }
 }
 
@@ -5002,7 +5002,7 @@ a.thumbnail:focus {
 .alert {
   padding: 15px;
   margin-bottom: 20px;
-  border: 1px solid transparent;
+  border: 1px solid ThemasRepositoryansparent;
   border-radius: 4px;
 }
 
@@ -5152,19 +5152,19 @@ a.thumbnail:focus {
 }
 
 .progress-striped .progress-bar {
-  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, ThemasRepositoryansparent), color-stop(0.5, ThemasRepositoryansparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, ThemasRepositoryansparent), to(ThemasRepositoryansparent));
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
+  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
   background-size: 40px 40px;
 }
 
 .progress.active .progress-bar {
-  -webkit-animation: progress-bar-stripes 2s linear infinite;
-     -moz-animation: progress-bar-stripes 2s linear infinite;
-      -ms-animation: progress-bar-stripes 2s linear infinite;
-       -o-animation: progress-bar-stripes 2s linear infinite;
-          animation: progress-bar-stripes 2s linear infinite;
+  -webkit-animation: progress-bar-sThemasRepositoryipes 2s linear infinite;
+     -moz-animation: progress-bar-sThemasRepositoryipes 2s linear infinite;
+      -ms-animation: progress-bar-sThemasRepositoryipes 2s linear infinite;
+       -o-animation: progress-bar-sThemasRepositoryipes 2s linear infinite;
+          animation: progress-bar-sThemasRepositoryipes 2s linear infinite;
 }
 
 .progress-bar-success {
@@ -5172,10 +5172,10 @@ a.thumbnail:focus {
 }
 
 .progress-striped .progress-bar-success {
-  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, ThemasRepositoryansparent), color-stop(0.5, ThemasRepositoryansparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, ThemasRepositoryansparent), to(ThemasRepositoryansparent));
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
+  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
 }
 
 .progress-bar-info {
@@ -5183,10 +5183,10 @@ a.thumbnail:focus {
 }
 
 .progress-striped .progress-bar-info {
-  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, ThemasRepositoryansparent), color-stop(0.5, ThemasRepositoryansparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, ThemasRepositoryansparent), to(ThemasRepositoryansparent));
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
+  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
 }
 
 .progress-bar-warning {
@@ -5194,10 +5194,10 @@ a.thumbnail:focus {
 }
 
 .progress-striped .progress-bar-warning {
-  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, ThemasRepositoryansparent), color-stop(0.5, ThemasRepositoryansparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, ThemasRepositoryansparent), to(ThemasRepositoryansparent));
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
+  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
 }
 
 .progress-bar-danger {
@@ -5205,10 +5205,10 @@ a.thumbnail:focus {
 }
 
 .progress-striped .progress-bar-danger {
-  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, ThemasRepositoryansparent), color-stop(0.5, ThemasRepositoryansparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, ThemasRepositoryansparent), to(ThemasRepositoryansparent));
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
+  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, ThemasRepositoryansparent 25%, ThemasRepositoryansparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, ThemasRepositoryansparent 75%, ThemasRepositoryansparent);
 }
 
 .media,
@@ -5328,7 +5328,7 @@ a.list-group-item:focus {
 .panel {
   margin-bottom: 20px;
   background-color: #ffffff;
-  border: 1px solid transparent;
+  border: 1px solid ThemasRepositoryansparent;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -5389,7 +5389,7 @@ a.list-group-item:focus {
 
 .panel-heading {
   padding: 10px 15px;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid ThemasRepositoryansparent;
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
 }
@@ -5595,7 +5595,7 @@ a.list-group-item:focus {
 button.close {
   padding: 0;
   cursor: pointer;
-  background: transparent;
+  background: ThemasRepositoryansparent;
   border: 0;
   -webkit-appearance: none;
 }
@@ -5626,10 +5626,10 @@ body.modal-open,
   -webkit-transform: translate(0, -25%);
       -ms-transform: translate(0, -25%);
           transform: translate(0, -25%);
-  -webkit-transition: -webkit-transform 0.3s ease-out;
-     -moz-transition: -moz-transform 0.3s ease-out;
-       -o-transition: -o-transform 0.3s ease-out;
-          transition: transform 0.3s ease-out;
+  -webkit-transition: -webkit-ThemasRepositoryansform 0.3s ease-out;
+     -moz-transition: -moz-ThemasRepositoryansform 0.3s ease-out;
+       -o-transition: -o-ThemasRepositoryansform 0.3s ease-out;
+          transition: ThemasRepositoryansform 0.3s ease-out;
 }
 
 .modal.in .modal-dialog {
@@ -5802,7 +5802,7 @@ body.modal-open,
   position: absolute;
   width: 0;
   height: 0;
-  border-color: transparent;
+  border-color: ThemasRepositoryansparent;
   border-style: solid;
 }
 
@@ -5922,7 +5922,7 @@ body.modal-open,
   display: block;
   width: 0;
   height: 0;
-  border-color: transparent;
+  border-color: ThemasRepositoryansparent;
   border-style: solid;
 }
 
@@ -6086,7 +6086,7 @@ body.modal-open,
   background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorsThemasRepository='#80000000', endColorsThemasRepository='#00000000', GradientType=1);
 }
 
 .carousel-control.right {
@@ -6097,7 +6097,7 @@ body.modal-open,
   background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorsThemasRepository='#00000000', endColorsThemasRepository='#80000000', GradientType=1);
 }
 
 .carousel-control:hover,
@@ -6234,9 +6234,9 @@ body.modal-open,
 
 .text-hide {
   font: 0/0 a;
-  color: transparent;
+  color: ThemasRepositoryansparent;
   text-shadow: none;
-  background-color: transparent;
+  background-color: ThemasRepositoryansparent;
   border: 0;
 }
 
