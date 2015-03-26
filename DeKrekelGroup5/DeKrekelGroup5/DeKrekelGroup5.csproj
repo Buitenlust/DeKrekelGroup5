@@ -196,6 +196,8 @@
     <Compile Include="Models\DAL\BoekenRepository.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
     <Compile Include="Models\DAL\Mappers\BoekMapper.cs" />
+    <Compile Include="Models\DAL\Mappers\CDMapper.cs" />
+    <Compile Include="Models\DAL\Mappers\DVDMapper.cs" />
     <Compile Include="Models\DAL\Mappers\SpelMapper.cs" />
     <Compile Include="Models\DAL\Mappers\ThemaMapper.cs" />
     <Compile Include="Models\DAL\Mappers\UitlenerMapper.cs" />
