@@ -22,8 +22,8 @@ namespace DeKrekelGroup5.Controllers
 
         public BoekenController(IBoekenRepository boekenRepository, IThemasRepository themasRepository)
         {
-            letterTuin = new LetterTuin(boekenRepository,null,themasRepository);
-            beheerder = new Beheerder(boekenRepository, null, themasRepository);
+            letterTuin = new LetterTuin();
+            beheerder = new Beheerder();
         }
 
         // GET: Boeken
@@ -51,7 +51,7 @@ namespace DeKrekelGroup5.Controllers
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Boek boek = letterTuin.GetBoek(id);
+            Boek boek = letterTuin.GetItem(id) as Boek;
             if (boek == null)
                 return HttpNotFound();
             return View(boek);
@@ -84,7 +84,7 @@ namespace DeKrekelGroup5.Controllers
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Boek boek = beheerder.GetBoek(id);
+            Boek boek = beheerder.GetItem(id) as Boek;
             if (boek == null)
                 return HttpNotFound();
             return View(new BoekCreateViewModel(beheerder.GetThemas(), boek));
@@ -112,7 +112,7 @@ namespace DeKrekelGroup5.Controllers
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Boek boek = beheerder.GetBoek(id);
+            Boek boek = beheerder.GetItem(id) as Boek;
             if (boek == null)
             {
                 return HttpNotFound();

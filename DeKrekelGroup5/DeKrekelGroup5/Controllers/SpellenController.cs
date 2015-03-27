@@ -22,8 +22,8 @@ namespace DeKrekelGroup5.Controllers
 
         public SpellenController(ISpellenRepository spellenRepository, IThemasRepository themasRepository)
         {
-            letterTuin = new LetterTuin(null, spellenRepository, themasRepository);
-            beheerder = new Beheerder(null, spellenRepository, themasRepository);
+            letterTuin = new LetterTuin();
+            beheerder = new Beheerder();
         }
 
         // GET: Spellen
@@ -51,7 +51,7 @@ namespace DeKrekelGroup5.Controllers
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Spel spel = letterTuin.GetSpel(id);
+            Spel spel = letterTuin.GetItem(id) as Spel;
             if (spel == null)
                 return HttpNotFound();
             return View(spel);
@@ -84,7 +84,7 @@ namespace DeKrekelGroup5.Controllers
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Spel spel = beheerder.GetSpel(id);
+            Spel spel = beheerder.GetItem(id) as Spel;
             if (spel == null)
                 return HttpNotFound();
             return View(new SpelCreateViewModel(beheerder.GetThemas(), spel));
@@ -112,7 +112,7 @@ namespace DeKrekelGroup5.Controllers
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Spel spel = beheerder.GetSpel(id);
+            Spel spel = beheerder.GetItem(id) as Spel;
             if (spel == null)
             {
                 return HttpNotFound();

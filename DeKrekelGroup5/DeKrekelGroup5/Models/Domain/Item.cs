@@ -14,14 +14,14 @@ namespace DeKrekelGroup5.Models.Domain
         [Key]
         public int Exemplaar { get; set; }
 
-        [Required(ErrorMessage = "Vul een titel in aub...")]
         public string Titel { get; set; }
-
-        [Display(Name = "Omschrijving")]
-        [MaxLength(1023)]
         public string Omschrijving { get; set; }
 
         public int Leeftijd { get; set; }
+
+        public bool Beschikbaar { get; set; }
+
+        public bool Uitgeleend { get; set; }
 
         public virtual Thema Themaa { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -7,94 +8,76 @@ using DeKrekelGroup5.ViewModel;
 
 namespace DeKrekelGroup5.Models.Domain
 {
-    public class Beheerder : LetterTuin
+    public class Beheerder : Bibliothecaris
     {
-        public Beheerder(IBoekenRepository boekenRepository, ISpellenRepository spellenRepository, IThemasRepository themasRepository) : base(boekenRepository, spellenRepository, themasRepository)
+        /// <summary> Adds an item to the collection </summary>
+        /// <returns>returns true if item is succesfully added to the collection. Exemplaar must be = 0 </returns>
+        /// <param name="item"> toe te voegen Item </param>
+        public bool AddItem(Item item)
         {
+            if (item != null && item.Exemplaar == 0)
+                Items.Add(item);
         }
 
-        public void AddBoek(BoekViewModel boek)
+        /// <summary> Get the first boek that matches the item id  parameter </summary>
+        /// <returns>returns true if item is succesfully added to the list. Exemplaar must be > 0 </returns>
+        /// <param name="item"> te updaten Item </param>
+        public bool UpdateItem(Item item)
         {
-            Boek newBoek = new Boek
+            if (item != null && item.Exemplaar > 0)
             {
-                Exemplaar = boek.Exemplaar,
-                Auteur = boek.Auteur,
-                Leeftijd = boek.Leeftijd,
-                Omschrijving = boek.Omschrijving,
-                Titel = boek.Titel,
-                Uitgever = boek.Uitgever,
-                Themaa = (String.IsNullOrEmpty(boek.Thema) ? null : GetThemaByName(boek.Thema))
-             };
-            BoekenRepository.Add(newBoek);
-            BoekenRepository.DoNotDuplicateThema(newBoek);
-            BoekenRepository.SaveChanges();
-        }
-
-        public void AddSpel(SpelViewModel spel)
-        {
-            Spel newSpel = new Spel
-            {
-                Exemplaar = spel.Exemplaar,
-                Uitgever = spel.Uitgever,
-                Leeftijd = spel.Leeftijd,
-                Omschrijving = spel.Omschrijving,
-                Titel = spel.Titel,
-                Themaa = (String.IsNullOrEmpty(spel.Thema) ? null : GetThemaByName(spel.Thema))
-            };
-
-            SpellenRepository.Add(newSpel);
-            SpellenRepository.DoNotDuplicateThema(newSpel);
-            SpellenRepository.SaveChanges();
-        }
-
-        public void EditBoek(BoekViewModel boek)
-        {
-            Boek newBoek = null;
-            if (boek.Exemplaar != 0)
-                newBoek = GetBoek(boek.Exemplaar);
-            if (newBoek != null)
-            {
-                newBoek.Auteur = boek.Auteur;
-                newBoek.Leeftijd = boek.Leeftijd;
-                newBoek.Omschrijving = boek.Omschrijving;
-                newBoek.Titel = boek.Titel;
-                newBoek.Uitgever = boek.Uitgever;
-                newBoek.Themaa = (String.IsNullOrEmpty(boek.Thema) ? null : GetThemaByName(boek.Thema));
-                //newBoek.Update(newBoek);
-                BoekenRepository.DoNotDuplicateThema(newBoek);
-                BoekenRepository.SaveChanges();
+                Items.Remove(GetItem(item.Exemplaar));
+                Items.Add(item);
+                return true;
             }
+            return false;
         }
 
-        public void EditSpel(SpelViewModel spel)
+        /// <summary> Removes an item from the collection </summary>
+        /// <returns>returns true if item is succesfully removed from the collection. Exemplaar must be > 0 </returns>
+        /// <param name="item"> te verwijderen Item </param>
+        public bool RemoveItem(Item item)
         {
-            Spel newSpel = null;
-            if (spel.Exemplaar != 0)
-                newSpel = GetSpel(spel.Exemplaar);
-            if (newSpel != null)
-            { 
-                newSpel.Leeftijd = spel.Leeftijd;
-                newSpel.Omschrijving = spel.Omschrijving;
-                newSpel.Titel = spel.Titel;
-                newSpel.Uitgever = spel.Uitgever;
-                newSpel.Themaa = (String.IsNullOrEmpty(spel.Thema) ? null : GetThemaByName(spel.Thema));
-                SpellenRepository.DoNotDuplicateThema(newSpel);
-                SpellenRepository.SaveChanges();
+            if (item != null && item.Exemplaar > 0)
+            {
+                Items.Remove(item);
+                return true;
             }
-        } 
-
-        public void VerwijderBoek(int id)
-        {
-            BoekenRepository.Remove(GetBoek(id));
-            BoekenRepository.SaveChanges();
+            return false;
         }
 
-        public void VerwijderSpel(int id)
+        /// <summary> Past de boete per dag aan met nieuwe instelling</summary> 
+        /// <param name="bedrag"> nieuw bedrag in euro </param>
+        public void PasBoeteAan(int bedrag)
         {
-            SpellenRepository.Remove(GetSpel(id));
-            SpellenRepository.SaveChanges();
+            if (bedrag >= 0) 
+            Instellingen.BedragBoetePerDag = bedrag;
         }
 
-        
+        /// <summary> Past de maximum aantal toegestane Verlengingen aan</summary> 
+        /// <param name="aantal"> nieuwe aantal verlengingen </param>
+        public void PasMaxVerlengingen(int aantal)
+        {
+            if (aantal <= 3 && aantal >= 0)
+            Instellingen.MaxVerlengingen = aantal;
+        }
+
+        /// <summary> Past de max aantal toegestane uitleendagen aan</summary> 
+        /// <param name="dagen"> nieuwe aantal dagen </param>
+        public void PasMaxuitleenDagenAan(int dagen)
+        {
+            if (dagen > 7)
+            Instellingen.UitleenDagen = dagen;
+        }
+
+
+        /// <summary> Past het paswoord van de beheerder aan.</summary> 
+        /// <param name="paswoord"> nieuw paswoord </param>
+        public void VeranderPaswoorBeheerder(string paswoord)
+        {
+            string hashed = HashPassword(paswoord);
+            this.Password = hashed;
+        }
+
     }
 }

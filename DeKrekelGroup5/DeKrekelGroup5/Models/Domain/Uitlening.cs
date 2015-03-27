@@ -17,7 +17,6 @@ namespace DeKrekelGroup5.Models.Domain
 
         public Item Itemm { get; set; }
         public Uitlener Uitlenerr { get; set; }
-        
-
+        public int Verlenging { get; set; }
     }
 }

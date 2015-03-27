@@ -212,6 +212,7 @@
     <Compile Include="Models\DAL\UitleningenRepository.cs" />
     <Compile Include="Models\DAL\VerteltasRepository.cs" />
     <Compile Include="Models\Domain\Beheerder.cs" />
+    <Compile Include="Models\Domain\Bibliothecaris.cs" />
     <Compile Include="Models\Domain\Boek.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -220,6 +221,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain\CD.cs" />
+    <Compile Include="Models\Domain\Instellingen.cs" />
     <Compile Include="Models\Domain\DVD.cs" />
     <Compile Include="Models\Domain\ICDsRepository.cs" />
     <Compile Include="Models\Domain\IDVDsRepository.cs" />
