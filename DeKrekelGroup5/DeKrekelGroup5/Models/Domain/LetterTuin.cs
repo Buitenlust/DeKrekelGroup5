@@ -32,7 +32,7 @@ namespace DeKrekelGroup5.Models.Domain
                                     p.Auteur.ToLower().Contains(search.ToLower()) ||
                                     p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
                                     p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
-            return null;
+            return Items.OfType<Boek>().Take(25);
         }
 
         /// <summary> Get all spellen that contains a search keyword in Titel, Uitgever, Thema or omschrijving </summary>
@@ -45,7 +45,7 @@ namespace DeKrekelGroup5.Models.Domain
                                      p.Uitgever.ToLower().Contains(search.ToLower()) ||             
                                      p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
                                      p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
-            return null;
+            return Items.OfType<Spel>().Take(25);
         }
 
         /// <summary> Get all cd's that contains a search keyword in Titel, Uitgever, Thema or omschrijving </summary>
@@ -58,7 +58,7 @@ namespace DeKrekelGroup5.Models.Domain
                                  p.Uitgever.ToLower().Contains(search.ToLower()) ||
                                  p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
                                  p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
-            return null;
+            return Items.OfType<CD>().Take(25);
         }
 
         /// <summary> Get all dvd's that contains a search keyword in Titel, Uitgever, Thema or omschrijving </summary>
@@ -71,7 +71,7 @@ namespace DeKrekelGroup5.Models.Domain
                                   p.Uitgever.ToLower().Contains(search.ToLower()) ||
                                   p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
                                   p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
-            return null;
+            return Items.OfType<DVD>().Take(25);
         }
 
         /// <summary> Get all verteltassen that contains a search keyword in Titel, Uitgever, Thema or omschrijving </summary>
@@ -83,7 +83,7 @@ namespace DeKrekelGroup5.Models.Domain
                 return Items.OfType<VertelTas>().Where(p => p.Titel.ToLower().Contains(search.ToLower()) || 
                                                p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
                                                p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
-            return null;
+            return Items.OfType<VertelTas>().Take(25);
         }
 
         /// <summary> Get all themas ordered by themas name </summary> 
