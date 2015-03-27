@@ -16,7 +16,11 @@ namespace DeKrekelGroup5.Models.Domain
         public bool AddItem(Item item)
         {
             if (item != null && item.Exemplaar == 0)
+            {
                 Items.Add(item);
+                return true;
+            }
+            return false;
         }
 
         /// <summary> Get the first boek that matches the item id  parameter </summary>
@@ -35,9 +39,10 @@ namespace DeKrekelGroup5.Models.Domain
 
         /// <summary> Removes an item from the collection </summary>
         /// <returns>returns true if item is succesfully removed from the collection. Exemplaar must be > 0 </returns>
-        /// <param name="item"> te verwijderen Item </param>
-        public bool RemoveItem(Item item)
+        /// <param name="id"> id van te verwijderen item </param>
+        public bool RemoveItem(int id)
         {
+            Item item = GetItem(id);
             if (item != null && item.Exemplaar > 0)
             {
                 Items.Remove(item);

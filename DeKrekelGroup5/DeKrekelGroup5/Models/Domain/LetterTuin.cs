@@ -99,6 +99,7 @@ namespace DeKrekelGroup5.Models.Domain
         {
             if (thema != null && !thema.Trim().IsEmpty())
                 return Themas.SingleOrDefault(t => t.Themaa == thema);
+            return null;
         }
 
         /// <summary> Get the first item that matches the item id  parameter </summary>

@@ -19,6 +19,7 @@ namespace DeKrekelGroup5.Controllers
     {
         private LetterTuin letterTuin;
         private Beheerder beheerder;
+ 
 
         public BoekenController(IBoekenRepository boekenRepository, IThemasRepository themasRepository)
         {
@@ -72,7 +73,21 @@ namespace DeKrekelGroup5.Controllers
         {
             if (ModelState.IsValid)
             {
-                beheerder.AddBoek(boek);
+                Boek newBoek = new Boek()
+                {
+                    Titel = boek.Titel,
+                    Auteur = boek.Auteur,
+                    Leeftijd = boek.Leeftijd,
+                    Beschikbaar = true,
+                    Uitgeleend = false,
+                    Themaa = beheerder.GetThemaByName(boek.Thema),
+                    Omschrijving = boek.Omschrijving,
+                    Exemplaar = 0,
+                    Uitgever = boek.Uitgever
+
+                };
+
+                beheerder.AddItem(newBoek);
                 TempData["Info"] = "Het boek werd toegevoegd...";
                 return RedirectToAction("Index");
             }
@@ -99,7 +114,20 @@ namespace DeKrekelGroup5.Controllers
         {
             if (ModelState.IsValid)
             {
-                beheerder.EditBoek(boek);
+                Boek newBoek = new Boek()
+                {
+                    Titel = boek.Titel,
+                    Auteur = boek.Auteur,
+                    Leeftijd = boek.Leeftijd,
+                    Beschikbaar = true,
+                    Uitgeleend = false,
+                    Themaa = beheerder.GetThemaByName(boek.Thema),
+                    Omschrijving = boek.Omschrijving,
+                    Exemplaar = boek.Exemplaar,
+                    Uitgever = boek.Uitgever
+
+                };
+                beheerder.AddItem(newBoek);
 
                 return RedirectToAction("Index");
             }
@@ -125,7 +153,7 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         { 
-            beheerder.VerwijderBoek(id);
+            beheerder.RemoveItem(id);
             return RedirectToAction("Index");
         }
     }

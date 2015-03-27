@@ -72,7 +72,19 @@ namespace DeKrekelGroup5.Controllers
         {
             if (ModelState.IsValid)
             {
-                beheerder.AddSpel(spel);
+                Spel newSpel = new Spel()
+                {
+                    Titel = spel.Titel, 
+                    Leeftijd = spel.Leeftijd,
+                    Beschikbaar = true,
+                    Uitgeleend = false,
+                    Themaa = beheerder.GetThemaByName(spel.Thema),
+                    Omschrijving = spel.Omschrijving,
+                    Exemplaar = 0,
+                    Uitgever = spel.Uitgever
+
+                };
+                beheerder.AddItem(newSpel);
                 TempData["Info"] = "Het spel werd toegevoegd...";
                 return RedirectToAction("Index");
             }
@@ -99,7 +111,20 @@ namespace DeKrekelGroup5.Controllers
         {
             if (ModelState.IsValid)
             {
-                beheerder.EditSpel(spel);
+                Spel newSpel = new Spel()
+                {
+                    Titel = spel.Titel,
+                    Leeftijd = spel.Leeftijd,
+                    Beschikbaar = true,
+                    Uitgeleend = false,
+                    Themaa = beheerder.GetThemaByName(spel.Thema),
+                    Omschrijving = spel.Omschrijving,
+                    Exemplaar = spel.Exemplaar,
+                    Uitgever = spel.Uitgever
+
+                };
+
+                beheerder.AddItem(newSpel);
 
                 return RedirectToAction("Index");
             }
@@ -125,7 +150,7 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         { 
-            beheerder.VerwijderSpel(id);
+            beheerder.RemoveItem(id);
             return RedirectToAction("Index");
         }
     }

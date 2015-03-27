@@ -105,7 +105,9 @@ namespace DeKrekelGroup5.Models.Domain
                 Uitleningen.Remove(uitlening);
                 uitlening.Verlenging += 1;
                 Uitleningen.Add(uitlening);
+                return true;
             }
+            return false;
         }
 
         /// <summary> Computes a salted hash of the password and salt provided and returns as a base64 encoded string. </summary>
