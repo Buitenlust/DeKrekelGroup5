@@ -25,5 +25,10 @@ namespace DeKrekelGroup5.Models.Domain
 
         public virtual Thema Themaa { get; set; }
 
+        //public enum Beschikbaar { get; set; }
+
+        //public string Cover { get; set; } <-- wordt naar verwezen als images/Cover.imageFormat OF gwn als url
+ 
+        //public boolean Uitgeleend { get; set; }
     }
 }

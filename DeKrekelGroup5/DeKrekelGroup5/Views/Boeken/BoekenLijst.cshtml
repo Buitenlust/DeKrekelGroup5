@@ -57,11 +57,11 @@
                 @Html.DisplayFor(modelItem => item.Thema)
             </td>
             <td>
-                Beschikbaar?
+                @*@Html.DisplayFor(modelItem => item.Beschikbaar)*@
             </td>
             <td>
-                @*uitleenIcoonLink
-                BinnenBrengenIcoonLink*@
+                @*uitleenIcoonLink met link naar uitleenpagina
+                BinnenBrengenIcoonLink met link naar uitleenpagina*@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Exemplaar }) |

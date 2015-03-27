@@ -13,21 +13,37 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Boek</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Auteur, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Boek.Titel, htmlAttributes: new { @class = "editLabel" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Boek.Auteur, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Boek.Auteur, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Boek.Titel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Boek.Titel, "", new { @class = "text-danger" })
             </div>
         </div>
 
+        div class="form-group">
+        @Html.LabelFor(model => model.Boek.Auteur, htmlAttributes: new { @class = "editLabel" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Boek.Auteur, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Boek.Auteur, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Boek.Omschrijving, htmlAttributes: new { @class = "editLabel" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Boek.Omschrijving, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Boek.Omschrijving, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Uitgever, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Boek.Uitgever, htmlAttributes: new { @class = "editLabel" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Boek.Uitgever, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Boek.Uitgever, "", new { @class = "text-danger" })
@@ -35,45 +51,41 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Leeftijd, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Boek.Leeftijd, htmlAttributes: new { @class = "editLabel" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Boek.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Boek.Leeftijd, "", new { @class = "text-danger" })
             </div>
         </div>
 
- 
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Titel, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Boek.Titel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Boek.Titel, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Omschrijving, htmlAttributes: new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Boek.Omschrijving, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.Boek.Omschrijving, "", new {@class = "text-danger"})
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Thema, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Boek.Thema, htmlAttributes: new { @class = "editLabel" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Boek.Thema, Model.Themas, " --Selecteer een Thema--")
                 @Html.ValidationMessageFor(model => model.Boek.Thema)
             </div>
         </div>
-        
+            
+        @*<div class="form-group">
+            maak knop aan voor maken nieuw thema
+        </div>*@
+    
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.Boek.Beschikbaar, htmlAttributes: new { @class = "editLabel" })
+        <div>
+            @Html.DropDownListFor(model => model.Boek.Beschikbaar, Model.Beschikbaarheden, " --Selecteer beschikbaarheid--")
+        </div>
+    </div>*@
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
+
+    
+
 }
 
 <div>
