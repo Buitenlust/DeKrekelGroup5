@@ -20,7 +20,7 @@ namespace DeKrekelGroup5.Controllers
         private LetterTuin letterTuin;
         private Beheerder beheerder;
 
-        public SpellenController(ISpellenRepository spellenRepository, IThemasRepository themasRepository)
+        public SpellenController(ILettertuinRepository lettertuinRepository, IThemasRepository themasRepository)
         {
             letterTuin = new LetterTuin();
             beheerder = new Beheerder();

@@ -21,7 +21,7 @@ namespace DeKrekelGroup5.Controllers
         private Beheerder beheerder;
  
 
-        public BoekenController(IBoekenRepository boekenRepository, IThemasRepository themasRepository)
+        public BoekenController(ILettertuinRepository lettertuinRepository, IThemasRepository themasRepository)
         {
             letterTuin = new LetterTuin();
             beheerder = new Beheerder();

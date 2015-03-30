@@ -65,8 +65,7 @@ namespace DeKrekelGroup5.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IThemasRepository>().To<ThemasRepository>().InRequestScope();
-            kernel.Bind<IBoekenRepository>().To<BoekenRepository>().InRequestScope();
-            kernel.Bind<ISpellenRepository>().To<SpellenRepository>().InRequestScope();
+            kernel.Bind<ILettertuinRepository>().To<LettertuinRepository>().InRequestScope();
             kernel.Bind<KrekelContext>().ToSelf().InRequestScope();
 
         }        

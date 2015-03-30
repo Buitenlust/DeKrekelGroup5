@@ -7,11 +7,7 @@ namespace DeKrekelGroup5.Models.Domain
 {
     public class DVD : Item
     {
-
-        public string Titel { get; set; }
         public string Uitgever { get; set; }
-
-
 
     }
 }
