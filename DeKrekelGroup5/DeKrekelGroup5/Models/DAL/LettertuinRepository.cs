@@ -10,12 +10,10 @@ namespace DeKrekelGroup5.Models.DAL
     public class LettertuinRepository : ILettertuinRepository
     {
         private KrekelContext context;
-        private DbSet<VertelTas> verteltassen; 
 
         public LettertuinRepository(KrekelContext context)
         {
-            this.context = context;
-            verteltassen = context.VertelTassen;
+            this.context = context; 
         }
 
         //Boek
