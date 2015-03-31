@@ -17,28 +17,29 @@ namespace DeKrekelGroup5.Controllers
 {
     public class BoekenController : Controller
     {
-        private LetterTuin letterTuin;
-        private Beheerder beheerder;
- 
+        private ILettertuinRepository letterTuinRepository;
+        private IBeheerderRepository beheerderRepository;
+        private IBibliothecarisRepository bibliothecarisRepository;
 
-        public BoekenController(ILettertuinRepository lettertuinRepository, IThemasRepository themasRepository)
+        public BoekenController(ILettertuinRepository letterTuinRepository, IBeheerderRepository beheerderRepository, IBibliothecarisRepository bibliothecarisRepository)
         {
-            letterTuin = new LetterTuin();
-            beheerder = new Beheerder();
+            this.letterTuinRepository = letterTuinRepository;
+            this.beheerderRepository = beheerderRepository;
+            this.bibliothecarisRepository = bibliothecarisRepository;
         }
 
         // GET: Boeken
-        public ActionResult Index(String search=null)
+        public ActionResult Index(LetterTuin letterTuin, String search=null)
         {
             IEnumerable<Boek> boeken;
             if (!String.IsNullOrEmpty(search))
             {
-                boeken = letterTuin.GetBoeken(search);
+                boeken = letterTuinRepository.FindBoek(search);
                 ViewBag.Selection = "Alle boeken met " + search;
             }
             else
             {
-                boeken = letterTuin.GetBoeken(search).Take(25);
+                boeken = letterTuinRepository.FindAllBoeken().Take(25);
                 ViewBag.Selection = "Alle boeken";
             }
             if (Request.IsAjaxRequest())
@@ -48,18 +49,18 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Boeken/Details/5
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(LetterTuin letterTuin, int id = 0)
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Boek boek = letterTuin.GetItem(id) as Boek;
+            Boek boek = letterTuinRepository.FindItemById(id) as Boek;
             if (boek == null)
                 return HttpNotFound();
             return View(boek);
         }
 
         // GET: Boeken/Create
-        public ActionResult Create()
+        public ActionResult Create(Beheerder beheerder)
         {
             return View(new BoekCreateViewModel(beheerder.GetThemas(), new Boek()));
         }
@@ -69,7 +70,7 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Prefix = "Boek")] BoekViewModel boek)
+        public ActionResult Create(Beheerder beheerder,[Bind(Prefix = "Boek")] BoekViewModel boek)
         {
             if (ModelState.IsValid)
             {
@@ -84,10 +85,11 @@ namespace DeKrekelGroup5.Controllers
                     Omschrijving = boek.Omschrijving,
                     Exemplaar = 0,
                     Uitgever = boek.Uitgever
-
                 };
 
                 beheerder.AddItem(newBoek);
+                beheerderRepository.DoNotDuplicateThema(newBoek);
+                beheerderRepository.SaveChanges();
                 TempData["Info"] = "Het boek werd toegevoegd...";
                 return RedirectToAction("Index");
             }
@@ -95,14 +97,14 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Boeken/Edit/5
-        public ActionResult Edit(int id=0)
+        public ActionResult Edit(Beheerder beheerder,int id=0)
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Boek boek = beheerder.GetItem(id) as Boek;
+            Boek boek = letterTuinRepository.FindItemById(id) as Boek;
             if (boek == null)
                 return HttpNotFound();
-            return View(new BoekCreateViewModel(beheerder.GetThemas(), boek));
+            return View(new BoekCreateViewModel(letterTuinRepository.FindAllthemas(), boek));
         }
 
         // POST: Boeken/Edit/5
@@ -110,7 +112,7 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Prefix = "Boek")] BoekViewModel boek)
+        public ActionResult Edit(Beheerder beheerder,[Bind(Prefix = "Boek")] BoekViewModel boek)
         {
             if (ModelState.IsValid)
             {
@@ -128,19 +130,20 @@ namespace DeKrekelGroup5.Controllers
 
                 };
                 beheerder.AddItem(newBoek);
-
+                beheerderRepository.DoNotDuplicateThema(newBoek);
+                beheerderRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(boek);
         }
 
         // GET: Boeken/Delete/5
-        public ActionResult Delete(int id=0)
+        public ActionResult Delete(Beheerder beheerder, int id=0)
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Boek boek = beheerder.GetItem(id) as Boek;
+            Boek boek = letterTuinRepository.FindItemById(id) as Boek;
             if (boek == null)
             {
                 return HttpNotFound();
@@ -151,7 +154,7 @@ namespace DeKrekelGroup5.Controllers
         // POST: Boeken/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Beheerder beheerder, int id)
         { 
             beheerder.RemoveItem(id);
             return RedirectToAction("Index");

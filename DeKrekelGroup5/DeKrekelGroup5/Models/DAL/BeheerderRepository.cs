@@ -111,5 +111,15 @@ namespace DeKrekelGroup5.Models.DAL
         {
             context.SaveChanges();
         }
+
+        public void DoNotDuplicateThema(Item item)
+        {
+            context.Entry(item.Themaa).State = EntityState.Modified; //Zorgt dat het thema niet aangemaakt wordt.
+        }
+
+        public void SaveChanges()
+        {
+            context.SaveChanges();
+        }
     }
 }

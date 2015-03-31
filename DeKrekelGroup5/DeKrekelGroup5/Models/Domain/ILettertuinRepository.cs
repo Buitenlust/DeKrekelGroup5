@@ -7,6 +7,11 @@ namespace DeKrekelGroup5.Models.Domain
 {
     public interface ILettertuinRepository
     {
+
+        //Item
+        IQueryable<Item> FindAllItems();
+        Item FindItemById(int id);
+
         //boek
         IQueryable<Boek> FindAllBoeken();
         IQueryable<Boek> FindBoek(String search);
@@ -40,7 +45,11 @@ namespace DeKrekelGroup5.Models.Domain
 
         IQueryable<VertelTas> FindAllVerteltassen();
         VertelTas findByIdVerteltas(int id);
-        
+
+        //Themas
+        IQueryable<Thema> FindAllthemas();
+        Thema FindThema(int id);
+
 
 
     }

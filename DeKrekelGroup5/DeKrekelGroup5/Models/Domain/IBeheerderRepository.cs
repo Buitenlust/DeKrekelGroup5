@@ -28,5 +28,9 @@ namespace DeKrekelGroup5.Models.Domain
 
         void Add(Uitlener uitlener);
         void SaveChanges(Uitlener uitlener);
+
+
+        void DoNotDuplicateThema(Item item);
+        void SaveChanges();
     }
 }

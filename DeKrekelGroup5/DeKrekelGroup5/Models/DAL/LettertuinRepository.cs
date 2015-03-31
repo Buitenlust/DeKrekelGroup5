@@ -16,7 +16,18 @@ namespace DeKrekelGroup5.Models.DAL
             this.context = context; 
         }
 
+        public IQueryable<Item> FindAllItems()
+        {
+            return context.Items;
+        }
+
+        public Item FindItemById(int id)
+        {
+            return context.Items.Find(id);
+        }
+
         //Boek
+
         public IQueryable<Boek> FindAllBoeken()
         {
             return context.Boeken;
@@ -115,7 +126,15 @@ namespace DeKrekelGroup5.Models.DAL
         {
             return context.VertelTassen.Find(id);
         }
-        
 
+        public IQueryable<Thema> FindAllthemas()
+        {
+            return context.Themas;
+        }
+
+        public Thema FindThema(int id)
+        {
+            return context.Themas.Find(id);
+        }
     }
 }
