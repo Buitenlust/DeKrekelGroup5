@@ -5,6 +5,7 @@ using System.Web.Services;
 using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Migrations.Model;
 
 namespace DeKrekelGroup5.Models.Domain
 {
@@ -25,5 +26,15 @@ namespace DeKrekelGroup5.Models.Domain
 
         public virtual Thema Themaa { get; set; }
 
+
+        public void Update(Item item)
+        {
+            Leeftijd = item.Leeftijd;
+            Omschrijving = item.Omschrijving;
+            Titel = item.Titel;
+            Beschikbaar = item.Beschikbaar;
+            Uitgeleend = item.Uitgeleend;
+            Themaa = item.Themaa;
+        }
     }
 }

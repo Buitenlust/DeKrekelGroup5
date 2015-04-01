@@ -14,10 +14,7 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
         {
             //table
             ToTable("LetterTuin");
-            HasKey(b => b.Id);
-
-            //HasMany(c => c.Items).WithRequired().Map(m => m.MapKey("LetterTuinId")).WillCascadeOnDelete(false);
-            
+            HasKey(b => b.Id); 
         }
     }
 }

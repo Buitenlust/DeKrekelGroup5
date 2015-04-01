@@ -17,13 +17,11 @@ namespace DeKrekelGroup5.Controllers
 {
     public class SpellenController : Controller
     {
-        private LetterTuin letterTuin;
-        private Beheerder beheerder;
+        private LetterTuin letterTuin; 
 
         public SpellenController(ILettertuinRepository lettertuinRepository, IThemasRepository themasRepository)
         {
-            letterTuin = new LetterTuin();
-            beheerder = new Beheerder();
+            letterTuin = new LetterTuin(); 
         }
 
         // GET: Spellen

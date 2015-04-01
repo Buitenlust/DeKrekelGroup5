@@ -16,125 +16,145 @@ namespace DeKrekelGroup5.Models.DAL
             this.context = context; 
         }
 
-        public IQueryable<Item> FindAllItems()
+        public LetterTuin GetLetterTuin(int id)
         {
-            return context.Items;
+            return context.LetterTuinen.Find(id);
         }
 
-        public Item FindItemById(int id)
+        //public IQueryable<Item> FindAllItems()
+        //{
+        //    return context.Items;
+        //}
+
+        //public Item FindItemById(int id)
+        //{
+        //    return context.Items.Find(id);
+        //}
+
+        public void SaveChanges()
         {
-            return context.Items.Find(id);
+            context.SaveChanges();
         }
 
-        //Boek
+        ////Boek
 
-        public IQueryable<Boek> FindAllBoeken()
-        {
-            return context.Boeken;
-        }
+        //public IQueryable<Boek> FindAllBoeken()
+        //{
+        //    return context.Boeken;
+        //}
 
-        public IQueryable<Boek> FindBoek(string search)
-        {
-            return context.Boeken.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
-                                             p.Uitgever.ToLower().Contains(search.ToLower()) ||
-                                             p.Auteur.ToLower().Contains(search.ToLower()) ||
-                                             p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
-                                             p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
-        }
+        //public IQueryable<Boek> FindBoek(string search)
+        //{
+        //    return context.Boeken.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
+        //                                     p.Uitgever.ToLower().Contains(search.ToLower()) ||
+        //                                     p.Auteur.ToLower().Contains(search.ToLower()) ||
+        //                                     p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
+        //                                     p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
+        //}
 
-        public Boek FindByIdBoek(int id)
-        {
-            return context.Boeken.Find(id);
-        }
+        //public Boek FindByIdBoek(int id)
+        //{
+        //    return context.Boeken.Find(id);
+        //}
 
         
 
-        //CD
-        public IQueryable<CD> FindAllCds()
-        {
-            return context.Cds;
-        }
+        ////CD
+        //public IQueryable<CD> FindAllCds()
+        //{
+        //    return context.Cds;
+        //}
 
-        public IQueryable<CD> FindCd(string search)
-        {
-            return context.Cds.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
-                                          p.Uitgever.ToLower().Contains(search.ToLower()) ||
-                                          p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
-                                          p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
-        }
+        //public IQueryable<CD> FindCd(string search)
+        //{
+        //    return context.Cds.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
+        //                                  p.Uitgever.ToLower().Contains(search.ToLower()) ||
+        //                                  p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
+        //                                  p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
+        //}
 
-        public CD FindByIdCd(int id)
-        {
-            return context.Cds.Find(id);
-        }
+        //public CD FindByIdCd(int id)
+        //{
+        //    return context.Cds.Find(id);
+        //}
 
 
-        //DVD
-        public IQueryable<DVD> findAllDvds()
-        {
-            return context.Dvds;
-        }
+        ////DVD
+        //public IQueryable<DVD> findAllDvds()
+        //{
+        //    return context.Dvds;
+        //}
 
 
         
 
-        public IQueryable<DVD> FindDvd(string search)
-        {
-            return context.Dvds.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
-                                             p.Uitgever.ToLower().Contains(search.ToLower()) ||
-                                             p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
-                                             p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
-        }
+        //public IQueryable<DVD> FindDvd(string search)
+        //{
+        //    return context.Dvds.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
+        //                                     p.Uitgever.ToLower().Contains(search.ToLower()) ||
+        //                                     p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
+        //                                     p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
+        //}
 
-        public DVD findByIdDvd(int id)
-        {
-            return context.Dvds.Find(id);
+        //public DVD findByIdDvd(int id)
+        //{
+        //    return context.Dvds.Find(id);
 
-        }
+        //}
        
 
-        //Spel
-        public IQueryable<Spel> FindAllSpellen()
-        {
-            return context.Spellen;
-        }
+        ////Spel
+        //public IQueryable<Spel> FindAllSpellen()
+        //{
+        //    return context.Spellen;
+        //}
 
-        public IQueryable<Spel> FindSpel(string search)
-        {
-            return context.Spellen.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
-                                             p.Uitgever.ToLower().Contains(search.ToLower()) ||
-                                             p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
-                                             p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
-        }
+        //public IQueryable<Spel> FindSpel(string search)
+        //{
+        //    return context.Spellen.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
+        //                                     p.Uitgever.ToLower().Contains(search.ToLower()) ||
+        //                                     p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
+        //                                     p.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.Titel);
+        //}
 
-        public Spel FindByIdSpel(int id)
-        {
-            return context.Spellen.Find(id);
-        }
+        //public Spel FindByIdSpel(int id)
+        //{
+        //    return context.Spellen.Find(id);
+        //}
 
         
 
-        //Verteltas
+        ////Verteltas
 
 
-        public IQueryable<VertelTas> FindAllVerteltassen()
+        //public IQueryable<VertelTas> FindAllVerteltassen()
+        //{
+        //    return context.VertelTassen;
+        //}
+
+        //public VertelTas findByIdVerteltas(int id)
+        //{
+        //    return context.VertelTassen.Find(id);
+        //}
+
+        //public IQueryable<Thema> FindAllthemas()
+        //{
+        //    return context.Themas;
+        //}
+
+        //public Thema FindThema(int id)
+        //{
+        //    return context.Themas.Find(id);
+        //}
+
+        public void DoNotDuplicateThema(Item item)
         {
-            return context.VertelTassen;
+            context.Entry(item.Themaa).State = EntityState.Modified;
         }
 
-        public VertelTas findByIdVerteltas(int id)
+        public void AddLetterTuin(LetterTuin letterTuin)
         {
-            return context.VertelTassen.Find(id);
-        }
-
-        public IQueryable<Thema> FindAllthemas()
-        {
-            return context.Themas;
-        }
-
-        public Thema FindThema(int id)
-        {
-            return context.Themas.Find(id);
+            context.LetterTuinen.Add(letterTuin);
         }
     }
 }

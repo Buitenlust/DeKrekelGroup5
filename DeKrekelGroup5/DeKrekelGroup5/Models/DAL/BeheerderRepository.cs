@@ -121,5 +121,11 @@ namespace DeKrekelGroup5.Models.DAL
         {
             context.SaveChanges();
         }
+
+        public Beheerder getBeheerder(int id)
+        {
+            return context.Beheerders.Find(id);
+            
+        }
     }
 }

@@ -13,18 +13,19 @@ namespace DeKrekelGroup5.Controllers
 {
     public class ThemasController : Controller
     {
-        private IThemasRepository tr;
+        private ILettertuinRepository lettertuinRepository;
+        private LetterTuin letterTuin;
 
-
-        public ThemasController(IThemasRepository themasRepository)
+        public ThemasController(ILettertuinRepository lt)
         {
-            tr = themasRepository;
+            lettertuinRepository = lt;
+            letterTuin = lettertuinRepository.GetLetterTuin(1);
         }
 
         // GET: Themas
         public ActionResult Index()
         {
-            return View(tr.FindAll().ToList());
+            return View(letterTuin.Themas.ToList());
         }
 
         // GET: Themas/Details/5
@@ -34,7 +35,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = tr.FindById(id);
+            Thema thema = letterTuin.GetThemaById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -43,7 +44,7 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Themas/Create
-        public ActionResult Create()
+        public ActionResult Create(Gebruiker gebruiker)
         {
             return View();
         }
@@ -53,12 +54,12 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdThema,Themaa")] Thema thema)
+        public ActionResult Create(Gebruiker gebruiker, [Bind(Include = "IdThema,Themaa")] Thema thema)
         {
             if (ModelState.IsValid)
             {
-                tr.Add(thema);
-                tr.SaveChanges();
+                letterTuin.AddThema(gebruiker, thema); 
+                lettertuinRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -66,13 +67,13 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Themas/Edit/5
-        public ActionResult Edit(int id = 0)
+        public ActionResult Edit(Gebruiker gebruiker, int id = 0)
         {
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = tr.FindById(id);
+            Thema thema = letterTuin.GetThemaById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -85,16 +86,16 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdThema,Themaa")] Thema thema)
+        public ActionResult Edit(Gebruiker gebruiker, [Bind(Include = "IdThema,Themaa")] Thema thema)
         {
-            Thema th = tr.FindById(thema.IdThema);
+            Thema th = letterTuin.GetThemaById(thema.IdThema);
 
             if (ModelState.IsValid)
             {
                 try
                 {
                     th.Update(thema.Themaa);
-                    tr.SaveChanges();
+                    lettertuinRepository.SaveChanges();
                     TempData["Info"] = "Het thema werd aangepast...";
                     return RedirectToAction("Index");
                 }
@@ -109,13 +110,13 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Themas/Delete/5
-        public ActionResult Delete(int id=0)
+        public ActionResult Delete(Gebruiker gebruiker, int id = 0)
         {
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = tr.FindById(id);
+            Thema thema = letterTuin.GetThemaById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -126,12 +127,11 @@ namespace DeKrekelGroup5.Controllers
         // POST: Themas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
-            Thema thema = tr.FindById(id);
-            tr.Remove(thema);
-            tr.Remove(thema);
-            tr.SaveChanges();
+            Thema thema = letterTuin.GetThemaById(id);
+            letterTuin.RemoveThema(gebruiker, thema); 
+            lettertuinRepository.SaveChanges();
             return RedirectToAction("Index");
         }
     }

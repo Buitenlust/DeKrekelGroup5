@@ -14,17 +14,16 @@ namespace DeKrekelGroup5.Models.DAL
         public KrekelContext(): base("name=dekrekelDB"){ }
         public KrekelContext(string connStringName) : base(connStringName) { }
 
-
-        public DbSet<Item> Items { get; set; }
-        public DbSet<Boek> Boeken { get; set; }
-        public DbSet<Spel> Spellen { get; set; }
-        public DbSet<Thema> Themas { get; set; }
-        public DbSet<VertelTas> VertelTassen { get; set; }
-
-        public DbSet<Uitlening> Uitleningen { get; set; }
-        public DbSet<Uitlener> Uitleners { get; set; }
-        public DbSet<CD> Cds { get; set; }
-        public DbSet<DVD> Dvds { get; set; } 
+        public DbSet<LetterTuin> LetterTuinen { get; set; }
+        //public DbSet<Item> Items { get; set; }
+        //public DbSet<Boek> Boeken { get; set; }
+        //public DbSet<Spel> Spellen { get; set; }
+        //public DbSet<Thema> Themas { get; set; }
+        //public DbSet<VertelTas> VertelTassen { get; set; }
+        //public DbSet<Uitlening> Uitleningen { get; set; }
+        //public DbSet<Uitlener> Uitleners { get; set; }
+        //public DbSet<CD> Cds { get; set; }
+        //public DbSet<DVD> Dvds { get; set; } 
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -37,8 +36,9 @@ namespace DeKrekelGroup5.Models.DAL
             modelBuilder.Configurations.Add(new UitlenerMapper());
             modelBuilder.Configurations.Add(new CDMapper());
             modelBuilder.Configurations.Add(new DVDMapper());
+            modelBuilder.Configurations.Add(new LetterTuinMapper());
+            modelBuilder.Configurations.Add(new GebruikerMapper());
 
-            
             base.OnModelCreating(modelBuilder);
         }
 

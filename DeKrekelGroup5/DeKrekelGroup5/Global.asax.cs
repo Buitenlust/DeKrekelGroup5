@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using DeKrekelGroup5.Infrastructure;
+using DeKrekelGroup5.Models.Domain;
 using MySql.Data.Entity;
 
 namespace DeKrekelGroup5
@@ -19,7 +21,9 @@ namespace DeKrekelGroup5
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            DbConfiguration.SetConfiguration(new MySqlEFConfiguration());   //Configuratie voor MySQL
+            DbConfiguration.SetConfiguration(new MySqlEFConfiguration()); //Configuratie voor MySQL
+
+            ModelBinders.Binders.Add(typeof (Gebruiker), new GebruikerModelBinder());
         }
     }
 }

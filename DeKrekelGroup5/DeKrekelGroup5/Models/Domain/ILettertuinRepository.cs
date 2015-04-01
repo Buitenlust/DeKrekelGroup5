@@ -7,50 +7,54 @@ namespace DeKrekelGroup5.Models.Domain
 {
     public interface ILettertuinRepository
     {
+        LetterTuin GetLetterTuin(int id);
 
-        //Item
-        IQueryable<Item> FindAllItems();
-        Item FindItemById(int id);
+        ////Item
+        //IQueryable<Item> FindAllItems();
+        //Item FindItemById(int id);
 
-        //boek
-        IQueryable<Boek> FindAllBoeken();
-        IQueryable<Boek> FindBoek(String search);
-        Boek FindByIdBoek(int id);
-        
-        
+        void SaveChanges();
 
-        //CD
-        IQueryable<CD> FindAllCds();
-        IQueryable<CD> FindCd(String search);
-        CD FindByIdCd(int id);
-        
+        ////boek
+        //IQueryable<Boek> FindAllBoeken();
+        //IQueryable<Boek> FindBoek(String search);
+        //Boek FindByIdBoek(int id);
         
         
 
-        // DVD
-        IQueryable<DVD> findAllDvds();
-        IQueryable<DVD> FindDvd(String search);
-        DVD findByIdDvd(int id);
+        ////CD
+        //IQueryable<CD> FindAllCds();
+        //IQueryable<CD> FindCd(String search);
+        //CD FindByIdCd(int id);
         
         
         
 
-        // Spel
-        IQueryable<Spel> FindAllSpellen();
-        IQueryable<Spel> FindSpel(String search);
-        Spel FindByIdSpel(int id);
+        //// DVD
+        //IQueryable<DVD> findAllDvds();
+        //IQueryable<DVD> FindDvd(String search);
+        //DVD findByIdDvd(int id);
+        
+        
         
 
-        // Verteltas
+        //// Spel
+        //IQueryable<Spel> FindAllSpellen();
+        //IQueryable<Spel> FindSpel(String search);
+        //Spel FindByIdSpel(int id);
+        
 
-        IQueryable<VertelTas> FindAllVerteltassen();
-        VertelTas findByIdVerteltas(int id);
+        //// Verteltas
 
-        //Themas
-        IQueryable<Thema> FindAllthemas();
-        Thema FindThema(int id);
+        //IQueryable<VertelTas> FindAllVerteltassen();
+        //VertelTas findByIdVerteltas(int id);
+
+        ////Themas
+        //IQueryable<Thema> FindAllthemas();
+        //Thema FindThema(int id);
 
 
-
+        void DoNotDuplicateThema(Item item);
+        void AddLetterTuin(LetterTuin letterTuin);
     }
 }

@@ -16,9 +16,7 @@ namespace DeKrekelGroup5.Models.Domain
 
         public void Update(Boek boek)
         {
-            base.Omschrijving = boek.Omschrijving;
-            base.Themaa = boek.Themaa;
-            base.Titel = boek.Titel;
+            base.Update(boek);
             Auteur = boek.Auteur;
             Uitgever = boek.Uitgever;
         }

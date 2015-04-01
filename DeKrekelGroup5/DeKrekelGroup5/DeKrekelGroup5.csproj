@@ -191,14 +191,12 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\SpellenController.cs" />
     <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
-    <Compile Include="Infrastructure\LetterTuinModelBinder.cs" />
-    <Compile Include="Models\DAL\BeheerderRepository.cs" />
-    <Compile Include="Models\DAL\BibliothecarisRepository.cs" />
+    <Compile Include="Infrastructure\GebruikerModelBinder.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
     <Compile Include="Models\DAL\LettertuinRepository.cs" />
+    <Compile Include="Models\DAL\Mappers\GebruikerMapper.cs" />
     <Compile Include="Models\DAL\Mappers\LetterTuinMapper.cs" />
     <Compile Include="Models\DAL\Mappers\BoekMapper.cs" />
     <Compile Include="Models\DAL\Mappers\CDMapper.cs" />
@@ -209,9 +207,6 @@
     <Compile Include="Models\DAL\Mappers\UitlenerMapper.cs" />
     <Compile Include="Models\DAL\Mappers\UitleningMapper.cs" />
     <Compile Include="Models\DAL\Mappers\VerteltasMapper.cs" />
-    <Compile Include="Models\DAL\ThemasRepository.cs" />
-    <Compile Include="Models\Domain\Beheerder.cs" />
-    <Compile Include="Models\Domain\Bibliothecaris.cs" />
     <Compile Include="Models\Domain\Boek.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -220,12 +215,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain\CD.cs" />
-    <Compile Include="Models\Domain\IBeheerderRepository.cs" />
-    <Compile Include="Models\Domain\IBibliothecarisRepository.cs" />
+    <Compile Include="Models\Domain\Gebruiker.cs" />
     <Compile Include="Models\Domain\ILettertuinRepository.cs" />
     <Compile Include="Models\Domain\Instellingen.cs" />
     <Compile Include="Models\Domain\DVD.cs" />
-    <Compile Include="Models\Domain\IThemasRepository.cs" />
     <Compile Include="Models\Domain\Item.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Domain\LetterTuin.cs" />
