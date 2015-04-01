@@ -21,6 +21,9 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
             Property(v => v.Bevat).HasMaxLength(45);
             //Property(v => v.Boeken).  --------- Weet voorlopig niet of deze collections wel gemapt kunnen worden
             //Property(v => v.Spellen).
+            Property(v => v.Leeftijd).IsRequired();
+            Property(v => v.Beschikbaar).IsRequired();
+            Property(v => v.Uitgeleend).IsRequired();
         }
     }
 }

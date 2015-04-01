@@ -20,6 +20,9 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
             Property(b => b.Titel).HasMaxLength(55).IsRequired();
             Property(b => b.Uitgever).HasMaxLength(55);
             Property(b => b.Auteur).HasMaxLength(55);
+            Property(b => b.Leeftijd).IsRequired();
+            Property(b => b.Beschikbaar).IsRequired();
+            Property(b => b.Uitgeleend).IsRequired();
             
 
             //primary key
