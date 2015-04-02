@@ -48,6 +48,7 @@ namespace DeKrekelGroup5.Models
 
     public class LoginViewModel
     {
+        public string Username;
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
