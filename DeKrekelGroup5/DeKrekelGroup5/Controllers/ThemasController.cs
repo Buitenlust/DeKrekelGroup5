@@ -13,19 +13,20 @@ namespace DeKrekelGroup5.Controllers
 {
     public class ThemasController : Controller
     {
-        private ILettertuinRepository lettertuinRepository;
-        private LetterTuin letterTuin;
+        private IGebruikerRepository GebruikerRepository;
+        private Gebruiker Gebruiker;
 
-        public ThemasController(ILettertuinRepository lt)
+        public ThemasController(IGebruikerRepository lt)
         {
-            lettertuinRepository = lt;
-            letterTuin = lettertuinRepository.GetLetterTuin(1);
+            GebruikerRepository = lt;
+            Gebruiker = GebruikerRepository.GetGebruiker(1);
+            Gebruiker.LetterTuin = GebruikerRepository.GetGebruiker(1).LetterTuin;
         }
 
         // GET: Themas
         public ActionResult Index()
         {
-            return View(letterTuin.Themas.ToList());
+            return View(Gebruiker.LetterTuin.Themas.ToList());
         }
 
         // GET: Themas/Details/5
@@ -35,7 +36,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = letterTuin.GetThemaById(id);
+            Thema thema = Gebruiker.LetterTuin.GetThemaById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -58,8 +59,8 @@ namespace DeKrekelGroup5.Controllers
         {
             if (ModelState.IsValid)
             {
-                letterTuin.AddThema(gebruiker, thema); 
-                lettertuinRepository.SaveChanges();
+                Gebruiker.AddThema(thema); 
+                GebruikerRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -73,7 +74,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = letterTuin.GetThemaById(id);
+            Thema thema = Gebruiker.LetterTuin.GetThemaById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -88,14 +89,14 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Gebruiker gebruiker, [Bind(Include = "IdThema,Themaa")] Thema thema)
         {
-            Thema th = letterTuin.GetThemaById(thema.IdThema);
+            Thema th = Gebruiker.LetterTuin.GetThemaById(thema.IdThema);
 
             if (ModelState.IsValid)
             {
                 try
                 {
                     th.Update(thema.Themaa);
-                    lettertuinRepository.SaveChanges();
+                    GebruikerRepository.SaveChanges();
                     TempData["Info"] = "Het thema werd aangepast...";
                     return RedirectToAction("Index");
                 }
@@ -116,7 +117,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = letterTuin.GetThemaById(id);
+            Thema thema = Gebruiker.LetterTuin.GetThemaById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -129,9 +130,9 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
-            Thema thema = letterTuin.GetThemaById(id);
-            letterTuin.RemoveThema(gebruiker, thema); 
-            lettertuinRepository.SaveChanges();
+            Thema thema = Gebruiker.LetterTuin.GetThemaById(id);
+            Gebruiker.RemoveThema(thema); 
+            GebruikerRepository.SaveChanges();
             return RedirectToAction("Index");
         }
     }

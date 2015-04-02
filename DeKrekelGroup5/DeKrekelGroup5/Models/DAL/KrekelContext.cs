@@ -15,6 +15,7 @@ namespace DeKrekelGroup5.Models.DAL
         public KrekelContext(string connStringName) : base(connStringName) { }
 
         public DbSet<LetterTuin> LetterTuinen { get; set; }
+        public DbSet<Gebruiker> Gebruikers { get; set; }
         //public DbSet<Item> Items { get; set; }
         //public DbSet<Boek> Boeken { get; set; }
         //public DbSet<Spel> Spellen { get; set; }

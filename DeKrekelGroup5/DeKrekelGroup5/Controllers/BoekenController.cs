@@ -17,38 +17,39 @@ namespace DeKrekelGroup5.Controllers
 {
     public class BoekenController : Controller
     {
-        private ILettertuinRepository letterTuinRepository;
-        private LetterTuin lt;
+        private IGebruikerRepository gebruikerRepository;
+        private Gebruiker Gebruiker;
  
-        public BoekenController(ILettertuinRepository letterTuinRepository)
+        public BoekenController(IGebruikerRepository gebruikerRepository)
         {
-            this.letterTuinRepository = letterTuinRepository;
+            this.gebruikerRepository = gebruikerRepository;
 
-            lt = letterTuinRepository.GetLetterTuin(1);
-            if (lt == null)
+            Gebruiker = gebruikerRepository.GetGebruiker(1); //Anonymous
+            if (Gebruiker == null)
             {
-                lt = new LetterTuin();
-                lt.Instellingen = new Instellingen(){MaxVerlengingen = 2, BedragBoetePerDag = 1, UitleenDagen = 14};
-                letterTuinRepository.AddLetterTuin(lt);
-                letterTuinRepository.SaveChanges();
-                lt = letterTuinRepository.GetLetterTuin(1);
+                Gebruiker = new Gebruiker(){AdminRechten = true, BibliotheekRechten = true, GebruikersNaam = "Anonymous", LetterTuin = new LetterTuin()};
+                Gebruiker.VeranderPaswoord("Annymous");
+                Gebruiker.LetterTuin.Instellingen = new Instellingen(){MaxVerlengingen = 2, BedragBoetePerDag = 1, UitleenDagen = 14};
+                gebruikerRepository.AddGebruiker(Gebruiker);
+                gebruikerRepository.SaveChanges();
+                Gebruiker = gebruikerRepository.GetGebruiker(1);
             }
         }
 
         // GET: Boeken
         public ActionResult Index(String search=null)
         {
-
+            //LetterTuin letterTuin = Gebruiker.
             
             IEnumerable<Boek> boeken;
             if (!String.IsNullOrEmpty(search))
             {
-                boeken = lt.GetBoeken(search);
+                boeken = Gebruiker.LetterTuin.GetBoeken(search);
                 ViewBag.Selection = "Alle boeken met " + search;
             }
             else
             {
-                boeken = lt.GetBoeken(null);
+                boeken = Gebruiker.LetterTuin.GetBoeken(null);
                 ViewBag.Selection = "Alle boeken";
             }
             if (Request.IsAjaxRequest())
@@ -62,7 +63,7 @@ namespace DeKrekelGroup5.Controllers
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Boek boek = lt.GetItem(id) as Boek;
+            Boek boek = Gebruiker.LetterTuin.GetItem(id) as Boek;
             if (boek == null)
                 return HttpNotFound();
             return View(boek);
@@ -71,7 +72,7 @@ namespace DeKrekelGroup5.Controllers
         // GET: Boeken/Create
         public ActionResult Create(Gebruiker gebruiker=null)
         {
-            return View(new BoekCreateViewModel(lt.Themas.ToList(), new Boek()));
+            return View(new BoekCreateViewModel(Gebruiker.LetterTuin.Themas.ToList(), new Boek()));
         }
 
         // POST: Boeken/Create
@@ -90,15 +91,15 @@ namespace DeKrekelGroup5.Controllers
                     Leeftijd = boek.Leeftijd,
                     Beschikbaar = true,
                     Uitgeleend = false,
-                    Themaa = lt.GetThemaByName(boek.Thema),
+                    Themaa = Gebruiker.LetterTuin.GetThemaByName(boek.Thema),
                     Omschrijving = boek.Omschrijving,
                     Exemplaar = 0,
                     Uitgever = boek.Uitgever
                 };
 
-                lt.AddItem(gebruiker, newBoek);
-                letterTuinRepository.DoNotDuplicateThema(newBoek);
-                letterTuinRepository.SaveChanges();
+                Gebruiker.AddItem(newBoek);
+                gebruikerRepository.DoNotDuplicateThema(newBoek);
+                gebruikerRepository.SaveChanges();
                 TempData["Info"] = "Het boek werd toegevoegd...";
                 return RedirectToAction("Index");
             }
@@ -110,10 +111,10 @@ namespace DeKrekelGroup5.Controllers
         {
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Boek boek = lt.GetItem(id) as Boek;
+            Boek boek = Gebruiker.LetterTuin.GetItem(id) as Boek;
             if (boek == null)
                 return HttpNotFound();
-            return View(new BoekCreateViewModel(lt.Themas, boek));
+            return View(new BoekCreateViewModel(Gebruiker.LetterTuin.Themas, boek));
         }
 
         // POST: Boeken/Edit/5
@@ -132,15 +133,15 @@ namespace DeKrekelGroup5.Controllers
                     Leeftijd = boek.Leeftijd,
                     Beschikbaar = true,
                     Uitgeleend = false,
-                    Themaa = lt.GetThemaByName(boek.Thema),
+                    Themaa = Gebruiker.LetterTuin.GetThemaByName(boek.Thema),
                     Omschrijving = boek.Omschrijving,
                     Exemplaar = boek.Exemplaar,
                     Uitgever = boek.Uitgever
 
                 };
-                lt.UpdateBoek(gebruiker, newBoek);
-                letterTuinRepository.DoNotDuplicateThema(newBoek);
-                letterTuinRepository.SaveChanges();
+                Gebruiker.UpdateBoek(newBoek);
+                gebruikerRepository.DoNotDuplicateThema(newBoek);
+                gebruikerRepository.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(boek);
@@ -152,7 +153,7 @@ namespace DeKrekelGroup5.Controllers
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Boek boek = lt.GetItem(id) as Boek;
+            Boek boek = Gebruiker.LetterTuin.GetItem(id) as Boek;
             if (boek == null)
             {
                 return HttpNotFound();
@@ -164,9 +165,9 @@ namespace DeKrekelGroup5.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
-        { 
-            lt.RemoveItem(gebruiker,id);
-            letterTuinRepository.SaveChanges();
+        {
+            Gebruiker.RemoveItem(id);
+            gebruikerRepository.SaveChanges();
             return RedirectToAction("Index");
         }
     }
