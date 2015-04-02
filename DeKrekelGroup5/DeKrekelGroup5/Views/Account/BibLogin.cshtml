@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "BibLogin";
+}
+
+<div id="content">
+    <div id="login">
+        @using (Ajax.BeginForm("BibLogin",
+        new AjaxOptions
+        {
+            HttpMethod = "Get"
+            
+        }
+        ))
+        {
+            <input type="password" name="loginField" id="loginField" value="paswoord" />
+            <form action="javascript:history.go(-1)">
+                <input type="submit" value="Login" class="btn btn-default" />
+            </form>
+        }
+        
+
+    </div>
+</div>
+

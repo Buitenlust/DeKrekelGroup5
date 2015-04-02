@@ -193,6 +193,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
+    <Compile Include="Helpers\ImgHelper.cs" />
     <Compile Include="Models\DAL\BoekenRepository.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
     <Compile Include="Models\DAL\Mappers\BoekMapper.cs" />
@@ -295,18 +296,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
@@ -329,6 +318,8 @@
     <Content Include="Views\Boeken\Edit.cshtml" />
     <Content Include="Views\Boeken\Index.cshtml" />
     <Content Include="Views\Boeken\BoekenLijst.cshtml" />
+    <Content Include="Views\Account\BibLogin.cshtml" />
+    <Content Include="Views\Account\AdminLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
