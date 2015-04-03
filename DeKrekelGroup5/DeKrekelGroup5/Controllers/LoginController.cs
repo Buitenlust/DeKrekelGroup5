@@ -44,6 +44,10 @@ namespace DeKrekelGroup5.Controllers
             if (gebruiker != null && gebruiker.PaswoordHashed == gebruiker.HashPassword(logon.Paswoord)) 
             {
                 //moet nu gebruiker binden
+                if (HttpContext.Session != null)
+                { 
+                    HttpContext.Session["gebruiker"] = gebruiker; 
+                }
                 return RedirectToAction("Index", "Home");
             }
             return RedirectToAction("Login");
