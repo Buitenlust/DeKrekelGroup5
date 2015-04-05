@@ -231,6 +231,7 @@
     <Compile Include="Models\Domain\Uitlening.cs" />
     <Compile Include="Models\Domain\VertelTas.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\LogoutViewModel.cs" />
     <Compile Include="ViewModel\SpelViewModel.cs" />
     <Compile Include="ViewModel\BoekViewModel.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
@@ -301,6 +302,9 @@
     <Content Include="Views\Spellen\Details.cshtml" />
     <Content Include="Views\Spellen\Edit.cshtml" />
     <Content Include="Views\Spellen\Index.cshtml" />
+    <Content Include="Views\Login\AdminLogin.cshtml" />
+    <Content Include="Views\Login\BibliothecarisLogin.cshtml" />
+    <Content Include="Views\Login\Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
