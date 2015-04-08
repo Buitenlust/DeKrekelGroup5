@@ -25,7 +25,14 @@ namespace DeKrekelGroup5.Controllers
         {
             GebruikersRep = gebruikersrep;
             gebruikers = gebruikersrep.GetGebruikers();
+
+            if (HttpContext.Session["gebruiker"] == null)
+            {
+                HttpContext.Session["gebruiker"] = GebruikersRep.GetGebruiker(1);
+            }
         }
+
+
 
         // GET: /Account/Login
         [HttpGet]

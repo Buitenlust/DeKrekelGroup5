@@ -17,23 +17,26 @@ namespace DeKrekelGroup5.Controllers
 {
     public class BoekenController : Controller
     {
-        private IGebruikerRepository gebruikerRepository;
+        private IGebruikerRepository gebruikersRep;
         private Gebruiker Gebruiker;
  
         public BoekenController(IGebruikerRepository gebruikerRepository)
         {
-            this.gebruikerRepository = gebruikerRepository;
+            gebruikersRep = gebruikerRepository;
 
-            Gebruiker = gebruikerRepository.GetGebruiker(1); //Anonymous
-            if (Gebruiker == null)
+            if (HttpContext.Session["gebruiker"] == null)
             {
-                Gebruiker = new Gebruiker(){AdminRechten = true, BibliotheekRechten = true, GebruikersNaam = "Anonymous", LetterTuin = new LetterTuin()};
-                Gebruiker.VeranderPaswoord("Annymous");
-                Gebruiker.LetterTuin.Instellingen = new Instellingen(){MaxVerlengingen = 2, BedragBoetePerDag = 1, UitleenDagen = 14};
-                gebruikerRepository.AddGebruiker(Gebruiker);
-                gebruikerRepository.SaveChanges();
-                Gebruiker = gebruikerRepository.GetGebruiker(1);
+                HttpContext.Session["gebruiker"] = gebruikersRep.GetGebruiker(1);
             }
+            //if (Gebruiker == null)
+            //{
+            //    Gebruiker = new Gebruiker(){AdminRechten = true, BibliotheekRechten = true, GebruikersNaam = "Anonymous", LetterTuin = new LetterTuin()};
+            //    Gebruiker.VeranderPaswoord("Annymous");
+            //    Gebruiker.LetterTuin.Instellingen = new Instellingen(){MaxVerlengingen = 2, BedragBoetePerDag = 1, UitleenDagen = 14};
+            //    gebruikerRepository.AddGebruiker(Gebruiker);
+            //    gebruikerRepository.SaveChanges();
+            //    Gebruiker = gebruikerRepository.GetGebruiker(1);
+            //}
         }
 
         // GET: Boeken

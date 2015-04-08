@@ -11,6 +11,16 @@ namespace DeKrekelGroup5.Controllers
 {
     public class HomeController : Controller
     {
+        private IGebruikerRepository GebruikersRep;
+        public HomeController(IGebruikerRepository gebruikersrep)
+        {
+            GebruikersRep = gebruikersrep;
+
+            if (HttpContext.Session["gebruiker"] == null)
+            {
+                HttpContext.Session["gebruiker"] = GebruikersRep.GetGebruiker(1);
+            }
+        }
   
         public ActionResult Index()
         { 
