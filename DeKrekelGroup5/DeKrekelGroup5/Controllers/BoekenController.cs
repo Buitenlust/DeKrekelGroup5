@@ -23,27 +23,16 @@ namespace DeKrekelGroup5.Controllers
         public BoekenController(IGebruikerRepository gebruikerRepository)
         {
             gebruikersRep = gebruikerRepository;
-
-            if (HttpContext.Session["gebruiker"] == null)
-            {
-                HttpContext.Session["gebruiker"] = gebruikersRep.GetGebruiker(1);
-            }
-            //if (Gebruiker == null)
-            //{
-            //    Gebruiker = new Gebruiker(){AdminRechten = true, BibliotheekRechten = true, GebruikersNaam = "Anonymous", LetterTuin = new LetterTuin()};
-            //    Gebruiker.VeranderPaswoord("Annymous");
-            //    Gebruiker.LetterTuin.Instellingen = new Instellingen(){MaxVerlengingen = 2, BedragBoetePerDag = 1, UitleenDagen = 14};
-            //    gebruikerRepository.AddGebruiker(Gebruiker);
-            //    gebruikerRepository.SaveChanges();
-            //    Gebruiker = gebruikerRepository.GetGebruiker(1);
-            //}
+           
         }
 
         // GET: Boeken
-        public ActionResult Index(String search=null)
+        public ActionResult Index( Gebruiker gebruiker, String search=null)
         {
-            //LetterTuin letterTuin = Gebruiker.
-            
+            Gebruiker = gebruiker;
+            if (gebruiker == null)
+                Gebruiker = gebruikersRep.GetGebruiker(1);
+           
             IEnumerable<Boek> boeken;
             if (!String.IsNullOrEmpty(search))
             {
@@ -55,10 +44,11 @@ namespace DeKrekelGroup5.Controllers
                 boeken = Gebruiker.LetterTuin.GetBoeken(null);
                 ViewBag.Selection = "Alle boeken";
             }
+            
             if (Request.IsAjaxRequest())
-                return PartialView("BoekenLijst", new BoekenLijstViewModel(boeken));
-
-            return View(new BoekenLijstViewModel(boeken));
+                return PartialView("BoekenLijst", new BoekenLijstViewModel(boeken){IsAdmin = Gebruiker.AdminRechten, IsBibliothecaris = Gebruiker.BibliotheekRechten});
+            
+            return View(new BoekenLijstViewModel(boeken){ IsAdmin = Gebruiker.AdminRechten, IsBibliothecaris = Gebruiker.BibliotheekRechten });
         }
 
         // GET: Boeken/Details/5
@@ -73,9 +63,12 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Boeken/Create
-        public ActionResult Create(Gebruiker gebruiker=null)
+        public ActionResult Create(Gebruiker gebruiker)
         {
-            return View(new BoekCreateViewModel(Gebruiker.LetterTuin.Themas.ToList(), new Boek()));
+            if(gebruiker != null && gebruiker.AdminRechten)
+                return View(new BoekCreateViewModel(Gebruiker.LetterTuin.Themas.ToList(), new Boek()));
+            return RedirectToAction("Login", "AdminLogin");
+            
         }
 
         // POST: Boeken/Create
@@ -101,8 +94,8 @@ namespace DeKrekelGroup5.Controllers
                 };
 
                 Gebruiker.AddItem(newBoek);
-                gebruikerRepository.DoNotDuplicateThema(newBoek);
-                gebruikerRepository.SaveChanges();
+                gebruikersRep.DoNotDuplicateThema(newBoek);
+                gebruikersRep.SaveChanges();
                 TempData["Info"] = "Het boek werd toegevoegd...";
                 return RedirectToAction("Index");
             }
@@ -143,8 +136,8 @@ namespace DeKrekelGroup5.Controllers
 
                 };
                 Gebruiker.UpdateBoek(newBoek);
-                gebruikerRepository.DoNotDuplicateThema(newBoek);
-                gebruikerRepository.SaveChanges();
+                gebruikersRep.DoNotDuplicateThema(newBoek);
+                gebruikersRep.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(boek);
@@ -170,7 +163,7 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
             Gebruiker.RemoveItem(id);
-            gebruikerRepository.SaveChanges();
+            gebruikersRep.SaveChanges();
             return RedirectToAction("Index");
         }
     }

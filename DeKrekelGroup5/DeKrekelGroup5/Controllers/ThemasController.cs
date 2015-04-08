@@ -19,13 +19,9 @@ namespace DeKrekelGroup5.Controllers
         public ThemasController(IGebruikerRepository lt)
         {
             GebruikerRepository = lt;
-            Gebruiker = GebruikerRepository.GetGebruiker(1);
-            Gebruiker.LetterTuin = GebruikerRepository.GetGebruiker(1).LetterTuin;
+            
 
-            if (HttpContext.Session["gebruiker"] == null)
-            {
-                HttpContext.Session["gebruiker"] = GebruikerRepository.GetGebruiker(1);
-            }
+            System.Web.HttpContext.Current.Session["gebruiker"] = Gebruiker;
         }
 
         // GET: Themas

@@ -15,6 +15,15 @@ namespace DeKrekelGroup5.Models.Domain
         public bool AdminRechten { get; set; }
         public bool BibliotheekRechten { get; set; }
         public LetterTuin LetterTuin { get; set; }
+
+        public Gebruiker(string gebruikersNaam, string paswoord, bool adminRechten, bool bibRechten, LetterTuin letterTuin)
+        { 
+            GebruikersNaam = gebruikersNaam;
+            PaswoordHashed = HashPassword(paswoord);
+            AdminRechten = adminRechten;
+            BibliotheekRechten = bibRechten;
+            LetterTuin = letterTuin;
+        }
         
         public Gebruiker(int id, string gebruikersNaam, string paswoord, bool adminRechten, bool bibRechten, LetterTuin letterTuin)
         {

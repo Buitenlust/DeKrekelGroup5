@@ -18,18 +18,13 @@ namespace DeKrekelGroup5.Controllers
    
     public class LoginController : Controller
     {
-        private IGebruikerRepository GebruikersRep { get; set; }
+        private IGebruikerRepository GebruikersRep;
         private IEnumerable<Gebruiker> gebruikers;
 
-        public LoginController(IGebruikerRepository gebruikersrep)
+        public LoginController(IGebruikerRepository gebruikersrep, Gebruiker gebruiker)
         {
             GebruikersRep = gebruikersrep;
             gebruikers = gebruikersrep.GetGebruikers();
-
-            if (HttpContext.Session["gebruiker"] == null)
-            {
-                HttpContext.Session["gebruiker"] = GebruikersRep.GetGebruiker(1);
-            }
         }
 
 
@@ -61,7 +56,6 @@ namespace DeKrekelGroup5.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-
             return View(new LogoutViewModel());
         }
 
@@ -98,24 +92,25 @@ namespace DeKrekelGroup5.Controllers
                 {
                     HttpContext.Session["gebruiker"] = gebruiker;
                 }
-                return Redirect(Request.UrlReferrer.ToString());
+                return Redirect((Request.UrlReferrer == null) ? "" : Request.UrlReferrer.ToString());
             }
             return RedirectToAction("BibliothecarisLogin");
         }
         [HttpPost]
         public ActionResult AdminLogin(LoginViewModel logon)
         {   //if AdminRechten op adminLogin, return to last page, else return adminlogin 
-            TempData["Info"] = logon.Paswoord;
+            
             Gebruiker gebruiker = gebruikers.SingleOrDefault(g => g.GebruikersNaam == logon.Username);
             if (gebruiker != null && gebruiker.AdminRechten == true &&  gebruiker.PaswoordHashed == gebruiker.HashPassword(logon.Paswoord))
             {
-                //moet nu gebruiker binden
+                TempData["Info"] = "Succesvol ingelogd!";
                 if (HttpContext.Session != null)
                 {
                     HttpContext.Session["gebruiker"] = gebruiker;
                 }
-                return Redirect(Request.UrlReferrer.ToString());
+                return RedirectToAction("Index", "Home");
             }
+            TempData["Info"] = "Verkeerd paswoord!";
             return RedirectToAction("AdminLogin");
         }
 
@@ -131,10 +126,10 @@ namespace DeKrekelGroup5.Controllers
                 {
                     HttpContext.Session["gebruiker"] = gebruiker;
                 }
-                return Redirect(Request.UrlReferrer.ToString());
+                return Redirect((Request.UrlReferrer == null) ? "" : Request.UrlReferrer.ToString());
             }
             //return to previous page
-            return Redirect(Request.UrlReferrer.ToString());
+            return Redirect((Request.UrlReferrer == null) ? "" : Request.UrlReferrer.ToString());
         }
     }
 }

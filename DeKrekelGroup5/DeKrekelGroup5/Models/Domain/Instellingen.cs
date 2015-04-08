@@ -14,5 +14,18 @@ namespace DeKrekelGroup5.Models.Domain
         public int UitleenDagen { get; set; }
         public int MaxVerlengingen { get; set; }
 
+        public Instellingen()
+        {
+            
+        }
+
+        public Instellingen(int id, decimal bedragBoetePerDag, int uitleenDagen, int maxVerlengingen)
+        {
+            Id = id;
+            BedragBoetePerDag = bedragBoetePerDag;
+            UitleenDagen = uitleenDagen;
+            MaxVerlengingen = maxVerlengingen;
+        }
+
     }
 }

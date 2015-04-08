@@ -16,11 +16,17 @@ namespace DeKrekelGroup5.ViewModel
         [Required(ErrorMessage = "Geef een uitgever in aub...")]
         [MaxLength(45, ErrorMessage = "De naam van de uitgever is te lang (max. 45 tekens)")]
         public string Uitgever { get; set; }
+
+        
+
+
     }
 
     public class BoekenLijstViewModel
     {
         public IEnumerable<BoekViewModel> Boeken { get; set; }
+        public bool IsAdmin { get; set; }
+        public bool IsBibliothecaris { get; set; }
 
         public BoekenLijstViewModel(IEnumerable<Boek> boeken)
         {

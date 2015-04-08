@@ -16,15 +16,6 @@ namespace DeKrekelGroup5.Models.DAL
 
         public DbSet<LetterTuin> LetterTuinen { get; set; }
         public DbSet<Gebruiker> Gebruikers { get; set; }
-        //public DbSet<Item> Items { get; set; }
-        //public DbSet<Boek> Boeken { get; set; }
-        //public DbSet<Spel> Spellen { get; set; }
-        //public DbSet<Thema> Themas { get; set; }
-        //public DbSet<VertelTas> VertelTassen { get; set; }
-        //public DbSet<Uitlening> Uitleningen { get; set; }
-        //public DbSet<Uitlener> Uitleners { get; set; }
-        //public DbSet<CD> Cds { get; set; }
-        //public DbSet<DVD> Dvds { get; set; } 
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

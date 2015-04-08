@@ -196,6 +196,7 @@
     <Compile Include="Infrastructure\GebruikerModelBinder.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
     <Compile Include="Models\DAL\GebruikerRepository.cs" />
+    <Compile Include="Models\DAL\KrekelInitializer.cs" />
     <Compile Include="Models\DAL\Mappers\GebruikerMapper.cs" />
     <Compile Include="Models\DAL\Mappers\LetterTuinMapper.cs" />
     <Compile Include="Models\DAL\Mappers\BoekMapper.cs" />
