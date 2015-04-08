@@ -13,26 +13,26 @@ namespace DeKrekelGroup5.Controllers
 {
     public class ThemasController : Controller
     {
-        private IGebruikerRepository GebruikerRepository;
+        private IGebruikerRepository gebruikersRep;
         private Gebruiker Gebruiker;
 
         public ThemasController(IGebruikerRepository lt)
         {
-            GebruikerRepository = lt;
-            
-
-            System.Web.HttpContext.Current.Session["gebruiker"] = Gebruiker;
+            gebruikersRep = lt; 
         }
 
         // GET: Themas
-        public ActionResult Index()
+        public ActionResult Index(Gebruiker gebruiker)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             return View(Gebruiker.LetterTuin.Themas.ToList());
         }
 
         // GET: Themas/Details/5
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(Gebruiker gebruiker, int id = 0)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -48,6 +48,7 @@ namespace DeKrekelGroup5.Controllers
         // GET: Themas/Create
         public ActionResult Create(Gebruiker gebruiker)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             return View();
         }
 
@@ -58,6 +59,8 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Gebruiker gebruiker, [Bind(Include = "IdThema,Themaa")] Thema thema)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             if (ModelState.IsValid)
             {
                 Gebruiker.AddThema(thema); 
@@ -71,6 +74,8 @@ namespace DeKrekelGroup5.Controllers
         // GET: Themas/Edit/5
         public ActionResult Edit(Gebruiker gebruiker, int id = 0)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -90,6 +95,8 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Gebruiker gebruiker, [Bind(Include = "IdThema,Themaa")] Thema thema)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             Thema th = Gebruiker.LetterTuin.GetThemaById(thema.IdThema);
 
             if (ModelState.IsValid)
@@ -114,6 +121,8 @@ namespace DeKrekelGroup5.Controllers
         // GET: Themas/Delete/5
         public ActionResult Delete(Gebruiker gebruiker, int id = 0)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -131,6 +140,8 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             Thema thema = Gebruiker.LetterTuin.GetThemaById(id);
             Gebruiker.RemoveThema(thema); 
             GebruikerRepository.SaveChanges();

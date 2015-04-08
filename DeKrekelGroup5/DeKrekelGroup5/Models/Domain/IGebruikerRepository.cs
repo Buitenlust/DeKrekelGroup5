@@ -8,6 +8,7 @@ namespace DeKrekelGroup5.Models.Domain
     public interface IGebruikerRepository
     {
         Gebruiker GetGebruiker(int id);
+        Gebruiker GetGebruikerByName(String naam);
         IQueryable<Gebruiker> GetGebruikers();
 
         void AddGebruiker(Gebruiker gebruiker);

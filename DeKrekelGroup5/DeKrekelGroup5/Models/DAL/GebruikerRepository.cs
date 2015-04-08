@@ -22,6 +22,11 @@ namespace DeKrekelGroup5.Models.DAL
             return context.Gebruikers.Include(l => l.LetterTuin).FirstOrDefault(i => i.Id==id);
         }
 
+        public Gebruiker GetGebruikerByName(string naam)
+        {
+            return context.Gebruikers.Include(l => l.LetterTuin).FirstOrDefault(i => i.GebruikersNaam == naam);
+        }
+
         public IQueryable<Gebruiker> GetGebruikers()
         {
             return context.Gebruikers.Include(l=>l.LetterTuin);

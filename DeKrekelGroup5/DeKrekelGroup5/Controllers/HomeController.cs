@@ -11,13 +11,9 @@ namespace DeKrekelGroup5.Controllers
 {
     public class HomeController : Controller
     {
-        private IGebruikerRepository GebruikersRep;
 
-        public HomeController(IGebruikerRepository gebruikersrep, Gebruiker gebruiker)
+        public HomeController(IGebruikerRepository gebruikersrep)
         {
-            GebruikersRep = gebruikersrep;
-
-            
         }
   
         public ActionResult Index()

@@ -23,16 +23,13 @@ namespace DeKrekelGroup5.Controllers
         public BoekenController(IGebruikerRepository gebruikerRepository)
         {
             gebruikersRep = gebruikerRepository;
-           
         }
 
         // GET: Boeken
         public ActionResult Index( Gebruiker gebruiker, String search=null)
         {
-            Gebruiker = gebruiker;
-            if (gebruiker == null)
-                Gebruiker = gebruikersRep.GetGebruiker(1);
-           
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            
             IEnumerable<Boek> boeken;
             if (!String.IsNullOrEmpty(search))
             {
@@ -52,8 +49,10 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Boeken/Details/5
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(Gebruiker gebruiker, int id = 0)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             Boek boek = Gebruiker.LetterTuin.GetItem(id) as Boek;
@@ -65,7 +64,9 @@ namespace DeKrekelGroup5.Controllers
         // GET: Boeken/Create
         public ActionResult Create(Gebruiker gebruiker)
         {
-            if(gebruiker != null && gebruiker.AdminRechten)
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
+            if(gebruiker.AdminRechten)
                 return View(new BoekCreateViewModel(Gebruiker.LetterTuin.Themas.ToList(), new Boek()));
             return RedirectToAction("Login", "AdminLogin");
             
@@ -76,8 +77,10 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Prefix = "Boek")] BoekViewModel boek, Gebruiker gebruiker = null)
+        public ActionResult Create([Bind(Prefix = "Boek")] BoekViewModel boek, Gebruiker gebruiker)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             if (ModelState.IsValid)
             {
                 Boek newBoek = new Boek()
@@ -103,8 +106,10 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Boeken/Edit/5
-        public ActionResult Edit(Gebruiker gebruiker= null,int id=0)
+        public ActionResult Edit(Gebruiker gebruiker,int id=0)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             Boek boek = Gebruiker.LetterTuin.GetItem(id) as Boek;
@@ -118,8 +123,10 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Prefix = "Boek")] BoekViewModel boek, Gebruiker gebruiker=null)
+        public ActionResult Edit([Bind(Prefix = "Boek")] BoekViewModel boek, Gebruiker gebruiker)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             if (ModelState.IsValid)
             {
                 Boek newBoek = new Boek()
@@ -144,8 +151,10 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Boeken/Delete/5
-        public ActionResult Delete(Gebruiker gebruiker=null, int id=0)
+        public ActionResult Delete(Gebruiker gebruiker, int id=0)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             if (id == 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -162,6 +171,8 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
+            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             Gebruiker.RemoveItem(id);
             gebruikersRep.SaveChanges();
             return RedirectToAction("Index");
