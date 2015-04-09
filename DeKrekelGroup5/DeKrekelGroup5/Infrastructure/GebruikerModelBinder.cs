@@ -15,8 +15,6 @@ namespace DeKrekelGroup5.Infrastructure
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             Gebruiker gebruiker = controllerContext.HttpContext.Session[gebruikerSessionKey] as Gebruiker;
-            if(gebruiker==null)
-                gebruiker = new Gebruiker(){GebruikersNaam = "Anonymous"};
             controllerContext.HttpContext.Session[gebruikerSessionKey] = gebruiker;
             return gebruiker;
         }

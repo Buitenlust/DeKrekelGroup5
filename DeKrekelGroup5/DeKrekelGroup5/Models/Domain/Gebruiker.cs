@@ -100,10 +100,9 @@ namespace DeKrekelGroup5.Models.Domain
         /// <summary> Removes an item from the collection </summary>
         /// <returns>returns true if item is succesfully removed from the collection. Exemplaar must be > 0 </returns>
         /// <param name="id"> id van te verwijderen item </param>
-        public bool RemoveItem(int id)
+        public bool RemoveItem(Item item)
         {
-            CheckAdminRechten();
-            Item item = LetterTuin.GetItem(id);
+            CheckAdminRechten(); 
             if (item != null && item.Exemplaar > 0)
             {
                 LetterTuin.Items.Remove(item);
@@ -300,6 +299,71 @@ namespace DeKrekelGroup5.Models.Domain
             if (!BibliotheekRechten)
                 throw new AccessViolationException();
         }
+
+        /// <summary> Geeft een lijst van uitleners </summary>
+        /// <returns>Returns IEnumerable van Uitleners</returns>
+        /// <exception>Throws Accessviolationexception indien gebruiker geen rechten heeft. </exception>
+        public IEnumerable<Uitlener> GetUitleners(String search)
+        {
+            CheckBibliotheekRechten();
+
+            if (search != null && !search.Trim().IsEmpty())
+                return LetterTuin.Uitleners.Where(p => p.Naam.ToLower().Contains(search.ToLower()) ||
+                                                       p.VoorNaam.ToLower().Contains(search.ToLower())).OrderBy(p=>p.Naam); 
+            return LetterTuin.Uitleners.Take(25);
+        }
+
+        /// <summary> Geeft een lijst van uitleners </summary>
+        /// <exception>Throws Accessviolationexception indien gebruiker geen rechten heeft. </exception>
+        public void AddUitlener(Uitlener uitlener)
+        {
+            CheckAdminRechten();
+            LetterTuin.Uitleners.Add(uitlener);
+        }
+
+        /// <summary> Geeft uitlener terug op basis van id </summary>
+        /// <exception>Throws Accessviolationexception indien gebruiker geen rechten heeft. </exception>
+        public Uitlener GetUitlenerById(int id)
+        {
+            CheckBibliotheekRechten();
+            if(LetterTuin.Uitleners.Count > 0 && id > 0)
+                return LetterTuin.Uitleners.FirstOrDefault(u => u.Id == id);
+            return null;
+        }
+
+        /// <summary> Update de parameters van een uitlener</summary>
+        /// <returns> Geeft true weer als het boek is aangepast. Exemplaar van het boek moet > 0 </returns>
+        /// <param name="uitlener"> te updaten uitlener </param>
+        public bool UpdateUitlener(Uitlener uitlener)
+        {
+            CheckAdminRechten();
+            if (uitlener != null && uitlener.Id > 0)
+            {
+                var newUitlener = GetUitlenerById(uitlener.Id);
+                if (newUitlener != null)
+                {
+                    newUitlener.Update(uitlener);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary> Verwijdert uitlener op basis van id </summary>
+        /// <exception>Throws Accessviolationexception indien gebruiker geen rechten heeft. </exception>
+        /// <param name="uitlener"> te verwijderen uitlener </param>
+        public bool RemoveUitlener(Uitlener uitlener)
+        {
+            CheckAdminRechten();
+            if (uitlener != null && uitlener.Id > 0)
+            {
+                LetterTuin.Uitleners.Remove(uitlener);
+                return true;
+            }
+            return false;
+        }
+
+
 
     }
 }

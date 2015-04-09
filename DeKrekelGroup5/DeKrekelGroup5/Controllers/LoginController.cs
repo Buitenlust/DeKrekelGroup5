@@ -18,16 +18,12 @@ namespace DeKrekelGroup5.Controllers
    
     public class LoginController : Controller
     {
-        private IGebruikerRepository GebruikersRep;
         private IEnumerable<Gebruiker> gebruikers;
 
         public LoginController(IGebruikerRepository gebruikersrep, Gebruiker gebruiker)
         {
-            GebruikersRep = gebruikersrep;
             gebruikers = gebruikersrep.GetGebruikers();
         }
-
-
 
         // GET: /Account/Login
         [HttpGet]
@@ -54,17 +50,15 @@ namespace DeKrekelGroup5.Controllers
         }
 
         [HttpGet]
-        public ActionResult Logout()
+        public ActionResult Logout(Gebruiker gebruiker)
         {
-            return View(new LogoutViewModel());
+            if(gebruiker != null)
+                return View();
         }
 
         [HttpPost]
         public ActionResult Login(LoginViewModel logon)
-        {//maak 3 varianten: 
-            //if AdminRechten op adminLogin, else return loginview opnieuw 
-            //else if BibliotheekRechten op BibLogin, else return loginview opnieuw 
-            //voor logoutview of if (HttpContext.Session["gebruiker"] = null): HttpContext.Session["gebruiker"] = gebruiker; waarbij gerbuiker gewone user is 
+        {
             TempData["Info"] = logon.Paswoord;
             Gebruiker gebruiker = gebruikers.SingleOrDefault(g => g.GebruikersNaam == logon.Username);
             if (gebruiker != null && gebruiker.PaswoordHashed == gebruiker.HashPassword(logon.Paswoord)) 
@@ -81,15 +75,15 @@ namespace DeKrekelGroup5.Controllers
 
         [HttpPost]
         public ActionResult BibliothecarisLogin(LoginViewModel logon)
-        {   //if AdminRechten op adminLogin, return loginview opnieuw 
-            //else if BibliotheekRechten op BibLogin, else return loginview opnieuw 
-            TempData["Info"] = logon.Paswoord;
+        {   
+            
             Gebruiker gebruiker = gebruikers.SingleOrDefault(g => g.GebruikersNaam == logon.Username);
-            if (gebruiker != null && gebruiker.AdminRechten==false && gebruiker.BibliotheekRechten==true && gebruiker.PaswoordHashed == gebruiker.HashPassword(logon.Paswoord))
+            if (gebruiker != null && gebruiker.BibliotheekRechten==true && gebruiker.PaswoordHashed == gebruiker.HashPassword(logon.Paswoord))
             {
                 //moet nu gebruiker binden
                 if (HttpContext.Session != null)
                 {
+                    TempData["Info"] = "Succesvol ingelogd als Bibliothecaris";
                     HttpContext.Session["gebruiker"] = gebruiker;
                 }
                 return Redirect((Request.UrlReferrer == null) ? "" : Request.UrlReferrer.ToString());
@@ -106,6 +100,7 @@ namespace DeKrekelGroup5.Controllers
                 TempData["Info"] = "Succesvol ingelogd!";
                 if (HttpContext.Session != null)
                 {
+                    TempData["Info"] = "Succesvol ingelogd als Bibliothecaris";
                     HttpContext.Session["gebruiker"] = gebruiker;
                 }
                 return RedirectToAction("Index", "Home");
@@ -114,22 +109,16 @@ namespace DeKrekelGroup5.Controllers
             return RedirectToAction("AdminLogin");
         }
 
-        [HttpPost]
-        public ActionResult Logout(LogoutViewModel logoff)
-        {// if yes, set user to standard user en goto previous page, if no: return to previous page
-            TempData["Info"] = "gewone gebruiker";
-            Gebruiker gebruiker = gebruikers.SingleOrDefault(g => g.GebruikersNaam == logoff.Username);
-
-            if (gebruiker != null)
+        [HttpGet]
+        public ActionResult LogoutConfirmed()
+        {
+            if (HttpContext.Session != null)
             {
-                if (HttpContext.Session != null)
-                {
-                    HttpContext.Session["gebruiker"] = gebruiker;
-                }
-                return Redirect((Request.UrlReferrer == null) ? "" : Request.UrlReferrer.ToString());
+                TempData["Info"] = "Succesvol uitgelogd";
+                HttpContext.Session["gebruiker"] = null;
             }
-            //return to previous page
             return Redirect((Request.UrlReferrer == null) ? "" : Request.UrlReferrer.ToString());
+            
         }
     }
 }

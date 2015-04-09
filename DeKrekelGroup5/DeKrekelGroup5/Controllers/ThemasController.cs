@@ -24,20 +24,23 @@ namespace DeKrekelGroup5.Controllers
         // GET: Themas
         public ActionResult Index(Gebruiker gebruiker)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            return View(Gebruiker.LetterTuin.Themas.ToList());
+            if(gebruiker==null)
+                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            return View(gebruiker.LetterTuin.Themas.ToList());
         }
 
         // GET: Themas/Details/5
         public ActionResult Details(Gebruiker gebruiker, int id = 0)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-
+            if (gebruiker == null)
+                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = Gebruiker.LetterTuin.GetThemaById(id);
+            Thema thema = gebruiker.LetterTuin.GetThemaById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -48,7 +51,8 @@ namespace DeKrekelGroup5.Controllers
         // GET: Themas/Create
         public ActionResult Create(Gebruiker gebruiker)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();   
             return View();
         }
 
@@ -59,12 +63,14 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Gebruiker gebruiker, [Bind(Include = "IdThema,Themaa")] Thema thema)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             if (ModelState.IsValid)
             {
-                Gebruiker.AddThema(thema); 
-                GebruikerRepository.SaveChanges();
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+                gebruiker.AddThema(thema);
+                gebruikersRep.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -74,13 +80,14 @@ namespace DeKrekelGroup5.Controllers
         // GET: Themas/Edit/5
         public ActionResult Edit(Gebruiker gebruiker, int id = 0)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = Gebruiker.LetterTuin.GetThemaById(id);
+            Thema thema = gebruiker.LetterTuin.GetThemaById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -95,16 +102,17 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Gebruiker gebruiker, [Bind(Include = "IdThema,Themaa")] Thema thema)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-
-            Thema th = Gebruiker.LetterTuin.GetThemaById(thema.IdThema);
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            Thema th = gebruiker.LetterTuin.GetThemaById(thema.IdThema);
 
             if (ModelState.IsValid)
             {
                 try
                 {
                     th.Update(thema.Themaa);
-                    GebruikerRepository.SaveChanges();
+                    gebruikersRep.SaveChanges();
                     TempData["Info"] = "Het thema werd aangepast...";
                     return RedirectToAction("Index");
                 }
@@ -121,13 +129,14 @@ namespace DeKrekelGroup5.Controllers
         // GET: Themas/Delete/5
         public ActionResult Delete(Gebruiker gebruiker, int id = 0)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = Gebruiker.LetterTuin.GetThemaById(id);
+            Thema thema = gebruiker.LetterTuin.GetThemaById(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -140,11 +149,12 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-
-            Thema thema = Gebruiker.LetterTuin.GetThemaById(id);
-            Gebruiker.RemoveThema(thema); 
-            GebruikerRepository.SaveChanges();
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            Thema thema = gebruiker.LetterTuin.GetThemaById(id);
+            gebruiker.RemoveThema(thema);
+            gebruikersRep.SaveChanges();
             return RedirectToAction("Index");
         }
     }

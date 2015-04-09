@@ -193,6 +193,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
+    <Compile Include="Controllers\UitlenersController.cs" />
     <Compile Include="Infrastructure\GebruikerModelBinder.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
     <Compile Include="Models\DAL\GebruikerRepository.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="Models\Domain\Thema.cs" />
     <Compile Include="Models\Domain\Uitlening.cs" />
     <Compile Include="Models\Domain\VertelTas.cs" />
+    <Compile Include="ViewModel\UitlenerViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\LogoutViewModel.cs" />
     <Compile Include="ViewModel\SpelViewModel.cs" />
@@ -306,6 +308,11 @@
     <Content Include="Views\Login\AdminLogin.cshtml" />
     <Content Include="Views\Login\BibliothecarisLogin.cshtml" />
     <Content Include="Views\Login\Logout.cshtml" />
+    <Content Include="Views\Uitleners\Create.cshtml" />
+    <Content Include="Views\Uitleners\Delete.cshtml" />
+    <Content Include="Views\Uitleners\Details.cshtml" />
+    <Content Include="Views\Uitleners\Edit.cshtml" />
+    <Content Include="Views\Uitleners\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

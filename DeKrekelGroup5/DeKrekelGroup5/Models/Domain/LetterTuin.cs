@@ -19,6 +19,7 @@ namespace DeKrekelGroup5.Models.Domain
         public virtual ICollection<Item> Items { get; set; }
         public virtual ICollection<Thema> Themas { get; set; }
         public virtual ICollection<Uitlening> Uitleningen { get; set; }
+        public virtual ICollection<Uitlener> Uitleners { get; set; }
         public virtual Instellingen Instellingen { get; set; }
 
         public LetterTuin()

@@ -8,132 +8,194 @@ using System.Web;
 using System.Web.Mvc;
 using DeKrekelGroup5.Models.DAL;
 using DeKrekelGroup5.Models.Domain;
+using DeKrekelGroup5.ViewModel;
 
 namespace DeKrekelGroup5.Controllers
 {
     public class UitlenersController : Controller
     {
-        private IGebruikerRepository gebruikerRepository;
-        private Gebruiker Gebruiker;
+        private readonly IGebruikerRepository gebruikerRepository;
 
-        public GebruikersController(IGebruikerRepository gebruikerRepository)
+        public UitlenersController(IGebruikerRepository gebruikerRepository)
         {
             this.gebruikerRepository = gebruikerRepository;
-
-            Gebruiker = HttpContext.
         }
 
-
-
-
         // GET: Uitleners
-        public ActionResult Index()
+        public ActionResult Index(Gebruiker gebruiker, String search=null)
         {
-            return View(db.Uitleners.ToList());
+            if (gebruiker == null || gebruiker.BibliotheekRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
+            {
+                return View(new UitlenersLijstViewModel(gebruiker.GetUitleners(search).ToList()));    
+            }
+            catch (AccessViolationException)
+            {
+                return new HttpUnauthorizedResult();
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         // GET: Uitleners/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(Gebruiker gebruiker, int id = 0)
         {
-            if (id == null)
-            {
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (id <= 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Uitlener uitlener = db.Uitleners.Find(id);
-            if (uitlener == null)
+            try
             {
-                return HttpNotFound();
+                Uitlener uitlener = gebruiker.GetUitlenerById(id);
+                if (uitlener == null)
+                    return HttpNotFound();
+                return View(new UitlenerViewModel(uitlener));
+
             }
-            return View(uitlener);
+            catch (AccessViolationException)
+            {
+                return new HttpUnauthorizedResult();
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         // GET: Uitleners/Create
-        public ActionResult Create()
+        public ActionResult Create(Gebruiker gebruiker)
         {
-            return View();
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            return View(new UitlenerViewModel());
         }
 
         // POST: Uitleners/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Naam,VoorNaam")] Uitlener uitlener)
+        public ActionResult Create(Gebruiker gebruiker, [Bind(Include = "Id,Naam,VoorNaam,Klas,Adres,Email")] UitlenerViewModel uitlener)
         {
-            if (ModelState.IsValid)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (ModelState.IsValid && uitlener != null && uitlener.Id == 0 )
             {
-                db.Uitleners.Add(uitlener);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    gebruiker.AddUitlener(uitlener.MapNaarUitlener(uitlener));
+                    gebruikerRepository.SaveChanges();
+                    TempData["Info"] = "Uitlener " + uitlener.Naam +" "+ uitlener.VoorNaam + " werd toegevoegd...";
+                    return RedirectToAction("Index");
+                }
+                catch (AccessViolationException)
+                {
+                    return new HttpUnauthorizedResult();
+                }
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
             }
 
             return View(uitlener);
         }
 
         // GET: Uitleners/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(Gebruiker gebruiker, int id=0) //todo viewmodel
         {
-            if (id == null)
-            {
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (id <= 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Uitlener uitlener = db.Uitleners.Find(id);
+
+            Uitlener uitlener = gebruiker.GetUitlenerById(id);
             if (uitlener == null)
-            {
                 return HttpNotFound();
-            }
-            return View(uitlener);
+            
+            return View(new UitlenerViewModel(uitlener));
         }
 
         // POST: Uitleners/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Naam,VoorNaam")] Uitlener uitlener)
+        public ActionResult Edit(Gebruiker gebruiker, [Bind(Include = "Id,Naam,VoorNaam,Klas,Adres,Email")] UitlenerViewModel uitlener)
         {
-            if (ModelState.IsValid)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (ModelState.IsValid && uitlener != null && uitlener.Id > 0)
             {
-                db.Entry(uitlener).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    gebruiker.UpdateUitlener(uitlener.MapNaarUitlener(uitlener));
+                    TempData["Info"] = "Uitlener " + uitlener.Naam + " " + uitlener.VoorNaam + " werd aangepast...";
+                    gebruikerRepository.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (AccessViolationException)
+                {
+                    return new HttpUnauthorizedResult();
+                }
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+                
             }
             return View(uitlener);
         }
 
         // GET: Uitleners/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(Gebruiker gebruiker, int id=0)       //todo heeft gebruiker nog uitleningen?
         {
-            if (id == null)
-            {
+             if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (id <= 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Uitlener uitlener = db.Uitleners.Find(id);
+
+            Uitlener uitlener = gebruiker.GetUitlenerById(id);
             if (uitlener == null)
-            {
                 return HttpNotFound();
-            }
+            
             return View(uitlener);
         }
 
         // POST: Uitleners/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id=0)  //todo heeft gebruiker nog uitleningen? zoja, lijst weergeven van uitleningen.
         {
-            Uitlener uitlener = db.Uitleners.Find(id);
-            db.Uitleners.Remove(uitlener);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (id <= 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            try
             {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+                    Uitlener uitlener = gebruiker.GetUitlenerById(id);
+                        if (uitlener == null)
+                    return HttpNotFound();
+                    gebruiker.RemoveUitlener(uitlener);
+                    gebruikerRepository.SaveChanges();
+                    TempData["Info"] = "Uitlener " + uitlener.Naam + " " + uitlener.VoorNaam + " werd toegevoegd...";
+                    return RedirectToAction("Index");
+                }
+                catch (AccessViolationException)
+                {
+                    return new HttpUnauthorizedResult();
+                }
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+        } 
     }
 }

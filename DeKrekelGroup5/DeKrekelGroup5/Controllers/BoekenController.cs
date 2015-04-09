@@ -17,9 +17,8 @@ namespace DeKrekelGroup5.Controllers
 {
     public class BoekenController : Controller
     {
-        private IGebruikerRepository gebruikersRep;
-        private Gebruiker Gebruiker;
- 
+        private IGebruikerRepository gebruikersRep; 
+
         public BoekenController(IGebruikerRepository gebruikerRepository)
         {
             gebruikersRep = gebruikerRepository;
@@ -28,48 +27,73 @@ namespace DeKrekelGroup5.Controllers
         // GET: Boeken
         public ActionResult Index( Gebruiker gebruiker, String search=null)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            
-            IEnumerable<Boek> boeken;
-            if (!String.IsNullOrEmpty(search))
+            if(gebruiker == null)
+                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
             {
-                boeken = Gebruiker.LetterTuin.GetBoeken(search);
-                ViewBag.Selection = "Alle boeken met " + search;
+                IEnumerable<Boek> boeken;
+                if (!String.IsNullOrEmpty(search))
+                {
+                    boeken = gebruiker.LetterTuin.GetBoeken(search);
+                    ViewBag.Selection = "Alle boeken met " + search;
+                }
+                else
+                {
+                    boeken = gebruiker.LetterTuin.GetBoeken(null);
+                    ViewBag.Selection = "Alle boeken";
+                }
+
+                if (Request.IsAjaxRequest())
+                    return PartialView("BoekenLijst", new BoekenLijstViewModel(boeken) { IsAdmin = gebruiker.AdminRechten, IsBibliothecaris = gebruiker.BibliotheekRechten });
+
+                return View(new BoekenLijstViewModel(boeken) { IsAdmin = gebruiker.AdminRechten, IsBibliothecaris = gebruiker.BibliotheekRechten });
             }
-            else
+            catch (Exception)
             {
-                boeken = Gebruiker.LetterTuin.GetBoeken(null);
-                ViewBag.Selection = "Alle boeken";
+
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
             
-            if (Request.IsAjaxRequest())
-                return PartialView("BoekenLijst", new BoekenLijstViewModel(boeken){IsAdmin = Gebruiker.AdminRechten, IsBibliothecaris = Gebruiker.BibliotheekRechten});
             
-            return View(new BoekenLijstViewModel(boeken){ IsAdmin = Gebruiker.AdminRechten, IsBibliothecaris = Gebruiker.BibliotheekRechten });
         }
 
         // GET: Boeken/Details/5
         public ActionResult Details(Gebruiker gebruiker, int id = 0)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-
-            if (id == 0)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Boek boek = Gebruiker.LetterTuin.GetItem(id) as Boek;
-            if (boek == null)
-                return HttpNotFound();
-            return View(boek);
+            if (gebruiker == null)
+                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
+            {
+                if (id == 0)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
+                if (boek == null)
+                    return HttpNotFound();
+                return View(boek);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+            
         }
 
         // GET: Boeken/Create
         public ActionResult Create(Gebruiker gebruiker)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-
-            if(gebruiker.AdminRechten)
-                return View(new BoekCreateViewModel(Gebruiker.LetterTuin.Themas.ToList(), new Boek()));
-            return RedirectToAction("Login", "AdminLogin");
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();   
             
+            try
+            {
+                    return View(new BoekCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new Boek()));
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         // POST: Boeken/Create
@@ -79,28 +103,25 @@ namespace DeKrekelGroup5.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Prefix = "Boek")] BoekViewModel boek, Gebruiker gebruiker)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-
-            if (ModelState.IsValid)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (ModelState.IsValid && boek != null && boek.Exemplaar <=0)
             {
-                Boek newBoek = new Boek()
+                try
                 {
-                    Titel = boek.Titel,
-                    Auteur = boek.Auteur,
-                    Leeftijd = boek.Leeftijd,
-                    Beschikbaar = true,
-                    Uitgeleend = false,
-                    Themaa = Gebruiker.LetterTuin.GetThemaByName(boek.Thema),
-                    Omschrijving = boek.Omschrijving,
-                    Exemplaar = 0,
-                    Uitgever = boek.Uitgever
-                };
-
-                Gebruiker.AddItem(newBoek);
-                gebruikersRep.DoNotDuplicateThema(newBoek);
-                gebruikersRep.SaveChanges();
-                TempData["Info"] = "Het boek werd toegevoegd...";
-                return RedirectToAction("Index");
+                    Boek newBoek = boek.MapToBoek(boek, gebruiker.LetterTuin.GetThemaByName(boek.Thema));
+                    gebruiker.AddItem(newBoek);
+                    gebruikersRep.DoNotDuplicateThema(newBoek);
+                    gebruikersRep.SaveChanges();
+                    TempData["Info"] = "Boek"+ boek.Titel +" werd toegevoegd...";
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+                
             }
             return RedirectToAction("Create");
         }
@@ -108,14 +129,23 @@ namespace DeKrekelGroup5.Controllers
         // GET: Boeken/Edit/5
         public ActionResult Edit(Gebruiker gebruiker,int id=0)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
 
-            if (id == 0)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Boek boek = Gebruiker.LetterTuin.GetItem(id) as Boek;
-            if (boek == null)
-                return HttpNotFound();
-            return View(new BoekCreateViewModel(Gebruiker.LetterTuin.Themas, boek));
+            try
+            {
+                if (id <= 0)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
+                if (boek == null)
+                    return HttpNotFound();
+                return View(new BoekCreateViewModel(gebruiker.LetterTuin.Themas, boek));
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+            
         }
 
         // POST: Boeken/Edit/5
@@ -125,27 +155,26 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Prefix = "Boek")] BoekViewModel boek, Gebruiker gebruiker)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-
-            if (ModelState.IsValid)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (ModelState.IsValid && boek!= null && boek.Exemplaar > 0)
             {
-                Boek newBoek = new Boek()
+                try
                 {
-                    Titel = boek.Titel,
-                    Auteur = boek.Auteur,
-                    Leeftijd = boek.Leeftijd,
-                    Beschikbaar = true,
-                    Uitgeleend = false,
-                    Themaa = Gebruiker.LetterTuin.GetThemaByName(boek.Thema),
-                    Omschrijving = boek.Omschrijving,
-                    Exemplaar = boek.Exemplaar,
-                    Uitgever = boek.Uitgever
-
-                };
-                Gebruiker.UpdateBoek(newBoek);
-                gebruikersRep.DoNotDuplicateThema(newBoek);
-                gebruikersRep.SaveChanges();
-                return RedirectToAction("Index");
+                    boek.Uitgeleend = false;
+                    boek.Beschikbaar = true;
+                    Boek newBoek = boek.MapToBoek(boek, gebruiker.LetterTuin.GetThemaByName(boek.Thema));
+                    gebruiker.UpdateBoek(newBoek);
+                    gebruikersRep.DoNotDuplicateThema(newBoek);
+                    TempData["Info"] = "Boek " + boek.Titel + " werd aangepast...";
+                    gebruikersRep.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
             }
             return View(boek);
         }
@@ -153,17 +182,23 @@ namespace DeKrekelGroup5.Controllers
         // GET: Boeken/Delete/5
         public ActionResult Delete(Gebruiker gebruiker, int id=0)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
 
-            if (id == 0)
+            if (id <= 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Boek boek = Gebruiker.LetterTuin.GetItem(id) as Boek;
-            if (boek == null)
+            try
             {
-                return HttpNotFound();
+                Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
+                if (boek == null)
+                    return HttpNotFound();
+                return View(boek);
             }
-            return View(boek);
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         // POST: Boeken/Delete/5
@@ -171,11 +206,29 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
-            Gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (id <= 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Gebruiker.RemoveItem(id);
-            gebruikersRep.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+                Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
+                if (boek == null)
+                    return HttpNotFound();
+                gebruiker.RemoveItem(boek);
+                gebruikersRep.SaveChanges();
+                TempData["Info"] = "Boek" +boek.Titel+ " werd verwijderd...";
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+
+            
         }
     }
 }

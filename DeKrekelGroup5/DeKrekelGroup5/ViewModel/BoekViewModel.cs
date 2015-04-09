@@ -17,7 +17,23 @@ namespace DeKrekelGroup5.ViewModel
         [MaxLength(45, ErrorMessage = "De naam van de uitgever is te lang (max. 45 tekens)")]
         public string Uitgever { get; set; }
 
-        
+
+
+        public Boek MapToBoek(BoekViewModel vm, Thema thema)
+        {
+            return new Boek()
+            {
+                Exemplaar = vm.Exemplaar,
+                Auteur = vm.Auteur,
+                Beschikbaar = vm.Beschikbaar,
+                Uitgeleend = vm.Uitgeleend,
+                Leeftijd = vm.Leeftijd,
+                Omschrijving = vm.Omschrijving,
+                Titel = vm.Titel,
+                Themaa = thema,
+                Uitgever = Uitgever
+            };
+        }
 
 
     }
