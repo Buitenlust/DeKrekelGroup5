@@ -12,13 +12,26 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Titel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titel)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Auteur)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Auteur)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Omschrijving)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.Omschrijving)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Uitgever)
         </dt>
@@ -36,24 +49,38 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Titel)
+            @Html.DisplayNameFor(model => model.Themaa)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Titel)
+            @Html.DisplayFor(model => model.Themaa)
         </dd>
+        @*<dt>
+            @Html.DisplayNameFor(model => model.beschikbaar)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.beschikbaar)
+        </dd> 
         <dt>
-            @Html.DisplayNameFor(model => model.Omschrijving)
+            @Html.DisplayNameFor(model => model.Cover)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Omschrijving)
+            @Html.DisplayFor(model => model.Cover)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Uitgeleend)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Uitgeleend)
+        </dd>*@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

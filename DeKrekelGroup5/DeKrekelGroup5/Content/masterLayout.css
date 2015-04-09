@@ -1,0 +1,191 @@
+﻿
+Skip to content
+This repository
+
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 5-mrt-2015, 0:58:57
+    Author     : Jonas
+*/
+
+body {
+    background-image: url("../images/background.jpg");
+    background-repeat: no-repeat;
+} 
+#body{
+    clear:both;
+}
+a:link{
+    text-decoration:none;
+    color:white;
+}
+a:visited {
+    color:white;
+    text-decoration:none;
+}
+dt{
+    background-color: greenyellow;
+    border-radius: 5px;
+    padding-left: 5px;
+    width: 100px;
+}
+dd{
+    background-color: #FFFAF0;
+    border-radius: 5px;
+    padding-left: 5px;
+    margin-right: 50px;
+}
+#BookCover{
+    
+}
+
+.editLabel{
+    background-color: greenyellow;
+    border-radius: 5px;
+    padding-left: 5px;
+    width: 100px;
+}
+input[type=text]{
+    border-radius: 5px;
+    padding-left: 5px;
+    margin-left: 50px;
+    width:50%;
+}
+input[type=file]{
+    border-radius: 5px;
+    padding-left: 5px;
+    margin-left: 50px;
+    
+}
+#beschikbaar{
+    border-radius: 5px;
+    padding-left: 5px;
+    margin-left: 50px;
+    
+}
+.beschikbaarheid{
+/*    background-color:  green;*/
+}
+
+input[type=submit]{
+    border-radius: 5px;
+    padding-left: 5px;
+    margin-top: 30px;
+    margin-left: 50px;
+    width:20%;
+}
+
+#detailIcons{
+    float:right;
+}
+#header{
+   
+    
+}
+
+#krekel{
+    float: left;
+}
+#krekelImg{
+    float: left;
+}
+#krekelLink{
+    color: white;
+    font-family: cursive;
+}
+
+#navBar{
+    //width: 20%;
+    background-color: #FFFAF0;  
+    float:right;
+    border-radius: 10px;
+    display: inline-block;
+}
+#navBar img{
+   width: 50px;
+    height: 50px; 
+}
+
+#titel{
+    text-align: center;
+    color: white;
+    font-family: cursive;
+}
+
+
+#wrapper{
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
+
+#content{
+    clear: both;
+    width: 70%;
+    margin: 0 auto;
+}
+
+#searchBar{
+   width: 100%;
+}
+#search{
+    margin:10px;
+    width: 150px;
+    border-radius: 5px;
+}
+.createNew{
+    /*/*float: right;*/
+    
+}
+
+.table{
+    
+    border-collapse: collapse;
+    border-radius: 10px;
+    width: 100%;
+    background-color: white;
+    padding: 20px;
+}
+th{
+    text-align: left;
+    background-color: #B3D524;
+    padding: 5px;
+    
+    //grand hotel font via krekelsite pagina bron
+}
+td select{
+    width: 90%;
+}
+.indexTable{
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
+
+
+.indexTable img{
+    width : 200px;
+    height : 200px;
+}
+.vertelTasItem{
+    
+    border-radius: 10px;
+    display: inline-block;
+    background-color: white;
+    width: 20%;
+    padding: 5px;
+    border-collapse: collapse;
+}
+
+.vertelTasItem img{
+    width: 20px;
+    height: 20px;
+    float: right;
+}
+

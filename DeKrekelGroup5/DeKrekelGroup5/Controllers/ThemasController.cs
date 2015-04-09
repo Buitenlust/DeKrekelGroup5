@@ -22,10 +22,10 @@ namespace DeKrekelGroup5.Controllers
             Gebruiker = GebruikerRepository.GetGebruiker(1);
             Gebruiker.LetterTuin = GebruikerRepository.GetGebruiker(1).LetterTuin;
 
-            if (HttpContext.Session["gebruiker"] == null)
-            {
-                HttpContext.Session["gebruiker"] = GebruikerRepository.GetGebruiker(1);
-            }
+            //if (HttpContext.Session["gebruiker"] == null)
+            //{
+            //    HttpContext.Session["gebruiker"] = GebruikerRepository.GetGebruiker(1);
+            //}
         }
 
         // GET: Themas

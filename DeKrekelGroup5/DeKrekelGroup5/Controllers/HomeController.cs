@@ -16,10 +16,10 @@ namespace DeKrekelGroup5.Controllers
         {
             GebruikersRep = gebruikersrep;
 
-            if (HttpContext.Session["gebruiker"] == null)
-            {
-                HttpContext.Session["gebruiker"] = GebruikersRep.GetGebruiker(1);
-            }
+            //if (HttpContext.Session["gebruiker"] == null)
+            //{
+            //    HttpContext.Session["gebruiker"] = GebruikersRep.GetGebruiker(1);
+            //}
         }
   
         public ActionResult Index()

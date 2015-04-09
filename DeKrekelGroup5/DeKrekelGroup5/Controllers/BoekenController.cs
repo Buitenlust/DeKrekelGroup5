@@ -24,10 +24,10 @@ namespace DeKrekelGroup5.Controllers
         {
             gebruikersRep = gebruikerRepository;
 
-            if (HttpContext.Session["gebruiker"] == null)
-            {
-                HttpContext.Session["gebruiker"] = gebruikersRep.GetGebruiker(1);
-            }
+            //if (HttpContext.Session["gebruiker"] == null)
+            //{
+            //    HttpContext.Session["gebruiker"] = gebruikersRep.GetGebruiker(1);
+            //}
             //if (Gebruiker == null)
             //{
             //    Gebruiker = new Gebruiker(){AdminRechten = true, BibliotheekRechten = true, GebruikersNaam = "Anonymous", LetterTuin = new LetterTuin()};
@@ -101,8 +101,8 @@ namespace DeKrekelGroup5.Controllers
                 };
 
                 Gebruiker.AddItem(newBoek);
-                gebruikerRepository.DoNotDuplicateThema(newBoek);
-                gebruikerRepository.SaveChanges();
+                gebruikersRep.DoNotDuplicateThema(newBoek);
+                gebruikersRep.SaveChanges();
                 TempData["Info"] = "Het boek werd toegevoegd...";
                 return RedirectToAction("Index");
             }
@@ -143,8 +143,8 @@ namespace DeKrekelGroup5.Controllers
 
                 };
                 Gebruiker.UpdateBoek(newBoek);
-                gebruikerRepository.DoNotDuplicateThema(newBoek);
-                gebruikerRepository.SaveChanges();
+                gebruikersRep.DoNotDuplicateThema(newBoek);
+                gebruikersRep.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(boek);
@@ -170,7 +170,7 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
             Gebruiker.RemoveItem(id);
-            gebruikerRepository.SaveChanges();
+            gebruikersRep.SaveChanges();
             return RedirectToAction("Index");
         }
     }
