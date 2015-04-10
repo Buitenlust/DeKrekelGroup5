@@ -14,19 +14,29 @@
             <table class="indexTable">
                 <tr>
                     <td>
-                        @Html.ActionLink("Boeken","index","boeken")
+                        @*@Html.ActionLink("Boeken","index","boeken")*@
+                        <a href=' @Url.Action("index", "boeken") '><img src="~/Images/Book.png" /></a>
+
                     </td>
                     <td>
-                        @Html.ActionLink("CDs", "index", "cds")
+                        @*@Html.ActionLink("CDs", "index", "cds")*@
+                        <a href=' @Url.Action("index", "cds") '><img src="~/Images/cd.png" /></a>
+
                     </td>
                     <td>
-                        @Html.ActionLink("DVDs", "index", "dvds")
+                        @*@Html.ActionLink("DVDs", "index", "dvds")*@
+                        <a href=' @Url.Action("index", "dvds") '><img src="~/Images/dvd.png" /></a>
+
                     </td>
                     <td>
-                        @Html.ActionLink("Spellen", "index", "spellen")
+                        @*@Html.ActionLink("Spellen", "index", "spellen")*@
+                        <a href=' @Url.Action("index", "spellen") '><img src="~/Images/spel.png" /></a>
+
                     </td>
                     <td>
-                        @Html.ActionLink("VertelTassen", "index", "verteltassen")
+                        @*@Html.ActionLink("VertelTassen", "index", "verteltassen")*@
+                        <a href=' @Url.Action("index", "vertelTassen") '><img src="~/Images/vertelTas.png" /></a>
+
                     </td>
                 </tr>
 

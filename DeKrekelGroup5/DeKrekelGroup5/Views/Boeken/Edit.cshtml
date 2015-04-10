@@ -91,7 +91,8 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @*@Html.ActionLink("Back to List", "Index")*@
+    <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
 </div>
 
 @section Scripts {

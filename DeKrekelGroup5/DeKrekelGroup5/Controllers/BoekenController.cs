@@ -28,15 +28,15 @@ namespace DeKrekelGroup5.Controllers
             //{
             //    HttpContext.Session["gebruiker"] = gebruikersRep.GetGebruiker(1);
             //}
-            //if (Gebruiker == null)
-            //{
-            //    Gebruiker = new Gebruiker(){AdminRechten = true, BibliotheekRechten = true, GebruikersNaam = "Anonymous", LetterTuin = new LetterTuin()};
-            //    Gebruiker.VeranderPaswoord("Annymous");
-            //    Gebruiker.LetterTuin.Instellingen = new Instellingen(){MaxVerlengingen = 2, BedragBoetePerDag = 1, UitleenDagen = 14};
-            //    gebruikerRepository.AddGebruiker(Gebruiker);
-            //    gebruikerRepository.SaveChanges();
-            //    Gebruiker = gebruikerRepository.GetGebruiker(1);
-            //}
+            if (Gebruiker == null)
+            {
+                Gebruiker = new Gebruiker() { AdminRechten = true, BibliotheekRechten = true, GebruikersNaam = "Anonymous", LetterTuin = new LetterTuin() };
+                Gebruiker.VeranderPaswoord("Annymous");
+                Gebruiker.LetterTuin.Instellingen = new Instellingen() { MaxVerlengingen = 2, BedragBoetePerDag = 1, UitleenDagen = 14 };
+                gebruikerRepository.AddGebruiker(Gebruiker);
+                gebruikerRepository.SaveChanges();
+                Gebruiker = gebruikerRepository.GetGebruiker(1);
+            }
         }
 
         // GET: Boeken

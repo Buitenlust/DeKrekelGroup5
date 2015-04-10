@@ -19,11 +19,16 @@
             </header>
             <nav id="navBar">
                 <div>    
-                    @Html.ActionLink("home","index","home")
-                    @Html.ActionLink("BibLogin", "bibliothecarisLogin", "login")
-                    @Html.ActionLink("AdminLogin", "adminLogin", "login")
-                    @Html.ActionLink("afmelden", "logout", "login")
-                    @Html.ActionLink("help", "about", "home")
+                    @*@Html.ActionLink("home","index","home")*@
+                    <a href=' @Url.Action("index", "home") '><img src="~/Images/home.png" /></a>
+                    @*@Html.ActionLink("BibLogin", "bibliothecarisLogin", "login")*@
+                    <a href=' @Url.Action("bibliothecarisLogin", "login") '><img src="~/Images/guest.png" /></a>
+                    @*@Html.ActionLink("AdminLogin", "adminLogin", "login")*@
+                    <a href=' @Url.Action("adminLogin", "login")'><img src="~/Images/admin.png" /></a>
+                    @*@Html.ActionLink("afmelden", "logout", "login")*@
+                    <a href=' @Url.Action("logout", "login") '><img src="~/Images/logout.png" /></a>
+                    @*@Html.ActionLink("help", "about", "home")*@
+                    <a href=' @Url.Action("about", "home") '><img src="~/Images/help.png" /></a>
                 </div>
             </nav>
         </div>
