@@ -1,22 +1,31 @@
-﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-    @Html.AntiForgeryToken()
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+<div class="loginbox">
+    <div class="message-error">@TempData["error"]</div>
+    @Html.EditorFor(model => model.loginViewModel.Username, new { htmlAttributes = new { @class = "hidden" } })
+    @Html.ValidationMessageFor(model => model.loginViewModel.Username, "", new { @class = "text-danger" })
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+    Paswoord:
+    @Html.PasswordFor(model => model.loginViewModel.Paswoord, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.loginViewModel.Paswoord, "", new { @class = "text-danger" })
+</div>
+
+<div class="bottom">
+    @if (@Model.loginViewModel.Username == "Beheerder")
+    {
+        <button type="submit" class="button green close"><img src="~/Images/tick.png">Inloggen!</button>
     }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Login", routeValues: null, htmlAttributes: new { Username = "beheerder" })</li>
-    </ul>
-}
+    @if (@Model.loginViewModel.Username == "Bibliothecaris")
+    {
+        <button type="submit" class="button green close"><img src="~/Images/tick.png">Inloggen!</button>
+    }
+    <a href="#" class="button red close" id="closeFrame"><img src="~/Images/cross.png">Terug!</a>
+</div>
+<script>
+    $(document).ready(function() {
+
+        $("#closeFrame").click(function(e) { // Button which will activate our modal
+            $("#modal").hide(600);
+            $(".reveal-modal-bg").remove();
+        });
+    });
+</script>

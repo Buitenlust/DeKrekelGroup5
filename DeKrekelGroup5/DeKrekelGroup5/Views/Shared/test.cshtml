@@ -1,0 +1,23 @@
+﻿@model DeKrekelGroup5.ViewModel.LoginViewModel
+
+
+<div id="heading">
+    Login:
+</div>
+
+<div id="contentLogin">
+    <img src="~/Images/admin.png" class="tinyImg" /> 
+
+        <div class="loginbox">
+
+            Paswoord:
+            @Html.PasswordFor(model => model.Paswoord, new {htmlAttributes = new {@class = "form-control"}})
+            @Html.ValidationMessageFor(model => model.Paswoord, "", new {@class = "text-danger"})
+        </div>
+
+    <div class="bottom">
+    <a href="#" class="button green close"><img src="~/Images/tick.png">Inloggen!</a>
+
+        <a href="#" class="button red close"><img src="~/Images/cross.png">Terug!</a>
+        </div>
+</div>

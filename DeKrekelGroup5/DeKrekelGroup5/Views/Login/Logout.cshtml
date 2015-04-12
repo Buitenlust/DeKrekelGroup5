@@ -1,22 +1,30 @@
-﻿@{
-    ViewBag.Title = "Logout";
-}
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+<div id="heading">
+    @Model.loginViewModel.Username Logout:
+</div>
 
-<div id="content">
-    <div id="logout">
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <h4>Bent u zeker dat u wilt uitloggen?</h4>
+<div id="contentLogin">
 
+    @if (@Model.loginViewModel.Username == "Beheerder")
+    {
+        <img src="~/Images/admin.png" class="tinyImg" />
+    }
+    @if (@Model.loginViewModel.Username == "Bibliothecaris")
+    {
+        <img src="~/Images/guest.png" class="tinyImg" />
+    }
 
-                <div>
-                    @Html.ActionLink("Ja", "LogoutConfirmed")    <!-- Te veranderen in Images!-->
-                </div>
-                <div>
-                    @Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })<!-- Werkt nog niet -  Te veranderen in Images!-->  
-                </div>
-
-            </div>
+    @using (Ajax.BeginForm("Logout",
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "Post",
+                            UpdateTargetId = "LogoutDiv"
+                        }
+                        ))
+    {
+        <div id="LogoutDiv">
+            @Html.Partial("_LogoutPartial", Model)
         </div>
-    </div>
+    }
 </div>

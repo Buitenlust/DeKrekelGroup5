@@ -1,85 +1,89 @@
 ﻿@model DeKrekelGroup5.ViewModel.BoekCreateViewModel
 
-@{
-    ViewBag.Title = "Create";
-}
-
-
-
-<h2>Create</h2>
-
-
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Boek</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Auteur, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Boek.Auteur, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Boek.Auteur, "", new { @class = "text-danger" })
-            </div>
+ <div id="content">
+    <h4 id="subtitel">Boek aanmaken</h4>
+    <hr />
+    <div id="wrapDetails">
+        <div id="leftCol">
+            <img src="~/Images/krekel.png" alt="krekelSchool">
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Uitgever, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Boek.Uitgever, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Boek.Uitgever, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Leeftijd, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Boek.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Boek.Leeftijd, "", new { @class = "text-danger" })
+            <div id="mainCol">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <table id="details">
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Auteur)</td>
+                        <td>
+                            @Html.EditorFor(model => model.Boek.Auteur, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Boek.Auteur, "", new {@class = "text-danger"})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Uitgever)</td>
+                        <td>
+                            @Html.EditorFor(model => model.Boek.Uitgever, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Boek.Uitgever, "", new {@class = "text-danger"})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Leeftijd)</td>
+                        <td>
+                            @Html.EditorFor(model => model.Boek.Leeftijd, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Boek.Leeftijd, "", new {@class = "text-danger"})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Titel)</td>
+                        <td>
+                            @Html.EditorFor(model => model.Boek.Titel, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Boek.Titel, "", new {@class = "text-danger"})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Omschrijving)</td>
+                        <td class="textArea">
+                            @Html.TextAreaFor(model => model.Boek.Omschrijving, new {rows = "10", columns = "300"})
+                            @Html.ValidationMessageFor(model => model.Boek.Omschrijving, "", new {@class = "text-danger"})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.LabelFor(model => model.Boek.Thema, htmlAttributes: new { @class = "editLabel" })</td>
+                        <td>
+                            @Html.DropDownListFor(model => model.Boek.Thema, Model.Themas, " --Selecteer een Thema--")
+                            @Html.ValidationMessageFor(model => model.Boek.Thema)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Uitgeleend)</td>
+                        <td>
+                            @Html.EditorFor(model => model.Boek.Uitgeleend, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Boek.Uitgeleend, "", new {@class = "text-danger"})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Beschikbaar)</td>
+                        <td>
+                            @Html.EditorFor(model => model.Boek.Beschikbaar, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.Boek.Beschikbaar, "", new {@class = "text-danger"})
+                        </td>
+                    </tr>
+                </table>
+                <p>
+                    <a href='@Url.Action("index")' class="floatRight"><img src="~/Images/Return.png"/></a>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default"/>
+                        </div>
+                    </div>
+                </p>
             </div>
-        </div>
-
- 
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Titel, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Boek.Titel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Boek.Titel, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Omschrijving, htmlAttributes: new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Boek.Omschrijving, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.Boek.Omschrijving, "", new {@class = "text-danger"})
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Boek.Thema, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Boek.Thema, Model.Themas, " --Selecteer een Thema--")
-                @Html.ValidationMessageFor(model => model.Boek.Thema)
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+        }
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

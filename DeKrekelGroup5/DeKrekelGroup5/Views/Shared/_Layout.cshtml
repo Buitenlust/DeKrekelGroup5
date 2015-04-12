@@ -3,53 +3,53 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    <title>De Lettertuin</title>
+    @Styles.Render("~/Content/masterLayout.css")
+    @Styles.Render("~/Content/reveal.css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Mediatheek - De Krekel", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+<div id="wrapper">
+    <div id="header">
+        <header id="krekel">
+            <a id="krekelImg" href="http://www.vbsdekrekel.be/"><img src="~/Images/krekel.png" alt="krekelSchool"></a>
+            <h1 id="krekelLink">
+                <a id="LinkToSite" href="http://www.vbsdekrekel.be/">Vrije basisschool de Krekel</a>
+            </h1>
+        </header>
+        <nav id="navBar">
+            <div>
+                <a href='@Url.Action("index", "home")'><img src="~/Images/home.png"/></a>
+                <a href='#' id="loginBib"><img src="~/Images/guest.png" /></a>
+                <a href='#' id="loginBeh"><img src="~/Images/admin.png" /></a>
+                <a href='#' id="logout"><img src="~/Images/logout.png" /></a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Thema", "Index", "Themas")</li>
-                    <li>@Html.ActionLink("Boeken", "Index", "Boeken")</li>
-                    <!--<li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>-->
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+        </nav>
+    </div>
+
+    <div class="container body-content">
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                <div class="message-error">@TempData["Info"]</div>
+                @RenderBody()
+            </section>
         </div>
+        <div id="modal" class="hidden">
+        </div>
+
+        <footer><hr/>
+            <p>&copy; @DateTime.Now.Year - MediaTheek - De Krekel by Group5</p>
+        </footer>
     </div>
-<div class="container body-content">
-
-
-
-    <div id="body">
-        @RenderSection("featured", required: false)
-        <section class="content-wrapper main-content clear-fix">
-            <div class="message-error">@TempData["Info"]</div>
-            @RenderBody()
-        </section>
-    </div>
-    <hr/>
-    <footer>
-        <p>&copy; @DateTime.Now.Year - MediaTheek - De Krekel by Group5</p>
-    </footer>
 </div>
-
-    @Scripts.Render("~/bundles/jquery")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/reveal")
     @RenderSection("scripts", required: false)
+
+    
 </body>
 </html>

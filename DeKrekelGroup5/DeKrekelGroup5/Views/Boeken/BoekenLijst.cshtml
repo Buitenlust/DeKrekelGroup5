@@ -1,16 +1,19 @@
 ﻿
 @model DeKrekelGroup5.ViewModel.BoekenLijstViewModel
 
-<h3>@ViewBag.Selection</h3>
-
-
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Exemplaar)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Titel)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Auteur)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Omschrijving)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Uitgever)
@@ -19,14 +22,12 @@
             @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Leeftijd)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Titel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Omschrijving)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Thema)
         </th>
+        <th>
+            Beschikbaar
+        </th>
+        <th>Uitlenen/Binnenbrengen</th>
         <th></th>
     </tr>
 
@@ -37,7 +38,13 @@
                 @Html.DisplayFor(modelItem => item.Exemplaar)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Titel)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Auteur)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Omschrijving)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Uitgever)
@@ -46,21 +53,33 @@
                 @Html.DisplayFor(modelItem => item.Leeftijd)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Titel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Omschrijving)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Thema)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Exemplaar }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Exemplaar }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Exemplaar })
+                @if (item.Beschikbaar)
+                {
+                    <img src="~/Images/ok.png" class="icon"/>
+                }
+                else
+                {
+                    <img src="~/Images/cross.png" class="icon"/>
+                }
+                @*@Html.DisplayFor(modelItem => item.Beschikbaar)*@
+            </td>
+            <td>
+                @*@Html.ActionLink("Uitlenen/binnenbrengen","uitlenen","","uitleen")*@
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Exemplaar })*@
+                <a href=' @Url.Action("edit",new { id = item.Exemplaar }) '><img src="~/Images/edit.png"/></a> 
+                @*@Html.ActionLink("Details", "Details", new { id = item.Exemplaar })*@
+                <a href=' @Url.Action("details",new { id = item.Exemplaar }) '><img src="~/Images/details.png" /></a> 
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.Exemplaar })*@
+                <a href=' @Url.Action("delete",new { id = item.Exemplaar }) '><img src="~/Images/delete.png" /></a>
             </td>
         </tr>
     }
 
 </table>
+
 

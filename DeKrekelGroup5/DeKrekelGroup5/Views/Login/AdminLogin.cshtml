@@ -1,41 +1,33 @@
 ﻿@model DeKrekelGroup5.ViewModel.LoginViewModel
-@{
-    ViewBag.Title = "AdminLogin";
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
 
-<div id="content">
-    <div id="login">
-
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-horizontal">
-                <h4>@Model.Username</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <div class="col-md-10">
-                        paswoord:
-                        @Html.PasswordFor(model => model.Paswoord, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Paswoord, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Login" class="btn btn-default" />
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Create Foo Bar</h3>
 </div>
 
+@using (Html.BeginForm("AdminLogin", "Login", FormMethod.Post, new {@class = "modal-form"}))
+{
+    @Html.ValidationSummary()
 
+    <div class="modal-body">
+        <div>
+            
+            Paswoord:
+            @Html.PasswordFor(model => model.Paswoord, new {htmlAttributes = new {@class = "form-control"}})
+            @Html.ValidationMessageFor(model => model.Paswoord, "", new {@class = "text-danger"})
+        </div>
 
+    </div>
 
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Undo</button>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+
+}
 
 
 

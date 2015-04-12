@@ -14,6 +14,11 @@ namespace DeKrekelGroup5.ViewModel
         [MinLength(6, ErrorMessage = " min 6 tekens")]
         public string Paswoord { get; set; }
 
+        public bool IsBeheerder { get; set; }
+
+        public bool IsBibliothecaris { get; set; }
+
+
         public LoginViewModel()
         {
 

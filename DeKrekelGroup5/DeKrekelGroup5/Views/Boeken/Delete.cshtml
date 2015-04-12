@@ -3,62 +3,70 @@
 @{
     ViewBag.Title = "Delete";
 }
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Boek</h4>
+ 
+<div id="content">
+    <h4 id="subtitel">Ben je zeker dat je dit boek wil verwijderen?</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Auteur)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Auteur)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Uitgever)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Uitgever)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Leeftijd)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Leeftijd)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Titel)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Titel)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Omschrijving)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Omschrijving)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+    <div id="wrapDetails">
+        <div id="leftCol">
+            <img src="~/Images/krekel.png" alt="krekelSchool">
         </div>
-    }
+
+        <div id="mainCol">
+            <table id="details">
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.Exemplaar)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.Exemplaar)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.Auteur)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.Auteur)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.Uitgever)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.Uitgever)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.Leeftijd)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.Leeftijd)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.Titel)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.Auteur)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.Omschrijving)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.Auteur)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.Themaa.Themaa)</td>
+                    <td class="td2">@Html.DisplayNameFor(model => model.Themaa.Themaa)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.Uitgeleend)</td>
+                    <td>@Html.DisplayFor(model => model.Uitgeleend)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.Beschikbaar)</td>
+                    <td>@Html.DisplayFor(model => model.Beschikbaar)</td>
+                </tr>
+            </table>
+
+
+                    @using (Html.BeginForm())
+                    {
+                    @Html.AntiForgeryToken()
+    <p class="floatRight">
+
+        <button type="submit" value="Delete" class="button green close"><img src="~/Images/tick.png">Verwijder!</button>
+        <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
+    </p>
+                    }
+
+            </div>
+    </div>
+
+   
+
 </div>
+

@@ -1,42 +1,30 @@
-﻿@model DeKrekelGroup5.ViewModel.LoginViewModel
-@{
-    ViewBag.Title = "Login";
-}
-
-<div id="content">
-    <div id="login">
-
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-horizontal">
-                <h4>@Model.Username</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <div class="col-md-10">
-                        paswoord:
-                        @Html.PasswordFor(model => model.Paswoord, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Paswoord, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Login" class="btn btn-default" />
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+<div id="heading">
+   @Model.loginViewModel.Username Login:
 </div>
 
+<div id="contentLogin">
 
-
-
-
-
-
-
+    @if (@Model.loginViewModel.Username == "Beheerder")
+     {
+         <img src="~/Images/admin.png" class="tinyImg"/>
+     }
+    @if (@Model.loginViewModel.Username == "Bibliothecaris")
+     {
+         <img src="~/Images/guest.png" class="tinyImg"/>
+     }
+     
+ @using (Ajax.BeginForm("Login",
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "Post",
+                            UpdateTargetId = "LoginDiv"
+                        }
+                        ))
+ {
+    <div id="LoginDiv">
+        @Html.Partial("_LoginPartial", Model) 
+    </div>
+ }
+</div>

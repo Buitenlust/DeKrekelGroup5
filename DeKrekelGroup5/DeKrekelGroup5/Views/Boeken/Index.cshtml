@@ -1,28 +1,39 @@
 ﻿@model DeKrekelGroup5.ViewModel.BoekenLijstViewModel
 
 @{
-    ViewBag.Title = "Boekenlijst";
+    ViewBag.Title = "Index";
 }
 
+<div id="content">
+    <table>
+        <tr>
+            <td>
+                <div id="searchBar">
+                    @using (Ajax.BeginForm("Index",
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "Get",
+                            UpdateTargetId = "Boeken" //,
+                            //OnComplete = "clearMessage"
+                        }
+                        ))
+                    {
+                        <input type="search" name="search" id="search" value="zoek een boek"/>
+                        <input type="submit" value="Zoek item" class="btn btn-default" id="searchSubmit"/>
+                        }
+                    @*@Html.ActionLink("Create New", "Create")*@
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 
-@using (Ajax.BeginForm("Index",
-        new AjaxOptions
-        {
-            InsertionMode = InsertionMode.Replace,
-            HttpMethod = "Get",
-            UpdateTargetId = "Boeken"//,
-            //OnComplete = "clearMessage"
-        }
-        ))
-{
-    <input type="search" name="search" id="search" />
-    <input type="submit" value="Search in all products" class="btn btn-default" />
-}
+                </div>
+            </td>
+            <td>
+                <a href=' @Url.Action("create") '><img src="~/Images/create.gif" class="createNew"/></a>
+            </td>
+        </tr>
 
-<div  id="Boeken">
-    @Html.Partial("BoekenLijst", Model)
+    </table>
+    <div id="Boeken">
+        @Html.Partial("BoekenLijst", Model)
+    </div>
 </div>

@@ -12,6 +12,7 @@ using Microsoft.Owin.Security;
 using DeKrekelGroup5.ViewModel;
 using DeKrekelGroup5.Models.Domain;
 using System.Collections.Generic;
+using System.Net;
 
 namespace DeKrekelGroup5.Controllers
 {
@@ -29,93 +30,54 @@ namespace DeKrekelGroup5.Controllers
         [HttpGet]
         public ActionResult Login(string username)
         {
+            TempData["error"] = "";
+            if (Request.IsAjaxRequest())
+                return PartialView("Login", new MainViewModel(){loginViewModel =  new LoginViewModel() { Username = username }});
 
-            return View(new LoginViewModel() { Username = username });
-        }
-
-        // GET: /Account/BibliothecarisLogin
-        [HttpGet]
-        public ActionResult BibliothecarisLogin(string username)
-        {
-
-            return View(new LoginViewModel() { Username = username });
-        }
-
-        // GET: /Account/AdminLogin
-        [HttpGet]
-        public ActionResult AdminLogin(string username)
-        {
-
-            return View(new LoginViewModel() { Username = username });
+            return PartialView("Login", new MainViewModel() { loginViewModel = new LoginViewModel() { Username = username } });
         }
 
         [HttpGet]
         public ActionResult Logout(Gebruiker gebruiker)
         {
             if(gebruiker != null)
-                return View();
+                return PartialView("Logout", new MainViewModel() { loginViewModel = new LoginViewModel() { Username = gebruiker.GebruikersNaam } });
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-
+      
+        
+        
         [HttpPost]
-        public ActionResult Login(LoginViewModel logon)
-        {
-            TempData["Info"] = logon.Paswoord;
-            Gebruiker gebruiker = gebruikers.SingleOrDefault(g => g.GebruikersNaam == logon.Username);
-            if (gebruiker != null && gebruiker.PaswoordHashed == gebruiker.HashPassword(logon.Paswoord)) 
-            {
-                //moet nu gebruiker binden
-                if (HttpContext.Session != null)
-                { 
-                    HttpContext.Session["gebruiker"] = gebruiker; 
-                }
-                return Redirect(Request.UrlReferrer.ToString());
-            }
-            return RedirectToAction("Login");
-        }
-
-        [HttpPost]
-        public ActionResult BibliothecarisLogin(LoginViewModel logon)
-        {   
-            
-            Gebruiker gebruiker = gebruikers.SingleOrDefault(g => g.GebruikersNaam == logon.Username);
-            if (gebruiker != null && gebruiker.BibliotheekRechten==true && gebruiker.PaswoordHashed == gebruiker.HashPassword(logon.Paswoord))
-            {
-                //moet nu gebruiker binden
-                if (HttpContext.Session != null)
-                {
-                    TempData["Info"] = "Succesvol ingelogd als Bibliothecaris";
-                    HttpContext.Session["gebruiker"] = gebruiker;
-                }
-                return Redirect((Request.UrlReferrer == null) ? "" : Request.UrlReferrer.ToString());
-            }
-            return RedirectToAction("BibliothecarisLogin");
-        }
-        [HttpPost]
-        public ActionResult AdminLogin(LoginViewModel logon)
+        public ActionResult Login([Bind(Prefix = "loginViewModel")] LoginViewModel logon)
         {   //if AdminRechten op adminLogin, return to last page, else return adminlogin 
-            
-            Gebruiker gebruiker = gebruikers.SingleOrDefault(g => g.GebruikersNaam == logon.Username);
-            if (gebruiker != null && gebruiker.AdminRechten == true &&  gebruiker.PaswoordHashed == gebruiker.HashPassword(logon.Paswoord))
+           
+            if (Request.IsAjaxRequest())
             {
-                TempData["Info"] = "Succesvol ingelogd!";
-                if (HttpContext.Session != null)
+                Gebruiker gebruiker = gebruikers.SingleOrDefault(g => g.GebruikersNaam == logon.Username);
+
+                if (gebruiker != null && gebruiker.PaswoordHashed == gebruiker.HashPassword(logon.Paswoord))
                 {
-                    TempData["Info"] = "Succesvol ingelogd als Bibliothecaris";
-                    HttpContext.Session["gebruiker"] = gebruiker;
+                    if (HttpContext.Session != null)
+                    {
+                        HttpContext.Session["gebruiker"] = gebruiker;
+                    }
+                    TempData["success"] = "Welkom, u bent succesvol ingelogd, "+logon.Username;
+                    return PartialView("_success", new MainViewModel(){loginViewModel = logon});
                 }
-                return RedirectToAction("Index", "Home");
+                TempData["error"] = "Verkeerd paswoord!";
+                return PartialView("_LoginPartial", new MainViewModel(){loginViewModel =  new LoginViewModel() { Username = logon.Username }});
             }
-            TempData["Info"] = "Verkeerd paswoord!";
-            return RedirectToAction("AdminLogin");
+            return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
-        public ActionResult LogoutConfirmed()
+        [HttpPost]
+        public ActionResult Logout()
         {
             if (HttpContext.Session != null)
             {
-                TempData["Info"] = "Succesvol uitgelogd";
+                TempData["success"] = "U ben succesvol uitgelogd!";
                 HttpContext.Session["gebruiker"] = null;
+                return PartialView("_success", new MainViewModel() { loginViewModel = new LoginViewModel() });
             }
             return Redirect((Request.UrlReferrer == null) ? "" : Request.UrlReferrer.ToString());
             
