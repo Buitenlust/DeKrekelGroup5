@@ -318,7 +318,7 @@ select {
 #modal {
     visibility:visiblee;
 	width:360px;
-	height:189px;
+	height:250px;
 	padding:8px;
 
 	background:rgba(0,0,0,.3);
@@ -384,7 +384,7 @@ select {
 
 #contentLogin {
     width:360px;
-    height:180px;
+    height:200px;
  
     background:#fcfcfc;
  
