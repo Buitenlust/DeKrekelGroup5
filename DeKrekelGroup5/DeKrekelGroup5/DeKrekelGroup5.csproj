@@ -194,7 +194,6 @@
     <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Controllers\UitlenersController.cs" />
-    <Compile Include="Controllers\VerteltasController.cs" />
     <Compile Include="Infrastructure\GebruikerModelBinder.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
     <Compile Include="Models\DAL\GebruikerRepository.cs" />
