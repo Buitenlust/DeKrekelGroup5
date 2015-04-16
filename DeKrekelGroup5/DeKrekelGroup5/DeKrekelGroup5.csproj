@@ -234,8 +234,7 @@
     <Compile Include="Models\Domain\VertelTas.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\UitlenerViewModel.cs" />
-    <Compile Include="ViewModel\LoginViewModel.cs" />
-    <Compile Include="ViewModel\LogoutViewModel.cs" />
+    <Compile Include="ViewModel\GebruikerViewModel.cs" />
     <Compile Include="ViewModel\SpelViewModel.cs" />
     <Compile Include="ViewModel\BoekViewModel.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />

@@ -1,10 +1,5 @@
-﻿@model DeKrekelGroup5.Models.Domain.Boek
-
-@{
-    ViewBag.Title = "Details";
-}
-
-
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+ 
 <div id="content">
     <h4 id="subtitel">Details Boek</h4>
     <hr/>
@@ -15,46 +10,46 @@
         <div id="mainCol">
             <table id="details">
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.Exemplaar)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.Exemplaar)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Exemplaar)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Exemplaar)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.Auteur)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.Auteur)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Auteur)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Auteur)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.Uitgever)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.Uitgever)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Uitgever)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Uitgever)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.Leeftijd)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.Leeftijd)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Leeftijd)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Leeftijd)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.Titel)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.Auteur)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Titel)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Auteur)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.Omschrijving)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.Auteur)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Omschrijving)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Auteur)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.Themaa.Themaa)</td>
-                    <td class="td2">@Html.DisplayNameFor(model => model.Themaa.Themaa)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Thema)</td>
+                    <td class="td2">@Html.DisplayNameFor(model => model.BoekViewModel.Thema)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.Uitgeleend)</td>
-                    <td>@Html.DisplayFor(model => model.Uitgeleend)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Uitgeleend)</td>
+                    <td>@Html.DisplayFor(model => model.BoekViewModel.Uitgeleend)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.Beschikbaar)</td>
-                    <td>@Html.DisplayFor(model => model.Beschikbaar)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Beschikbaar)</td>
+                    <td>@Html.DisplayFor(model => model.BoekViewModel.Beschikbaar)</td>
                 </tr>
             </table>
 
             <p class ="floatRight">
                 @*@Html.ActionLink("Edit", "Edit", new { id = Model.Exemplaar })*@
-                <a href=' @Url.Action("edit", new { id = Model.Exemplaar }) '><img src="~/Images/edit.png" /></a>
+                <a href=' @Url.Action("edit", new { id = Model.BoekViewModel.Exemplaar }) '><img src="~/Images/edit.png" /></a>
                 @*@Html.ActionLink("Back to List", "Index")*@
                 <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
             </p>

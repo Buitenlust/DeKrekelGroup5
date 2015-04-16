@@ -1,5 +1,5 @@
-﻿@model DeKrekelGroup5.ViewModel.BoekCreateViewModel
-
+﻿@using DeKrekelGroup5.ViewModel
+@model DeKrekelGroup5.ViewModel.MainViewModel
  <div id="content">
     <h4 id="subtitel">Boek aanmaken</h4>
     <hr />
@@ -12,63 +12,64 @@
         {
             @Html.AntiForgeryToken()
 
+            
             <div id="mainCol">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <table id="details">
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Auteur)</td>
+                        <td class="td1">@Html.DisplayNameFor(model => model.BoekCreateViewModel.Boek.Auteur)</td>
                         <td>
-                            @Html.EditorFor(model => model.Boek.Auteur, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Boek.Auteur, "", new {@class = "text-danger"})
+                            @Html.EditorFor(model => model.BoekCreateViewModel.Boek.Auteur, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.BoekCreateViewModel.Boek.Auteur, "", new {@class = "text-danger"})
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Uitgever)</td>
+                        <td class="td1">@Html.DisplayNameFor(model => model.BoekCreateViewModel.Boek.Uitgever)</td>
                         <td>
-                            @Html.EditorFor(model => model.Boek.Uitgever, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Boek.Uitgever, "", new {@class = "text-danger"})
+                            @Html.EditorFor(model => model.BoekCreateViewModel.Boek.Uitgever, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BoekCreateViewModel.Boek.Uitgever, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Leeftijd)</td>
+                        <td class="td1">@Html.DisplayNameFor(model => model.BoekCreateViewModel.Boek.Leeftijd)</td>
                         <td>
-                            @Html.EditorFor(model => model.Boek.Leeftijd, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Boek.Leeftijd, "", new {@class = "text-danger"})
+                            @Html.EditorFor(model => model.BoekCreateViewModel.Boek.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BoekCreateViewModel.Boek.Leeftijd, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Titel)</td>
+                        <td class="td1">@Html.DisplayNameFor(model => model.BoekCreateViewModel.Boek.Titel)</td>
                         <td>
-                            @Html.EditorFor(model => model.Boek.Titel, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Boek.Titel, "", new {@class = "text-danger"})
+                            @Html.EditorFor(model => model.BoekCreateViewModel.Boek.Titel, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BoekCreateViewModel.Boek.Titel, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Omschrijving)</td>
+                        <td class="td1">@Html.DisplayNameFor(model => model.BoekCreateViewModel.Boek.Omschrijving)</td>
                         <td class="textArea">
-                            @Html.TextAreaFor(model => model.Boek.Omschrijving, new {rows = "10", columns = "300"})
-                            @Html.ValidationMessageFor(model => model.Boek.Omschrijving, "", new {@class = "text-danger"})
+                            @Html.TextAreaFor(model => model.BoekCreateViewModel.Boek.Omschrijving, new { rows = "10", columns = "300" })
+                            @Html.ValidationMessageFor(model => model.BoekCreateViewModel.Boek.Omschrijving, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.LabelFor(model => model.Boek.Thema, htmlAttributes: new { @class = "editLabel" })</td>
+                        <td class="td1">@Html.LabelFor(model => model.BoekCreateViewModel.Boek.Thema, htmlAttributes: new { @class = "editLabel" })</td>
                         <td>
-                            @Html.DropDownListFor(model => model.Boek.Thema, Model.Themas, " --Selecteer een Thema--")
-                            @Html.ValidationMessageFor(model => model.Boek.Thema)
+                            @Html.DropDownListFor(model => model.BoekCreateViewModel.Boek.Thema, Model.BoekCreateViewModel.Themas, " --Selecteer een Thema--")
+                            @Html.ValidationMessageFor(model => model.BoekCreateViewModel.Boek.Thema)
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Uitgeleend)</td>
+                        <td class="td1">@Html.DisplayNameFor(model => model.BoekCreateViewModel.Boek.Uitgeleend)</td>
                         <td>
-                            @Html.EditorFor(model => model.Boek.Uitgeleend, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Boek.Uitgeleend, "", new {@class = "text-danger"})
+                            @Html.EditorFor(model => model.BoekCreateViewModel.Boek.Uitgeleend, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BoekCreateViewModel.Boek.Uitgeleend, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.Boek.Beschikbaar)</td>
+                        <td class="td1">@Html.DisplayNameFor(model => model.BoekCreateViewModel.Boek.Beschikbaar)</td>
                         <td>
-                            @Html.EditorFor(model => model.Boek.Beschikbaar, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Boek.Beschikbaar, "", new {@class = "text-danger"})
+                            @Html.EditorFor(model => model.BoekCreateViewModel.Boek.Beschikbaar, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BoekCreateViewModel.Boek.Beschikbaar, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                 </table>

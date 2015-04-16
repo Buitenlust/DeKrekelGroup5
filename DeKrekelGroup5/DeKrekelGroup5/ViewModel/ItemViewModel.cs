@@ -22,5 +22,10 @@ namespace DeKrekelGroup5.ViewModel
 
         public bool Beschikbaar { get; set; }
         public bool Uitgeleend { get; set; }
+
+        public ItemViewModel()
+        {
+            
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using DeKrekelGroup5.Models.DAL;
 using DeKrekelGroup5.Models.Domain;
+using DeKrekelGroup5.ViewModel;
 
 namespace DeKrekelGroup5.Controllers
 {
@@ -15,24 +16,10 @@ namespace DeKrekelGroup5.Controllers
         public HomeController(IGebruikerRepository gebruikersrep)
         {
         }
-  
-        public ActionResult Index()
-        { 
-            return View();
-        }
 
-        public ActionResult About()
+        public ActionResult Index(Gebruiker gebruiker)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(new MainViewModel(gebruiker));
         }
     }
 }

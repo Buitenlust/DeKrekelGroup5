@@ -6,7 +6,7 @@ using System.Web;
 
 namespace DeKrekelGroup5.ViewModel
 {
-    public class LoginViewModel
+    public class GebruikerViewModel
     {
         public string Username { get; set; }
         [Required(ErrorMessage = "Tes vandoen")]
@@ -19,11 +19,11 @@ namespace DeKrekelGroup5.ViewModel
         public bool IsBibliothecaris { get; set; }
 
 
-        public LoginViewModel()
+        public GebruikerViewModel()
         {
 
         }
-        public LoginViewModel(string username, string paswoord)
+        public GebruikerViewModel(string username, string paswoord)
         {
             Username = username;
             Paswoord = paswoord;

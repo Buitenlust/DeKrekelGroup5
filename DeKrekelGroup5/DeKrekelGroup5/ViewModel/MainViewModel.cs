@@ -2,14 +2,86 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using DeKrekelGroup5.Models.Domain;
 
 namespace DeKrekelGroup5.ViewModel
 {
     public class MainViewModel
     {
-        public LoginViewModel loginViewModel { get; set; }
-        public BoekViewModel boekViewModel { get; set; }
-        public SpelViewModel spelViewModel { get; set; }
-        public UitlenerViewModel uitlenerViewModel { get; set; }
+        public GebruikerViewModel GebruikerViewModel { get; set; }
+
+        public BoekViewModel BoekViewModel { get; set; }
+        public BoekenLijstViewModel BoekenLijstViewModel { get; set; }
+        public BoekCreateViewModel BoekCreateViewModel { get; set; }
+
+        public SpelViewModel SpelViewModel { get; set; }
+
+        public UitlenerViewModel UitlenerViewModel { get; set; }
+
+
+        public MainViewModel()
+        {
+            GebruikerViewModel = new GebruikerViewModel();
+            BoekViewModel = new BoekViewModel();
+            BoekenLijstViewModel = new BoekenLijstViewModel();
+            BoekCreateViewModel = new BoekCreateViewModel();
+            SpelViewModel = new SpelViewModel();
+            UitlenerViewModel = new UitlenerViewModel();
+        }
+
+        public MainViewModel(Gebruiker gebruiker)
+        {
+            if(gebruiker == null)
+                gebruiker = new Gebruiker();
+            GebruikerViewModel = new GebruikerViewModel()
+            {
+                Username = gebruiker.GebruikersNaam,
+                Paswoord = gebruiker.PaswoordHashed,
+                IsBibliothecaris = gebruiker.BibliotheekRechten,
+                IsBeheerder = gebruiker.AdminRechten
+            };
+        }
+
+        public void SetGebruikerToVm(Gebruiker gebruiker)
+        {
+            GebruikerViewModel = new GebruikerViewModel()
+            {
+                Username = gebruiker.GebruikersNaam,
+                Paswoord = gebruiker.PaswoordHashed,
+                IsBibliothecaris = gebruiker.BibliotheekRechten,
+                IsBeheerder = gebruiker.AdminRechten
+            };
+        }
+
+        public object SetNewBoekenLijstVm(IEnumerable<Boek> boeken)
+        {
+                BoekenLijstViewModel = new BoekenLijstViewModel(boeken);
+            return this;
+        }
+
+        public object SetBoekViewModel(Boek boek)
+        {
+            BoekViewModel = new BoekViewModel()
+            {
+                Exemplaar = boek.Exemplaar,
+                Omschrijving = boek.Omschrijving,
+                Titel = boek.Titel,
+                Auteur = boek.Auteur,
+                Uitgever = boek.Uitgever,
+                Leeftijd = boek.Leeftijd,
+                Thema = boek.Themaa.Themaa
+            };
+            return this;
+        }
+
+        public object SetBoekCreateViewModel(IEnumerable<Thema> themas, Boek boek)
+        {
+             BoekCreateViewModel = new BoekCreateViewModel(themas, boek);
+            return this;
+        }
+
+
     }
+
 }

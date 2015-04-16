@@ -45,9 +45,9 @@ namespace DeKrekelGroup5.Controllers
                 }
 
                 if (Request.IsAjaxRequest())
-                    return PartialView("BoekenLijst", new BoekenLijstViewModel(boeken) { IsAdmin = gebruiker.AdminRechten, IsBibliothecaris = gebruiker.BibliotheekRechten });
+                    return PartialView("BoekenLijst", new MainViewModel(gebruiker).SetNewBoekenLijstVm(boeken));
 
-                return View(new BoekenLijstViewModel(boeken) { IsAdmin = gebruiker.AdminRechten, IsBibliothecaris = gebruiker.BibliotheekRechten });
+                return View(new MainViewModel(gebruiker).SetNewBoekenLijstVm(boeken));
             }
             catch (Exception)
             {
@@ -71,7 +71,7 @@ namespace DeKrekelGroup5.Controllers
                 Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
                 if (boek == null)
                     return HttpNotFound();
-                return View(boek);
+                return View(new MainViewModel(gebruiker).SetBoekViewModel(boek));
             }
             catch (Exception)
             {
@@ -88,7 +88,7 @@ namespace DeKrekelGroup5.Controllers
             
             try
             {
-                    return View(new BoekCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new Boek()));
+                return View(new MainViewModel(gebruiker).SetBoekCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new Boek()));
             }
             catch (Exception)
             {
@@ -101,20 +101,20 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Prefix = "Boek")] BoekViewModel boek, Gebruiker gebruiker)
+        public ActionResult Create([Bind(Prefix = "BoekCreateViewModel")] BoekCreateViewModel boek, Gebruiker gebruiker)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            if (ModelState.IsValid && boek != null && boek.Exemplaar <=0)
+            if (ModelState.IsValid && boek != null && boek.Boek.Exemplaar <=0)
             {
                 try
                 {
-                    Boek newBoek = boek.MapToBoek(boek, gebruiker.LetterTuin.GetThemaByName(boek.Thema));
+                    Boek newBoek = boek.Boek.MapToBoek(boek.Boek, gebruiker.LetterTuin.GetThemaByName(boek.Boek.Thema));
                     gebruiker.AddItem(newBoek);
                     gebruikersRep.DoNotDuplicateThema(newBoek);
                     gebruikersRep.SaveChanges();
-                    TempData["Info"] = "Boek"+ boek.Titel +" werd toegevoegd...";
+                    TempData["Info"] = "Boek" + boek.Boek.Titel + " werd toegevoegd...";
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -139,7 +139,7 @@ namespace DeKrekelGroup5.Controllers
                 Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
                 if (boek == null)
                     return HttpNotFound();
-                return View(new BoekCreateViewModel(gebruiker.LetterTuin.Themas, boek));
+                return View(new MainViewModel(gebruiker).SetBoekCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), boek));
             }
             catch (Exception)
             {
@@ -153,21 +153,21 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Prefix = "Boek")] BoekViewModel boek, Gebruiker gebruiker)
+        public ActionResult Edit([Bind(Prefix = "BoekCreateViewModel")] BoekCreateViewModel boek, Gebruiker gebruiker)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            if (ModelState.IsValid && boek!= null && boek.Exemplaar > 0)
+            if (ModelState.IsValid && boek!= null && boek.Boek.Exemplaar > 0)
             {
                 try
                 {
-                    boek.Uitgeleend = false;
-                    boek.Beschikbaar = true;
-                    Boek newBoek = boek.MapToBoek(boek, gebruiker.LetterTuin.GetThemaByName(boek.Thema));
+                    boek.Boek.Uitgeleend = false;
+                    boek.Boek.Beschikbaar = true;
+                    Boek newBoek = boek.Boek.MapToBoek(boek.Boek, gebruiker.LetterTuin.GetThemaByName(boek.Boek.Thema));
                     gebruiker.UpdateBoek(newBoek);
                     gebruikersRep.DoNotDuplicateThema(newBoek);
-                    TempData["Info"] = "Boek " + boek.Titel + " werd aangepast...";
+                    TempData["Info"] = "Boek " + boek.Boek.Titel + " werd aangepast...";
                     gebruikersRep.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -176,7 +176,7 @@ namespace DeKrekelGroup5.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }
             }
-            return View(boek);
+            return View(new MainViewModel(gebruiker){BoekCreateViewModel = boek});
         }
 
         // GET: Boeken/Delete/5
@@ -193,7 +193,7 @@ namespace DeKrekelGroup5.Controllers
                 Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
                 if (boek == null)
                     return HttpNotFound();
-                return View(boek);
+                return View(new MainViewModel(gebruiker).SetBoekViewModel(boek));
             }
             catch (Exception)
             {
