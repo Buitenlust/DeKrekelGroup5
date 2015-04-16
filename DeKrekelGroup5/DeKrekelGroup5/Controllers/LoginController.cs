@@ -32,23 +32,23 @@ namespace DeKrekelGroup5.Controllers
         {
             TempData["error"] = "";
             if (Request.IsAjaxRequest())
-                return PartialView("Login", new MainViewModel(){loginViewModel =  new LoginViewModel() { Username = username }});
+                return PartialView("Login", new MainViewModel(){GebruikerViewModel =  new GebruikerViewModel() { Username = username }});
 
-            return PartialView("Login", new MainViewModel() { loginViewModel = new LoginViewModel() { Username = username } });
+            return PartialView("Login", new MainViewModel() { GebruikerViewModel = new GebruikerViewModel() { Username = username } });
         }
 
         [HttpGet]
         public ActionResult Logout(Gebruiker gebruiker)
         {
             if(gebruiker != null)
-                return PartialView("Logout", new MainViewModel() { loginViewModel = new LoginViewModel() { Username = gebruiker.GebruikersNaam } });
+                return PartialView("Logout", new MainViewModel() { GebruikerViewModel = new GebruikerViewModel() { Username = gebruiker.GebruikersNaam } });
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
       
         
         
         [HttpPost]
-        public ActionResult Login([Bind(Prefix = "loginViewModel")] LoginViewModel logon)
+        public ActionResult Login([Bind(Prefix = "GebruikerViewModel")] GebruikerViewModel logon)
         {   //if AdminRechten op adminLogin, return to last page, else return adminlogin 
            
             if (Request.IsAjaxRequest())
@@ -62,10 +62,10 @@ namespace DeKrekelGroup5.Controllers
                         HttpContext.Session["gebruiker"] = gebruiker;
                     }
                     TempData["success"] = "Welkom, u bent succesvol ingelogd, "+logon.Username;
-                    return PartialView("_success", new MainViewModel(){loginViewModel = logon});
+                    return PartialView("_success", new MainViewModel(){GebruikerViewModel = logon});
                 }
                 TempData["error"] = "Verkeerd paswoord!";
-                return PartialView("_LoginPartial", new MainViewModel(){loginViewModel =  new LoginViewModel() { Username = logon.Username }});
+                return PartialView("_LoginPartial", new MainViewModel(){GebruikerViewModel =  new GebruikerViewModel() { Username = logon.Username }});
             }
             return RedirectToAction("Index", "Home");
         }
@@ -77,7 +77,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 TempData["success"] = "U ben succesvol uitgelogd!";
                 HttpContext.Session["gebruiker"] = null;
-                return PartialView("_success", new MainViewModel() { loginViewModel = new LoginViewModel() });
+                return PartialView("_success", new MainViewModel() { GebruikerViewModel = new GebruikerViewModel() });
             }
             return Redirect((Request.UrlReferrer == null) ? "" : Request.UrlReferrer.ToString());
             

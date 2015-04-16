@@ -1,15 +1,15 @@
 ﻿@model DeKrekelGroup5.ViewModel.MainViewModel
 <div id="heading">
-   @Model.loginViewModel.Username Login:
+   @Model.GebruikerViewModel.Username Login:
 </div>
 
 <div id="contentLogin">
 
-    @if (@Model.loginViewModel.Username == "Beheerder")
+    @if (@Model.GebruikerViewModel.Username == "Beheerder")
      {
          <img src="~/Images/admin.png" class="tinyImg"/>
      }
-    @if (@Model.loginViewModel.Username == "Bibliothecaris")
+    @if (@Model.GebruikerViewModel.Username == "Bibliothecaris")
      {
          <img src="~/Images/guest.png" class="tinyImg"/>
      }

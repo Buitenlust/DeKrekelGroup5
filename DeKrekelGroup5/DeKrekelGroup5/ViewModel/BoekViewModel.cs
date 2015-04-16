@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -17,6 +19,10 @@ namespace DeKrekelGroup5.ViewModel
         [MaxLength(45, ErrorMessage = "De naam van de uitgever is te lang (max. 45 tekens)")]
         public string Uitgever { get; set; }
 
+        public BoekViewModel() 
+        {
+             
+        }
 
 
         public Boek MapToBoek(BoekViewModel vm, Thema thema)
@@ -41,8 +47,6 @@ namespace DeKrekelGroup5.ViewModel
     public class BoekenLijstViewModel
     {
         public IEnumerable<BoekViewModel> Boeken { get; set; }
-        public bool IsAdmin { get; set; }
-        public bool IsBibliothecaris { get; set; }
 
         public BoekenLijstViewModel(IEnumerable<Boek> boeken)
         {
@@ -55,6 +59,11 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = b.Leeftijd, 
                 Thema = b.Themaa.Themaa
             });
+        }
+
+        public BoekenLijstViewModel()
+        {
+            Boeken = new List<BoekViewModel>();
         }
     }
   
@@ -78,6 +87,13 @@ namespace DeKrekelGroup5.ViewModel
             };
 
             Themas = new SelectList(themas, "Themaa", "Themaa", Boek.Thema ?? "");
+        }
+
+        public BoekCreateViewModel()
+        {
+            Boek = new BoekViewModel();
+            IEnumerable<Thema> themas = new List<Thema>();
+            Themas = new SelectList(themas, "", "", "");
         }
     }
 

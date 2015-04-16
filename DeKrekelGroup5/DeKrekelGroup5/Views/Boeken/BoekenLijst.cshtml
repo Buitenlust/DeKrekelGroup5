@@ -1,28 +1,28 @@
 ﻿
-@model DeKrekelGroup5.ViewModel.BoekenLijstViewModel
+@model DeKrekelGroup5.ViewModel.MainViewModel
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Exemplaar)
+            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Exemplaar)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Titel)
+            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Titel)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Auteur)
+            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Auteur)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Omschrijving)
+            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Omschrijving)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Uitgever)
+            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Uitgever)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Leeftijd)
+            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Leeftijd)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Boeken.FirstOrDefault().Thema)
+            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Thema)
         </th>
         <th>
             Beschikbaar
@@ -31,7 +31,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model.Boeken)
+    @foreach (var item in Model.BoekenLijstViewModel.Boeken)
     {
         <tr>
             <td>

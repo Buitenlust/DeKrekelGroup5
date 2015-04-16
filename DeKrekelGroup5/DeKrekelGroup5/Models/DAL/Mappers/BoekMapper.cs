@@ -22,8 +22,9 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
             Property(b => b.Auteur).HasMaxLength(55);
             
 
+
             //primary key
-            HasKey(boek => boek.Exemplaar);
+            HasKey(boek => boek.Exemplaar); 
         }
     }
 }
