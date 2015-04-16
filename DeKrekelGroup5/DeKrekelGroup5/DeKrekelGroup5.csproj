@@ -192,6 +192,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\BoekenController.cs" />
+    <Compile Include="Controllers\CDController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Infrastructure\GebruikerModelBinder.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="Models\Domain\Thema.cs" />
     <Compile Include="Models\Domain\Uitlening.cs" />
     <Compile Include="Models\Domain\VertelTas.cs" />
+    <Compile Include="ViewModel\CDViewModel.cs" />
     <Compile Include="ViewModel\SpelViewModel.cs" />
     <Compile Include="ViewModel\BoekViewModel.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
@@ -312,6 +314,12 @@
     <Content Include="Views\Spellen\Details.cshtml" />
     <Content Include="Views\Spellen\Edit.cshtml" />
     <Content Include="Views\Spellen\Index.cshtml" />
+    <Content Include="Views\CD\CDLijst.cshtml" />
+    <Content Include="Views\CD\Create.cshtml" />
+    <Content Include="Views\CD\Delete.cshtml" />
+    <Content Include="Views\CD\Details.cshtml" />
+    <Content Include="Views\CD\Edit.cshtml" />
+    <Content Include="Views\CD\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
