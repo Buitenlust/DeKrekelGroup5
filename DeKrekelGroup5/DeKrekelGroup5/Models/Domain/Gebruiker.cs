@@ -88,6 +88,24 @@ namespace DeKrekelGroup5.Models.Domain
             return false;
         }
 
+        /// <summary> Update de parameters van een dvd</summary>
+        /// <returns> Geeft true weer als de dvd is aangepast. Exemplaar van de dvd moet > 0 </returns>
+        /// <param name="dvd"> te updaten dvd </param>
+        public bool UpdateDVD(DVD dvd)
+        {
+            CheckAdminRechten();
+            if (dvd != null && dvd.Exemplaar > 0)
+            {
+                var newItem = LetterTuin.GetItem(dvd.Exemplaar) as DVD;
+                if (newItem != null)
+                {
+                    newItem.Update(dvd);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary> Removes an item from the collection </summary>
         /// <returns>returns true if item is succesfully removed from the collection. Exemplaar must be > 0 </returns>
         /// <param name="id"> id van te verwijderen item </param>
