@@ -214,11 +214,22 @@ namespace DeKrekelGroup5.Models.Domain
             return null;
         }
 
+        /// <summary> return an uitlening matching the parameter id.</summary>
+        /// <returns>Returns a IEnumerable of Spellen or null if not found</returns>
+        /// <param name="id"> id of an item </param> 
+        public Uitlening GetOpenUitleningByItem(int id)
+        {
+            CheckBibliotheekRechten();
+            if (id > 0)
+                return LetterTuin.Uitleningen.Where(p => p.Itemm.Exemplaar == id).SingleOrDefault(p => p.BinnenGebracht.Year == 1);
+            return null;
+        }
+
         /// <summary> Add a new Uitlening to the Collection </summary>
         /// <returns>Returns a boolean true if the uitlening is succesfully created</returns>
         /// <param name="uitlener"> Object Uitlener </param>
         /// <param name="item"> Object item </param>
-        public bool VoegUitleningToe(Gebruiker gebruiker, Uitlener uitlener, Item item)
+        public bool VoegUitleningToe(Uitlener uitlener, Item item)
         {
             CheckBibliotheekRechten();
             if (uitlener != null && item != null && uitlener.Id > 0 && item.Exemplaar > 0)
@@ -227,10 +238,11 @@ namespace DeKrekelGroup5.Models.Domain
                 {
                     Itemm = item,
                     StartDatum = DateTime.Today,
+                    EindDatum = DateTime.Today.AddDays(LetterTuin.Instellingen.UitleenDagen),
                     Verlenging = 0,
                     Uitlenerr = uitlener
 
-                });
+                }); 
                 return true;
             }
             return false;
@@ -238,46 +250,41 @@ namespace DeKrekelGroup5.Models.Domain
 
         /// <summary> Modifies the uitlening. adds the enddate to today </summary>
         /// <returns>Returns a boolean true if the uitlening is correctly modified</returns>
-        /// <param name="id"> Id of uitlening </param>
-        public bool EindeUitlening(Gebruiker gebruiker, int id)
+        /// <param name="uitlening">uitlening </param>
+        public void EindeUitlening(Uitlening uitlening)
         {
             CheckBibliotheekRechten();
-            Uitlening oldUitlening = GetUitlening(id);
-            if (oldUitlening != null)
+            if (uitlening != null)
             {
-                LetterTuin.Uitleningen.Remove(oldUitlening);
-                oldUitlening.EindDatum = DateTime.Today;
-                LetterTuin.Uitleningen.Add(oldUitlening);
-                return true;
+                uitlening.BinnenGebracht = DateTime.Today;
+                uitlening.update(uitlening);
             }
-            return false;
         }
 
         /// <summary> Calculates the fine after an item is returned </summary>
         /// <returns>Returns the amount to pay.</returns>
-        /// <param name="id"> Id of uitlening </param>
-        public decimal GetBoete(Gebruiker gebruiker, int id)
+        /// <param name="uitlening"> de uitlening </param>
+        public decimal GetBoete(Uitlening uitlening)
         {
             CheckBibliotheekRechten();
-            Uitlening uitlening = GetUitlening(id);
-            int dagen = uitlening.EindDatum.Subtract(uitlening.StartDatum).Days;
-            if (dagen > LetterTuin.Instellingen.UitleenDagen)
-                return dagen - LetterTuin.Instellingen.UitleenDagen * LetterTuin.Instellingen.BedragBoetePerDag;
+            int dagen = DateTime.Today.Subtract(uitlening.EindDatum).Days;
+            if (dagen > 0)
+                return (dagen * (decimal)LetterTuin.Instellingen.BedragBoetePerDag)/100;
             return 0;
         }
 
         /// <summary> Verlengt de uitlening van een uitgeleende item </summary>
         /// <returns>Retourneerd true als dit mogelijk en gewijzigd is</returns>
         /// <param name="id"> Id van uitlening </param>
-        public bool VerlengUitlening(Gebruiker gebruiker, int id)
+        public bool VerlengUitlening(int id)
         {
             CheckBibliotheekRechten();
             Uitlening uitlening = GetUitlening(id);
             if (uitlening.Verlenging < LetterTuin.Instellingen.MaxVerlengingen)
             {
-                LetterTuin.Uitleningen.Remove(uitlening);
+                uitlening.update(uitlening);
+                uitlening.EindDatum = uitlening.EindDatum.AddDays(LetterTuin.Instellingen.UitleenDagen);
                 uitlening.Verlenging += 1;
-                LetterTuin.Uitleningen.Add(uitlening);
                 return true;
             }
             return false;
@@ -361,6 +368,22 @@ namespace DeKrekelGroup5.Models.Domain
                 return true;
             }
             return false;
+        }
+
+        /// <summary> controleert indien een verlenging mogelijk is </summary>
+        /// <exception>Throws Accessviolationexception indien gebruiker geen rechten heeft. </exception>
+        /// <returns>true indien verlenging mogelijk is</returns>
+        /// <param name="item"> item te verlengen uitlening </param>
+        public bool CheckVerlenging(Item item)
+        {
+            CheckBibliotheekRechten();
+            Uitlening uitlening = GetOpenUitleningByItem(item.Exemplaar);
+            if (uitlening.Verlenging < LetterTuin.Instellingen.MaxVerlengingen)
+                return true;
+            return false;
+
+
+
         }
 
 

@@ -32,7 +32,6 @@ namespace DeKrekelGroup5.ViewModel
                 Exemplaar = vm.Exemplaar,
                 Auteur = vm.Auteur,
                 Beschikbaar = vm.Beschikbaar,
-                Uitgeleend = vm.Uitgeleend,
                 Leeftijd = vm.Leeftijd,
                 Omschrijving = vm.Omschrijving,
                 Titel = vm.Titel,
@@ -57,7 +56,10 @@ namespace DeKrekelGroup5.ViewModel
                 Auteur = b.Auteur,
                 Uitgever = b.Uitgever,
                 Leeftijd = b.Leeftijd, 
-                Thema = b.Themaa.Themaa
+                Thema = b.Themaa.Themaa,
+                Beschikbaar = b.Beschikbaar,
+                EindDatumUitlening = b.Uitleningen.Count == 0? new DateTime() : b.Uitleningen.SingleOrDefault(d => d.Id == b.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = b.Uitleningen.Count == 0? false: b.Uitleningen.SingleOrDefault(d => d.Id == b.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             });
         }
 
@@ -83,7 +85,10 @@ namespace DeKrekelGroup5.ViewModel
                 Auteur = boek.Auteur,
                 Uitgever = boek.Uitgever,
                 Leeftijd = boek.Leeftijd,
-                Thema = (boek.Themaa == null ? "" : boek.Themaa.Themaa)
+                Thema = (boek.Themaa == null ? "" : boek.Themaa.Themaa),
+                Beschikbaar = boek.Beschikbaar,
+                EindDatumUitlening = boek.Uitleningen.Count == 0 ? new DateTime() : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = boek.Uitleningen.Count == 0 ? false : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             };
 
             Themas = new SelectList(themas, "Themaa", "Themaa", Boek.Thema ?? "");

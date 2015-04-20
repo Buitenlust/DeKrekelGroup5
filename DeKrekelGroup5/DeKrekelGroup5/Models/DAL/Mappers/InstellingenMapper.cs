@@ -16,11 +16,6 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
 
             //Key
             HasKey(i => i.Id);
-
-            //Props
-            Property(i => i.MaxVerlengingen).Equals(4);
-            Property(i => i.UitleenDagen).IsRequired().Equals(14);
-            Property(i => i.BedragBoetePerDag).Equals(0.2);
         }
 
     }

@@ -22,10 +22,16 @@ namespace DeKrekelGroup5.Models.Domain
 
         public bool Beschikbaar { get; set; }
 
-        public bool Uitgeleend { get; set; }
-
         public virtual Thema Themaa { get; set; }
 
+        public virtual List<Uitlening> Uitleningen { get; set; }
+
+
+        public Item()
+        { 
+            //Themaa = new Thema();
+            //Uitleningen = new List<Uitlening>();
+        }
 
         public void Update(Item item)
         {
@@ -33,8 +39,8 @@ namespace DeKrekelGroup5.Models.Domain
             Omschrijving = item.Omschrijving;
             Titel = item.Titel;
             Beschikbaar = item.Beschikbaar;
-            Uitgeleend = item.Uitgeleend;
             Themaa = item.Themaa;
+            Uitleningen = item.Uitleningen;
         }
     }
 }

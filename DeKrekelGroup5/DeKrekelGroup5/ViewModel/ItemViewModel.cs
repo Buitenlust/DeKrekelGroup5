@@ -21,11 +21,20 @@ namespace DeKrekelGroup5.ViewModel
         public string Thema { get; set; }
 
         public bool Beschikbaar { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
+
+        public DateTime EindDatumUitlening { get; set; }
         public bool Uitgeleend { get; set; }
 
         public ItemViewModel()
         {
             
+        }
+
+        public String GetStringDate()
+        {
+            return EindDatumUitlening.Day + " / " + EindDatumUitlening.Month + " / " + EindDatumUitlening.Year;
         }
     }
 }

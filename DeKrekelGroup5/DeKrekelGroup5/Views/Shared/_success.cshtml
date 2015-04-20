@@ -1,9 +1,9 @@
 ﻿@model DeKrekelGroup5.ViewModel.MainViewModel
 <div class="loginbox">
-    @TempData["success"] @Model.GebruikerViewModel.Username!
+    @TempData["success"]
 </div>
 
-<div class="bottom">
+<div id="bottom">
     <a href="#" class="button green close" id="closeFrame"><img src="~/Images/tick.png">Ok!</a>
 </div>
 
@@ -13,6 +13,7 @@
         $("#closeFrame").click(function(e) { 
             $("#modal").hide(600);
             $(".reveal-modal-bg").remove();
+            window.location.reload();
         });
     });
 </script>

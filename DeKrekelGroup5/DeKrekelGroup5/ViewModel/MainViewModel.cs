@@ -9,15 +9,22 @@ namespace DeKrekelGroup5.ViewModel
 {
     public class MainViewModel
     {
+        public InfoViewModel InfoViewModel { get; set; }
         public GebruikerViewModel GebruikerViewModel { get; set; }
+
+        public ItemViewModel ItemViewModel { get; set; }
 
         public BoekViewModel BoekViewModel { get; set; }
         public BoekenLijstViewModel BoekenLijstViewModel { get; set; }
         public BoekCreateViewModel BoekCreateViewModel { get; set; }
+        
 
         public SpelViewModel SpelViewModel { get; set; }
 
         public UitlenerViewModel UitlenerViewModel { get; set; }
+        public UitlenersLijstViewModel UitlenersLijstViewModel { get; set; }
+
+        
 
 
         public MainViewModel()
@@ -28,6 +35,9 @@ namespace DeKrekelGroup5.ViewModel
             BoekCreateViewModel = new BoekCreateViewModel();
             SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
+            UitlenersLijstViewModel = new UitlenersLijstViewModel();
+            ItemViewModel = new ItemViewModel();
+            InfoViewModel = new InfoViewModel();
         }
 
         public MainViewModel(Gebruiker gebruiker)
@@ -41,6 +51,14 @@ namespace DeKrekelGroup5.ViewModel
                 IsBibliothecaris = gebruiker.BibliotheekRechten,
                 IsBeheerder = gebruiker.AdminRechten
             };
+            BoekViewModel = new BoekViewModel();
+            BoekenLijstViewModel = new BoekenLijstViewModel();
+            BoekCreateViewModel = new BoekCreateViewModel();
+            SpelViewModel = new SpelViewModel();
+            UitlenerViewModel = new UitlenerViewModel();
+            UitlenersLijstViewModel = new UitlenersLijstViewModel();
+            ItemViewModel = new ItemViewModel();
+            InfoViewModel = new InfoViewModel();
         }
 
         public void SetGebruikerToVm(Gebruiker gebruiker)
@@ -60,6 +78,12 @@ namespace DeKrekelGroup5.ViewModel
             return this;
         }
 
+        public object SetNewUitlenersLijstVm(IEnumerable<Uitlener> uitleners)
+        {
+            UitlenersLijstViewModel = new UitlenersLijstViewModel(uitleners);
+            return this;
+        }
+
         public object SetBoekViewModel(Boek boek)
         {
             BoekViewModel = new BoekViewModel()
@@ -70,7 +94,10 @@ namespace DeKrekelGroup5.ViewModel
                 Auteur = boek.Auteur,
                 Uitgever = boek.Uitgever,
                 Leeftijd = boek.Leeftijd,
-                Thema = boek.Themaa.Themaa
+                Thema = boek.Themaa.Themaa,
+                Beschikbaar = boek.Beschikbaar,
+                EindDatumUitlening = boek.Uitleningen.Count == 0 ? new DateTime() : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = boek.Uitleningen.Count == 0 ? false : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             };
             return this;
         }
@@ -81,7 +108,38 @@ namespace DeKrekelGroup5.ViewModel
             return this;
         }
 
+        public void SetItemViewModel(Item item)
+        {
+            ItemViewModel = new ItemViewModel()
+            {
+                Exemplaar = item.Exemplaar,
+                Omschrijving = item.Omschrijving,
+                Titel = item.Titel,
+                Leeftijd = item.Leeftijd,
+                Thema = item.Themaa.Themaa,
+                EindDatumUitlening = item.Uitleningen.Count == 0 ? new DateTime() : item.Uitleningen.SingleOrDefault(d => d.Id == item.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = item.Uitleningen.Count == 0 ? false : item.Uitleningen.SingleOrDefault(d => d.Id == item.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+            }; 
+        }
 
+        public void SetUitLenerViewModel(Uitlener uitlener)
+        {
+            UitlenerViewModel = new UitlenerViewModel(uitlener);
+        }
+
+        public Object SetNewInfo(String info, bool isError=false,bool isDialogBox=false, string callBackAction= null)
+        {
+            InfoViewModel = new InfoViewModel()
+            {
+                Info = info,
+                IsError = isError,
+                IsDialogBox = isDialogBox, 
+                CallBackAction = callBackAction
+            };
+            return this;
+        }
     }
+
+    
 
 }

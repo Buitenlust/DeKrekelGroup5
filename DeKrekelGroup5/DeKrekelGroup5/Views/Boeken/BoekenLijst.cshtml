@@ -1,4 +1,5 @@
 ﻿
+@using DeKrekelGroup5.ViewModel
 @model DeKrekelGroup5.ViewModel.MainViewModel
 
 <table class="table">
@@ -27,7 +28,6 @@
         <th>
             Beschikbaar
         </th>
-        <th>Uitlenen/Binnenbrengen</th>
         <th></th>
     </tr>
 
@@ -58,24 +58,46 @@
             <td>
                 @if (item.Beschikbaar)
                 {
-                    <img src="~/Images/ok.png" class="icon"/>
+                    if (item.Uitgeleend)
+                    {
+                        @item.GetStringDate()
+                        if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
+                         {
+                             @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new {exemplaar = item.Exemplaar}, new AjaxOptions {HttpMethod = "Get", UpdateTargetId = "modal"}, new {@class = "icon"})
+                         }
+                    }
+                    else
+                    {
+                        <img src="~/Images/tick.png" class="icon" />
+                    }
                 }
                 else
                 {
                     <img src="~/Images/cross.png" class="icon"/>
                 }
-                @*@Html.DisplayFor(modelItem => item.Beschikbaar)*@
             </td>
             <td>
-                @*@Html.ActionLink("Uitlenen/binnenbrengen","uitlenen","","uitleen")*@
-            </td>
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.Exemplaar })*@
-                <a href=' @Url.Action("edit",new { id = item.Exemplaar }) '><img src="~/Images/edit.png"/></a> 
-                @*@Html.ActionLink("Details", "Details", new { id = item.Exemplaar })*@
-                <a href=' @Url.Action("details",new { id = item.Exemplaar }) '><img src="~/Images/details.png" /></a> 
-                @*@Html.ActionLink("Delete", "Delete", new { id = item.Exemplaar })*@
-                <a href=' @Url.Action("delete",new { id = item.Exemplaar }) '><img src="~/Images/delete.png" /></a>
+                @if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
+                {
+                    if (item.Uitgeleend)
+                    {
+                        @Ajax.ImageActionLink("/Images/binnen.png", "EindeUitlening", "EindeUitlening", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modal" }, new { @class = "icon" })
+
+                    }
+                    else
+                    {
+                        if (item.Beschikbaar)
+                        {
+                             <a href=' @Url.Action("Create", "Uitleningen", new {id = item.Exemplaar}) '><img src="~/Images/buiten.png" class="icon"/></a>
+                         }
+                     }
+                }
+                <a href=' @Url.Action("details", new { id = item.Exemplaar }) '><img src="~/Images/details.png" class="icon" /></a>
+                @if (Model.GebruikerViewModel.IsBeheerder)
+                {
+                    <a href=' @Url.Action("edit", new {id = item.Exemplaar}) '><img src="~/Images/edit.png" class="icon"/></a>
+                    <a href=' @Url.Action("delete", new {id = item.Exemplaar}) '><img src="~/Images/delete.png" class="icon"/></a>
+                }
             </td>
         </tr>
     }

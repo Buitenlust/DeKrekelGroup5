@@ -1,10 +1,16 @@
 ﻿@model DeKrekelGroup5.ViewModel.MainViewModel
  
 <div id="content">
-    <h4 id="subtitel">Details Boek</h4>
+    <h4 id="subtitel">Details Boek
+    <div class="floatRight">
+        <a href=' @Url.Action("edit", new {id = Model.BoekViewModel.Exemplaar}) '><img src="~/Images/edit.png"/></a>
+
+        <a href=' @Url.Action("index") '><img src="~/Images/Return.png"/></a>
+    </div>
+        </h4>
     <hr/>
     <div id="wrapDetails">
-        <div id="leftCol"><img src="~/Images/krekel.png" alt="krekelSchool">
+        <div id="leftCol"><img src="~/Images/default.jpg" alt="krekelSchool">
         </div>
 
         <div id="mainCol">
@@ -35,24 +41,37 @@
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Thema)</td>
-                    <td class="td2">@Html.DisplayNameFor(model => model.BoekViewModel.Thema)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Thema)</td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Uitgeleend)</td>
-                    <td>@Html.DisplayFor(model => model.BoekViewModel.Uitgeleend)</td>
+                    <td class="td2">
+                        @if (@Model.BoekViewModel.Uitgeleend)
+                        {
+                            @Model.BoekViewModel.EindDatumUitlening.ToLongDateString()
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Beschikbaar)</td>
-                    <td>@Html.DisplayFor(model => model.BoekViewModel.Beschikbaar)</td>
+                    <td class="td2">
+                        @if (@Model.BoekViewModel.Beschikbaar)
+                        {
+                            <img src="~/Images/tick.png" class="icon" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </td>
                 </tr>
             </table>
 
-            <p class ="floatRight">
-                @*@Html.ActionLink("Edit", "Edit", new { id = Model.Exemplaar })*@
-                <a href=' @Url.Action("edit", new { id = Model.BoekViewModel.Exemplaar }) '><img src="~/Images/edit.png" /></a>
-                @*@Html.ActionLink("Back to List", "Index")*@
-                <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
-            </p>
+            
         </div>
         
     </div>

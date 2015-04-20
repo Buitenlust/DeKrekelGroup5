@@ -1,0 +1,79 @@
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+@if (Model.ItemViewModel != null)
+{
+    @Html.HiddenFor(model => model.ItemViewModel.Exemplaar)
+}
+   
+
+@if (Model.InfoViewModel.Info != null)
+{
+    <div id="heading">
+        
+        @if (Model.InfoViewModel.IsDialogBox)
+        {
+            <img src="~/Images/question.png" class="icon"/>
+            <span>Bevestiging:</span>
+        }
+        else
+        {
+            if (Model.InfoViewModel.IsError)
+            {
+                <img src="~/Images/cross.png" class="icon" />
+                <span>Oeps, er is iets fout gelopen:</span>
+            }
+            else
+            {
+                <img src="~/Images/info.png" class="icon" />
+                <span>Informatie:</span>
+            }
+        }
+
+    </div>
+
+    <div id="contentLogin">
+        <span>@Model.InfoViewModel.Info</span>
+    </div>
+if (Model.InfoViewModel.IsDialogBox)
+ {
+     <div id="bottom">
+         @using (Ajax.BeginForm(Model.InfoViewModel.CallBackAction,
+             new AjaxOptions
+             {
+                 InsertionMode = InsertionMode.Replace,
+                 HttpMethod = "Post",
+                 UpdateTargetId = "modal"
+             }
+             ))
+         {
+             <button type="submit" class="button green "><img src="~/Images/tick.png">Ok!</button>
+         }
+         <a href="#" class="button red close" id="closeFrame"><img src="~/Images/cross.png">Terug!</a>
+     </div>
+ }
+ else
+ {
+     <div id="bottom">
+         <a href="#" class="button green" id="home"><img src="~/Images/tick.png">Ok!</a>
+     </div>
+ }
+
+    <script>
+        
+        $(document).ready(function () {
+            showModal();
+            $("#closeFrame").click(function (e) {
+                $("#modal").hide(600, function() {
+                    $("html").load("/Home/Index");
+                });
+                $(".reveal-modal-bg").remove();
+
+            });
+
+            $("#home").click(function (e) {
+                    window.location.href = "/Home/Index";
+
+            });
+        });
+    </script>
+}
+ 

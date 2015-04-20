@@ -62,5 +62,10 @@ namespace DeKrekelGroup5.ViewModel
                 Email = b.Email
             });
         }
+
+        public UitlenersLijstViewModel()
+        {
+            Uitleners = new List<UitlenerViewModel>();
+        }
     }
 }

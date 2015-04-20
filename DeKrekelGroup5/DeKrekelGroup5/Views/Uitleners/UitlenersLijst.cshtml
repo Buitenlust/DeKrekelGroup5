@@ -1,0 +1,40 @@
+﻿
+@model DeKrekelGroup5.ViewModel.MainViewModel
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UitlenersLijstViewModel.Uitleners.FirstOrDefault().Naam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UitlenersLijstViewModel.Uitleners.FirstOrDefault().VoorNaam))
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UitlenersLijstViewModel.Uitleners.FirstOrDefault().Klas))
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var uitlener in Model.UitlenersLijstViewModel.Uitleners)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => uitlener.Naam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => uitlener.VoorNaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => uitlener.Klas)
+            </td>
+            <td>
+                <a href=' @Url.Action("edit", new { id = uitlener.Id }) '><img src="~/Images/edit.png" /></a>
+                <a href=' @Url.Action("details", new { id = uitlener.Id }) '><img src="~/Images/details.png" /></a>
+                <a href=' @Url.Action("delete", new { id = uitlener.Id }) '><img src="~/Images/delete.png" /></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+

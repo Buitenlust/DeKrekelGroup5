@@ -194,6 +194,8 @@
     <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Controllers\UitlenersController.cs" />
+    <Compile Include="Controllers\UitleningenController.cs" />
+    <Compile Include="Infrastructure\MainViewModelBinder.cs" />
     <Compile Include="Infrastructure\GebruikerModelBinder.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
     <Compile Include="Models\DAL\GebruikerRepository.cs" />
@@ -232,6 +234,8 @@
     <Compile Include="Models\Domain\Thema.cs" />
     <Compile Include="Models\Domain\Uitlening.cs" />
     <Compile Include="Models\Domain\VertelTas.cs" />
+    <Compile Include="ViewModel\ImageActionLinkHelper.cs" />
+    <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\UitlenerViewModel.cs" />
     <Compile Include="ViewModel\GebruikerViewModel.cs" />
@@ -251,27 +255,34 @@
     <Content Include="Images\admin.png" />
     <Content Include="Images\background.jpg" />
     <Content Include="Images\bg.jpg" />
+    <Content Include="Images\binnen.png" />
     <Content Include="Images\Book.png" />
+    <Content Include="Images\buiten.png" />
     <Content Include="Images\cd.png" />
     <Content Include="Images\create.gif" />
+    <Content Include="Images\create.png" />
     <Content Include="Images\cross.png" />
+    <Content Include="Images\default.jpg" />
     <Content Include="Images\delete.jpg" />
     <Content Include="Images\delete.png" />
     <Content Include="Images\details.png" />
     <Content Include="Images\dvd.png" />
     <Content Include="Images\edit.gif" />
     <Content Include="Images\edit.png" />
+    <Content Include="Images\extraTijd.png" />
     <Content Include="Images\guest.png" />
     <Content Include="Images\help.png" />
     <Content Include="Images\home.png" />
     <Content Include="Images\home_nontrans.png" />
     <Content Include="Images\icons.png" />
+    <Content Include="Images\info.png" />
     <Content Include="Images\krekel.png" />
     <Content Include="Images\login-and-logout-door.jpg" />
     <Content Include="Images\logout.png" />
     <Content Include="Images\male-avatar-clip-art.jpg" />
     <Content Include="Images\ok.jpg" />
     <Content Include="Images\ok.png" />
+    <Content Include="Images\question.png" />
     <Content Include="Images\Return.png" />
     <Content Include="Images\search.png" />
     <Content Include="Images\signs.jpg" />
@@ -350,6 +361,14 @@
     <Content Include="Views\Shared\test.cshtml" />
     <Content Include="Views\Shared\_success.cshtml" />
     <Content Include="Views\Shared\_LogoutPartial.cshtml" />
+    <Content Include="Views\Uitleningen\Create.cshtml" />
+    <Content Include="Views\Uitleningen\Delete.cshtml" />
+    <Content Include="Views\Uitleningen\Details.cshtml" />
+    <Content Include="Views\Uitleningen\Edit.cshtml" />
+    <Content Include="Views\Uitleningen\Index.cshtml" />
+    <Content Include="Views\Uitleners\UitlenersLijst.cshtml" />
+    <Content Include="Views\Uitleningen\UitlenersSelectLijst.cshtml" />
+    <Content Include="Views\Shared\_info.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,39 +1,45 @@
 
 $(document).ready(function () {
-    $("#modal").hide();
-
-    $("#closeFrame").click(function (e) {        // Button which will activate our modal
-        $("#modal").hide(600);
-    });
 
     $('#loginBib').click(function (e) {        // Button which will activate our modal
         $("#modal").load("/Login/Login?username=Bibliothecaris");
-            showLogin(); 
+        showModal(); 
     });
     $('#loginBeh').click(function (e) {        // Button which will activate our modal
         $("#modal").load("/Login/Login?username=Beheerder");
-        showLogin();
+        showModal();
     });
     $('#logout').click(function (e) {        // Button which will activate our modal
         $("#modal").load("/Login/Logout");
-        showLogin();
+        showModal();
     });
 
+    $("#closeFrame").click(function (e) {
+        $("#modal").hide(600);
+        $(".reveal-modal-bg").remove();
+        
+    });
+    $("#home").click(function (e) {
+        $("#modal").hide(600);
+        $(".reveal-modal-bg").remove();
+
+    });
 
 });
 
 
-
-function showLogin() {
+function showModal() {
     $("#modal").toggleClass('show hidden');
     $("#modal").show(700);
-    $('#modal').reveal({                // The item which will be opened with reveal
-        animation: 'fade',              // fade, fadeAndPop, none
-        animationspeed: 600,            // how fast animtions are
-        closeonbackgroundclick: true,   // if you click background will modal close?
-        dismissmodalclass: 'close'      // the class of a button or element that will close an open modal
+    $('#modal').reveal({                
+        animation: 'fade',              
+        animationspeed: 600,            
+        closeonbackgroundclick: true,   
+        dismissmodalclass: 'close'     
     });
 }
+
+
  
 /*
  * jQuery Reveal Plugin 1.0

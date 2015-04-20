@@ -84,8 +84,9 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Create(Gebruiker gebruiker)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return new HttpUnauthorizedResult();   
-            
+                return new HttpUnauthorizedResult();
+
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             try
             {
                 return View(new MainViewModel(gebruiker).SetBoekCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new Boek()));
@@ -110,12 +111,13 @@ namespace DeKrekelGroup5.Controllers
             {
                 try
                 {
+                    MainViewModel mvm = new MainViewModel(gebruiker);
                     Boek newBoek = boek.Boek.MapToBoek(boek.Boek, gebruiker.LetterTuin.GetThemaByName(boek.Boek.Thema));
                     gebruiker.AddItem(newBoek);
                     gebruikersRep.DoNotDuplicateThema(newBoek);
                     gebruikersRep.SaveChanges();
-                    TempData["Info"] = "Boek" + boek.Boek.Titel + " werd toegevoegd...";
-                    return RedirectToAction("Index");
+                    mvm.SetNewInfo("Boek" + boek.Boek.Titel + " werd toegevoegd...");
+                    return View("Index", mvm );
                 }
                 catch (Exception)
                 {
@@ -131,7 +133,7 @@ namespace DeKrekelGroup5.Controllers
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
-
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             try
             {
                 if (id <= 0)
@@ -162,14 +164,13 @@ namespace DeKrekelGroup5.Controllers
             {
                 try
                 {
-                    boek.Boek.Uitgeleend = false;
-                    boek.Boek.Beschikbaar = true;
+                    MainViewModel mvm = new MainViewModel(gebruiker);
                     Boek newBoek = boek.Boek.MapToBoek(boek.Boek, gebruiker.LetterTuin.GetThemaByName(boek.Boek.Thema));
                     gebruiker.UpdateBoek(newBoek);
                     gebruikersRep.DoNotDuplicateThema(newBoek);
-                    TempData["Info"] = "Boek " + boek.Boek.Titel + " werd aangepast...";
+                    mvm.SetNewInfo("Boek " + boek.Boek.Titel + " werd aangepast...");
                     gebruikersRep.SaveChanges();
-                    return RedirectToAction("Index");
+                    return View("Index", mvm);
                 }
                 catch (Exception)
                 {
@@ -184,7 +185,7 @@ namespace DeKrekelGroup5.Controllers
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
-
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             if (id <= 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -214,14 +215,15 @@ namespace DeKrekelGroup5.Controllers
 
             try
             {
+                MainViewModel mvm = new MainViewModel(gebruiker);
                 gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
                 Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
                 if (boek == null)
                     return HttpNotFound();
                 gebruiker.RemoveItem(boek);
                 gebruikersRep.SaveChanges();
-                TempData["Info"] = "Boek" +boek.Titel+ " werd verwijderd...";
-                return RedirectToAction("Index");
+                mvm.SetNewInfo("Boek" +boek.Titel+ " werd verwijderd...");
+                return View("Index", mvm);
             }
             catch (Exception)
             {

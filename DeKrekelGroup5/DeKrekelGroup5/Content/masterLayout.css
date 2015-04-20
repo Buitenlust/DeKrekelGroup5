@@ -18,9 +18,17 @@ html {
   -o-background-size: cover;
   background-size: cover;
 }
+header {
+    min-height: 50px;
+    height: 50px;
+}
 
 h2 {
     font-size: 50px;
+}
+h4 {
+    margin: 10px;
+    text-align: center;
 }
 a:link{
     text-decoration:none;
@@ -55,7 +63,6 @@ dd{
     margin-right: auto;
 }
 .icon {
-    display: block;
      width: 20px;
     height: 20px;
     padding: 0px;
@@ -135,10 +142,12 @@ input[type=submit]{
 #krekel{
     float: left;
 }
-#krekelImg{
+#krekelImg img{
+    height: 110px; 
     float: left;
 }
 #krekelLink{
+    font-size: 20px;
     color: #fffaf0;
     font-family: cursive;
 }
@@ -316,13 +325,10 @@ select {
 }
 
 #modal {
-    visibility:visiblee;
+    visibility:visible;
 	width:360px;
-	height:250px;
+	height:180px;
 	padding:8px;
-
-	background:rgba(0,0,0,.3);
-
 	-webkit-border-radius:8px;
 	-moz-border-radius:8px;
 	border-radius:8px;
@@ -381,10 +387,16 @@ select {
 	color:#444444;
 	text-shadow:0px 1px 0px #fff;
 }
+div#heading img {
+    float: left;
+}
+div#contentLogin span {
+    margin: 15px;
+}
 
 #contentLogin {
     width:360px;
-    height:200px;
+    height:100px;
  
     background:#fcfcfc;
  
@@ -392,22 +404,30 @@ select {
     -moz-box-shadow:0px 1px 3px rgba(0,0,0,.25);
     box-shadow:0px 1px 3px rgba(0,0,0,.25);
  
+}
+
+#contentLogin span {
+    font-size:13px;
+    font-weight:normal;
+    text-align:left;
+    line-height:22px;
+    color:#555555;
+    width:100%;
+    float: left;
+    margin:0px 15px;
+
+}
+
+#bottom {
+    width:360px;
+    height:50px;
+ 
+    background:#fcfcfc;
+ 
+    
     -webkit-border-radius:0px 0px 4px 4px;
     -moz-border-radius:0px 0px 4px 4px;
     border-radius:0px 0px 4px 4px;
-}
- 
-#contentLogin p {
-    font-size:13px;
-    font-weight:normal;
-    text-align:center;
-    line-height:22px;
-    color:#555555;
- 
-    width:100%;
-    float: left;
- 
-    margin:19px 0;
 }
 
 .button {
@@ -471,7 +491,7 @@ select {
  
     border:1px solid #5b8821;
     float: left;
-    margin:0 5px 0 35px;
+    margin:-10px 5px 10px 15px;
 }
 .button.red {
     background: -webkit-linear-gradient(top,  rgba(248,114,136,1) 0%,rgba(243,71,85,1) 90%,rgba(225,65,77,1) 95%,rgba(206,59,70,1) 100%);
@@ -482,8 +502,8 @@ select {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f87288', endColorstr='#ce3b46',GradientType=0 );
  
     border:1px solid #b0333e;
- 
-    margin:0 35px 0 5px;
+    float: right;
+    margin:-10px 15px 10px 35px;
 }
 .reveal-modal-bg {
     position: fixed;

@@ -8,7 +8,7 @@
     @Html.ValidationMessageFor(model => model.GebruikerViewModel.Paswoord, "", new { @class = "text-danger" })
 </div>
 
-<div class="bottom">
+<div id="bottom">
     @if (@Model.GebruikerViewModel.Username == "Beheerder")
     {
         <button type="submit" class="button green close"><img src="~/Images/tick.png">Inloggen!</button>

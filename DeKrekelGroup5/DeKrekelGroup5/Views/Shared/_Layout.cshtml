@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Ajax.Utilities
+@model DeKrekelGroup5.ViewModel.MainViewModel
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -21,9 +23,23 @@
         <nav id="navBar">
             <div>
                 <a href='@Url.Action("index", "home")'><img src="~/Images/home.png"/></a>
-                <a href='#' id="loginBib"><img src="~/Images/guest.png" /></a>
-                <a href='#' id="loginBeh"><img src="~/Images/admin.png" /></a>
-                <a href='#' id="logout"><img src="~/Images/logout.png" /></a>
+                @if (Model.GebruikerViewModel != null)
+                {
+                    if (!Model.GebruikerViewModel.IsBeheerder || !Model.GebruikerViewModel.IsBibliothecaris)
+                    {
+                        <a href='#' id="loginBib"><img src="~/Images/guest.png" /></a>
+                    }
+                    if (!Model.GebruikerViewModel.IsBeheerder || !Model.GebruikerViewModel.IsBibliothecaris)
+                    {
+                        <a href='#' id="loginBeh"><img src="~/Images/admin.png" /></a>
+                    }
+                    if (Model.GebruikerViewModel.IsBeheerder || Model.GebruikerViewModel.IsBibliothecaris)
+                    {
+                        <a href='#' id="logout"><img src="~/Images/logout.png" /></a>
+                    }
+                }
+                
+    
             </div>
         </nav>
     </div>
@@ -32,13 +48,21 @@
         <div id="body">
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
-                <div class="message-error">@TempData["Info"]</div>
                 @RenderBody()
             </section>
         </div>
+        @if (Model.InfoViewModel != null) { 
         <div id="modal" class="hidden">
+            @Html.Partial("_info", Model)
         </div>
-
+        }
+        else
+        {
+            <div id="modal">
+                @Html.Partial("_info", Model)
+            </div>
+        }
+        
         <footer><hr/>
             <p>&copy; @DateTime.Now.Year - MediaTheek - De Krekel by Group5</p>
         </footer>

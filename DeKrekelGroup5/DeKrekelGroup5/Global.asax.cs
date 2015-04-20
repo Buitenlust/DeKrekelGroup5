@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Web.Routing;
 using DeKrekelGroup5.Infrastructure;
 using DeKrekelGroup5.Models.DAL;
 using DeKrekelGroup5.Models.Domain;
+using DeKrekelGroup5.ViewModel;
 using MySql.Data.Entity;
 
 namespace DeKrekelGroup5
@@ -26,6 +28,7 @@ namespace DeKrekelGroup5
             Database.SetInitializer(new KrekelInitializer());
 
             ModelBinders.Binders.Add(typeof (Gebruiker), new GebruikerModelBinder());
+            ModelBinders.Binders.Add(typeof(MainViewModel), new  MainViewModelBinder());
         }
     }
 }

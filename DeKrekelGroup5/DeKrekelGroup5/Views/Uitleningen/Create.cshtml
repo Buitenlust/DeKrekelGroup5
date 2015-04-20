@@ -1,0 +1,31 @@
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+@Html.HiddenFor(modelItem => modelItem.ItemViewModel.Exemplaar)
+<div id="content">
+    <table>
+        <tr>
+            <td>
+                <div id="searchBar">
+                    @using (Ajax.BeginForm("Create",
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "Get",
+                            UpdateTargetId = "uitleners" //,
+                            //OnComplete = "clearMessage"
+                        }
+                        ))
+                    {
+                        <input type="search" name="search" id="search" value="zoek een uitlener" />
+                        <input type="submit" value="Zoek item" class="btn btn-default" id="searchSubmit" />
+                    }
+                </div>
+            </td>
+            <td>
+                <a href=' @Url.Action("create") '><img src="~/Images/create.gif" class="createNew" /></a>
+            </td>
+        </tr>
+    </table>
+    <div id="uitleners">
+        @Html.Partial("UitlenersSelectLijst", Model)
+    </div>
+</div>

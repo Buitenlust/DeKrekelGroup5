@@ -10,21 +10,22 @@
                         {
                             InsertionMode = InsertionMode.Replace,
                             HttpMethod = "Get",
-                            UpdateTargetId = "Boeken" //,
-                            //OnComplete = "clearMessage"
+                            UpdateTargetId = "Boeken"
                         }
                         ))
                     {
-                        <input type="search" name="search" id="search" value="zoek een boek"/>
-                        <input type="submit" value="Zoek item" class="btn btn-default" id="searchSubmit"/>
-                        }
-                    @*@Html.ActionLink("Create New", "Create")*@
+                        <input type="search" name="search" id="search" onclick="this.select();" />
+                            <input type="submit" value="Zoek item" class="btn btn-default" id="searchSubmit"/>
+                    }
 
 
                 </div>
             </td>
             <td>
-                <a href=' @Url.Action("create") '><img src="~/Images/create.gif" class="createNew"/></a>
+                @if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
+                 {
+                     <a href=' @Url.Action("create") '><img src="~/Images/create.png" class="createNew"/></a>
+                 }
             </td>
         </tr>
 

@@ -12,11 +12,21 @@ namespace DeKrekelGroup5.Models.Domain
     {
         public int Id { get; set; }
         
-        public DateTime StartDatum { get; set; }  
+        public DateTime StartDatum { get; set; }
+        public DateTime BinnenGebracht { get; set; }
         public DateTime EindDatum { get; set; }
-
         public Item Itemm { get; set; }
         public Uitlener Uitlenerr { get; set; }
         public int Verlenging { get; set; }
+
+        public void update(Uitlening uitlening)
+        {
+            StartDatum = uitlening.StartDatum;
+            BinnenGebracht = uitlening.BinnenGebracht;
+            EindDatum = uitlening.EindDatum;
+            Itemm = uitlening.Itemm;
+            Uitlenerr = uitlening.Uitlenerr;
+            Verlenging = uitlening.Verlenging;
+        }
     }
 }
