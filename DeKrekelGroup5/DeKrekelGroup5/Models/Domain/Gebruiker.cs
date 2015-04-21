@@ -97,6 +97,21 @@ namespace DeKrekelGroup5.Models.Domain
             return false;
         }
 
+        public bool UpdateVerteltas(VertelTas verteltas)
+        {
+            CheckAdminRechten();
+            if (verteltas != null && verteltas.Exemplaar > 0)
+            {
+                var newItem = LetterTuin.GetItem(verteltas.Exemplaar) as VertelTas;
+                if (newItem != null)
+                {
+                    newItem.Update(verteltas);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary> Update de parameters van een boek</summary>
         /// <returns> Geeft true weer als het boek is aangepast. Exemplaar van het boek moet > 0 </returns>
         /// <param name="cd"> te updaten boek </param>

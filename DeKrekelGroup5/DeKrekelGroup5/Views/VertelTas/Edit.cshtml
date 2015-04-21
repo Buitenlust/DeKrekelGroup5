@@ -1,0 +1,91 @@
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+
+
+<div id="content">
+    <h4 id="subtitel">Aanpassen verteltas</h4>
+    <hr />
+    <div id="wrapDetails">
+        <div id="leftCol">
+            <img src="~/Images/default.jpg" alt="krekelSchool">
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div id="mainCol">
+                <table id="details">
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.VertelTasCreateViewModel.Verteltas.Exemplaar)</td>
+                        <td class="td2">
+                            @Html.DisplayFor(model => model.VertelTasCreateViewModel.Verteltas.Exemplaar)
+                        @Html.HiddenFor(model => model.VertelTasCreateViewModel.Verteltas.Exemplaar)
+                        @Html.ValidationMessageFor(model => model.VertelTasCreateViewModel.Verteltas.Exemplaar, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasCreateViewModel.Verteltas.Leeftijd)</td>
+                    <td>
+                        @Html.EditorFor(model => model.VertelTasCreateViewModel.Verteltas.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.VertelTasCreateViewModel.Verteltas.Leeftijd, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasCreateViewModel.Verteltas.Titel)</td>
+                    <td>
+                        @Html.EditorFor(model => model.VertelTasCreateViewModel.Verteltas.Titel, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.VertelTasCreateViewModel.Verteltas.Titel, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasCreateViewModel.Verteltas.Omschrijving)</td>
+                    <td class="textArea">
+                        @Html.TextAreaFor(model => model.VertelTasCreateViewModel.Verteltas.Omschrijving, new { rows = "10", columns = "300" })
+                        @Html.ValidationMessageFor(model => model.VertelTasCreateViewModel.Verteltas.Omschrijving, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasCreateViewModel.Verteltas.Thema)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.VertelTasCreateViewModel.Verteltas.Thema, Model.VertelTasCreateViewModel.Themas, " --Selecteer een Thema--")
+                        @Html.ValidationMessageFor(model => model.VertelTasCreateViewModel.Verteltas.Thema)
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasCreateViewModel.Verteltas.Uitgeleend)</td>
+                    <td class="td2">
+                        @if (@Model.VertelTasCreateViewModel.Verteltas.Uitgeleend)
+                        {
+                            @Model.VertelTasCreateViewModel.Verteltas.EindDatumUitlening.ToLongDateString()
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasCreateViewModel.Verteltas.Beschikbaar)</td>
+                    <td>
+                        @Html.EditorFor(model => model.VertelTasCreateViewModel.Verteltas.Beschikbaar, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.VertelTasCreateViewModel.Verteltas.Beschikbaar, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </table>
+            <p>
+                <a href='@Url.Action("index")' class="floatRight"><img src="~/Images/Return.png" /></a>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </p>
+        </div>
+        }
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+    </div>
+</div>

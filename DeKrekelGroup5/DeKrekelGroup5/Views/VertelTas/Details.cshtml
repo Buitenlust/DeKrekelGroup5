@@ -1,0 +1,73 @@
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+
+<div id="content">
+    <h4 id="subtitel">
+        Details Verteltas
+        <div class="floatRight">
+            <a href=' @Url.Action("edit", new { id = Model.VerteltasViewModel.Exemplaar }) '><img src="~/Images/edit.png" /></a>
+
+            <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
+        </div>
+    </h4>
+    <hr />
+    <div id="wrapDetails">
+        <div id="leftCol">
+            <img src="~/Images/default.jpg" alt="krekelSchool">
+        </div>
+
+        <div id="mainCol">
+            <table id="details">
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Exemplaar)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.VerteltasViewModel.Exemplaar)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Leeftijd)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.VerteltasViewModel.Leeftijd)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Titel)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.VerteltasViewModel.Titel)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Omschrijving)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.VerteltasViewModel.Omschrijving)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Thema)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.VerteltasViewModel.Thema)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Uitgeleend)</td>
+                    <td class="td2">
+                        @if (@Model.VerteltasViewModel.Uitgeleend)
+                        {
+                            @Model.VerteltasViewModel.EindDatumUitlening.ToLongDateString()
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Beschikbaar)</td>
+                    <td class="td2">
+                        @if (@Model.VerteltasViewModel.Beschikbaar)
+                        {
+                            <img src="~/Images/tick.png" class="icon" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+
+    </div>
+
+</div>

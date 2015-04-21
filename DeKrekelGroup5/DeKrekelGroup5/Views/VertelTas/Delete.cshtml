@@ -1,0 +1,64 @@
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div id="content">
+    <h4 id="subtitel">Ben je zeker dat je deze verteltas wil verwijderen? <a href=' @Url.Action("index") '><img src="~/Images/Return.png" class="floatRight" /></a></h4>
+    <hr />
+    <div id="wrapDetails">
+        <div id="leftCol">
+            <img src="~/Images/default.jpg" alt="krekelSchool">
+        </div>
+
+        <div id="mainCol">
+            <table id="details">
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Exemplaar)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.VerteltasViewModel.Exemplaar)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Leeftijd)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.VerteltasViewModel.Leeftijd)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Titel)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.VerteltasViewModel.Titel)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Omschrijving)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.VerteltasViewModel.Omschrijving)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Thema)</td>
+                    <td class="td2">@Html.DisplayNameFor(model => model.VerteltasViewModel.Thema)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VerteltasViewModel.Uitgeleend)</td>
+                    <td>@Html.DisplayFor(model => model.VerteltasViewModel.Uitgeleend)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Beschikbaar)</td>
+                    <td>@Html.DisplayFor(model => model.BoekViewModel.Beschikbaar)</td>
+                </tr>
+            </table>
+
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <p class="floatRight">
+
+                    <button type="submit" value="Delete" class="button green close"><img src="~/Images/tick.png">Verwijder!</button>
+
+                </p>
+            }
+
+        </div>
+    </div>
+
+
+
+</div>
+

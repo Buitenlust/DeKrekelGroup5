@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DeKrekelGroup5.Models.Domain;
+using Microsoft.Ajax.Utilities;
 
 namespace DeKrekelGroup5.ViewModel
 {
@@ -17,7 +18,11 @@ namespace DeKrekelGroup5.ViewModel
         public BoekViewModel BoekViewModel { get; set; }
         public BoekenLijstViewModel BoekenLijstViewModel { get; set; }
         public BoekCreateViewModel BoekCreateViewModel { get; set; }
-        
+
+        public VerteltasViewModel VerteltasViewModel { get; set; }
+        public VertelTasLijstViewModel VertelTasLijstViewModel { get; set; }
+        public VertelTasCreateViewModel VertelTasCreateViewModel { get; set; }
+
 
         public SpelViewModel SpelViewModel { get; set; }
 
@@ -33,6 +38,9 @@ namespace DeKrekelGroup5.ViewModel
             BoekViewModel = new BoekViewModel();
             BoekenLijstViewModel = new BoekenLijstViewModel();
             BoekCreateViewModel = new BoekCreateViewModel();
+            VerteltasViewModel = new VerteltasViewModel();
+            VertelTasLijstViewModel = new VertelTasLijstViewModel();
+            VertelTasCreateViewModel = new VertelTasCreateViewModel();
             SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
@@ -54,6 +62,9 @@ namespace DeKrekelGroup5.ViewModel
             BoekViewModel = new BoekViewModel();
             BoekenLijstViewModel = new BoekenLijstViewModel();
             BoekCreateViewModel = new BoekCreateViewModel();
+            VerteltasViewModel = new VerteltasViewModel();
+            VertelTasLijstViewModel = new VertelTasLijstViewModel();
+            VertelTasCreateViewModel = new VertelTasCreateViewModel();
             SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
@@ -75,6 +86,12 @@ namespace DeKrekelGroup5.ViewModel
         public object SetNewBoekenLijstVm(IEnumerable<Boek> boeken)
         {
                 BoekenLijstViewModel = new BoekenLijstViewModel(boeken);
+            return this;
+        }
+
+        public Object SetNewVertelTassenLijstVm(IEnumerable<VertelTas> verteltassen)
+        {
+            VertelTasLijstViewModel = new VertelTasLijstViewModel(verteltassen);
             return this;
         }
 
@@ -102,9 +119,32 @@ namespace DeKrekelGroup5.ViewModel
             return this;
         }
 
+        public Object SetVerteltasViewModel(VertelTas verteltas)
+        {
+            VerteltasViewModel = new VerteltasViewModel()
+            {
+                Exemplaar = verteltas.Exemplaar,
+                Omschrijving = verteltas.Omschrijving,
+                Titel = verteltas.Titel,
+                Leeftijd = verteltas.Leeftijd,
+                Thema = verteltas.Themaa.Themaa,
+                Beschikbaar = verteltas.Beschikbaar,
+                EindDatumUitlening = verteltas.Uitleningen.Count == 0 ? new DateTime() : verteltas.Uitleningen.SingleOrDefault(d => d.Id == verteltas.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = verteltas.Uitleningen.Count == 0 ? false : verteltas.Uitleningen.SingleOrDefault(d => d.Id == verteltas.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+           
+            };
+            return this;
+        }
+
         public object SetBoekCreateViewModel(IEnumerable<Thema> themas, Boek boek)
         {
              BoekCreateViewModel = new BoekCreateViewModel(themas, boek);
+            return this;
+        }
+
+        public Object SetVertelTasCreateViewModel(IEnumerable<Thema> themas, VertelTas verteltas)
+        {
+            VertelTasCreateViewModel = new VertelTasCreateViewModel(themas, verteltas);
             return this;
         }
 
