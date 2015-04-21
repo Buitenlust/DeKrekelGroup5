@@ -73,7 +73,7 @@ namespace DeKrekelGroup5.Controllers
         // GET: DVD/Create
         public ActionResult Create(Gebruiker gebruiker = null)
         {
-            return View(new DVDCreateViewModel(Gebruiker.LetterTuin.Themas.ToList(), new Boek()));
+            return View(new DVDCreateViewModel(Gebruiker.LetterTuin.Themas.ToList(), new DVD()));
         }
 
         // POST: DVD/Create

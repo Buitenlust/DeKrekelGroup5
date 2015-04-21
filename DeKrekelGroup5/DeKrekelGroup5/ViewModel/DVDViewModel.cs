@@ -40,7 +40,7 @@ namespace DeKrekelGroup5.ViewModel
 
         public DVDCreateViewModel(IEnumerable<Thema> themas, DVD dvd)
         {
-            Boek = new BoekViewModel()
+            DVD = new DVDViewModel()
             {
                 Exemplaar = dvd.Exemplaar,
                 Omschrijving = dvd.Omschrijving,
@@ -50,7 +50,7 @@ namespace DeKrekelGroup5.ViewModel
                 Thema = (dvd.Themaa == null ? "" : dvd.Themaa.Themaa)
             };
 
-            Themas = new SelectList(themas, "Themaa", "Themaa", Boek.Thema ?? "");
+            Themas = new SelectList(themas, "Themaa", "Themaa", DVD.Thema ?? "");
         }
     }
 }

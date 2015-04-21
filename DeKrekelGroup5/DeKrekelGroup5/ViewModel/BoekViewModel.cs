@@ -37,12 +37,12 @@ namespace DeKrekelGroup5.ViewModel
     }
   
 
-    public class DVDCreateViewModel
+    public class BoekCreateViewModel
     {
         public SelectList Themas { get; set; }
         public BoekViewModel Boek { get; set; }
 
-        public DVDCreateViewModel(IEnumerable<Thema> themas , Boek boek)
+        public BoekCreateViewModel(IEnumerable<Thema> themas , Boek boek)
         {
             Boek = new BoekViewModel()
             {

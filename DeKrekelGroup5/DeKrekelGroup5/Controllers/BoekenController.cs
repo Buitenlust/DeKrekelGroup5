@@ -72,7 +72,7 @@ namespace DeKrekelGroup5.Controllers
         // GET: Boeken/Create
         public ActionResult Create(Gebruiker gebruiker=null)
         {
-            return View(new DVDCreateViewModel(Gebruiker.LetterTuin.Themas.ToList(), new Boek()));
+            return View(new BoekCreateViewModel(Gebruiker.LetterTuin.Themas.ToList(), new Boek()));
         }
 
         // POST: Boeken/Create
@@ -114,7 +114,7 @@ namespace DeKrekelGroup5.Controllers
             Boek boek = Gebruiker.LetterTuin.GetItem(id) as Boek;
             if (boek == null)
                 return HttpNotFound();
-            return View(new DVDCreateViewModel(Gebruiker.LetterTuin.Themas, boek));
+            return View(new BoekCreateViewModel(Gebruiker.LetterTuin.Themas, boek));
         }
 
         // POST: Boeken/Edit/5
