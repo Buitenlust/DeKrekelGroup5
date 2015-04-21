@@ -90,7 +90,6 @@ namespace DeKrekelGroup5.Controllers
                     Titel = dvd.Titel,
                     Leeftijd = dvd.Leeftijd,
                     Beschikbaar = true,
-                    Uitgeleend = false,
                     Themaa = Gebruiker.LetterTuin.GetThemaByName(dvd.Thema),
                     Omschrijving = dvd.Omschrijving,
                     Exemplaar = 0,
@@ -130,8 +129,7 @@ namespace DeKrekelGroup5.Controllers
                 {
                     Titel = dvd.Titel,
                     Leeftijd = dvd.Leeftijd,
-                    Beschikbaar = true,
-                    Uitgeleend = false,
+                    Beschikbaar = true, 
                     Themaa = Gebruiker.LetterTuin.GetThemaByName(dvd.Thema),
                     Omschrijving = dvd.Omschrijving,
                     Exemplaar = dvd.Exemplaar,
@@ -165,7 +163,8 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
-            Gebruiker.RemoveItem(id);
+            
+            Gebruiker.RemoveItem(gebruiker.LetterTuin.GetItem(id));
             gebruikerRepository.SaveChanges();
             return RedirectToAction("Index");
         }
