@@ -88,7 +88,6 @@ namespace DeKrekelGroup5.Controllers
                     Artiest = cd.Artiest,
                     Leeftijd = cd.Leeftijd,
                     Beschikbaar = true,
-                    Uitgeleend = false,
                     Themaa = Gebruiker.LetterTuin.GetThemaByName(cd.Thema),
                     Omschrijving = cd.Omschrijving,
                     Exemplaar = 0,
@@ -131,7 +130,6 @@ namespace DeKrekelGroup5.Controllers
                     Artiest = cd.Artiest,
                     Leeftijd = cd.Leeftijd,
                     Beschikbaar = true,
-                    Uitgeleend = false,
                     Themaa = Gebruiker.LetterTuin.GetThemaByName(cd.Thema),
                     Omschrijving = cd.Omschrijving,
                     Exemplaar = cd.Exemplaar,
@@ -165,7 +163,8 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
-            Gebruiker.RemoveItem(id);
+            CD cd = gebruiker.LetterTuin.GetItem(id) as CD;
+            Gebruiker.RemoveItem(cd);
             gebruikerRepository.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -235,6 +235,7 @@
     <Compile Include="Models\Domain\Thema.cs" />
     <Compile Include="Models\Domain\Uitlening.cs" />
     <Compile Include="Models\Domain\VertelTas.cs" />
+    <Compile Include="ViewModel\CDViewModel.cs" />
     <Compile Include="ViewModel\ImageActionLinkHelper.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
