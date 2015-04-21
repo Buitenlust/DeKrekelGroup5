@@ -97,6 +97,24 @@ namespace DeKrekelGroup5.Models.Domain
             return false;
         }
 
+        /// <summary> Update de parameters van een boek</summary>
+        /// <returns> Geeft true weer als het boek is aangepast. Exemplaar van het boek moet > 0 </returns>
+        /// <param name="cd"> te updaten boek </param>
+        public bool UpdateCD(CD cd)
+        {
+            CheckAdminRechten();
+            if (cd != null && cd.Exemplaar > 0)
+            {
+                var newItem = LetterTuin.GetItem(cd.Exemplaar) as CD;
+                if (newItem != null)
+                {
+                    newItem.Update(cd);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary> Removes an item from the collection </summary>
         /// <returns>returns true if item is succesfully removed from the collection. Exemplaar must be > 0 </returns>
         /// <param name="id"> id van te verwijderen item </param>
