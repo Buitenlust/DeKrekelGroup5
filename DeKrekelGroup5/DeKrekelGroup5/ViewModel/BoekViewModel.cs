@@ -87,8 +87,8 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = boek.Leeftijd,
                 Thema = (boek.Themaa == null ? "" : boek.Themaa.Themaa),
                 Beschikbaar = boek.Beschikbaar,
-                EindDatumUitlening = boek.Uitleningen.Count == 0 ? new DateTime() : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).EindDatum,
-                Uitgeleend = boek.Uitleningen.Count == 0 ? false : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+                EindDatumUitlening = (boek.Uitleningen == null||  boek.Uitleningen.Count == 0) ? new DateTime() : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = (boek.Uitleningen == null || boek.Uitleningen.Count == 0) ? false : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             };
 
             Themas = new SelectList(themas, "Themaa", "Themaa", Boek.Thema ?? "");
