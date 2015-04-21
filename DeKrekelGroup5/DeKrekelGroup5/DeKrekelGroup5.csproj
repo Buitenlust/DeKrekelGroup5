@@ -193,6 +193,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\CDController.cs" />
+    <Compile Include="Controllers\DVDController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Controllers\UitlenersController.cs" />
     <Compile Include="Controllers\UitleningenController.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="Models\Domain\Thema.cs" />
     <Compile Include="Models\Domain\Uitlening.cs" />
     <Compile Include="Models\Domain\VertelTas.cs" />
+    <Compile Include="ViewModel\DVDViewModel.cs" />
     <Compile Include="ViewModel\CDViewModel.cs" />
     <Compile Include="ViewModel\ImageActionLinkHelper.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
@@ -377,6 +379,12 @@
     <Content Include="Views\CD\Details.cshtml" />
     <Content Include="Views\CD\Edit.cshtml" />
     <Content Include="Views\CD\Index.cshtml" />
+    <Content Include="Views\DVD\DVDLijst.cshtml" />
+    <Content Include="Views\DVD\Create.cshtml" />
+    <Content Include="Views\DVD\Delete.cshtml" />
+    <Content Include="Views\DVD\Details.cshtml" />
+    <Content Include="Views\DVD\Edit.cshtml" />
+    <Content Include="Views\DVD\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
