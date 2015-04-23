@@ -9,6 +9,7 @@ namespace DeKrekelGroup5.ViewModel
 {
     public class VerteltasViewModel : ItemViewModel
     {
+
         public VerteltasViewModel()
         {
 
@@ -23,7 +24,7 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = vm.Leeftijd,
                 Omschrijving = vm.Omschrijving,
                 Titel = vm.Titel,
-                Themaa = thema
+                Themaa = thema,
             };
         }
 
@@ -43,6 +44,7 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = v.Leeftijd,
                 Thema = v.Themaa.Themaa,
                 Beschikbaar = v.Beschikbaar,
+                
                 EindDatumUitlening = v.Uitleningen.Count == 0
                     ? new DateTime()
                     : v.Uitleningen.SingleOrDefault(d => d.Id == v.Uitleningen.Max(c => c.Id)).EindDatum,
