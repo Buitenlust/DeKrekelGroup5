@@ -77,8 +77,8 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = vertelTas.Leeftijd,
                 Thema = (vertelTas.Themaa == null ? "" : vertelTas.Themaa.Themaa),
                 Beschikbaar = vertelTas.Beschikbaar,
-                EindDatumUitlening = vertelTas.Uitleningen.Count == 0 ? new DateTime() : vertelTas.Uitleningen.SingleOrDefault(d => d.Id == vertelTas.Uitleningen.Max(c => c.Id)).EindDatum,
-                Uitgeleend = vertelTas.Uitleningen.Count == 0 ? false : vertelTas.Uitleningen.SingleOrDefault(d => d.Id == vertelTas.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+                EindDatumUitlening = (vertelTas.Uitleningen == null || vertelTas.Uitleningen.Count == 0) ? new DateTime() : vertelTas.Uitleningen.SingleOrDefault(d => d.Id == vertelTas.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = (vertelTas.Uitleningen == null || vertelTas.Uitleningen.Count == 0) ? false : vertelTas.Uitleningen.SingleOrDefault(d => d.Id == vertelTas.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             };
 
             Themas = new SelectList(themas, "Themaa", "Themaa", Verteltas.Thema ?? "");

@@ -84,6 +84,7 @@ namespace DeKrekelGroup5.Controllers
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
 
             try
             {
@@ -111,7 +112,7 @@ namespace DeKrekelGroup5.Controllers
                     gebruiker.AddItem(newVertelTas);
                     gebruikersRep.DoNotDuplicateThema(newVertelTas);
                     gebruikersRep.SaveChanges();
-                    mvm.SetNewInfo("Verteltas" + vertelTas.Verteltas.Titel + " werd toegevoegd...");
+                    mvm.SetNewInfo("Verteltas " + vertelTas.Verteltas.Titel + " werd toegevoegd...");
                     return View("Index", mvm);
                 }
                 catch (Exception)
