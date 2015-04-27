@@ -53,27 +53,33 @@ if (Model.InfoViewModel.IsDialogBox)
  else
  {
      <div id="bottom">
-         <a href="#" class="button green" id="home"><img src="~/Images/tick.png">Ok!</a>
+         <a href="#" class="button green" id="home" data-url="@Model.InfoViewModel.CallBackAction"><img src="~/Images/tick.png">Ok!</a>
      </div>
  }
 
     <script>
-        
-        $(document).ready(function () {
-            showModal();
-            $("#closeFrame").click(function (e) {
-                $("#modal").hide(600, function() {
-                    $("html").load("/Home/Index");
-                });
-                $(".reveal-modal-bg").remove();
 
+    $(document).ready(function () {
+        showModal();
+        $("#closeFrame").click(function (e) {
+            $("#modal").hide(600, function() {
+                $("html").load("/Home/Index");
             });
+            $(".reveal-modal-bg").remove();
 
-            $("#home").click(function (e) {
-                    window.location.href = "/Home/Index";
-
-            });
         });
+
+        $("#home").click(function (e) {
+            
+            if ($("#home").data("url").length !== 0)
+            {
+                window.location.href = $("#home").data("url");
+            } else 
+        {
+                    window.location.href = "/Home/Index";
+        }
+        });
+    });
     </script>
 }
  

@@ -1,0 +1,55 @@
+.indexTable {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-spacing: 20px;
+}
+
+.indexTable img{
+    width : 40%; 
+    height : 55%;
+    float: none;
+    margin-bottom: 20px;
+}
+td {
+    text-align: center;
+    margin: 30px; 
+    width: 20%;
+    padding: 20px;
+    color: #ffffff;
+     -webkit-transition:width 2s, height 2s, background-color 2s, -webkit-transform 2s;
+    transition:width 2s, height 2s, background-color 2s, transform 2s;
+}
+td div {   
+    text-align: left;
+    margin: -15px;
+    margin-bottom: -20px;
+    padding: -15px;
+}
+
+.tr1td1 {
+    background: firebrick;
+}
+.tr1td2 {
+    background: midnightblue;
+}
+.tr1td3 {
+    background: forestgreen;
+}
+.tr1td4 {
+    background: darkorchid;
+}
+.tr1td5 {
+    background: orangered;
+}
+td:hover {
+    background-color: #B3D524;
+    -webkit-transform:rotate(20deg);
+    transform:rotate(20deg);
+}
+
+.tr1td1:hover, .tr1td3:hover, .tr1td5:hover {
+    background-color: #B3D524;
+    -webkit-transform:rotate(-20deg);
+    transform:rotate(-20deg);
+}

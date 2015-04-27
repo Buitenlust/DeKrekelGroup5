@@ -16,6 +16,7 @@ namespace DeKrekelGroup5.Models.Domain
         public int Exemplaar { get; set; }
 
         public string Titel { get; set; }
+        public string ImageString { get; set; }
         public string Omschrijving { get; set; }
 
         public int Leeftijd { get; set; }
@@ -29,12 +30,11 @@ namespace DeKrekelGroup5.Models.Domain
 
         public Item()
         { 
-            //Themaa = new Thema();
-            //Uitleningen = new List<Uitlening>();
         }
 
         public void Update(Item item)
         {
+            ImageString = item.ImageString;
             Leeftijd = item.Leeftijd;
             Omschrijving = item.Omschrijving;
             Titel = item.Titel;

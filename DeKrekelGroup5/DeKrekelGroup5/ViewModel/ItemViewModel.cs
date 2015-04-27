@@ -17,6 +17,9 @@ namespace DeKrekelGroup5.ViewModel
         [Required(ErrorMessage = "Vul een jaartal tussen 0 & 99 in aub...")]
         [Range(0, 99)]
         public int Leeftijd { get; set; }
+
+        public HttpPostedFileBase ImageFile { get; set; }
+
         [Required(ErrorMessage = "Kies een thema aub...")]
         public string Thema { get; set; }
 
@@ -26,7 +29,7 @@ namespace DeKrekelGroup5.ViewModel
 
         public DateTime EindDatumUitlening { get; set; }
         public bool Uitgeleend { get; set; }
-
+        public string image { get; set; }
         public ItemViewModel()
         {
             

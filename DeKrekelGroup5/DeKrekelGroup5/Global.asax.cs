@@ -29,6 +29,7 @@ namespace DeKrekelGroup5
 
             ModelBinders.Binders.Add(typeof (Gebruiker), new GebruikerModelBinder());
             ModelBinders.Binders.Add(typeof(MainViewModel), new  MainViewModelBinder());
+            ModelBinders.Binders.Add(typeof(Helper), new HelperModelBinder());
         }
     }
 }

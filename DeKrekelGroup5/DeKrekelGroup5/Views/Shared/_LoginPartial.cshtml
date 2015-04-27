@@ -19,12 +19,16 @@
     }
     <a href="#" class="button red close" id="closeFrame"><img src="~/Images/cross.png">Terug!</a>
 </div>
-<script>
+
+ <script>
+
     $(document).ready(function() {
 
-        $("#closeFrame").click(function(e) { // Button which will activate our modal
+        $("#closeFrame").click(function(e) {
             $("#modal").hide(600);
             $(".reveal-modal-bg").remove();
+            window.location.reload();
         });
     });
+
 </script>

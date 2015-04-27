@@ -1,0 +1,21 @@
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+@Styles.Render("~/Content/uploadfile.css")
+@Scripts.Render("~/bundles/jquery")
+
+    @if (Model.BoekCreateViewModel == null || string.IsNullOrEmpty(Model.BoekCreateViewModel.Boek.image))
+    {
+        <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
+    }
+    else
+    {
+
+        <img src="@Url.Content("/FTP/Images/"+Model.BoekCreateViewModel.Boek.image)" alt="Model.BoekCreateViewModel.Boek.image" style="max-width: 70%" />
+    }
+    
+    <div id="multiplefileuploader"></div>
+    <div id="status"></div>
+
+
+
+
+<div id='uploadfiles'></div>

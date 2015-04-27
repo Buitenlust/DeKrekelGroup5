@@ -3,13 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>De Lettertuin</title>
-    @Styles.Render("~/Content/masterLayout.css")
-    @Styles.Render("~/Content/reveal.css")
-    @Scripts.Render("~/bundles/modernizr")
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>De Lettertuin</title>
+@Styles.Render("~/Content/masterLayout.css")
 </head>
 <body>
 <div id="wrapper">
@@ -27,23 +24,20 @@
                 {
                     if (!Model.GebruikerViewModel.IsBeheerder || !Model.GebruikerViewModel.IsBibliothecaris)
                     {
-                        <a href='#' id="loginBib"><img src="~/Images/guest.png" /></a>
+                        <a href='#' id="loginBib"><img src="~/Images/guest.png"/></a>
                     }
                     if (!Model.GebruikerViewModel.IsBeheerder || !Model.GebruikerViewModel.IsBibliothecaris)
                     {
-                        <a href='#' id="loginBeh"><img src="~/Images/admin.png" /></a>
+                        <a href='#' id="loginBeh"><img src="~/Images/admin.png"/></a>
                     }
                     if (Model.GebruikerViewModel.IsBeheerder || Model.GebruikerViewModel.IsBibliothecaris)
                     {
-                        <a href='#' id="logout"><img src="~/Images/logout.png" /></a>
+                        <a href='#' id="logout"><img src="~/Images/logout.png"/></a>
                     }
                 }
-                
-    
             </div>
         </nav>
     </div>
-
     <div class="container body-content">
         <div id="body">
             @RenderSection("featured", required: false)
@@ -51,10 +45,11 @@
                 @RenderBody()
             </section>
         </div>
-        @if (Model.InfoViewModel != null) { 
-        <div id="modal" class="hidden">
-            @Html.Partial("_info", Model)
-        </div>
+        @if (Model.InfoViewModel != null)
+        {
+            <div id="modal" class="hidden">
+                @Html.Partial("_info", Model)
+            </div>
         }
         else
         {
@@ -62,18 +57,19 @@
                 @Html.Partial("_info", Model)
             </div>
         }
-        
         <footer><hr/>
             <p>&copy; @DateTime.Now.Year - MediaTheek - De Krekel by Group5</p>
         </footer>
     </div>
 </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/reveal")
-    @RenderSection("scripts", required: false)
+<script src="/Scripts/jquery-2.1.3.min.js" type="text/javascript"></script>
+<script src="/Scripts/respond.min.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.reveal.js" type="text/javascript"></script>
+<script src="/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
 
-    
+@if (IsSectionDefined("JavaScript"))
+{
+    @RenderSection("JavaScript");
+}
 </body>
 </html>

@@ -19,11 +19,16 @@ $(document).ready(function () {
         $(".reveal-modal-bg").remove();
         
     });
-    $("#home").click(function (e) {
+
+    $("#closeFrameOk").click(function (e) {
         $("#modal").hide(600);
         $(".reveal-modal-bg").remove();
-
+        window.location.reload();
     });
+
+    $("#categories").hide();
+    $("#categories").show(4000);
+
 
 });
 
@@ -60,7 +65,7 @@ function showModal() {
      Listener for data-reveal-id attributes
     ----------------------------*/
 
-    $('a[data-reveal-id]').live('click', function (e) {
+    $('a[data-reveal-id]').on('click', function (e) {
         e.preventDefault();
         var modalLocation = $(this).attr('data-reveal-id');
         $('#' + modalLocation).reveal($(this).data());

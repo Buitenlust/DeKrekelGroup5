@@ -18,7 +18,7 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
             Property(s => s.Omschrijving).HasMaxLength(1023);
             Property(s => s.Titel).HasMaxLength(55).IsRequired();
             Property(s => s.Uitgever).HasMaxLength(55);
-
+            Property(b => b.ImageString).HasMaxLength(55);
             //Primary Key
             HasKey(spel => spel.Exemplaar);
         }

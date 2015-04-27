@@ -47,6 +47,8 @@ namespace DeKrekelGroup5.Controllers
                 }
                 mvm.SetNewUitlenersLijstVm(uitleners);
                 mvm.SetItemViewModel(gebruiker.LetterTuin.GetItem(id));
+                if (HttpContext.Session != null && Request.UrlReferrer != null)
+                    HttpContext.Session["helper"] = new Helper(Request.UrlReferrer.AbsolutePath);
                 if (Request.IsAjaxRequest())
                     return PartialView("UitlenersSelectLijst", mvm);
                  
@@ -82,6 +84,7 @@ namespace DeKrekelGroup5.Controllers
                     mvm.SetNewInfo("Wenst u " + item.Titel + " uit te lenen aan " + uitlener.VoorNaam + "?",false,true,"Confirm");
                     if (HttpContext.Session != null) 
                         HttpContext.Session["main"] = mvm;
+
                     return PartialView("_info", mvm);
                 }
                 catch (Exception)
@@ -112,7 +115,10 @@ namespace DeKrekelGroup5.Controllers
                     {
                         gebruiker.VoegUitleningToe(uitlener, item);
                         gebruikersRep.SaveChanges();
-                        mvm.SetNewInfo(item.Titel + " is uitgeleend aan " + uitlener.VoorNaam + ".");
+                        Helper helper = HttpContext.Session["helper"] as Helper;
+                        if(helper != null)
+                            return PartialView("_info", mvm.SetNewInfo(item.Titel + " is uitgeleend aan " + uitlener.VoorNaam + ".", false, false, helper.CallBack +"/Details/" + item.Exemplaar));
+                        return PartialView("_info", mvm.SetNewInfo(item.Titel + " is uitgeleend aan " + uitlener.VoorNaam + "."));
                     }
                     else
                     {
@@ -151,13 +157,16 @@ namespace DeKrekelGroup5.Controllers
                     Item item = gebruiker.LetterTuin.GetItem(exemplaar);
                     Uitlening uitlening = gebruiker.GetOpenUitleningByItem(exemplaar);
                     MainViewModel mvm = new MainViewModel(gebruiker);
+                    
                     mvm.SetItemViewModel(item);
+                    if (HttpContext.Session != null && Request.UrlReferrer != null)
+                        HttpContext.Session["helper"] = new Helper(Request.UrlReferrer.AbsolutePath);
                     if (item != null || uitlening != null)
                     {
                         decimal boete = gebruiker.GetBoete(uitlening); 
                         mvm.SetNewInfo(item.Titel + " Terugbrengen?",false,true,"ConfirmBack");
                         if (boete > 0)
-                            mvm.SetNewInfo(item.Titel + " Terugbrengen? De boete bedraagt " + boete + " euro", false, true, "ConfirmBack");
+                            mvm.SetNewInfo(item.Titel + " Terugbrengen? De boete bedraagt " + boete + " euro", false, true);
                     }
                     else
                     { 
@@ -191,25 +200,14 @@ namespace DeKrekelGroup5.Controllers
                     mvm.SetGebruikerToVm(gebruiker);
                     gebruiker.EindeUitlening(uitlening);
                     gebruikersRep.SaveChanges();
-                    mvm.SetNewInfo("Einde uitlening van " + item.Titel + " werd geregistreerd!");
-                    return PartialView("_info", mvm);
+
+                    Helper helper = HttpContext.Session["helper"] as Helper;
+                    if (helper != null)
+                        return PartialView("_info", mvm.SetNewInfo("Einde uitlening van " + item.Titel + " werd geregistreerd!", false, false, helper.CallBack + "/Details/" + item.Exemplaar));
+                    return PartialView("_info", mvm.SetNewInfo("Einde uitlening van " + item.Titel + " werd geregistreerd!"));
                 }
                 catch (DbEntityValidationException dbEx)
                 {
-                    Exception raise = dbEx;
-                    foreach (var validationErrors in dbEx.EntityValidationErrors)
-                    {
-                        foreach (var validationError in validationErrors.ValidationErrors)
-                        {
-                            string message = string.Format("{0}:{1}",
-                                validationErrors.Entry.Entity.ToString(),
-                                validationError.ErrorMessage);
-                            // raise a new exception nesting
-                            // the current instance as InnerException
-                            raise = new InvalidOperationException(message, raise);
-                        }
-                    }
-                    throw raise;
                     mvm.SetNewInfo("Er is iets ernstigs fout gelopen!", true);
                     return PartialView("_info",mvm);
                 }
@@ -232,6 +230,13 @@ namespace DeKrekelGroup5.Controllers
             {
                 gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
                 MainViewModel mvm = new MainViewModel(gebruiker);
+
+                if (HttpContext.Session != null)
+                {
+                    HttpContext.Session["main"] = mvm;
+                    HttpContext.Session["helper"] = new Helper(Request.UrlReferrer.AbsolutePath);
+                }
+                
                 Item item = gebruiker.LetterTuin.GetItem(exemplaar);
                 if (gebruiker.CheckVerlenging(item))
                 {
@@ -253,16 +258,17 @@ namespace DeKrekelGroup5.Controllers
             }
         }
 
+
+
         [HttpPost]
         // Post: Uitleningen/verlengen
-        public ActionResult VerlengConfirmed(Gebruiker gebruiker, MainViewModel mainViewModel)
+        public ActionResult VerlengConfirmed(Gebruiker gebruiker, MainViewModel mainViewModel, Helper helper)
         {
             if (gebruiker == null || gebruiker.BibliotheekRechten == false)
                 return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
             if(mainViewModel !=null)
             try
-            {
-                
+            { 
                 gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
                 MainViewModel mvm = new MainViewModel(gebruiker);
                 Item item = gebruiker.LetterTuin.GetItem(mainViewModel.ItemViewModel.Exemplaar);
@@ -271,13 +277,15 @@ namespace DeKrekelGroup5.Controllers
                     gebruiker.VerlengUitlening(gebruiker.GetOpenUitleningByItem(mainViewModel.ItemViewModel.Exemplaar).Id);
                     gebruikersRep.SaveChanges();
                     mvm.SetNewInfo("De uitlening is verlengd");
+                    if (helper != null)
+                        return PartialView("_info", mvm.SetNewInfo("De uitlening is verlengd", false, false, helper.CallBack + "/Details/" + item.Exemplaar));
+                    return PartialView("_info", mvm.SetNewInfo("De uitlening is verlengd"));
                 }
-                else
-                {
                     mvm.SetNewInfo("Er zijn geen verlengingen meer mogelijk", true);
-
-                }
-                return PartialView("_info", mvm);
+                    if (helper != null)
+                        return PartialView("_info", mvm.SetNewInfo("Er zijn geen verlengingen meer mogelijk", true, false, helper.CallBack + "/Details/" + item.Exemplaar));
+                    return PartialView("_info", mvm.SetNewInfo("Er zijn geen verlengingen meer mogelijk", true));
+                
             }
             catch (Exception)
             {

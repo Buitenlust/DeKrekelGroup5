@@ -10,62 +10,63 @@
         </h4>
     <hr/>
     <div id="wrapDetails">
-        <div id="leftCol"><img src="~/Images/default.jpg" alt="krekelSchool">
+        <div id="leftCol">
+            @Html.Partial("upload", Model)
         </div>
 
         <div id="mainCol">
             <table id="details">
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Exemplaar)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Exemplaar)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.BoekViewModel.Exemplaar)</td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Auteur)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Auteur)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.BoekViewModel.Auteur)</td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Uitgever)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Uitgever)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.BoekViewModel.Uitgever)</td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Leeftijd)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Leeftijd)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.BoekViewModel.Leeftijd)</td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Titel)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Auteur)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.BoekViewModel.Auteur)</td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Omschrijving)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Auteur)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.BoekViewModel.Auteur)</td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Thema)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.BoekViewModel.Thema)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.BoekViewModel.Thema)</td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Uitgeleend)</td>
-                    <td class="td2">
+                    <td>
                         @if (@Model.BoekViewModel.Uitgeleend)
                         {
                             @Model.BoekViewModel.EindDatumUitlening.ToLongDateString()
                         }
                         else
                         {
-                            <img src="~/Images/cross.png" class="icon" />
+                            <img src="~/Images/cross.png" class="bigIcon" />
                         }
                     </td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Beschikbaar)</td>
-                    <td class="td2">
+                    <td>
                         @if (@Model.BoekViewModel.Beschikbaar)
                         {
-                            <img src="~/Images/tick.png" class="icon" />
+                            <img src="~/Images/tick.png" class="bigIcon"/>
                         }
                         else
                         {
-                            <img src="~/Images/cross.png" class="icon" />
+                            <img src="~/Images/cross.png" class="bigIcon" />
                         }
                     </td>
                 </tr>

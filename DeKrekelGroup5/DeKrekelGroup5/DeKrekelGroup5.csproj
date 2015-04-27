@@ -58,7 +58,7 @@
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -71,6 +71,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -197,6 +198,8 @@
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Controllers\UitlenersController.cs" />
     <Compile Include="Controllers\UitleningenController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="Infrastructure\HelperModelBinder.cs" />
     <Compile Include="Infrastructure\MainViewModelBinder.cs" />
     <Compile Include="Infrastructure\GebruikerModelBinder.cs" />
     <Compile Include="Models\DAL\KrekelContext.cs" />
@@ -238,6 +241,7 @@
     <Compile Include="Models\Domain\VertelTas.cs" />
     <Compile Include="ViewModel\DVDViewModel.cs" />
     <Compile Include="ViewModel\CDViewModel.cs" />
+    <Compile Include="ViewModel\Helper.cs" />
     <Compile Include="ViewModel\ImageActionLinkHelper.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -251,7 +255,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\masterLayout.css" />
+    <Content Include="Content\home.css" />
     <Content Include="Content\reveal.css" />
+    <Content Include="Content\uploadfile.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -260,57 +266,58 @@
     <Content Include="Images\background.jpg" />
     <Content Include="Images\bg.jpg" />
     <Content Include="Images\binnen.png" />
-    <Content Include="Images\Book.png" />
+    <Content Include="Images\boeken.png" />
     <Content Include="Images\buiten.png" />
-    <Content Include="Images\cd.png" />
-    <Content Include="Images\create.gif" />
+    <Content Include="Images\category.png" />
     <Content Include="Images\create.png" />
     <Content Include="Images\cross.png" />
-    <Content Include="Images\default.jpg" />
     <Content Include="Images\delete.jpg" />
     <Content Include="Images\delete.png" />
     <Content Include="Images\details.png" />
-    <Content Include="Images\dvd.png" />
-    <Content Include="Images\edit.gif" />
     <Content Include="Images\edit.png" />
     <Content Include="Images\extraTijd.png" />
     <Content Include="Images\guest.png" />
-    <Content Include="Images\help.png" />
+    <Content Include="Images\headphone.png" />
     <Content Include="Images\home.png" />
-    <Content Include="Images\home_nontrans.png" />
-    <Content Include="Images\icons.png" />
     <Content Include="Images\info.png" />
     <Content Include="Images\krekel.png" />
-    <Content Include="Images\login-and-logout-door.jpg" />
+    <Content Include="Images\krekelFoto.png" />
     <Content Include="Images\logout.png" />
-    <Content Include="Images\male-avatar-clip-art.jpg" />
-    <Content Include="Images\ok.jpg" />
     <Content Include="Images\ok.png" />
     <Content Include="Images\question.png" />
     <Content Include="Images\Return.png" />
     <Content Include="Images\search.png" />
-    <Content Include="Images\signs.jpg" />
     <Content Include="Images\spel.png" />
     <Content Include="Images\tick.png" />
+    <Content Include="Images\upload.png" />
     <Content Include="Images\vertelTas.png" />
+    <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Images\video.png" />
+    <Content Include="Scripts\jquery-2.1.3.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.js" />
+    <Content Include="Scripts\jQuery.MultiFile.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Models\Domain\ClassDiagram.cd" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.4.4.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.reveal.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\upload.js" />
+    <Content Include="Scripts\validation_addition.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -324,7 +331,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
@@ -385,10 +391,13 @@
     <Content Include="Views\DVD\Details.cshtml" />
     <Content Include="Views\DVD\Edit.cshtml" />
     <Content Include="Views\DVD\Index.cshtml" />
+    <Content Include="Views\Shared\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="FTP\Images\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Views\Upload\" />
     <Folder Include="Views\VertelTas\" />
   </ItemGroup>
   <ItemGroup>

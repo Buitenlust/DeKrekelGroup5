@@ -1,4 +1,5 @@
 ﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+@Styles.Render("~/Content/home.css")
 <div id="wrapper">
     <div id="content">
         <div id="titel">
@@ -7,21 +8,57 @@
         <div id="categories">
             <table class="indexTable">
                 <tr>
-                    <td>
-                        <a href='@Url.Action("index", "boeken")'><img src="~/Images/Book.png" /></a>
+                    <td class="tr1td1">
+                        <a href='@Url.Action("index", "boeken")'><img src="~/Images/Boeken.png"/></a>
+                        <div>Boeken</div>
                     </td>
-                    <td>
-                        <a href='@Url.Action("index", "CD")'><img src="~/Images/cd.png" /></a>
+                    <td class="tr1td2">
+                        <a href='@Url.Action("index", "spellen")'><img src="~/Images/spel.png"/></a>
+                        <div>Spellen</div>
                     </td>
-                    <td>
-                        <a href='@Url.Action("index", "DVD")'><img src="~/Images/dvd.png" /></a>
+                    <td class="tr1td3">
+                        <a href='@Url.Action("index", "vertelTassen")'><img src="~/Images/vertelTas.png"/></a>
+                        <div>Verteltassen</div>
                     </td>
-                    <td>
-                        <a href='@Url.Action("index", "spellen")'><img src="~/Images/spel.png" /></a>
+                </tr>
+            </table>
+            <table class="indexTable">
+                <tr>
+                    <td class="tr1td4">
+                        <a href='@Url.Action("index", "CD")'><img src="~/Images/headphone.png"/></a>
+                        <div>Muziek</div>
                     </td>
-                    <td>
-                        <a href='@Url.Action("index", "vertelTassen")'><img src="~/Images/vertelTas.png" /></a>
+                    <td class="tr1td5">
+                        <a href='@Url.Action("index", "DVD")'><img src="~/Images/video.png"/></a>
+                        <div>Films</div>
                     </td>
+                    @if (Model.GebruikerViewModel.IsBeheerder || Model.GebruikerViewModel.IsBibliothecaris)
+                    {
+                        <td class="tr1td1">
+                            <a href='@Url.Action("index", "boeken")'><img src="~/Images/uitleningen.png"/></a>
+                            <div>Uitleningen</div>
+                        </td>
+                    }
+                </tr>
+            </table>
+            <table class="indexTable">
+            <tr>
+                @if (Model.GebruikerViewModel.IsBeheerder)
+                {
+                    <td class="tr1td2">
+                        <a href='@Url.Action("index", "CD")'><img src="~/Images/category.png"/></a>
+                        <div>Thema's</div>
+                    </td>
+                    <td class="tr1td3">
+                        <a href='@Url.Action("index", "spellen")'><img src="~/Images/users.png"/></a>
+                        <div>Gebruikers</div>
+                    </td>
+                    <td class="tr1td4">
+                        <a href='@Url.Action("index", "DVD")'><img src="~/Images/settings.png"/></a>
+                        <div>Instellingen</div>
+                    </td>
+                }
+
                 </tr>
             </table>
         </div>

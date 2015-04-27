@@ -8,12 +8,16 @@
     <button type="submit" class="button green"><img src="~/Images/tick.png">Uitloggen!</button>
     <a href="#" class="button red close" id="closeFrame"><img src="~/Images/cross.png">Terug!</a>
 </div>
+
 <script>
+
     $(document).ready(function() {
 
-        $("#closeFrame").click(function(e) { 
+        $("#closeFrame").click(function(e) {
             $("#modal").hide(600);
             $(".reveal-modal-bg").remove();
+            window.location.reload();
         });
     });
+
 </script>
