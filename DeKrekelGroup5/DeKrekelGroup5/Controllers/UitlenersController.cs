@@ -27,9 +27,10 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Index(Gebruiker gebruiker, MainViewModel mvm, String search=null)
         { 
             if (gebruiker == null || gebruiker.BibliotheekRechten == false)
-                return PartialView(mvm.SetNewInfo("U dient eerst in te loggen", true));
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
             mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             try
             {
                 mvm.SetNewUitlenersLijstVm(gebruiker.GetUitleners(search).ToList());
@@ -47,9 +48,10 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Details(Gebruiker gebruiker, MainViewModel mvm, int id = 0)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return PartialView(mvm.SetNewInfo("U dient eerst in te loggen", true));
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
             mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             if (id <= 0)
                 return PartialView(mvm.SetNewInfo("Gebruiker niet gevonden.", true));
             try
@@ -62,7 +64,7 @@ namespace DeKrekelGroup5.Controllers
             }
             catch (Exception)
             {
-                return PartialView(mvm.SetNewInfo("De server kan uw aanvraag niet behandelen.", true));
+                return View(mvm.SetNewInfo("De server kan uw aanvraag niet behandelen.", true));
             }
         }
 
@@ -70,9 +72,10 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Create(Gebruiker gebruiker, MainViewModel mvm)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return PartialView(mvm.SetNewInfo("U dient eerst in te loggen", true));
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
             mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             mvm.SetUitLenerViewModel(new Uitlener());
             return View(mvm);
         }
@@ -83,9 +86,10 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Create(Gebruiker gebruiker, MainViewModel mvm, [Bind(Prefix= "UitlenerViewModel")] UitlenerViewModel uvm)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return PartialView(mvm.SetNewInfo("U dient eerst in te loggen", true));
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
-            mvm.SetGebruikerToVm(gebruiker); 
+            mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             if (ModelState.IsValid && uvm != null && uvm.Id == 0 )
             {
                 try
@@ -108,9 +112,10 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Edit(Gebruiker gebruiker, MainViewModel mvm, int id=0)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return PartialView(mvm.SetNewInfo("U dient eerst in te loggen", true));
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
-            mvm.SetGebruikerToVm(gebruiker); 
+            mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             if (id <= 0)
                 return PartialView(mvm.SetNewInfo("Deze student bestaat niet", true));
             Uitlener uitlener = gebruiker.GetUitlenerById(id);
@@ -126,9 +131,10 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Edit(Gebruiker gebruiker, MainViewModel mvm, [Bind(Prefix = "UitlenerViewModel")] UitlenerViewModel uvm)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return PartialView(mvm.SetNewInfo("U dient eerst in te loggen", true));
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
-            mvm.SetGebruikerToVm(gebruiker); 
+            mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             if (ModelState.IsValid  && uvm.Id > 0)
             {
                 try
@@ -152,16 +158,17 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Delete(Gebruiker gebruiker, MainViewModel mvm, int id=0)       //todo heeft gebruiker nog uitleningen?
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return PartialView(mvm.SetNewInfo("U dient eerst in te loggen", true));
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
-            mvm.SetGebruikerToVm(gebruiker); 
+            mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             if (id <= 0)
                 return PartialView(mvm.SetNewInfo("Verkeerde Id", true));
             try
             {
                 Uitlener uitlener = gebruiker.GetUitlenerById(id);
                 if (uitlener == null)
-                    return PartialView(mvm.SetNewInfo("Student niet gevonden", true));
+                    return View(mvm.SetNewInfo("Student niet gevonden", true));
                 mvm.SetUitLenerViewModel(uitlener);
                 return View(mvm);
             }
@@ -177,9 +184,10 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult DeleteConfirmed(Gebruiker gebruiker,MainViewModel mvm, int id=0)  //todo heeft gebruiker nog uitleningen? zoja, lijst weergeven van uitleningen.
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return PartialView(mvm.SetNewInfo("U dient eerst in te loggen", true));
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
-            mvm.SetGebruikerToVm(gebruiker); 
+            mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             if (id <= 0)
                 return PartialView(mvm.SetNewInfo("Verkeerde Id", true));
             try
@@ -203,9 +211,10 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult CreateGroup(Gebruiker gebruiker, MainViewModel mvm)     
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return PartialView(mvm.SetNewInfo("U dient eerst in te loggen", true));
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
-            mvm.SetGebruikerToVm(gebruiker); 
+            mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
              
                 return View(mvm);
         }
@@ -219,7 +228,7 @@ namespace DeKrekelGroup5.Controllers
                 string pic = System.IO.Path.GetFileName(csv.FileName);
                 string path = System.IO.Path.Combine(Server.MapPath("~/FTP/Data"), DateTime.Today.Year + DateTime.Today.Month + pic);
                 csv.SaveAs(path);
-
+                mvm.InfoViewModel.Info = null;
                 try
                 {
                     CsvFileDescription inputFileDescription = new CsvFileDescription
@@ -250,9 +259,10 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult GroupDetails(Gebruiker gebruiker, MainViewModel mvm)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return PartialView(mvm.SetNewInfo("U dient eerst in te loggen", true));
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
-            mvm.SetGebruikerToVm(gebruiker); 
+            mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             if (mvm.UitlenersLijstViewModel.Uitleners != null)
             {
                 return PartialView("ImportUitlenersLijst", mvm);
@@ -264,10 +274,10 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult SaveGroupUsers(Gebruiker gebruiker, MainViewModel mvm)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return PartialView(mvm.SetNewInfo("U dient eerst in te loggen", true));
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
             gebruiker = gebruikerRepository.GetGebruikerByName(gebruiker.GebruikersNaam);
-            mvm.SetGebruikerToVm(gebruiker); 
-
+            mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             if (mvm.UitlenersLijstViewModel.Uitleners != null)
             {
 

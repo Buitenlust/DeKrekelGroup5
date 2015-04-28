@@ -17,7 +17,7 @@ namespace DeKrekelGroup5.Infrastructure
         {
             MainViewModel mvm = controllerContext.HttpContext.Session[gebruikerSessionKey] as MainViewModel;
             if (mvm != null)
-            {
+            { 
                 controllerContext.HttpContext.Session[gebruikerSessionKey] = mvm;
                 return mvm;
             }

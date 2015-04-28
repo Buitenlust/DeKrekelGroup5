@@ -68,6 +68,18 @@ if (Model.InfoViewModel.IsDialogBox)
             $(".reveal-modal-bg").remove();
         });
     });
+    $("#okInfo").click(function (e) { 
+        if ($("#okInfo").data("url").length !== 0) {
+            window.location.href = $("#okInfo").data("url");
+            $("#modal").hide();
+        } else {
+            $("#modal").hide();
+        }
+
+    });
+
+
+
     </script>
 }
  

@@ -12,11 +12,10 @@ namespace DeKrekelGroup5.Controllers
     public class HelperController : Controller
     {
         // GET: Helper
-        public ActionResult ClearInfo(Gebruiker gebruiker, MainViewModel mvm)
+        public void ClearInfo(Gebruiker gebruiker, MainViewModel mvm)
         {
-            mvm.InfoViewModel = null;
-            HttpContext.Session["main"] = mvm;
-            return new HttpStatusCodeResult(HttpStatusCode.Accepted);
+            mvm.InfoViewModel.Info = null;
+            HttpContext.Session["main"] = mvm; 
         }
     }
 }

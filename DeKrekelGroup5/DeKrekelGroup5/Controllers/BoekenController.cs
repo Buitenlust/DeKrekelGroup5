@@ -64,13 +64,14 @@ namespace DeKrekelGroup5.Controllers
                 gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             try
             {
                 if (id == 0)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
                 if (boek == null)
-                    return HttpNotFound();
+                    mvm.SetNewInfo("Boek niet gevonden");
                 return View("Details", mvm.SetBoekViewModel(boek));
             }
             catch (Exception)
@@ -83,13 +84,13 @@ namespace DeKrekelGroup5.Controllers
         // GET: Boeken/Create
         public ActionResult Create(Gebruiker gebruiker)
         {
-            if (gebruiker == null || gebruiker.AdminRechten == false)
-                return new HttpUnauthorizedResult();
+            MainViewModel mvm = new MainViewModel(gebruiker);
+            if (gebruiker == null || gebruiker.AdminRechten == false) 
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
 
-            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             try
             {
-                MainViewModel mvm = new MainViewModel(gebruiker);
+                
                 mvm.SetBoekCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new Boek());
                 HttpContext.Session["main"] = mvm;
                 return View(mvm);
@@ -135,17 +136,20 @@ namespace DeKrekelGroup5.Controllers
         // GET: Boeken/Edit/5
         public ActionResult Edit(Gebruiker gebruiker,int id=0)
         {
+
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            MainViewModel mvm = new MainViewModel(gebruiker);
+            mvm.InfoViewModel.Info = null;
+            mvm.SetGebruikerToVm(gebruiker);
             try
             {
                 if (id <= 0)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
                 if (boek == null)
-                    return HttpNotFound();
-                MainViewModel mvm = new MainViewModel(gebruiker);
+                    return HttpNotFound(); 
                 mvm.SetBoekCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), boek);
                 HttpContext.Session["main"] = mvm;
             
@@ -167,7 +171,8 @@ namespace DeKrekelGroup5.Controllers
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-
+            mvm.InfoViewModel.Info = null;
+            mvm.SetGebruikerToVm(gebruiker);
             if (newimage != null)
             {
                 return UploadImage(gebruiker,mvm,newimage);

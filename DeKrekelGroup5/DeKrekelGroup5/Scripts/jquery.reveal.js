@@ -30,9 +30,9 @@ $(document).ready(function () {
     $("#categories").show(2000);
 
     $("#okInfo").click(function (e) {
-        $.ajax({ url: '/Helper/ClearInfo' });
         if ($("#okInfo").data("url").length !== 0) {
-            window.location.href = $("#home").data("url");
+            window.location.href = $("#okInfo").data("url");
+            $("#modal").hide();
         } else {
             $("#modal").hide();
         }
