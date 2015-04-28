@@ -11,18 +11,14 @@ namespace DeKrekelGroup5.ViewModel
     {
         public InfoViewModel InfoViewModel { get; set; }
         public GebruikerViewModel GebruikerViewModel { get; set; }
-
         public ItemViewModel ItemViewModel { get; set; }
-
         public BoekViewModel BoekViewModel { get; set; }
         public BoekenLijstViewModel BoekenLijstViewModel { get; set; }
         public BoekCreateViewModel BoekCreateViewModel { get; set; }
-        
-
         public SpelViewModel SpelViewModel { get; set; }
-
         public UitlenerViewModel UitlenerViewModel { get; set; }
         public UitlenersLijstViewModel UitlenersLijstViewModel { get; set; }
+
 
         
 

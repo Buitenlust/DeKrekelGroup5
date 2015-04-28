@@ -351,9 +351,10 @@ namespace DeKrekelGroup5.Models.Domain
             CheckBibliotheekRechten();
 
             if (search != null && !search.Trim().IsEmpty())
-                return LetterTuin.Uitleners.Where(p => p.Naam.ToLower().Contains(search.ToLower()) ||
-                                                       p.VoorNaam.ToLower().Contains(search.ToLower())).OrderBy(p=>p.Naam); 
-            return LetterTuin.Uitleners.Take(25);
+                return LetterTuin.Uitleners.Where(p => p.Naam.ToLower().Contains(search.ToLower().Trim()) ||
+                                                       p.Klas.ToLower().Contains(search.ToLower().Trim()) ||
+                                                       p.VoorNaam.ToLower().Contains(search.ToLower().Trim())).OrderBy(p=>p.Naam); 
+            return LetterTuin.Uitleners;
         }
 
         /// <summary> Geeft een lijst van uitleners </summary>

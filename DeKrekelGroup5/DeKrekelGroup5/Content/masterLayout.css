@@ -32,7 +32,7 @@ h4 {
 }
 a:link{
     text-decoration:none;
-    color:#fffaf0;
+    color:#000000;
 }
 a:visited {
     color:#fffaf0;
@@ -881,3 +881,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
       float: left;
   color: red;
 }
+ .center {
+     margin-top: 20px;
+     width: 50%;
+     margin-left: auto;
+     margin-right: auto;
+ }

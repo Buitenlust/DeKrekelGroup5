@@ -19,5 +19,6 @@ namespace DeKrekelGroup5.Models.Domain
         void DoNotDuplicateThema(Item item);
         void DoNotDuplicateLetterTuin(Gebruiker gebruiker);
         void AddLetterTuin(LetterTuin letterTuin);
+        void UpdateUitlenersEindeSchooljaar();
     }
 }

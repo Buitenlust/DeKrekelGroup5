@@ -1,1 +1,39 @@
-﻿
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+<div id="content">
+    <table>
+        <tr>
+            <td>
+
+                <div id="searchBar" style="margin-left: 25%">
+                    @using (Ajax.BeginForm("Index",
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "Get",
+                            UpdateTargetId = "Uitleners"
+                        }
+                        ))
+                    {
+                        <input type="search" name="search" id="search" onclick=" this.select(); "/>
+                        <input type="submit" value="Zoek gebruiker" class="btn btn-default" id="searchSubmit"/>
+                    }
+
+
+                </div>
+            </td>
+            <td>
+                @if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
+                {
+                    <a href=' @Url.Action("create") '><img src="~/Images/adduser.png" class="createNew tinyImg"/></a>
+                    <a href=' @Url.Action("createGroup") '><img src="~/Images/addgroup.png" class="createNew tinyImg"/></a>
+                }
+            </td>
+        </tr>
+    </table>
+    <div id="leftCol">
+</div>
+    <div id="Uitleners">
+        
+        @Html.Partial("UitlenersLijst", Model)
+    </div>
+</div>

@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LINQtoCSV">
+      <HintPath>..\packages\LINQtoCSV.1.5.0.0\lib\net35\LINQtoCSV.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -195,6 +198,7 @@
     <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\CDController.cs" />
     <Compile Include="Controllers\DVDController.cs" />
+    <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Controllers\UitlenersController.cs" />
     <Compile Include="Controllers\UitleningenController.cs" />
@@ -316,6 +320,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\uploadData.js" />
     <Content Include="Scripts\upload.js" />
     <Content Include="Scripts\validation_addition.js" />
     <Content Include="Scripts\_references.js" />
@@ -328,7 +333,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
@@ -338,7 +342,6 @@
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml" />
@@ -368,7 +371,6 @@
     <Content Include="Views\Uitleners\Details.cshtml" />
     <Content Include="Views\Uitleners\Edit.cshtml" />
     <Content Include="Views\Uitleners\Index.cshtml" />
-    <Content Include="Views\Shared\test.cshtml" />
     <Content Include="Views\Shared\_success.cshtml" />
     <Content Include="Views\Shared\_LogoutPartial.cshtml" />
     <Content Include="Views\Uitleningen\Create.cshtml" />
@@ -392,11 +394,15 @@
     <Content Include="Views\DVD\Edit.cshtml" />
     <Content Include="Views\DVD\Index.cshtml" />
     <Content Include="Views\Shared\Upload.cshtml" />
+    <None Include="Views\Uitleners\CreateGroup.cshtml" />
+    <Content Include="Views\Uitleners\ImportUitlenersLijst.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="FTP\Data\" />
     <Folder Include="FTP\Images\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Views\Helper\" />
     <Folder Include="Views\Upload\" />
     <Folder Include="Views\VertelTas\" />
   </ItemGroup>

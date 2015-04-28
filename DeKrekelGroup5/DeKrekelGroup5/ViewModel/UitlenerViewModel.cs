@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -47,25 +48,42 @@ namespace DeKrekelGroup5.ViewModel
 
     }
 
-    public class UitlenersLijstViewModel
+    public class UitlenersLijstViewModel : IEnumerable<UitlenerViewModel>
     {
         public IEnumerable<UitlenerViewModel> Uitleners { get; set; }
 
         public UitlenersLijstViewModel(IEnumerable<Uitlener> uitleners)
         {
-            Uitleners = uitleners.Select(b => new UitlenerViewModel(){
-                Id = b.Id,
-                Naam = b.Naam,
-                VoorNaam = b.VoorNaam,
-                Klas = b.Klas,
-                Adres = b.Adres, 
-                Email = b.Email
-            });
+            if (uitleners == null)
+                Uitleners = new List<UitlenerViewModel>();
+            else
+            {
+                Uitleners = uitleners.Select(b => new UitlenerViewModel()
+                {
+                    Id = b.Id,
+                    Naam = b.Naam,
+                    VoorNaam = b.VoorNaam,
+                    Klas = b.Klas,
+                    Adres = b.Adres,
+                    Email = b.Email
+                });
+            }
+            
         }
 
         public UitlenersLijstViewModel()
         {
             Uitleners = new List<UitlenerViewModel>();
+        }
+
+        public IEnumerator<UitlenerViewModel> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

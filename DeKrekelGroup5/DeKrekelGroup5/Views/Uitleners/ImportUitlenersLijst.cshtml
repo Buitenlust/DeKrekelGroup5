@@ -1,8 +1,10 @@
 ﻿
 @using System.Collections.Specialized
-@model DeKrekelGroup5.ViewModel.MainViewModel
+@using DeKrekelGroup5.ViewModel
+@model DeKrekelGroup5.ViewModel.MainViewModel 
 
-<table class="table" style="max-width: 60%">
+<br/>
+<table class="table" style="max-width: 95%">
     <tr >
         <th>
             @Html.DisplayNameFor(model => model.UitlenersLijstViewModel.Uitleners.FirstOrDefault().Naam)
@@ -13,9 +15,13 @@
         <th>
             @Html.DisplayNameFor(model => model.UitlenersLijstViewModel.Uitleners.FirstOrDefault().Klas)
         </th>
-        <th style="width: 100px"></th>
+        <th>
+            @Html.DisplayNameFor(model => model.UitlenersLijstViewModel.Uitleners.FirstOrDefault().Adres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UitlenersLijstViewModel.Uitleners.FirstOrDefault().Email)
+        </th>
     </tr>
-
     @foreach (var uitlener in Model.UitlenersLijstViewModel.Uitleners)
     {
         <tr data-nr="@Html.DisplayFor(modelItem => uitlener.Id)">
@@ -29,18 +35,11 @@
                 @Html.DisplayFor(modelItem => uitlener.Klas)
             </td>
             <td>
-                <a href='@Url.Action("details", new {id = uitlener.Id})  '><img src="~/Images/details.png" class="icon"/></a>
-                @if (Model.GebruikerViewModel.IsBeheerder)
-                {
-                    <a href=' @Url.Action("edit", new {id = uitlener.Id}) '><img src="~/Images/edit.png" class="icon"/></a>
-                    <a href='@Url.Action("delete", new {id = uitlener.Id}) '><img src="~/Images/delete.png" class="icon"/></a>
-                }
+                @Html.DisplayFor(modelItem => uitlener.Adres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => uitlener.Email)
             </td>
         </tr>
     }
 </table>
-<style>
-.table tr:hover{
-  background: lawngreen;
-}
-</style>

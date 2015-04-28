@@ -67,5 +67,10 @@ namespace DeKrekelGroup5.Models.DAL
         {
             context.LetterTuinen.Add(letterTuin);
         }
+
+        public void UpdateUitlenersEindeSchooljaar()
+        {
+            context.Database.ExecuteSqlCommand("UPDATE Uitlener SET Klas = {0}", "Geen");
+        }
     }
 }

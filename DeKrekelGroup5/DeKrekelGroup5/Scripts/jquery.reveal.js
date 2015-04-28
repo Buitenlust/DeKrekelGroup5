@@ -27,8 +27,17 @@ $(document).ready(function () {
     });
 
     $("#categories").hide();
-    $("#categories").show(4000);
+    $("#categories").show(2000);
 
+    $("#okInfo").click(function (e) {
+        $.ajax({ url: '/Helper/ClearInfo' });
+        if ($("#okInfo").data("url").length !== 0) {
+            window.location.href = $("#home").data("url");
+        } else {
+            $("#modal").hide();
+        }
+
+    });
 
 });
 

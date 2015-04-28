@@ -53,7 +53,7 @@ if (Model.InfoViewModel.IsDialogBox)
  else
  {
      <div id="bottom">
-         <a href="#" class="button green" id="home" data-url="@Model.InfoViewModel.CallBackAction"><img src="~/Images/tick.png">Ok!</a>
+         <a href="#" class="button green" id="okInfo" data-url="@Model.InfoViewModel.CallBackAction"><img src="~/Images/tick.png">Ok!</a>
      </div>
  }
 
@@ -66,18 +66,6 @@ if (Model.InfoViewModel.IsDialogBox)
                 $("html").load("/Home/Index");
             });
             $(".reveal-modal-bg").remove();
-
-        });
-
-        $("#home").click(function (e) {
-            
-            if ($("#home").data("url").length !== 0)
-            {
-                window.location.href = $("#home").data("url");
-            } else 
-        {
-                    window.location.href = "/Home/Index";
-        }
         });
     });
     </script>

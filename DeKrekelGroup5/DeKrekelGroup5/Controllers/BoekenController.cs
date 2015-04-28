@@ -53,11 +53,8 @@ namespace DeKrekelGroup5.Controllers
             }
             catch (Exception)
             {
-
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
-            
-            
         }
 
         // GET: Boeken/Details/5
@@ -124,10 +121,7 @@ namespace DeKrekelGroup5.Controllers
                     gebruikersRep.DoNotDuplicateThema(newBoek);
                     gebruikersRep.SaveChanges();
                     mvm.SetNewInfo("Boek" + boek.Boek.Titel + " werd toegevoegd...");
-                    List<Boek> boeken = new List<Boek>();
-                    boeken.Add((Boek) gebruiker.LetterTuin.GetItem(gebruiker.LetterTuin.Items.Max(b => b.Exemplaar)));
-                    mvm.SetNewBoekenLijstVm(boeken);
-                    return View("Index", mvm );
+                    return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Items.Max(b => b.Exemplaar) });
                 }
                 catch (Exception)
                 {
@@ -190,10 +184,7 @@ namespace DeKrekelGroup5.Controllers
                         gebruikersRep.DoNotDuplicateThema(newBoek);
                         mvm.SetNewInfo("Boek " + boek.Boek.Titel + " werd aangepast...");
                         gebruikersRep.SaveChanges();
-                        List<Boek> boeken = new List<Boek>();
-                        boeken.Add((Boek)gebruiker.LetterTuin.GetItem(gebruiker.LetterTuin.Items.Max(b => b.Exemplaar)));
-                        mvm.SetNewBoekenLijstVm(boeken);
-                        return View("Index", mvm);
+                        return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = newBoek.Exemplaar });
                     }
                     catch (Exception)
                     {
@@ -257,8 +248,6 @@ namespace DeKrekelGroup5.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
-
-            
         }
         
         [HttpPost]

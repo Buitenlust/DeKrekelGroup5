@@ -47,13 +47,13 @@
         </div>
         @if (Model.InfoViewModel != null)
         {
-            <div id="modal" class="hidden">
+            <div id="modal">
                 @Html.Partial("_info", Model)
             </div>
         }
         else
         {
-            <div id="modal">
+            <div id="modal" style="display: none">
                 @Html.Partial("_info", Model)
             </div>
         }

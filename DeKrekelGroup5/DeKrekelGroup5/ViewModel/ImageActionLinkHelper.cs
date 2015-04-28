@@ -16,6 +16,5 @@ namespace DeKrekelGroup5.ViewModel
             var link = helper.ActionLink("[replaceme]", actionName, controller, routeValues, ajaxOptions).ToHtmlString();
             return MvcHtmlString.Create(link.Replace("[replaceme]", builder.ToString(TagRenderMode.SelfClosing)));
         }
-
     }
 }

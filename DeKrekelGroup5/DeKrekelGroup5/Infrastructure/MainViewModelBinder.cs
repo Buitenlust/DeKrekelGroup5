@@ -16,8 +16,17 @@ namespace DeKrekelGroup5.Infrastructure
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             MainViewModel mvm = controllerContext.HttpContext.Session[gebruikerSessionKey] as MainViewModel;
-            controllerContext.HttpContext.Session[gebruikerSessionKey] = mvm;
-            return mvm;
+            if (mvm != null)
+            {
+                controllerContext.HttpContext.Session[gebruikerSessionKey] = mvm;
+                return mvm;
+            }
+            else
+            {
+                return new MainViewModel();
+            }
+            
         }
     }
 }
+ 

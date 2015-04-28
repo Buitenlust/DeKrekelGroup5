@@ -1,45 +1,43 @@
-﻿@model DeKrekelGroup5.Models.Domain.Uitlening
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
-
-<div>
-    <h4>
-        Uitlening
+<div id="content">
+    <h4 id="subtitel">
+        Details student
         <div class="floatRight">
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-            @Html.ActionLink("Back to List", "Index")
+            <a href=' @Url.Action("edit", new { id = Model.UitlenerViewModel.Id}) '><img src="~/Images/edit.png" /></a>
+
+            <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
         </div>
     </h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDatum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDatum)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EindDatum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EindDatum)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Verlenging)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Verlenging)
-        </dd>
-
-    </dl>
+    <div id="wrapDetails">
+        <div id="mainCol">
+            <table id="details">
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.UitlenerViewModel.Id)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.UitlenerViewModel.Id)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.UitlenerViewModel.Naam)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.UitlenerViewModel.Naam)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.UitlenerViewModel.VoorNaam)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.UitlenerViewModel.VoorNaam)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.UitlenerViewModel.Klas)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.UitlenerViewModel.Klas)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.UitlenerViewModel.Adres)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.UitlenerViewModel.Adres)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.UitlenerViewModel.Email)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.UitlenerViewModel.Email)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
- 
