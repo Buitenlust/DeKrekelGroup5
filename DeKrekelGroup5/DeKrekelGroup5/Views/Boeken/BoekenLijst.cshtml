@@ -4,79 +4,71 @@
 
 <table class="table">
     <tr>
-        <th>
+        <th class="Cover">
             @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Exemplaar)
         </th>
-        <th>
+        <th class="ItemInfo">
             @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Titel)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Auteur)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Omschrijving)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Uitgever)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Leeftijd)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BoekenLijstViewModel.Boeken.FirstOrDefault().Thema)
-        </th>
-        <th>
-            Beschikbaar
-        </th>
-        <th></th>
+       
+        <th class="ItemOpties"></th>
     </tr>
 
     @foreach (var item in Model.BoekenLijstViewModel.Boeken)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Exemplaar)
+            
+            <td class="Cover">
+                @*@Html.DisplayFor(modelItem => item.Afbeelding)*@
+                <img src="~/Images/default.jpg" alt="Cover"/>
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titel)
+            <td class="ItemInfo">
+                <div>
+                    <div class="ItemBeschikbaarheid">
+                        @if (item.Beschikbaar)
+                        {
+                            if (item.Uitgeleend)
+                            {  <p>Beschikbaar vanaf @Html.DisplayFor(modelItem => item.EindDatumUitlening)</p>
+                                if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
+                                {
+                                    @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modal" }, new { @class = "icon" })
+                                }
+                            }
+                            else
+                            {
+                                <img src="~/Images/tick.png" class="icon" />
+                            }
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </div>
+                    <p>@Html.DisplayFor(modelItem => item.Auteur)</p>
+                    <p>@Html.DisplayFor(modelItem => item.Leeftijd)</p>
+                    <p>@Html.DisplayFor(modelItem => item.Uitgever)</p>
+                    <p>@Html.DisplayFor(modelItem => item.Omschrijving)</p>
+                    <p>@Html.DisplayFor(modelItem => item.Thema)</p>
+                </div>
+
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Auteur)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Omschrijving)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Uitgever)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Leeftijd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Thema)
-            </td>
-            <td>
-                @if (item.Beschikbaar)
-                {
-                    if (item.Uitgeleend)
-                    {
-                        @item.GetStringDate()
-                        if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
-                         {
-                             @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new {exemplaar = item.Exemplaar}, new AjaxOptions {HttpMethod = "Get", UpdateTargetId = "modal"}, new {@class = "icon"})
-                         }
+            <td class="ItemOpties">
+                <div class="ItemBewerken">
+                    @*in vertelTas?*@
+                    @if (Model.GebruikerViewModel.IsBeheerder)
+                    { 
+                        //steek het in een verteltas
+                        
                     }
-                    else
+                    @*edit en delete*@
+                    @if (Model.GebruikerViewModel.IsBeheerder)
                     {
-                        <img src="~/Images/tick.png" class="icon" />
+                        <a href=' @Url.Action("edit", new { id = item.Exemplaar }) '><img src="~/Images/edit.png" class="icon" /></a>
+                        <a href=' @Url.Action("delete", new { id = item.Exemplaar }) '><img src="~/Images/delete.png" class="icon" /></a>
                     }
-                }
-                else
-                {
-                    <img src="~/Images/cross.png" class="icon"/>
-                }
-            </td>
-            <td>
+
+                </div>
+                @*naar uitleenPagina*@
                 @if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
                 {
                     if (item.Uitgeleend)
@@ -88,17 +80,12 @@
                     {
                         if (item.Beschikbaar)
                         {
-                             <a href=' @Url.Action("Create", "Uitleningen", new {id = item.Exemplaar}) '><img src="~/Images/buiten.png" class="icon"/></a>
-                         }
-                     }
-                }
-                <a href=' @Url.Action("details", new { id = item.Exemplaar }) '><img src="~/Images/details.png" class="icon" /></a>
-                @if (Model.GebruikerViewModel.IsBeheerder)
-                {
-                    <a href=' @Url.Action("edit", new {id = item.Exemplaar}) '><img src="~/Images/edit.png" class="icon"/></a>
-                    <a href=' @Url.Action("delete", new {id = item.Exemplaar}) '><img src="~/Images/delete.png" class="icon"/></a>
+                            <a href=' @Url.Action("Create", "Uitleningen", new { id = item.Exemplaar }) '><img src="~/Images/buiten.png" class="icon" /></a>
+                        }
+                    }
                 }
             </td>
+
         </tr>
     }
 

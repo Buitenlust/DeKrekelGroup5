@@ -245,6 +245,36 @@ td select{
     height : 200px;
     margin-bottom: 200px;
 }
+
+.Cover{
+    width:15%;
+}
+.Cover img{
+    width: 80%;
+    height: 60%;
+}
+.ItemInfo{
+    width: 80%;
+}
+.ItemBeschikbaarheid{
+    clear: both;
+    float: right;
+}
+.ItemOpties{
+    width:5%;
+}
+ItemOpties img{
+    height:30%;
+    width: 100%;
+}
+.ItemBewerken{
+    height: 50%;
+}
+.ItemBewerken img{
+    width: 100%;
+    height: 30%;
+}
+
 .vertelTasItem{
     
     border-radius: 10px;

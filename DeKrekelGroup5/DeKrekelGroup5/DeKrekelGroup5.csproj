@@ -280,6 +280,7 @@
     <Content Include="Images\home_nontrans.png" />
     <Content Include="Images\icons.png" />
     <Content Include="Images\info.png" />
+    <Content Include="Images\InVertelTas.PNG" />
     <Content Include="Images\krekel.png" />
     <Content Include="Images\login-and-logout-door.jpg" />
     <Content Include="Images\logout.png" />
