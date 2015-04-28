@@ -54,6 +54,8 @@ dd{
     
 }
 
+
+
 .tinyImg {
     display: block;
     padding-top: 10px;
@@ -221,24 +223,78 @@ table {
 }
 
 .table{
-    
     border-collapse: collapse;
-    border-radius: 10px;
-    width: 100%;
+    width: 80%;
     background-color: #fffaf0;
     padding: 20px;
+    margin: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 th{
+    font-weight: bolder;
+    font-size: larger;
+    font-family: fantasy;
     text-align: left;
     background-color: #B3D524;
-    padding: 5px;
+    padding: 10px;
+    padding-left: 20px;
+}
+#left {
+    width: 200px;
     
 }
-td select{
-    width: 90%;
+
+#left img {
+    width: 150px;
+    margin: 15px;
+}
+#middle {
+    padding-left: 0px;
+}
+#right {
+    width: 50px;
+}
+.iconRight {
+    width: 25px;
+    float: right;
+    margin: 5px;
+}
+.beschikbaar {
+    font-style: italic;
+    position: absolute;
+    right: 40px; 
 }
 
 
+.wrapper-image {
+    position: relative;
+    width: 50px;
+    height: 200px;
+}
+
+.doorImg {
+    width: 40px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.middleDiv #themap {
+    position: absolute;
+    bottom: 0px;
+}
+
+.middleDiv {
+    margin: 15px;
+    position: relative;
+    width: 100%;
+    height: 200px;
+    font-size: larger;
+}
+.middleDiv p {
+    margin: 5px;
+}
 
 
 .vertelTasItem{
