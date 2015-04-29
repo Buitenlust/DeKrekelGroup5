@@ -1,42 +1,38 @@
-﻿@model DeKrekelGroup5.Models.Domain.Thema
-
-@{
-    ViewBag.Title = "Edit";
-}
-
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Thema</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.IdThema)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Themaa, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Themaa, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Themaa, "", new { @class = "text-danger" })
-            </div>
+﻿@using DeKrekelGroup5.ViewModel
+@model DeKrekelGroup5.ViewModel.MainViewModel
+<div id="content">
+    <h4 id="subtitel">
+        Thema aanpassen
+        <div class="floatRight">
+            <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+    </h4>
+    <hr />
+    <div id="wrapDetails">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div id="mainCol">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ThemaViewModel.IdThema)
+                <table id="details">
+                    <tr>
+                        <td class="td1">Thema</td>
+                        <td>
+                            @Html.EditorFor(model => model.ThemaViewModel.Themaa, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ThemaViewModel.Themaa, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                </table>
+                <p>
+                    <div class="form-group">
+                        <div class="button green" style="position: relative; overflow: hidden; cursor: default;">
+                            <img src="~/Images/tick.png" />Ok!
+                            <input type="submit" value="Create" style="position: absolute; cursor: pointer; top: 0px; width: 100%; height: 100%; left: 0px; z-index: 100; opacity: 0;" />
+                        </div>
+                    </div>
+                </p>
             </div>
-        </div>
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

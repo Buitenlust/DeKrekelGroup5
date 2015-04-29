@@ -18,6 +18,8 @@ namespace DeKrekelGroup5.ViewModel
         //public SpelViewModel SpelViewModel { get; set; }
         public UitlenerViewModel UitlenerViewModel { get; set; }
         public UitlenersLijstViewModel UitlenersLijstViewModel { get; set; }
+        public List<Thema> Themas { get; set; }
+        public ThemaViewModel ThemaViewModel { get; set; }
 
 
         
@@ -34,6 +36,7 @@ namespace DeKrekelGroup5.ViewModel
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
             ItemViewModel = new ItemViewModel();
             InfoViewModel = new InfoViewModel();
+            ThemaViewModel = new ThemaViewModel();
         }
 
         public MainViewModel(Gebruiker gebruiker)
@@ -55,6 +58,7 @@ namespace DeKrekelGroup5.ViewModel
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
             ItemViewModel = new ItemViewModel();
             InfoViewModel = new InfoViewModel();
+            ThemaViewModel = new ThemaViewModel();
         }
 
         public void SetGebruikerToVm(Gebruiker gebruiker)

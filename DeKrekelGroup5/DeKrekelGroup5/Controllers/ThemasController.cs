@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using DeKrekelGroup5.Models.DAL;
 using DeKrekelGroup5.Models.Domain;
+using DeKrekelGroup5.ViewModel;
+using Microsoft.Ajax.Utilities;
 
 namespace DeKrekelGroup5.Controllers
 {
@@ -22,77 +24,85 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Themas
-        public ActionResult Index(Gebruiker gebruiker)
+        public ActionResult Index(Gebruiker gebruiker, MainViewModel mvm, string search=null)
         {
-            if(gebruiker==null)
-                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
-            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            return View(gebruiker.LetterTuin.Themas.ToList());
-        }
-
-        // GET: Themas/Details/5
-        public ActionResult Details(Gebruiker gebruiker, int id = 0)
-        {
-            if (gebruiker == null)
-                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
-            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            if (id == 0)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+           
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+                mvm.SetGebruikerToVm(gebruiker); 
+                IEnumerable<Thema> themas;
+                mvm.Themas = gebruiker.LetterTuin.GetThemas(search).ToList(); 
+                
+                if (Request.IsAjaxRequest())
+                    return PartialView("ThemaLijst", mvm);
+                mvm.InfoViewModel.Info = null;
+                return View(mvm);
             }
-            Thema thema = gebruiker.LetterTuin.GetThemaById(id);
-            if (thema == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
-            return View(thema);
         }
 
         // GET: Themas/Create
         public ActionResult Create(Gebruiker gebruiker)
         {
+            MainViewModel mvm = new MainViewModel(gebruiker);
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return new HttpUnauthorizedResult();   
-            return View();
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+            try
+            {
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+                mvm.SetGebruikerToVm(gebruiker);
+                //HttpContext.Session["main"] = mvm;
+                return View(mvm);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         // POST: Themas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Gebruiker gebruiker, [Bind(Include = "IdThema,Themaa")] Thema thema)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Prefix = "ThemaViewModel")] ThemaViewModel themaVm, Gebruiker gebruiker, MainViewModel mvm)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return new HttpUnauthorizedResult();
-            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            if (ModelState.IsValid)
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+            if (ModelState.IsValid && themaVm !=null && !themaVm.Themaa.IsNullOrWhiteSpace())
             {
                 gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-                gebruiker.AddThema(thema);
+                gebruiker.AddThema(new Thema(){Themaa =  themaVm.Themaa});
                 gebruikersRep.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(thema);
+            return View(mvm);
         }
 
         // GET: Themas/Edit/5
         public ActionResult Edit(Gebruiker gebruiker, int id = 0)
         {
+            MainViewModel mvm = new MainViewModel(gebruiker);
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return new HttpUnauthorizedResult();
-            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            if (id == 0)
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+                mvm.SetGebruikerToVm(gebruiker);
+                mvm.ThemaViewModel = new ThemaViewModel(gebruiker.LetterTuin.GetThemaById(id));
+                return View(mvm);
             }
-            Thema thema = gebruiker.LetterTuin.GetThemaById(id);
-            if (thema == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
-            return View(thema);
         }
 
         // POST: Themas/Edit/5
@@ -100,20 +110,19 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Gebruiker gebruiker, [Bind(Include = "IdThema,Themaa")] Thema thema)
+        public ActionResult Edit([Bind(Prefix = "ThemaViewModel")] ThemaViewModel themaVm, Gebruiker gebruiker, MainViewModel mvm)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            Thema th = gebruiker.LetterTuin.GetThemaById(thema.IdThema);
-
+            
             if (ModelState.IsValid)
             {
                 try
                 {
-                    th.Update(thema.Themaa);
+                    gebruiker.UpdateThema(themaVm);
+
                     gebruikersRep.SaveChanges();
-                    TempData["Info"] = "Het thema werd aangepast...";
                     return RedirectToAction("Index");
                 }
                 catch (Exception e)
@@ -123,39 +132,48 @@ namespace DeKrekelGroup5.Controllers
                 
                 return RedirectToAction("Index");
             }
-            return View(thema);
+            return View(mvm);
         }
 
         // GET: Themas/Delete/5
-        public ActionResult Delete(Gebruiker gebruiker, int id = 0)
+        public ActionResult Delete(Gebruiker gebruiker, MainViewModel mvm, int id = 0)
         {
-            if (gebruiker == null || gebruiker.AdminRechten == false)
-                return new HttpUnauthorizedResult();
-            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            if (id == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Thema thema = gebruiker.LetterTuin.GetThemaById(id);
-            if (thema == null)
-            {
-                return HttpNotFound();
-            }
-            return View(thema);
+            if (gebruiker == null || gebruiker.BibliotheekRechten == false)
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+            if (id > 0)
+                try
+                {
+                    gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+                    mvm.ThemaViewModel = new ThemaViewModel(gebruiker.LetterTuin.GetThemaById(id));
+                    mvm.SetGebruikerToVm(gebruiker);
+                    if (mvm.ThemaViewModel.Themaa != null)
+                    {
+                        mvm.SetNewInfo("Wenst u " + mvm.ThemaViewModel.Themaa + " te verwijderen?", false, true, "DeleteConfirmed");
+                        if (HttpContext.Session != null)
+                            HttpContext.Session["main"] = mvm;
+                        return PartialView("_info", mvm);
+                    }
+                    return new HttpNotFoundResult();
+                }
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // POST: Themas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(Gebruiker gebruiker,MainViewModel mvm)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            Thema thema = gebruiker.LetterTuin.GetThemaById(id);
+            Thema thema = gebruiker.LetterTuin.GetThemaById(mvm.ThemaViewModel.IdThema);
             gebruiker.RemoveThema(thema);
             gebruikersRep.SaveChanges();
-            return RedirectToAction("Index");
+            return PartialView("_info", mvm.SetNewInfo(thema.Themaa + " is verwijderd!", false, false, "/Themas/Index")); 
         }
     }
 }

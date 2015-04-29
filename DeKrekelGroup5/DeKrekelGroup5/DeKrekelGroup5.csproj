@@ -245,6 +245,7 @@
     <Compile Include="ViewModel\ImageActionLinkHelper.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ThemaViewModel.cs" />
     <Compile Include="ViewModel\UitlenerViewModel.cs" />
     <Compile Include="ViewModel\GebruikerViewModel.cs" />
     <Compile Include="ViewModel\BoekViewModel.cs" />
@@ -345,7 +346,6 @@
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Themas\Create.cshtml" />
     <Content Include="Views\Themas\Delete.cshtml" />
-    <Content Include="Views\Themas\Details.cshtml" />
     <Content Include="Views\Themas\Edit.cshtml" />
     <Content Include="Views\Themas\Index.cshtml" />
     <Content Include="Views\Boeken\Create.cshtml" />
@@ -391,6 +391,7 @@
     <Content Include="Views\DVD\Edit.cshtml" />
     <Content Include="Views\DVD\Index.cshtml" />
     <Content Include="Views\Shared\Upload.cshtml" />
+    <Content Include="Views\Themas\ThemaLijst.cshtml" />
     <None Include="Views\Uitleners\CreateGroup.cshtml" />
     <Content Include="Views\Uitleners\ImportUitlenersLijst.cshtml" />
   </ItemGroup>

@@ -138,5 +138,11 @@ namespace DeKrekelGroup5.Models.Domain
 
         #endregion
 
+        public IEnumerable<Thema> GetThemas(string search)
+        {
+            if (search != null && !search.Trim().IsEmpty())
+                return Themas.Where(p => p.Themaa.ToLower().Contains(search.ToLower().Trim()));
+            return Themas;
+        }
     }
 }

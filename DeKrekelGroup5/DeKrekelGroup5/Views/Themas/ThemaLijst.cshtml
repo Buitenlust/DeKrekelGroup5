@@ -1,0 +1,44 @@
+﻿
+@using DeKrekelGroup5.Models.Domain
+@using DeKrekelGroup5.ViewModel
+@model DeKrekelGroup5.ViewModel.MainViewModel
+
+<table class="table" style="max-width: 50%">
+    <tr>
+        <th>
+            Thema
+        </th>
+        <th>
+        </th>
+    </tr>
+    @foreach (var thema in Model.Themas)
+    {
+        <tr>
+            <td>
+                @thema.Themaa
+            </td>
+            <td>
+                @if (Model.GebruikerViewModel.IsBeheerder)
+                {
+                    <a href=' @Url.Action("edit", new { id = thema.IdThema }) '><img src="~/Images/edit.png" class="iconRight" /></a> 
+                    @Ajax.ImageActionLink("/Images/delete.png", "verwijder", "Delete", "Themas", new { id =thema.IdThema }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "iconRight" })
+                }
+
+            </td>
+        </tr>
+    }
+</table>
+                   
+
+<style>
+    .table tr:hover {
+        background: lawngreen;
+    }
+    .table {
+        margin-left : 150px;
+        left: 500px;
+    }
+</style>
+
+
+

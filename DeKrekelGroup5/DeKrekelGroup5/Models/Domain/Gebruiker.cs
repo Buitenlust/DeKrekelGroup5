@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.WebPages;
+using DeKrekelGroup5.ViewModel;
 
 namespace DeKrekelGroup5.Models.Domain
 {
@@ -186,10 +187,15 @@ namespace DeKrekelGroup5.Models.Domain
         public bool AddThema(Thema thema)
         {
             CheckAdminRechten();
+
+            
             if (thema != null)
             {
-                LetterTuin.Themas.Add(thema);
+                Thema dbthema = LetterTuin.GetThemas(thema.Themaa).FirstOrDefault();
+                if (dbthema == null) { 
+                    LetterTuin.Themas.Add(thema);
                 return true;
+                }
             }
             return false;
         }
@@ -198,7 +204,7 @@ namespace DeKrekelGroup5.Models.Domain
         /// <summary> Update de parameters van een boek</summary>
         /// <returns> Geeft true weer als het boek is aangepast. Exemplaar van het boek moet > 0 </returns>
         /// <param name="thema"> te updaten boek </param>
-        public bool UpdateThema(Thema thema)
+        public bool UpdateThema(ThemaViewModel thema)
         {
             CheckAdminRechten();
             if (thema != null && thema.IdThema > 0)
@@ -206,7 +212,7 @@ namespace DeKrekelGroup5.Models.Domain
                 var th = LetterTuin.GetThemaById(thema.IdThema);
                 if (th != null)
                 {
-                    th.Update(thema.Themaa);
+                    th.Themaa = thema.Themaa;
                     return true;
                 }
             }

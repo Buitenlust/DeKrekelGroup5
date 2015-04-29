@@ -1,33 +1,35 @@
 ﻿@model DeKrekelGroup5.ViewModel.MainViewModel
 
-@{
-    ViewBag.Title = "Index";
-}
 
-<h2>Index</h2>
+<div id="content">
+    <table>
+        <tr>
+            <td>
+                <div id="searchBar">
+                    @using (Ajax.BeginForm("Index",
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "Get",
+                            UpdateTargetId = "Themas"
+                        }
+                        ))
+                    {
+                        <input type="search" name="search" id="search" placeholder='Zoeken' onclick="this.select();" />
+                        <input type="submit" value="Zoek item" class="btn btn-default" id="searchSubmit" />
+                    }
+                </div>
+            </td>
+            <td>
+                @if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
+                {
+                    <a href=' @Url.Action("create") '><img src="~/Images/create.png" class="createNew" /></a>
+                }
+            </td>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Themaa)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Themaa)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdThema }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdThema }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdThema })
-        </td>
-    </tr>
-}
-
-</table>
+    </table>
+    <div id="Themas">
+        @Html.Partial("ThemaLijst", Model)
+    </div>
+</div>

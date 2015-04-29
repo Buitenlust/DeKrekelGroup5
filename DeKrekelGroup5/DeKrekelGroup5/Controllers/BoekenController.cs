@@ -31,19 +31,18 @@ namespace DeKrekelGroup5.Controllers
         {
             if(gebruiker == null)
                 gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
-            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             try
             {
                 IEnumerable<Boek> boeken;
                 if (!String.IsNullOrEmpty(search))
                 {
                     boeken = gebruiker.LetterTuin.GetBoeken(search).ToList();
-                    ViewBag.Selection = "Alle boeken met " + search;
+                    //ViewBag.Selection = "Alle boeken met " + search;
                 }
                 else
                 {
                     boeken = gebruiker.LetterTuin.GetBoeken(null).ToList();
-                    ViewBag.Selection = "Alle boeken";
+                    //ViewBag.Selection = "Alle boeken";
                 }
 
                 if (Request.IsAjaxRequest())
@@ -62,7 +61,6 @@ namespace DeKrekelGroup5.Controllers
         {
             if (gebruiker == null)
                 gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
-            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             mvm.SetGebruikerToVm(gebruiker);
             mvm.InfoViewModel.Info = null;
             try
@@ -85,9 +83,8 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Create(Gebruiker gebruiker)
         {
             MainViewModel mvm = new MainViewModel(gebruiker);
-            if (gebruiker == null || gebruiker.AdminRechten == false) 
-                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
-
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
             try
             {
                 
@@ -109,7 +106,7 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Create([Bind(Prefix = "BoekCreateViewModel")] BoekCreateViewModel boek, Gebruiker gebruiker, MainViewModel mvm)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return new HttpUnauthorizedResult();
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             if (ModelState.IsValid && boek != null && boek.Boek.Exemplaar <=0)
             {
@@ -139,7 +136,7 @@ namespace DeKrekelGroup5.Controllers
         {
 
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return new HttpUnauthorizedResult();
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             MainViewModel mvm = new MainViewModel(gebruiker);
             mvm.InfoViewModel.Info = null;
@@ -170,7 +167,7 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Edit([Bind(Prefix = "BoekCreateViewModel")] BoekCreateViewModel boek, Gebruiker gebruiker, MainViewModel mvm, HttpPostedFileBase newimage=null)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return new HttpUnauthorizedResult();
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             mvm.InfoViewModel.Info = null;
             mvm.SetGebruikerToVm(gebruiker);
@@ -211,7 +208,7 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult Delete(Gebruiker gebruiker, int id=0)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return new HttpUnauthorizedResult();
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             if (id <= 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -235,7 +232,7 @@ namespace DeKrekelGroup5.Controllers
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
-                return new HttpUnauthorizedResult();
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             if (id <= 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
