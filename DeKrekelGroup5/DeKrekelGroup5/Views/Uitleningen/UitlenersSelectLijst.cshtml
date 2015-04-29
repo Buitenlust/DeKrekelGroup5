@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => uitlener.Klas)
             </td>
             <td>
-                @Ajax.ImageActionLink("/Images/tick.png", "SelectUitlener", "SelectUitlener", "Uitleningen", new { exemplaar = Model.ItemViewModel.Exemplaar, gebruikerId = uitlener.Id }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modal" }, new { @class = "icon" })
+                @Ajax.ImageActionLink("/Images/tick.png", "SelectUitlener", "SelectUitlener", "Uitleningen", new { exemplaar = Model.ItemViewModel.Exemplaar, gebruikerId = uitlener.Id }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "icon" })
             </td>
         </tr>
     }

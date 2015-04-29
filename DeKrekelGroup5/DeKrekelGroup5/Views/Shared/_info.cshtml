@@ -41,7 +41,7 @@ if (Model.InfoViewModel.IsDialogBox)
              {
                  InsertionMode = InsertionMode.Replace,
                  HttpMethod = "Post",
-                 UpdateTargetId = "modal"
+                 UpdateTargetId = "infomodal"
              }
              ))
          {
@@ -63,7 +63,7 @@ if (Model.InfoViewModel.IsDialogBox)
         showModal();
         $("#closeFrame").click(function (e) {
             $("#infomodal").hide(600, function() {
-                $("html").load("/Home/Index");
+                
             });
             $(".reveal-modal-bg").remove();
         });

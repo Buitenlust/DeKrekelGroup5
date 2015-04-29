@@ -38,7 +38,7 @@
                                 <span>Beschikbaar vanaf: </span>@item.GetStringDate() 
                                 if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
                                 {
-                                     @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new {exemplaar = item.Exemplaar}, new AjaxOptions {HttpMethod = "Get", UpdateTargetId = "modal"}, new {@class = "icon"})
+                                     @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new {exemplaar = item.Exemplaar}, new AjaxOptions {HttpMethod = "Get", UpdateTargetId = "infomodal"}, new {@class = "icon"})
                                 }
                             }
                             else
@@ -89,7 +89,7 @@
                         {
                             if (item.Uitgeleend)
                             {
-                                @Ajax.ImageActionLink("/Images/binnen.png", "EindeUitlening", "EindeUitlening", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modal" }, new { @class = "doorImg" })
+                                @Ajax.ImageActionLink("/Images/binnen.png", "EindeUitlening", "EindeUitlening", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "doorImg" })
 
                             }
                             else
