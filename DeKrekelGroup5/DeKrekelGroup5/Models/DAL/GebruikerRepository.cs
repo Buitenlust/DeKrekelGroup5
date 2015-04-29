@@ -54,7 +54,7 @@ namespace DeKrekelGroup5.Models.DAL
 
         public void DoNotDuplicateThema(Item item)
         {
-            context.Entry(item.Themaa).State = EntityState.Modified;
+            context.Entry(item.Themas).State = EntityState.Modified;
         }
 
         public void DoNotDuplicateLetterTuin(Gebruiker gebruiker)

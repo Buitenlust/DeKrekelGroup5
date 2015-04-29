@@ -24,7 +24,7 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
 
 
             //primary key
-            HasKey(boek => boek.Exemplaar); 
+            HasKey(boek => boek.Exemplaar);  
         }
     }
 }

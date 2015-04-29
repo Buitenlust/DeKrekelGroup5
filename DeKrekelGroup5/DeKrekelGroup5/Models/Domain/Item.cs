@@ -23,7 +23,7 @@ namespace DeKrekelGroup5.Models.Domain
 
         public bool Beschikbaar { get; set; }
 
-        public virtual Thema Themaa { get; set; }
+        public virtual List<Thema> Themas { get; set; }
 
         public virtual List<Uitlening> Uitleningen { get; set; }
 
@@ -38,8 +38,7 @@ namespace DeKrekelGroup5.Models.Domain
             Leeftijd = item.Leeftijd;
             Omschrijving = item.Omschrijving;
             Titel = item.Titel;
-            Beschikbaar = item.Beschikbaar;
-            Themaa = item.Themaa;
+            Beschikbaar = item.Beschikbaar; 
             Uitleningen = item.Uitleningen;
         }
     }

@@ -2,26 +2,26 @@
 $(document).ready(function () {
 
     $('#loginBib').click(function (e) {        // Button which will activate our modal
-        $("#modal").load("/Login/Login?username=Bibliothecaris");
+        $("#infomodal").load("/Login/Login?username=Bibliothecaris");
         showModal(); 
     });
     $('#loginBeh').click(function (e) {        // Button which will activate our modal
-        $("#modal").load("/Login/Login?username=Beheerder");
+        $("#infomodal").load("/Login/Login?username=Beheerder");
         showModal();
     });
     $('#logout').click(function (e) {        // Button which will activate our modal
-        $("#modal").load("/Login/Logout");
+        $("#infomodal").load("/Login/Logout");
         showModal();
     });
 
     $("#closeFrame").click(function (e) {
-        $("#modal").hide(600);
+        $("#infomodal").hide(600);
         $(".reveal-modal-bg").remove();
         
     });
 
     $("#closeFrameOk").click(function (e) {
-        $("#modal").hide(600);
+        $("#infomodal").hide(600);
         $(".reveal-modal-bg").remove();
         window.location.reload();
     });
@@ -32,9 +32,9 @@ $(document).ready(function () {
     $("#okInfo").click(function (e) {
         if ($("#okInfo").data("url").length !== 0) {
             window.location.href = $("#okInfo").data("url");
-            $("#modal").hide();
+            $("#infomodal").hide();
         } else {
-            $("#modal").hide();
+            $("#infomodal").hide();
         }
 
     });
@@ -43,9 +43,9 @@ $(document).ready(function () {
 
 
 function showModal() {
-    $("#modal").toggleClass('show hidden');
-    $("#modal").show(700);
-    $('#modal').reveal({                
+    $("#infomodal").toggleClass('show hidden');
+    $("#infomodal").show(700);
+    $('#infomodal').reveal({                
         animation: 'fade',              
         animationspeed: 600,            
         closeonbackgroundclick: true,   

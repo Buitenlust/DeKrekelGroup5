@@ -62,7 +62,7 @@ if (Model.InfoViewModel.IsDialogBox)
     $(document).ready(function () {
         showModal();
         $("#closeFrame").click(function (e) {
-            $("#modal").hide(600, function() {
+            $("#infomodal").hide(600, function() {
                 $("html").load("/Home/Index");
             });
             $(".reveal-modal-bg").remove();
@@ -71,9 +71,9 @@ if (Model.InfoViewModel.IsDialogBox)
     $("#okInfo").click(function (e) { 
         if ($("#okInfo").data("url").length !== 0) {
             window.location.href = $("#okInfo").data("url");
-            $("#modal").hide();
+            $("#infomodal").hide();
         } else {
-            $("#modal").hide();
+            $("#infomodal").hide();
         }
 
     });

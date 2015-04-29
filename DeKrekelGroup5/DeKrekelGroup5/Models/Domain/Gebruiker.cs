@@ -91,6 +91,11 @@ namespace DeKrekelGroup5.Models.Domain
                 if (newItem != null)
                 {
                     newItem.Update(boek);
+                    newItem.Themas.Clear();
+                    foreach (Thema thema in boek.Themas)
+                    {
+                        newItem.Themas.Add(thema);
+                    }
                     return true;
                 }
             }
@@ -418,12 +423,24 @@ namespace DeKrekelGroup5.Models.Domain
             if (uitlening.Verlenging < LetterTuin.Instellingen.MaxVerlengingen)
                 return true;
             return false;
+         }
 
 
-
+        public List<Thema> GetThemaListFromSelectedList(List<int> submittedThemas)
+        {
+            return  submittedThemas.Select(id => LetterTuin.GetThemaById(id)).ToList();
         }
 
 
+        /// <summary> returns a list of themas from an item</summary>
+        /// <returns>Returns a list of themas from an item</returns>
+        /// <param name="item"> an item </param> 
+        public List<Thema> GetThemasFromItem(Item item)
+        { 
+            if (item !=null)
+                return LetterTuin.Themas.Where(p => p.Items.Contains(item)).ToList();
+            return new List<Thema>();
+        }
 
     }
 }

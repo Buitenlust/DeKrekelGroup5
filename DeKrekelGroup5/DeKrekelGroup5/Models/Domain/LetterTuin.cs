@@ -42,12 +42,14 @@ namespace DeKrekelGroup5.Models.Domain
         public IEnumerable<Boek> GetBoeken(string search)
         {
             if (search != null && !search.Trim().IsEmpty())
-                return Items.OfType<Boek>().Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
+                return Items.OfType<Boek>().Where(p => p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
+                                                       p.Titel.ToLower().Contains(search.ToLower()) ||
                                                        p.Uitgever.ToLower().Contains(search.ToLower()) ||
                                                        p.Auteur.ToLower().Contains(search.ToLower()) ||
-                                                       p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
-                                                       p.Omschrijving.ToLower().Contains(search.ToLower()))
-                    .OrderBy(p => p.Titel);
+                                                       p.Omschrijving.ToLower().Contains(search.ToLower()));
+                     
+
+
             return Items.OfType<Boek>().Take(25);
         }
 
@@ -59,7 +61,7 @@ namespace DeKrekelGroup5.Models.Domain
             if (search != null && !search.Trim().IsEmpty())
                 return Items.OfType<Spel>().Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
                                                        p.Uitgever.ToLower().Contains(search.ToLower()) ||
-                                                       p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
+                                                       p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
                                                        p.Omschrijving.ToLower().Contains(search.ToLower()))
                     .OrderBy(p => p.Titel);
             return Items.OfType<Spel>().Take(25);
@@ -73,7 +75,7 @@ namespace DeKrekelGroup5.Models.Domain
             if (search != null && !search.Trim().IsEmpty())
                 return Items.OfType<CD>().Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
                                                      p.Uitgever.ToLower().Contains(search.ToLower()) ||
-                                                     p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
+                                                     p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
                                                      p.Omschrijving.ToLower().Contains(search.ToLower()))
                     .OrderBy(p => p.Titel);
             return Items.OfType<CD>().Take(25);
@@ -87,7 +89,7 @@ namespace DeKrekelGroup5.Models.Domain
             if (search != null && !search.Trim().IsEmpty())
                 return Items.OfType<DVD>().Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
                                                       p.Uitgever.ToLower().Contains(search.ToLower()) ||
-                                                      p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
+                                                      p.Themas.Any(t => t.Themaa.Contains(search)) ||
                                                       p.Omschrijving.ToLower().Contains(search.ToLower()))
                     .OrderBy(p => p.Titel);
             return Items.OfType<DVD>().Take(25);
@@ -100,7 +102,7 @@ namespace DeKrekelGroup5.Models.Domain
         {
             if (search != null && !search.Trim().IsEmpty())
                 return Items.OfType<VertelTas>().Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
-                                                            p.Themaa.Themaa.ToLower().Contains(search.ToLower()) ||
+                                                            p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
                                                             p.Omschrijving.ToLower().Contains(search.ToLower()))
                     .OrderBy(p => p.Titel);
             return Items.OfType<VertelTas>().Take(25);

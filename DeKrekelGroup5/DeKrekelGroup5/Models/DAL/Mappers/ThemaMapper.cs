@@ -19,7 +19,12 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
             //PK
             HasKey(t => t.IdThema);
 
-
+            HasMany(i => i.Items).WithMany(t => t.Themas).Map(i =>
+            {
+                i.ToTable("ItemThemas");
+                i.MapLeftKey("IdThema");
+                i.MapRightKey("Exemplaar");
+            });
 
             //Props
             Property(k => k.IdThema).HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_idthema", 1) { IsUnique = true }));

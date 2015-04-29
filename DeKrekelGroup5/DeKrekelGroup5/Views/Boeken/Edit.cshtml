@@ -1,6 +1,7 @@
 ﻿@using DeKrekelGroup5.ViewModel
 @model DeKrekelGroup5.ViewModel.MainViewModel
 @Styles.Render("~/Content/uploadfile.css")
+@Styles.Render("~/Content/multi-select.css")
 <div id="content">
     <h4 id="subtitel">
         Aanpassen boek
@@ -60,11 +61,9 @@
 
 
                     <tr>
-                        <td class="td1">Thema</td>
+                        <td class="td1">Themas</td>
                         <td>
-                            @Html.DropDownListFor(model => model.BoekCreateViewModel.Boek.Thema, Model.BoekCreateViewModel.Themas, " --Selecteer een Thema--")
-
-                            @Html.ValidationMessageFor(model => model.BoekCreateViewModel.Boek.Thema, "", new { @class = "text-danger", Html = "" })
+                            @Html.ListBoxFor(model => model.BoekCreateViewModel.SubmittedThemas, Model.BoekCreateViewModel.AllThemas, new { multiple = "multiple", @class = "multiselect" })
                         </td>
                     </tr>
 
@@ -123,6 +122,15 @@
      <script src="/Scripts/validation_addition.js" type="text/javascript"></script>
      <script src="/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
      <script src="/Scripts/jQuery.MultiFile.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.multi-select.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.multiselect').multiSelect(); 
+        });
+    </script>
+
+
+
 
      
  }

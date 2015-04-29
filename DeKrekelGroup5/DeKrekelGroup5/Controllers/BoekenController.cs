@@ -37,12 +37,12 @@ namespace DeKrekelGroup5.Controllers
                 IEnumerable<Boek> boeken;
                 if (!String.IsNullOrEmpty(search))
                 {
-                    boeken = gebruiker.LetterTuin.GetBoeken(search);
+                    boeken = gebruiker.LetterTuin.GetBoeken(search).ToList();
                     ViewBag.Selection = "Alle boeken met " + search;
                 }
                 else
                 {
-                    boeken = gebruiker.LetterTuin.GetBoeken(null);
+                    boeken = gebruiker.LetterTuin.GetBoeken(null).ToList();
                     ViewBag.Selection = "Alle boeken";
                 }
 
@@ -86,7 +86,7 @@ namespace DeKrekelGroup5.Controllers
         {
             MainViewModel mvm = new MainViewModel(gebruiker);
             if (gebruiker == null || gebruiker.AdminRechten == false) 
-                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
 
             try
             {
@@ -116,10 +116,11 @@ namespace DeKrekelGroup5.Controllers
                 try
                 { 
                     boek.Boek.image = mvm.BoekCreateViewModel.Boek.image;
-                    Boek newBoek = boek.Boek.MapToBoek(boek.Boek, gebruiker.LetterTuin.GetThemaByName(boek.Boek.Thema));
+                    List<Thema> themas = gebruiker.GetThemaListFromSelectedList(boek.SubmittedThemas);
+                    Boek newBoek = boek.Boek.MapToBoek(boek.Boek, themas);
                     
                     gebruiker.AddItem(newBoek);
-                    gebruikersRep.DoNotDuplicateThema(newBoek);
+                    //gebruikersRep.DoNotDuplicateThema(newBoek);
                     gebruikersRep.SaveChanges();
                     mvm.SetNewInfo("Boek" + boek.Boek.Titel + " werd toegevoegd...");
                     return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Items.Max(b => b.Exemplaar) });
@@ -149,7 +150,7 @@ namespace DeKrekelGroup5.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
                 if (boek == null)
-                    return HttpNotFound(); 
+                    return HttpNotFound();
                 mvm.SetBoekCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), boek);
                 HttpContext.Session["main"] = mvm;
             
@@ -184,9 +185,11 @@ namespace DeKrekelGroup5.Controllers
                     try
                     {
                         boek.Boek.image = mvm.BoekCreateViewModel.Boek.image;
-                        Boek newBoek = boek.Boek.MapToBoek(boek.Boek, gebruiker.LetterTuin.GetThemaByName(boek.Boek.Thema));
+
+                        List<Thema> themas = gebruiker.GetThemaListFromSelectedList(boek.SubmittedThemas);
+                        Boek newBoek = boek.Boek.MapToBoek(boek.Boek, themas);
                         gebruiker.UpdateBoek(newBoek);
-                        gebruikersRep.DoNotDuplicateThema(newBoek);
+                        //gebruikersRep.DoNotDuplicateThema(newBoek);
                         mvm.SetNewInfo("Boek " + boek.Boek.Titel + " werd aangepast...");
                         gebruikersRep.SaveChanges();
                         return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = newBoek.Exemplaar });

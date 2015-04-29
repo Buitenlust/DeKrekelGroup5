@@ -381,7 +381,7 @@ select {
     border-radius: 5px;
 }
 
-#modal {
+#infomodal {
 	width:360px;
 	height:180px;
 	padding:8px;
@@ -395,12 +395,10 @@ select {
 	margin-top:-94px !important;
 	margin-left:-180px !important;
 	z-index:101;
-}.hidden {
-    visibility: hidden;
-     display: block;
+}.hidden { 
+     display: none;
 }
-.show {
-    visibility: visible;
+.show { 
     display: block;
 }
 .bottom {
@@ -652,7 +650,7 @@ div#contentLogin span {
 
 @media only screen and (max-width: 767px) {
          
-    #modal {
+    #infomodal {
         width:284px;
         height:156px;
         padding:8px;

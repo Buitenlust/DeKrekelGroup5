@@ -25,7 +25,7 @@ namespace DeKrekelGroup5.ViewModel
         }
 
 
-        public Boek MapToBoek(BoekViewModel vm, Thema thema)
+        public Boek MapToBoek(BoekViewModel vm, List<Thema> themas )
         {
             return new Boek()
             {
@@ -35,7 +35,7 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = vm.Leeftijd,
                 Omschrijving = vm.Omschrijving,
                 Titel = vm.Titel,
-                Themaa = thema,
+                Themas = themas,
                 Uitgever = Uitgever,
                 ImageString = image
             };
@@ -57,7 +57,7 @@ namespace DeKrekelGroup5.ViewModel
                 Auteur = b.Auteur,
                 Uitgever = b.Uitgever,
                 Leeftijd = b.Leeftijd, 
-                Thema = b.Themaa.Themaa,
+                Themas = b.Themas,
                 image = b.ImageString,
                 Beschikbaar = b.Beschikbaar,
                 EindDatumUitlening = (b.Uitleningen == null||  b.Uitleningen.Count == 0) ? new DateTime() : b.Uitleningen.SingleOrDefault(d => d.Id == b.Uitleningen.Max(c => c.Id)).EindDatum,
@@ -74,6 +74,9 @@ namespace DeKrekelGroup5.ViewModel
 
     public class BoekCreateViewModel
     {
+        public MultiSelectList AllThemas { get; set; }
+        public List<int> SubmittedThemas { get; set; }
+
         public SelectList Themas { get; set; }
         public BoekViewModel Boek { get; set; }
 
@@ -88,13 +91,14 @@ namespace DeKrekelGroup5.ViewModel
                 Uitgever = boek.Uitgever,
                 Leeftijd = boek.Leeftijd,
                 image = boek.ImageString,
-                Thema = (boek.Themaa == null ? "" : boek.Themaa.Themaa),
+                Themas = themas.ToList(),
                 Beschikbaar = boek.Beschikbaar,
                 EindDatumUitlening = (boek.Uitleningen == null||  boek.Uitleningen.Count == 0) ? new DateTime() : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).EindDatum,
                 Uitgeleend = (boek.Uitleningen == null || boek.Uitleningen.Count == 0) ? false : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             };
 
-            Themas = new SelectList(themas, "Themaa", "Themaa", Boek.Thema ?? "");
+            //Themas = new SelectList(themas, "Themaa", "Themaa", Boek.Thema ?? "");
+            AllThemas = new MultiSelectList(themas.ToList(), "IdThema", "Themaa",(boek.Themas == null || boek.Themas.Count == 0) ? null : boek.Themas.Select(t => t.IdThema));
         }
 
         public BoekCreateViewModel()
@@ -102,6 +106,8 @@ namespace DeKrekelGroup5.ViewModel
             Boek = new BoekViewModel();
             IEnumerable<Thema> themas = new List<Thema>();
             Themas = new SelectList(themas, "", "", "");
+            AllThemas = new SelectList(themas, "", "", "");
+            SubmittedThemas = new List<int>();
         }
     }
 

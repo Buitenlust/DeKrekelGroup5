@@ -37,8 +37,13 @@
                     <td class="td2 gray">@Html.DisplayFor(model => model.BoekViewModel.Leeftijd)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Thema)</td>
-                    <td class="td2 gray">@Html.DisplayFor(model => model.BoekViewModel.Thema)</td>
+                    <td class="td1">Themas</td>
+                    <td class="td2 gray">@{ int counter = 0; }
+                    @foreach (var thema in Model.BoekViewModel.Themas)
+                    {
+                        counter++;
+                        <span>@thema.Themaa</span> @(counter < Model.BoekViewModel.Themas.Count ? "|" : "")
+                    }</td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Omschrijving)</td>

@@ -17,7 +17,7 @@ namespace DeKrekelGroup5.Models.Domain
         [Required(ErrorMessage = "Vul een thema in aub...")]
         [Display(Name = "Thema")]
         public String Themaa { get; set; }
-
+        public virtual List<Item> Items { get; set; } 
 
         public void Update(string thema)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using DeKrekelGroup5.Models.Domain;
 
 namespace DeKrekelGroup5.ViewModel
 {
@@ -20,8 +21,8 @@ namespace DeKrekelGroup5.ViewModel
 
         public HttpPostedFileBase ImageFile { get; set; }
 
-        [Required(ErrorMessage = "Kies een thema aub...")]
-        public string Thema { get; set; }
+        //Required(ErrorMessage = "Kies een thema aub...")]
+        public List<Thema> Themas { get; set; }
 
         public bool Beschikbaar { get; set; }
 
