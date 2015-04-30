@@ -48,7 +48,7 @@
                         }
                         else
                         {
-                            <strong>Beschikbaar: </strong>
+                            <span>Beschikbaar: </span>
                             <img src="~/Images/cross.png" class="icon"/>
                         }
                     </div>
@@ -59,14 +59,14 @@
 
                     <p><strong>Leeftijd: </strong> @Html.DisplayFor(modelItem => item.Leeftijd) jaar</p>
                     
-                    <p><strong>Omschrijving: </strong> @Html.DisplayFor(modelItem => item.Omschrijving)</p>
+                    <p><strong>Omschrijving: </strong> <span style="font-size: medium">@Html.DisplayFor(modelItem => item.Omschrijving)</span></p>
 
                     <p id="themap">
                         @{ int counter = 0; }
                         @foreach (var thema in item.Themas)
                         {
                             counter++;
-                            <span>@thema.Themaa</span> @(counter < item.Themas.Count ? "|" : "")
+                            <span style="font-style: italic">@thema.Themaa</span> @(counter < item.Themas.Count ? "|" : "")
                         }
                     </p>
 

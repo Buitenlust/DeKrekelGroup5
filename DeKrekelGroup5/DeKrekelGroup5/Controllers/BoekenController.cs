@@ -31,6 +31,8 @@ namespace DeKrekelGroup5.Controllers
         {
             if(gebruiker == null)
                 gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            else
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             try
             {
                 IEnumerable<Boek> boeken;
@@ -61,6 +63,8 @@ namespace DeKrekelGroup5.Controllers
         {
             if (gebruiker == null)
                 gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            else
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             mvm.SetGebruikerToVm(gebruiker);
             mvm.InfoViewModel.Info = null;
             try
@@ -85,6 +89,7 @@ namespace DeKrekelGroup5.Controllers
             MainViewModel mvm = new MainViewModel(gebruiker);
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
             try
             {
                 
