@@ -1,84 +1,105 @@
-﻿@model DeKrekelGroup5.ViewModel.CDCreateViewModel
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
 
-@{
-    ViewBag.Title = "Edit";
-}
-
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Boek</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.CD.Exemplaar)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CD.Artiest, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CD.Artiest, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CD.Artiest, "", new { @class = "text-danger" })
-            </div>
+<div id="content">
+    <h4 id="subtitel">Aanpassen CD</h4>
+    <hr />
+    <div id="wrapDetails">
+        <div id="leftCol">
+            <img src="~/Images/default.jpg" alt="krekelSchool">
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CD.Uitgever, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CD.Uitgever, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CD.Uitgever, "", new { @class = "text-danger" })
-            </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div id="mainCol">
+                <table id="details">
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.CDCreateViewModel.CD.Exemplaar)</td>
+                        <td class="td2">
+                            @Html.DisplayFor(model => model.CDCreateViewModel.CD.Exemplaar)
+                        @Html.HiddenFor(model => model.CDCreateViewModel.CD.Exemplaar)
+                        @Html.ValidationMessageFor(model => model.CDCreateViewModel.CD.Exemplaar, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDCreateViewModel.CD.Artiest)</td>
+                    <td>
+                        @Html.EditorFor(model => model.CDCreateViewModel.CD.Artiest, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CDCreateViewModel.CD.Artiest, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDCreateViewModel.CD.Uitgever)</td>
+                    <td>
+                        @Html.EditorFor(model => model.CDCreateViewModel.CD.Uitgever, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CDCreateViewModel.CD.Uitgever, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDCreateViewModel.CD.Leeftijd)</td>
+                    <td>
+                        @Html.EditorFor(model => model.CDCreateViewModel.CD.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CDCreateViewModel.CD.Leeftijd, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDCreateViewModel.CD.Titel)</td>
+                    <td>
+                        @Html.EditorFor(model => model.CDCreateViewModel.CD.Titel, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CDCreateViewModel.CD.Titel, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDCreateViewModel.CD.Omschrijving)</td>
+                    <td class="textArea">
+                        @Html.TextAreaFor(model => model.CDCreateViewModel.CD.Omschrijving, new { rows = "10", columns = "300" })
+                        @Html.ValidationMessageFor(model => model.CDCreateViewModel.CD.Omschrijving, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDCreateViewModel.CD.Thema)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.CDCreateViewModel.CD.Thema, Model.CDCreateViewModel.Themas, " --Selecteer een Thema--")
+                        @Html.ValidationMessageFor(model => model.CDCreateViewModel.CD.Thema)
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDCreateViewModel.CD.Uitgeleend)</td>
+                    <td class="td2">
+                        @if (@Model.CDCreateViewModel.CD.Uitgeleend)
+                        {
+                            @Model.CDCreateViewModel.CD.EindDatumUitlening.ToLongDateString()
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDCreateViewModel.CD.Beschikbaar)</td>
+                    <td>
+                        @Html.EditorFor(model => model.CDCreateViewModel.CD.Beschikbaar, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CDCreateViewModel.CD.Beschikbaar, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </table>
+            <p>
+                <a href='@Url.Action("index")' class="floatRight"><img src="~/Images/Return.png" /></a>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </p>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CD.Leeftijd, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CD.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CD.Leeftijd, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CD.Titel, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CD.Titel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CD.Titel, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CD.Omschrijving, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CD.Omschrijving, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CD.Omschrijving, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CD.Thema, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CD.Thema, Model.Themas, " --Selecteer een Thema--")
-                @Html.ValidationMessageFor(model => model.CD.Thema)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+        }
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
