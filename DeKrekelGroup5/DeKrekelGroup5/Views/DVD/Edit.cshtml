@@ -1,74 +1,98 @@
-﻿@model DeKrekelGroup5.ViewModel.DVDCreateViewModel
-
-<h2>Edit</h2>
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
 
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>DVD</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.DVD.Exemplaar)
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DVD.Uitgever, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DVD.Uitgever, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DVD.Uitgever, "", new { @class = "text-danger" })
-            </div>
+<div id="content">
+    <h4 id="subtitel">Aanpassen DVD</h4>
+    <hr />
+    <div id="wrapDetails">
+        <div id="leftCol">
+            <img src="~/Images/default.jpg" alt="krekelSchool">
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DVD.Leeftijd, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DVD.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DVD.Leeftijd, "", new { @class = "text-danger" })
-            </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div id="mainCol">
+                <table id="details">
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Exemplaar)</td>
+                        <td class="td2">
+                            @Html.DisplayFor(model => model.DVDCreateViewModel.DVD.Exemplaar)
+                        @Html.HiddenFor(model => model.DVDCreateViewModel.DVD.Exemplaar)
+                        @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Exemplaar, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Uitgever)</td>
+                    <td>
+                        @Html.EditorFor(model => model.DVDCreateViewModel.DVD.Uitgever, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Uitgever, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Leeftijd)</td>
+                    <td>
+                        @Html.EditorFor(model => model.DVDCreateViewModel.DVD.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Leeftijd, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Titel)</td>
+                    <td>
+                        @Html.EditorFor(model => model.DVDCreateViewModel.DVD.Titel, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Titel, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Omschrijving)</td>
+                    <td class="textArea">
+                        @Html.TextAreaFor(model => model.DVDCreateViewModel.DVD.Omschrijving, new { rows = "10", columns = "300" })
+                        @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Omschrijving, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Thema)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DVDCreateViewModel.DVD.Thema, Model.BoekCreateViewModel.Themas, " --Selecteer een Thema--")
+                        @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Thema)
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Uitgeleend)</td>
+                    <td class="td2">
+                        @if (@Model.DVDCreateViewModel.DVD.Uitgeleend)
+                        {
+                            @Model.DVDCreateViewModel.DVD.EindDatumUitlening.ToLongDateString()
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Beschikbaar)</td>
+                    <td>
+                        @Html.EditorFor(model => model.DVDCreateViewModel.DVD.Beschikbaar, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Beschikbaar, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </table>
+            <p>
+                <a href='@Url.Action("index")' class="floatRight"><img src="~/Images/Return.png" /></a>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </p>
         </div>
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DVD.Titel, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DVD.Titel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DVD.Titel, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DVD.Omschrijving, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DVD.Omschrijving, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DVD.Omschrijving, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DVD.Thema, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.DVD.Thema, Model.Themas, " --Selecteer een Thema--")
-                @Html.ValidationMessageFor(model => model.DVD.Thema)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+        }
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
