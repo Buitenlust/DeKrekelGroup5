@@ -96,7 +96,7 @@ namespace DeKrekelGroup5.Controllers
 
         //POST : VertelTassen/Create
         [HttpPost]
-        public ActionResult Create([Bind(Prefix = "Boek")] VertelTasViewModel vertelTas, Gebruiker gebruiker)
+        public ActionResult Create([Bind(Prefix = "Verteltas")] VertelTasViewModel vertelTas, Gebruiker gebruiker)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();

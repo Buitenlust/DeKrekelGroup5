@@ -16,6 +16,11 @@ namespace DeKrekelGroup5.ViewModel
         public BoekenLijstViewModel BoekenLijstViewModel { get; set; }
         public BoekCreateViewModel BoekCreateViewModel { get; set; }
         //public SpelViewModel SpelViewModel { get; set; }
+
+        public VertelTasViewModel VertelTasViewModel { get; set; }
+        public VertelTasLijstViewModel VertelTasLijstViewModel { get; set; }
+        public VertelTasCreateViewModel VertelTasCreateViewModel { get; set; }
+
         public UitlenerViewModel UitlenerViewModel { get; set; }
         public UitlenersLijstViewModel UitlenersLijstViewModel { get; set; }
         public List<Thema> Themas { get; set; }

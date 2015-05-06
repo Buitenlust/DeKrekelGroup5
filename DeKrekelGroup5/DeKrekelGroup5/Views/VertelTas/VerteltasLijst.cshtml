@@ -1,0 +1,107 @@
+﻿@using DeKrekelGroup5.Models.Domain
+@using DeKrekelGroup5.ViewModel
+@model DeKrekelGroup5.ViewModel.MainViewModel
+
+@foreach (var item in Model.VertelTasLijstViewModel.VertelTassen)
+{
+    <table class="table">
+        <tr>
+            <th>
+                B @Html.DisplayFor(modelItem => item.Exemplaar)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.Omschrijving)
+            </th>
+            <th>
+            </th>
+        </tr>
+        <tr>
+            <td id="left">
+                @if (string.IsNullOrEmpty(item.image))
+                {
+                    <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
+                }
+                else
+                {
+
+                    <img src='@Url.Content("~/FTP/Images/"+item.image)' alt="item.image" />
+                }
+            </td>
+            <td id="middle">
+                <div class="middleDiv">
+                    <div class="beschikbaar">
+                        @if (item.Beschikbaar)
+                        {
+                            if (item.Uitgeleend)
+                            {
+                                <span>Beschikbaar vanaf: </span>@item.GetStringDate()
+                                if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
+                                {
+                                    @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "icon" })
+                                }
+                            }
+                            else
+                            {
+                                <span>Beschikbaar: </span> <img src="~/Images/tick.png" class="icon" />
+                            }
+                        }
+                        else
+                        {
+                            <span>Beschikbaar: </span>
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </div>
+
+
+                    <p><strong>Leeftijd: </strong> @Html.DisplayFor(modelItem => item.Leeftijd) jaar</p>
+
+                    <p><strong>Omschrijving: </strong> <span style="font-size: medium">@Html.DisplayFor(modelItem => item.Omschrijving)</span></p>
+
+                    <p id="themap">
+                        @{ int counter = 0; }
+                        @foreach (var thema in item.Themas)
+                        {
+                            counter++;
+                            <span style="font-style: italic">@thema.Themaa</span> @(counter < item.Themas.Count ? "|" : "")
+                        }
+                    </p>
+
+
+
+                </div>
+            </td>
+            <td id="right">
+                <div class="wrapper-image">
+
+                    <a href=' @Url.Action("details", new { id = item.Exemplaar }) '><img src="~/Images/details.png" class="iconRight" /></a>
+                    @if (Model.GebruikerViewModel.IsBeheerder)
+                    {
+                        <a href=' @Url.Action("edit", new { id = item.Exemplaar }) '><img src="~/Images/edit.png" class="iconRight" /></a>
+                        <a href=' @Url.Action("delete", new { id = item.Exemplaar }) '><img src="~/Images/delete.png" class="iconRight" /></a>
+                    }
+
+
+                    @if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
+                    {
+                        if (item.Uitgeleend)
+                        {
+                            @Ajax.ImageActionLink("/Images/binnen.png", "EindeUitlening", "EindeUitlening", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "doorImg" })
+
+                        }
+                        else
+                        {
+                            if (item.Beschikbaar)
+                            {
+                                <a href=' @Url.Action("Create", "Uitleningen", new { id = item.Exemplaar }) ' class="doorImg"><img src="~/Images/buiten.png" /></a>
+                            }
+                        }
+                    }
+                </div>
+            </td>
+        </tr>
+    </table>
+}
+
+
+
+
