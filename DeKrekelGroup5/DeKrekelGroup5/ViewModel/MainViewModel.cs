@@ -36,6 +36,9 @@ namespace DeKrekelGroup5.ViewModel
             BoekViewModel = new BoekViewModel();
             BoekenLijstViewModel = new BoekenLijstViewModel();
             BoekCreateViewModel = new BoekCreateViewModel();
+            VertelTasViewModel = new VertelTasViewModel();
+            VertelTasLijstViewModel = new VertelTasLijstViewModel();
+            VertelTasCreateViewModel = new VertelTasCreateViewModel();
             //SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
@@ -58,6 +61,9 @@ namespace DeKrekelGroup5.ViewModel
             BoekViewModel = new BoekViewModel();
             BoekenLijstViewModel = new BoekenLijstViewModel();
             BoekCreateViewModel = new BoekCreateViewModel();
+            VertelTasViewModel = new VertelTasViewModel();
+            VertelTasLijstViewModel = new VertelTasLijstViewModel();
+            VertelTasCreateViewModel = new VertelTasCreateViewModel();
             //SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
@@ -80,6 +86,12 @@ namespace DeKrekelGroup5.ViewModel
         public object SetNewBoekenLijstVm(IEnumerable<Boek> boeken)
         {
                 BoekenLijstViewModel = new BoekenLijstViewModel(boeken);
+            return this;
+        }
+
+        public object SetNewVerteltasLijstVm(IEnumerable<VertelTas> verteltassen)
+        {
+            VertelTasLijstViewModel = new VertelTasLijstViewModel(verteltassen);
             return this;
         }
 
@@ -113,6 +125,30 @@ namespace DeKrekelGroup5.ViewModel
             return this;
         }
 
+        public object SetVerteltasViewModel(VertelTas verteltas)
+        {
+            VertelTasViewModel = new VertelTasViewModel();
+            {
+                Exemplaar = verteltas.Exemplaar,
+                Omschrijving = verteltas.Omschrijving,
+                Titel = verteltas.Titel,
+                Leeftijd = verteltas.Leeftijd,
+                Themas = verteltas.Themas,
+                Items = verteltas.Items,
+                Beschikbaar = verteltas.Beschikbaar,
+                EindDatumUitlening = verteltas.Uitleningen.Count == 0 ? new DateTime() : verteltas.Uitleningen.SingleOrDefault(d => d.Id == verteltas.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = verteltas.Uitleningen.Count == 0 ? false : verteltas.Uitleningen.SingleOrDefault(d => d.Id == verteltas.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+            };
+            return this;
+        }
+
+        public object SetVerteltasCreateViewModel(IEnumerable<Thema> themas, VertelTas verteltas, IEnumerable<Boek> boeken, IEnumerable<Spel> spellen,
+            IEnumerable<CD> CDs, IEnumerable<DVD> DVDs  )
+        {
+            VertelTasCreateViewModel = new VertelTasCreateViewModel(themas, verteltas, boeken, spellen, CDs, DVDs);
+            return this;
+        }
+
         public void SetItemViewModel(Item item)
         {
             ItemViewModel = new ItemViewModel()
@@ -143,7 +179,7 @@ namespace DeKrekelGroup5.ViewModel
             };
             return this;
         }
-    }
+
 
     
 

@@ -7,7 +7,7 @@ using DeKrekelGroup5.Models.Domain;
 
 namespace DeKrekelGroup5.ViewModel
 {
-    public class VertelTasViewModel : ItemViewModel
+    public class VertelTasViewModel:ItemViewModel
     {
 
         public VertelTasViewModel()
