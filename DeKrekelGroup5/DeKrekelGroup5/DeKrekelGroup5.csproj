@@ -250,6 +250,7 @@
     <Compile Include="ViewModel\GebruikerViewModel.cs" />
     <Compile Include="ViewModel\BoekViewModel.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
+    <Compile Include="ViewModel\VerteltasViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
