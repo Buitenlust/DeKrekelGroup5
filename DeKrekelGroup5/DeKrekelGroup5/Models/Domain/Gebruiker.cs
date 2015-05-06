@@ -133,6 +133,24 @@ namespace DeKrekelGroup5.Models.Domain
             return false;
         }
 
+        /// <summary> Update de parameters van een spel</summary>
+        /// <returns> Geeft true weer als het spel is aangepast. Exemplaar van het spel moet > 0 </returns>
+        /// <param name="spel"> te updaten spel </param>
+        public bool UpdateSpel(Spel spel)
+        {
+            CheckAdminRechten();
+            if (spel != null && spel.Exemplaar > 0)
+            {
+                var newItem = LetterTuin.GetItem(spel.Exemplaar) as Spel;
+                if (newItem != null)
+                {
+                    newItem.Update(spel);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary> Removes an item from the collection </summary>
         /// <returns>returns true if item is succesfully removed from the collection. Exemplaar must be > 0 </returns>
         /// <param name="id"> id van te verwijderen item </param>

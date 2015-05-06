@@ -1,72 +1,83 @@
-﻿@model DeKrekelGroup5.ViewModel.SpelCreateViewModel
-
-@{
-    ViewBag.Title = "Create";
-}
-
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Spel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Spel.Uitgever, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Spel.Uitgever, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Spel.Uitgever, "", new { @class = "text-danger" })
-            </div>
+﻿@using DeKrekelGroup5.ViewModel
+@model DeKrekelGroup5.ViewModel.MainViewModel
+<div id="content">
+    <h4 id="subtitel">Spel aanmaken</h4>
+    <hr />
+    <div id="wrapDetails">
+        <div id="leftCol">
+            <img src="~/Images/krekel.png" alt="krekelSchool">
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Spel.Leeftijd, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Spel.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Spel.Leeftijd, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
- 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Spel.Titel, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Spel.Titel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Spel.Titel, "", new { @class = "text-danger" })
+            <div id="mainCol">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <table id="details">
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.SpelCreateViewModel.Spel.Uitgever)</td>
+                        <td>
+                            @Html.EditorFor(model => model.SpelCreateViewModel.Spel.Uitgever, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Uitgever, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.SpelCreateViewModel.Spel.Leeftijd)</td>
+                        <td>
+                            @Html.EditorFor(model => model.SpelCreateViewModel.Spel.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Leeftijd, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.SpelCreateViewModel.Spel.Titel)</td>
+                        <td>
+                            @Html.EditorFor(model => model.SpelCreateViewModel.Spel.Titel, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Titel, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.SpelCreateViewModel.Spel.Omschrijving)</td>
+                        <td class="textArea">
+                            @Html.TextAreaFor(model => model.SpelCreateViewModel.Spel.Omschrijving, new { rows = "10", columns = "300" })
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Omschrijving, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.LabelFor(model => model.SpelCreateViewModel.Spel.Thema, htmlAttributes: new { @class = "editLabel" })</td>
+                        <td>
+                            @Html.DropDownListFor(model => model.SpelCreateViewModel.Spel.Thema, Model.SpelCreateViewModel.Themas, " --Selecteer een Thema--")
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Thema)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.SpelCreateViewModel.Spel.Uitgeleend)</td>
+                        <td>
+                            @Html.EditorFor(model => model.SpelCreateViewModel.Spel.Uitgeleend, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Uitgeleend, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">@Html.DisplayNameFor(model => model.SpelCreateViewModel.Spel.Beschikbaar)</td>
+                        <td>
+                            @Html.EditorFor(model => model.SpelCreateViewModel.Spel.Beschikbaar, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Beschikbaar, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                </table>
+                <p>
+                    <a href='@Url.Action("index")' class="floatRight"><img src="~/Images/Return.png" /></a>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </p>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Spel.Omschrijving, htmlAttributes: new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Spel.Omschrijving, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.Spel.Omschrijving, "", new {@class = "text-danger"})
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Spel.Thema, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Spel.Thema, Model.Themas, " --Selecteer een Thema--")
-                @Html.ValidationMessageFor(model => model.Spel.Thema)
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+        }
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

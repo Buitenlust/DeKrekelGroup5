@@ -17,48 +17,84 @@ namespace DeKrekelGroup5.Controllers
 {
     public class SpellenController : Controller
     {
-        private LetterTuin letterTuin; 
+        private IGebruikerRepository gebruikersRep; 
 
-        public SpellenController(ILettertuinRepository lettertuinRepository, IThemasRepository themasRepository)
+        public SpellenController(IGebruikerRepository gebruikerRepository)
         {
-            letterTuin = new LetterTuin(); 
+            gebruikersRep = gebruikerRepository;
         }
 
         // GET: Spellen
-        public ActionResult Index(String search=null)
+        public ActionResult Index( Gebruiker gebruiker, String search=null)
         {
-            IEnumerable<Spel> spellen;
-            if (!String.IsNullOrEmpty(search))
+            if(gebruiker == null)
+                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
             {
-                spellen = letterTuin.GetSpellen(search);
-                ViewBag.Selection = "Alle spellen met " + search;
-            }
-            else
-            {
-                spellen = letterTuin.GetSpellen(search).Take(25);
-                ViewBag.Selection = "Alle spellen";
-            }
-            if (Request.IsAjaxRequest())
-                return PartialView("SpellenLijst", new SpellenLijstViewModel(spellen));
+                IEnumerable<Spel> spellen;
+                if (!String.IsNullOrEmpty(search))
+                {
+                    spellen = gebruiker.LetterTuin.GetSpellen(search);
+                    ViewBag.Selection = "Alle spellen met " + search;
+                }
+                else
+                {
+                    spellen = gebruiker.LetterTuin.GetSpellen(null);
+                    ViewBag.Selection = "Alle spellen";
+                }
 
-            return View(new SpellenLijstViewModel(spellen));
+                if (Request.IsAjaxRequest())
+                    return PartialView("SpellenLijst", new MainViewModel(gebruiker).SetNewSpellenLijstVm(spellen));
+
+                return View(new MainViewModel(gebruiker).SetNewSpellenLijstVm(spellen));
+            }
+            catch (Exception)
+            {
+
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+            
+            
         }
 
         // GET: Spellen/Details/5
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(Gebruiker gebruiker, int id = 0)
         {
-            if (id == 0)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Spel spel = letterTuin.GetItem(id) as Spel;
-            if (spel == null)
-                return HttpNotFound();
-            return View(spel);
+            if (gebruiker == null)
+                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
+            {
+                if (id == 0)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Spel spel = gebruiker.LetterTuin.GetItem(id) as Spel;
+                if (spel == null)
+                    return HttpNotFound();
+                return View(new MainViewModel(gebruiker).SetSpelViewModel(spel));
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+            
         }
 
         // GET: Spellen/Create
-        public ActionResult Create()
+        public ActionResult Create(Gebruiker gebruiker)
         {
-            return View(new SpelCreateViewModel(beheerder.GetThemas(), new Spel()));
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
+            {
+                return View(new MainViewModel(gebruiker).SetSpelCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new Spel()));
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         // POST: Spellen/Create
@@ -66,38 +102,52 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Prefix = "Spel")] SpelViewModel spel)
+        public ActionResult Create([Bind(Prefix = "SpelCreateViewModel")] SpelCreateViewModel spel, Gebruiker gebruiker)
         {
-            if (ModelState.IsValid)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (ModelState.IsValid && spel != null && spel.Spel.Exemplaar <=0)
             {
-                Spel newSpel = new Spel()
+                try
                 {
-                    Titel = spel.Titel, 
-                    Leeftijd = spel.Leeftijd,
-                    Beschikbaar = true,
-                    Uitgeleend = false,
-                    Themaa = beheerder.GetThemaByName(spel.Thema),
-                    Omschrijving = spel.Omschrijving,
-                    Exemplaar = 0,
-                    Uitgever = spel.Uitgever
-
-                };
-                beheerder.AddItem(newSpel);
-                TempData["Info"] = "Het spel werd toegevoegd...";
-                return RedirectToAction("Index");
+                    MainViewModel mvm = new MainViewModel(gebruiker);
+                    Spel newSpel = spel.Spel.MapToSpel(spel.Spel, gebruiker.LetterTuin.GetThemaByName(spel.Spel.Thema));
+                    gebruiker.AddItem(newSpel);
+                    gebruikersRep.DoNotDuplicateThema(newSpel);
+                    gebruikersRep.SaveChanges();
+                    mvm.SetNewInfo("Spel" + spel.Spel.Titel + " werd toegevoegd...");
+                    return View("Index", mvm );
+                }
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+                
             }
             return RedirectToAction("Create");
         }
 
         // GET: Spellen/Edit/5
-        public ActionResult Edit(int id=0)
+        public ActionResult Edit(Gebruiker gebruiker,int id=0)
         {
-            if (id == 0)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Spel spel = beheerder.GetItem(id) as Spel;
-            if (spel == null)
-                return HttpNotFound();
-            return View(new SpelCreateViewModel(beheerder.GetThemas(), spel));
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
+            {
+                if (id <= 0)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Spel spel = gebruiker.LetterTuin.GetItem(id) as Spel;
+                if (spel == null)
+                    return HttpNotFound();
+                return View(new MainViewModel(gebruiker).SetSpelCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), spel));
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+            
         }
 
         // POST: Spellen/Edit/5
@@ -105,51 +155,82 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Prefix = "Spel")] SpelViewModel spel)
+        public ActionResult Edit([Bind(Prefix = "SpelCreateViewModel")] SpelCreateViewModel spel, Gebruiker gebruiker)
         {
-            if (ModelState.IsValid)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (ModelState.IsValid && spel!= null && spel.Spel.Exemplaar > 0)
             {
-                Spel newSpel = new Spel()
+                try
                 {
-                    Titel = spel.Titel,
-                    Leeftijd = spel.Leeftijd,
-                    Beschikbaar = true,
-                    Uitgeleend = false,
-                    Themaa = beheerder.GetThemaByName(spel.Thema),
-                    Omschrijving = spel.Omschrijving,
-                    Exemplaar = spel.Exemplaar,
-                    Uitgever = spel.Uitgever
-
-                };
-
-                beheerder.AddItem(newSpel);
-
-                return RedirectToAction("Index");
+                    MainViewModel mvm = new MainViewModel(gebruiker);
+                    Spel newSpel = spel.Spel.MapToSpel(spel.Spel, gebruiker.LetterTuin.GetThemaByName(spel.Spel.Thema));
+                    gebruiker.UpdateSpel(newSpel);
+                    gebruikersRep.DoNotDuplicateThema(newSpel);
+                    mvm.SetNewInfo("Spel " + spel.Spel.Titel + " werd aangepast...");
+                    gebruikersRep.SaveChanges();
+                    return View("Index", mvm);
+                }
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
             }
-            return View(spel);
+            return View(new MainViewModel(gebruiker){SpelCreateViewModel = spel});
         }
 
         // GET: Spellen/Delete/5
-        public ActionResult Delete(int id=0)
+        public ActionResult Delete(Gebruiker gebruiker, int id=0)
         {
-            if (id == 0)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (id <= 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Spel spel = beheerder.GetItem(id) as Spel;
-            if (spel == null)
+            try
             {
-                return HttpNotFound();
+                Spel spel = gebruiker.LetterTuin.GetItem(id) as Spel;
+                if (spel == null)
+                    return HttpNotFound();
+                return View(new MainViewModel(gebruiker).SetSpelViewModel(spel));
             }
-            return View(spel);
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         // POST: Spellen/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        { 
-            beheerder.RemoveItem(id);
-            return RedirectToAction("Index");
+        public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
+        {
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (id <= 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            try
+            {
+                MainViewModel mvm = new MainViewModel(gebruiker);
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+                Spel spel = gebruiker.LetterTuin.GetItem(id) as Spel;
+                if (spel == null)
+                    return HttpNotFound();
+                gebruiker.RemoveItem(spel);
+                gebruikersRep.SaveChanges();
+                mvm.SetNewInfo("Spel" +spel.Titel+ " werd verwijderd...");
+                return View("Index", mvm);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+
+            
         }
     }
 }

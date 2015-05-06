@@ -20,6 +20,8 @@ namespace DeKrekelGroup5.ViewModel
         
 
         public SpelViewModel SpelViewModel { get; set; }
+        public SpellenLijstViewModel SpellenLijstViewModel { get; set; }
+        public SpelCreateViewModel SpelCreateViewModel { get; set; }
 
         public UitlenerViewModel UitlenerViewModel { get; set; }
         public UitlenersLijstViewModel UitlenersLijstViewModel { get; set; }
@@ -34,6 +36,8 @@ namespace DeKrekelGroup5.ViewModel
             BoekenLijstViewModel = new BoekenLijstViewModel();
             BoekCreateViewModel = new BoekCreateViewModel();
             SpelViewModel = new SpelViewModel();
+            SpellenLijstViewModel = new SpellenLijstViewModel();
+            SpelCreateViewModel = new SpelCreateViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
             ItemViewModel = new ItemViewModel();
@@ -55,6 +59,8 @@ namespace DeKrekelGroup5.ViewModel
             BoekenLijstViewModel = new BoekenLijstViewModel();
             BoekCreateViewModel = new BoekCreateViewModel();
             SpelViewModel = new SpelViewModel();
+            SpellenLijstViewModel = new SpellenLijstViewModel();
+            SpelCreateViewModel = new SpelCreateViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
             ItemViewModel = new ItemViewModel();
@@ -75,6 +81,12 @@ namespace DeKrekelGroup5.ViewModel
         public object SetNewBoekenLijstVm(IEnumerable<Boek> boeken)
         {
                 BoekenLijstViewModel = new BoekenLijstViewModel(boeken);
+            return this;
+        }
+
+        public object SetNewSpellenLijstVm(IEnumerable<Spel> spellen)
+        {
+            SpellenLijstViewModel = new SpellenLijstViewModel(spellen);
             return this;
         }
 
@@ -105,6 +117,29 @@ namespace DeKrekelGroup5.ViewModel
         public object SetBoekCreateViewModel(IEnumerable<Thema> themas, Boek boek)
         {
              BoekCreateViewModel = new BoekCreateViewModel(themas, boek);
+            return this;
+        }
+
+        public object SetSpelViewModel(Spel spel)
+        {
+            BoekViewModel = new BoekViewModel()
+            {
+                Exemplaar = spel.Exemplaar,
+                Omschrijving = spel.Omschrijving,
+                Titel = spel.Titel,
+                Uitgever = spel.Uitgever,
+                Leeftijd = spel.Leeftijd,
+                Thema = spel.Themaa.Themaa,
+                Beschikbaar = spel.Beschikbaar,
+                EindDatumUitlening = spel.Uitleningen.Count == 0 ? new DateTime() : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = spel.Uitleningen.Count == 0 ? false : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+            };
+            return this;
+        }
+
+        public object SetSpelCreateViewModel(IEnumerable<Thema> themas, Spel spel)
+        {
+            SpelCreateViewModel = new SpelCreateViewModel(themas, spel);
             return this;
         }
 

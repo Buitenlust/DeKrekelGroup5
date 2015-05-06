@@ -194,6 +194,7 @@
     <Compile Include="Controllers\BoekenController.cs" />
     <Compile Include="Controllers\CDController.cs" />
     <Compile Include="Controllers\DVDController.cs" />
+    <Compile Include="Controllers\SpellenController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Controllers\UitlenersController.cs" />
     <Compile Include="Controllers\UitleningenController.cs" />
