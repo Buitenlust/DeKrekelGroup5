@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -100,12 +101,15 @@ namespace DeKrekelGroup5.Models.Domain
         /// <param name="search"> search keyword </param>
         public IEnumerable<VertelTas> GetVertelTassen(string search)
         {
+
             if (search != null && !search.Trim().IsEmpty())
                 return Items.OfType<VertelTas>().Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
                                                             p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
                                                             p.Omschrijving.ToLower().Contains(search.ToLower()))
                     .OrderBy(p => p.Titel);
+
             return Items.OfType<VertelTas>().Take(25);
+
         }
 
 

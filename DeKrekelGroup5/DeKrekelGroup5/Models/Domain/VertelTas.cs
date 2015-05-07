@@ -11,8 +11,7 @@ namespace DeKrekelGroup5.Models.Domain
 {
     public class VertelTas : Item
     {
-        //public string Bevat { get; set; }
-
+        public String Bevat { get; set; }
         public virtual ICollection<Item> Items { get; set; }
 
     }

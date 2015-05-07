@@ -29,24 +29,19 @@ namespace DeKrekelGroup5.Controllers
         {
             if (gebruiker == null)
                 gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            else
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             try
             {
                 IEnumerable<VertelTas> verteltassen;
-                if (!String.IsNullOrEmpty(search))
-                {
-                    verteltassen = gebruiker.LetterTuin.GetVertelTassen(search);
-                    ViewBag.Selection = "Alle verteltassen met " + search;
-                }
-                else
-                {
-                    verteltassen = gebruiker.LetterTuin.GetVertelTassen(null);
-                    ViewBag.Selection = "Alle verteltassen";
-                }
+
+                    verteltassen = gebruiker.LetterTuin.GetVertelTassen(search).ToList();
+                    //ViewBag.Selection = "Alle verteltassen met " + search;
+                
 
                 if (Request.IsAjaxRequest())
-                    return PartialView("VertelTasLijst",
-                        new MainViewModel(gebruiker).SetNewVerteltasLijstVm(verteltassen));
+                    return PartialView("VertelTasLijst", new MainViewModel(gebruiker).SetNewVerteltasLijstVm(verteltassen));
 
                 return View(new MainViewModel(gebruiker).SetNewVerteltasLijstVm(verteltassen));
             }
@@ -88,7 +83,7 @@ namespace DeKrekelGroup5.Controllers
 
             try
             {
-                return View(new MainViewModel(gebruiker).SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new VertelTas(), new List<Item>()));
+                return View(new MainViewModel(gebruiker).SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new VertelTas(), gebruiker.LetterTuin.Items));
             }
             catch (Exception)
             {
@@ -135,7 +130,7 @@ namespace DeKrekelGroup5.Controllers
                 VertelTas vertelTas = gebruiker.LetterTuin.GetItem(id) as VertelTas;
                 if (vertelTas == null)
                     return HttpNotFound();
-                return View(new MainViewModel(gebruiker).SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), vertelTas, new List<Item>()));
+                return View(new MainViewModel(gebruiker).SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), vertelTas, gebruiker.LetterTuin.Items));
             }
             catch (Exception)
             {

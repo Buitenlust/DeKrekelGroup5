@@ -2,7 +2,7 @@
 @using DeKrekelGroup5.ViewModel
 @model DeKrekelGroup5.ViewModel.MainViewModel
 
-@foreach (var item in Model.VertelTasLijstViewModel.VertelTassen)
+@foreach (var item in Model.BoekenLijstViewModel.Boeken)
 {
     <table class="table">
         <tr>
@@ -10,7 +10,7 @@
                 B @Html.DisplayFor(modelItem => item.Exemplaar)
             </th>
             <th>
-                @Html.DisplayFor(modelItem => item.Omschrijving)
+                @Html.DisplayFor(modelItem => item.Titel)
             </th>
             <th>
             </th>
@@ -51,7 +51,6 @@
                             <img src="~/Images/cross.png" class="icon" />
                         }
                     </div>
-
 
                     <p><strong>Leeftijd: </strong> @Html.DisplayFor(modelItem => item.Leeftijd) jaar</p>
 
