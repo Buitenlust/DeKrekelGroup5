@@ -81,6 +81,10 @@ namespace DeKrekelGroup5.ViewModel
         public MultiSelectList AllThemas { get; set; }
         public List<int> SubmittedThemas { get; set; }
         public SelectList Themas { get; set; }
+        public SelectList Items { get; set; }
+        public MultiSelectList AllItems { get; set; }
+        public List<int> SubmittedItems { get; set; }
+
         public MultiSelectList AllBoeken { get; set; }
         public List<int> SubmittedBoeken { get; set; }
         public SelectList Boeken { get; set; }
@@ -116,6 +120,10 @@ namespace DeKrekelGroup5.ViewModel
 
             //Themas = new SelectList(themas, "Themaa", "Themaa", Boek.Thema ?? "");
             AllThemas = new MultiSelectList(themas.ToList(), "IdThema", "Themaa", (vertelTas.Themas == null || vertelTas.Themas.Count == 0) ? null : vertelTas.Themas.Select(t => t.IdThema));
+            AllBoeken = new MultiSelectList(items.OfType<Boek>().ToList(),"Exemplaar", "Titel", (vertelTas.Items == null || vertelTas.Items.Count == 0) ? null : vertelTas.Items.Select(b=>b.Titel));
+            AllSpellen = new MultiSelectList(items.OfType<Spel>().ToList(), "Exemplaar", "Titel", (vertelTas.Items == null || vertelTas.Items.Count() == 0) ? null : vertelTas.Items.Select(s => s.Titel));
+            AllCDs = new MultiSelectList(items.OfType<CD>().ToList(), "Exemplaar", "Titel", (vertelTas.Items == null || vertelTas.Items.Count() == 0) ? null : vertelTas.Items.Select(c => c.Titel));
+            AllDVDs = new MultiSelectList(items.OfType<DVD>().ToList(), "Exemplaar", "Titel", (vertelTas.Items == null || vertelTas.Items.Count() == 0) ? null : vertelTas.Items.Select(d => d.Titel));
         }
 
         public VertelTasCreateViewModel()

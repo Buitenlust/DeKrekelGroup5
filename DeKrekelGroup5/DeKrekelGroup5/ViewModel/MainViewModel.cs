@@ -142,6 +142,7 @@ namespace DeKrekelGroup5.ViewModel
                 Titel = verteltas.Titel,
                 Leeftijd = verteltas.Leeftijd,
                 Themas = verteltas.Themas,
+                Items = verteltas.Items,
                 Beschikbaar = verteltas.Beschikbaar,
                 EindDatumUitlening =
                     verteltas.Uitleningen.Count == 0
