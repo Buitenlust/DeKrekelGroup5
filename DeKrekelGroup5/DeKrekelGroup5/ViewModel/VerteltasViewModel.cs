@@ -95,8 +95,7 @@ namespace DeKrekelGroup5.ViewModel
         public SelectList DVDs { get; set; }
         public VertelTasViewModel Verteltas { get; set; }
 
-        public VertelTasCreateViewModel(IEnumerable<Thema> themas, VertelTas vertelTas, IEnumerable<Boek> boeken, IEnumerable<Spel> spellen,
-            IEnumerable<CD> CDs, IEnumerable<DVD> DVDs  )
+        public VertelTasCreateViewModel(IEnumerable<Thema> themas, VertelTas vertelTas, IEnumerable<Item> items )
         {
             Verteltas = new VertelTasViewModel()
             {
@@ -106,10 +105,10 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = vertelTas.Leeftijd,
                 Themas = themas.ToList(),
                 image = vertelTas.ImageString,
-                Boeken = boeken.ToList(),
-                Spellen = spellen.ToList(),
-                CDs = CDs.ToList(),
-                DVDs = DVDs.ToList(),
+                Boeken = items.OfType<Boek>().ToList(),
+                Spellen = items.OfType<Spel>().ToList(),
+                CDs = items.OfType<CD>().ToList(),
+                DVDs = items.OfType<DVD>().ToList(),
                 Beschikbaar = vertelTas.Beschikbaar,
                 EindDatumUitlening = (vertelTas.Uitleningen == null || vertelTas.Uitleningen.Count == 0) ? new DateTime() : vertelTas.Uitleningen.SingleOrDefault(d => d.Id == vertelTas.Uitleningen.Max(c => c.Id)).EindDatum,
                 Uitgeleend = (vertelTas.Uitleningen == null || vertelTas.Uitleningen.Count == 0) ? false : vertelTas.Uitleningen.SingleOrDefault(d => d.Id == vertelTas.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
@@ -126,7 +125,24 @@ namespace DeKrekelGroup5.ViewModel
             Themas = new SelectList(themas, "", "", "");
             AllThemas = new SelectList(themas, "", "", "");
             SubmittedThemas = new List<int>();
+            IEnumerable<Boek> boeken = new List<Boek>();
+            Boeken = new SelectList(boeken, "", "", "");
+            AllBoeken = new SelectList(boeken,"","","");
+            SubmittedBoeken = new List<int>();
+            IEnumerable<Spel> spellen = new List<Spel>();
+            Spellen = new SelectList(spellen, "", "", "");
+            AllSpellen = new SelectList(spellen, "", "", "");
+            SubmittedSpellen = new List<int>();
+            IEnumerable<CD> Cds = new List<CD>();
+            CDs = new SelectList(Cds, "", "", "");
+            AllCDs = new SelectList(CDs, "", "", "");
+            SubmittedCDs = new List<int>();
+            IEnumerable<DVD> Dvds = new List<DVD>();
+            DVDs = new SelectList(Dvds, "", "", "");
+            AllDVDs = new SelectList(DVDs, "", "", "");
+            SubmittedDVDs = new List<int>();
         }
+
     }
 
 

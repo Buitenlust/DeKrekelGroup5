@@ -79,6 +79,54 @@ namespace DeKrekelGroup5.Models.Domain
                 }
                 return false;
         }
+
+        public bool CreateVertelTas(VertelTasCreateViewModel vertelTas)
+        {
+            CheckAdminRechten();
+            if (vertelTas != null)
+            {
+                List<Thema> themas = GetThemaListFromSelectedList(vertelTas.SubmittedThemas);
+                VertelTas newVertelTas = vertelTas.Verteltas.MapToVertelTas(vertelTas.Verteltas, themas, new List<Item>());
+                
+
+                if (vertelTas.SubmittedBoeken != null && vertelTas.SubmittedBoeken.Count != 0)
+                {
+                    foreach ( int Exemplaar in vertelTas.SubmittedBoeken)
+                    {
+                        newVertelTas.Items.Add(LetterTuin.GetItem(Exemplaar));
+                    }
+                }
+
+                if (vertelTas.SubmittedSpellen != null && vertelTas.SubmittedSpellen.Count != 0)
+                {
+                    foreach (int Exemplaar in vertelTas.SubmittedSpellen)
+                    {
+                        newVertelTas.Items.Add(LetterTuin.GetItem(Exemplaar));
+                    }
+                }
+
+                if (vertelTas.SubmittedCDs != null && vertelTas.SubmittedCDs.Count != 0)
+                {
+                    foreach (int Exemplaar in vertelTas.SubmittedCDs)
+                    {
+                        newVertelTas.Items.Add(LetterTuin.GetItem(Exemplaar));
+                    }
+                }
+
+                if (vertelTas.SubmittedDVDs != null && vertelTas.SubmittedDVDs.Count != 0)
+                {
+                    foreach (int Exemplaar in vertelTas.SubmittedDVDs)
+                    {
+                        newVertelTas.Items.Add(LetterTuin.GetItem(Exemplaar));
+                    }
+                }
+
+                LetterTuin.Items.Add(newVertelTas);
+            }
+            
+
+            return false;
+        }
  
         /// <summary> Update de parameters van een boek</summary>
         /// <returns> Geeft true weer als het boek is aangepast. Exemplaar van het boek moet > 0 </returns>
@@ -447,6 +495,8 @@ namespace DeKrekelGroup5.Models.Domain
                 return LetterTuin.Themas.Where(p => p.Items.Contains(item)).ToList();
             return new List<Thema>();
         }
+
+        
 
     }
 }

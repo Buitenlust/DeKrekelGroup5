@@ -201,6 +201,7 @@
     <Compile Include="Controllers\UitlenersController.cs" />
     <Compile Include="Controllers\UitleningenController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="Controllers\VerteltasController.cs" />
     <Compile Include="Infrastructure\HelperModelBinder.cs" />
     <Compile Include="Infrastructure\MainViewModelBinder.cs" />
     <Compile Include="Infrastructure\GebruikerModelBinder.cs" />

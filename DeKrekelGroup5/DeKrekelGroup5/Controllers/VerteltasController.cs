@@ -45,10 +45,10 @@ namespace DeKrekelGroup5.Controllers
                 }
 
                 if (Request.IsAjaxRequest())
-                    return PartialView("VertelTassenLijst",
-                        new MainViewModel(gebruiker).SetNewVertelTassenLijstVm(verteltassen));
+                    return PartialView("VertelTasLijst",
+                        new MainViewModel(gebruiker).SetNewVerteltasLijstVm(verteltassen));
 
-                return View(new MainViewModel(gebruiker).SetNewVertelTassenLijstVm(verteltassen));
+                return View(new MainViewModel(gebruiker).SetNewVerteltasLijstVm(verteltassen));
             }
             catch (Exception)
             {
@@ -88,7 +88,7 @@ namespace DeKrekelGroup5.Controllers
 
             try
             {
-                return View(new MainViewModel(gebruiker).SetVertelTasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new VertelTas()));
+                return View(new MainViewModel(gebruiker).SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new VertelTas(), new List<Item>()));
             }
             catch (Exception)
             {
@@ -108,9 +108,7 @@ namespace DeKrekelGroup5.Controllers
                 try
                 {
                     MainViewModel mvm = new MainViewModel(gebruiker);
-                    VertelTas newVertelTas = vertelTas.Verteltas.MapToVertelTas(vertelTas.Verteltas, gebruiker.LetterTuin.GetThemaByName(vertelTas.Verteltas.Thema));
-                    gebruiker.AddItem(newVertelTas);
-                    gebruikersRep.DoNotDuplicateThema(newVertelTas);
+                    gebruiker.CreateVertelTas(vertelTas);
                     gebruikersRep.SaveChanges();
                     mvm.SetNewInfo("Verteltas " + vertelTas.Verteltas.Titel + " werd toegevoegd...");
                     return View("Index", mvm);
@@ -137,7 +135,7 @@ namespace DeKrekelGroup5.Controllers
                 VertelTas vertelTas = gebruiker.LetterTuin.GetItem(id) as VertelTas;
                 if (vertelTas == null)
                     return HttpNotFound();
-                return View(new MainViewModel(gebruiker).SetVertelTasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), vertelTas));
+                return View(new MainViewModel(gebruiker).SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), vertelTas, new List<Item>()));
             }
             catch (Exception)
             {
@@ -159,9 +157,9 @@ namespace DeKrekelGroup5.Controllers
                 try
                 {
                     MainViewModel mvm = new MainViewModel(gebruiker);
-                    VertelTas newVertelTas = vertelTas.Verteltas.MapToVertelTas(vertelTas.Verteltas, gebruiker.LetterTuin.GetThemaByName(vertelTas.Verteltas.Thema));
-                    gebruiker.UpdateVerteltas(newVertelTas);
-                    gebruikersRep.DoNotDuplicateThema(newVertelTas);
+                   // VertelTas newVertelTas = vertelTas.Verteltas.MapToVertelTas(vertelTas.Verteltas, gebruiker.LetterTuin.GetThemaByName(vertelTas.Verteltas.Thema));
+                   // gebruiker.UpdateVerteltas(newVertelTas);
+                    //gebruikersRep.DoNotDuplicateThema(newVertelTas);
                     mvm.SetNewInfo("Verteltas " + vertelTas.Verteltas.Titel + " werd aangepast...");
                     gebruikersRep.SaveChanges();
                     return View("Index", mvm);

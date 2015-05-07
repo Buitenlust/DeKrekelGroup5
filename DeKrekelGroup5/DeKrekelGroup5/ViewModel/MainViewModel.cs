@@ -134,7 +134,8 @@ namespace DeKrekelGroup5.ViewModel
 
         public object SetVerteltasViewModel(VertelTas verteltas)
         {
-            VertelTasViewModel = new VertelTasViewModel();
+
+            VertelTasViewModel = new VertelTasViewModel()
             {
                 Exemplaar = verteltas.Exemplaar,
                 Omschrijving = verteltas.Omschrijving,
@@ -155,11 +156,10 @@ namespace DeKrekelGroup5.ViewModel
             return this;
         }
 
-        public object SetVerteltasCreateViewModel(IEnumerable<Thema> themas, VertelTas verteltas,
-            IEnumerable<Boek> boeken, IEnumerable<Spel> spellen,
-            IEnumerable<CD> CDs, IEnumerable<DVD> DVDs)
+
+        public object SetVerteltasCreateViewModel(IEnumerable<Thema> themas, VertelTas verteltas, IEnumerable<Item> items)
         {
-            VertelTasCreateViewModel = new VertelTasCreateViewModel(themas, verteltas, boeken, spellen, CDs, DVDs);
+            VertelTasCreateViewModel = new VertelTasCreateViewModel(themas,verteltas,items);
             return this;
         }
 
