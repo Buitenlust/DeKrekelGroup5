@@ -15,14 +15,20 @@ namespace DeKrekelGroup5.ViewModel
         public BoekViewModel BoekViewModel { get; set; }
         public BoekenLijstViewModel BoekenLijstViewModel { get; set; }
         public BoekCreateViewModel BoekCreateViewModel { get; set; }
-        //public SpelViewModel SpelViewModel { get; set; }
+
+        public CDViewModel CDViewModel { get; set; }
+        public CDLijstViewModel CDLijstViewModel { get; set; }
+        public CDCreateViewModel CDCreateViewModel { get; set; }
+
+        public SpelViewModel SpelViewModel { get; set; }
+
         public UitlenerViewModel UitlenerViewModel { get; set; }
         public UitlenersLijstViewModel UitlenersLijstViewModel { get; set; }
         public List<Thema> Themas { get; set; }
         public ThemaViewModel ThemaViewModel { get; set; }
 
-
         
+
 
 
         public MainViewModel()
@@ -31,7 +37,10 @@ namespace DeKrekelGroup5.ViewModel
             BoekViewModel = new BoekViewModel();
             BoekenLijstViewModel = new BoekenLijstViewModel();
             BoekCreateViewModel = new BoekCreateViewModel();
-            //SpelViewModel = new SpelViewModel();
+            CDViewModel = new CDViewModel();
+            CDLijstViewModel = new CDLijstViewModel();
+            CDCreateViewModel = new CDCreateViewModel();
+            SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
             ItemViewModel = new ItemViewModel();
@@ -53,7 +62,10 @@ namespace DeKrekelGroup5.ViewModel
             BoekViewModel = new BoekViewModel();
             BoekenLijstViewModel = new BoekenLijstViewModel();
             BoekCreateViewModel = new BoekCreateViewModel();
-            //SpelViewModel = new SpelViewModel();
+            CDViewModel = new CDViewModel();
+            CDLijstViewModel = new CDLijstViewModel();
+            CDCreateViewModel = new CDCreateViewModel();
+            SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
             ItemViewModel = new ItemViewModel();
@@ -75,6 +87,12 @@ namespace DeKrekelGroup5.ViewModel
         public object SetNewBoekenLijstVm(IEnumerable<Boek> boeken)
         {
                 BoekenLijstViewModel = new BoekenLijstViewModel(boeken);
+            return this;
+        }
+
+        public object SetNewCDLijstVm(IEnumerable<CD> cds)
+        {
+            CDLijstViewModel = new CDLijstViewModel(cds);
             return this;
         }
 
@@ -105,6 +123,30 @@ namespace DeKrekelGroup5.ViewModel
         public object SetBoekCreateViewModel(IEnumerable<Thema> themas, Boek boek)
         {
              BoekCreateViewModel = new BoekCreateViewModel(themas, boek);
+            return this;
+        }
+
+        public object SetCDViewModel(CD cd)
+        {
+            CDViewModel = new CDViewModel()
+            {
+                Exemplaar = cd.Exemplaar,
+                Omschrijving = cd.Omschrijving,
+                Titel = cd.Titel,
+                Artiest = cd.Artiest,
+                Uitgever = cd.Uitgever,
+                Leeftijd = cd.Leeftijd,
+                Thema = cd.Themaa.Themaa,
+                Beschikbaar = cd.Beschikbaar,
+                EindDatumUitlening = cd.Uitleningen.Count == 0 ? new DateTime() : cd.Uitleningen.SingleOrDefault(d => d.Id == cd.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = cd.Uitleningen.Count == 0 ? false : cd.Uitleningen.SingleOrDefault(d => d.Id == cd.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+            };
+            return this;
+        }
+
+        public object SetCDCreateViewModel(IEnumerable<Thema> themas, CD cd)
+        {
+            CDCreateViewModel = new CDCreateViewModel(themas, cd);
             return this;
         }
 

@@ -1,70 +1,83 @@
-﻿@model DeKrekelGroup5.Models.Domain.CD
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
 
-@{
-    ViewBag.Title = "Details";
-}
+<div id="content">
+    <h4 id="subtitel">
+        Details CD
+        <div class="floatRight">
+            <a href=' @Url.Action("edit", new { id = Model.CDViewModel.Exemplaar }) '><img src="~/Images/edit.png" /></a>
 
-<h2>Details</h2>
-
-<div>
-    <h4>Boek</h4>
+            <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
+        </div>
+    </h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Artiest)
-        </dt>
+    <div id="wrapDetails">
+        <div id="leftCol">
+            <img src="~/Images/default.jpg" alt="krekelSchool">
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Artiest)
-        </dd>
+        <div id="mainCol">
+            <table id="details">
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Exemplaar)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.CDViewModel.Exemplaar)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Artiest)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.CDViewModel.Artiest)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Uitgever)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.CDViewModel.Uitgever)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Leeftijd)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.CDViewModel.Leeftijd)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Titel)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.CDViewModel.Titel)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Omschrijving)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.CDViewModel.Omschrijving)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Thema)</td>
+                    <td class="td2">@Html.DisplayFor(model => model.CDViewModel.Thema)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Uitgeleend)</td>
+                    <td class="td2">
+                        @if (@Model.CDViewModel.Uitgeleend)
+                        {
+                            @Model.CDViewModel.EindDatumUitlening.ToLongDateString()
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Beschikbaar)</td>
+                    <td class="td2">
+                        @if (@Model.CDViewModel.Beschikbaar)
+                        {
+                            <img src="~/Images/tick.png" class="icon" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </td>
+                </tr>
+            </table>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Uitgever)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Uitgever)
-        </dd>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Leeftijd)
-        </dt>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Leeftijd)
-        </dd>
-
-
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Titel)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Titel)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Omschrijving)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Omschrijving)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Themaa.Themaa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Themaa.Themaa)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Exemplaar }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
 
