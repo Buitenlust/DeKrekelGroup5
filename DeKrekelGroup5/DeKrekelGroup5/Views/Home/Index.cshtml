@@ -21,8 +21,6 @@
                         <div>Verteltassen</div>
                     </td>
                 </tr>
-            </table>
-            <table class="indexTable">
                 <tr>
                     <td class="tr1td4">
                         <a href='@Url.Action("index", "CD")'><img src="~/Images/headphone.png"/></a>
@@ -31,35 +29,44 @@
                     <td class="tr1td5">
                         <a href='@Url.Action("index", "DVD")'><img src="~/Images/video.png"/></a>
                         <div>Films</div>
-                    </td>
-                    @if (Model.GebruikerViewModel.IsBeheerder || Model.GebruikerViewModel.IsBibliothecaris)
-                    {
-                        <td class="tr1td1">
-                            <a href='@Url.Action("index", "Uitleningen")'><img src="~/Images/uitleningen.png"/></a>
-                            <div>Uitleningen</div>
-                        </td>
-                    }
+                    </td>@if (Model.GebruikerViewModel.IsBeheerder || Model.GebruikerViewModel.IsBibliothecaris)
+                         {
+                             <td class="tr1td1">
+
+
+                                 <a href='@Url.Action("index", "Uitleningen")'><img src="~/Images/uitleningen.png"/></a>
+                                 <div>Uitleningen</div>
+
+
+                             </td>
+                         }
                 </tr>
-            </table>
-            <table class="indexTable">
-            <tr>
                 @if (Model.GebruikerViewModel.IsBeheerder)
                 {
-                    <td class="tr1td2">
-                        <a href='@Url.Action("index", "Themas")'><img src="~/Images/category.png"/></a>
-                        <div>Thema's</div>
-                    </td>
-                    <td class="tr1td3">
-                        <a href='@Url.Action("index", "Uitleners")'><img src="~/Images/users.png"/></a>
-                        <div>Gebruikers</div>
-                    </td>
-                    <td class="tr1td4">
-                        <a href='@Url.Action("index", "Settings")'><img src="~/Images/settings.png"/></a>
-                        <div>Instellingen</div>
-                    </td>
-                }
+                    <tr>
 
-                </tr>
+                        <td class="tr1td2">
+                            <a href='@Url.Action("index", "Themas")'><img src="~/Images/category.png"/></a>
+                            <div>Thema's</div>
+                        </td>
+                        <td class="tr1td3">
+                            <a href='@Url.Action("index", "Uitleners")'><img src="~/Images/users.png"/></a>
+                            <div>Gebruikers</div>
+                        </td>
+                        <td class="tr1td4">
+                            <a href='@Url.Action("index", "Settings")'><img src="~/Images/settings.png"/></a>
+                            <div>Instellingen</div>
+                        </td>
+
+
+                    </tr>
+                }
+            </table>
+            <table class="indexTable">
+                
+            </table>
+            <table class="indexTable">
+            
             </table>
         </div>
     </div>

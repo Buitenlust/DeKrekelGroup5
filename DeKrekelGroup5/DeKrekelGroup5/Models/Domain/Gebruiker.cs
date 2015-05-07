@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 using System.Web.WebPages;
 using DeKrekelGroup5.ViewModel;
 
@@ -59,7 +59,7 @@ namespace DeKrekelGroup5.Models.Domain
         {
             string sHashWithSalt = paswoord + "";
             byte[] saltedHashBytes = Encoding.UTF8.GetBytes(sHashWithSalt);
-            System.Security.Cryptography.HashAlgorithm algorithm = new System.Security.Cryptography.SHA256Managed();
+            HashAlgorithm algorithm = new SHA256Managed();
             byte[] hash = algorithm.ComputeHash(saltedHashBytes);
             return Convert.ToBase64String(hash);
         }

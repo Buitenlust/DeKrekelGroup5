@@ -4,8 +4,10 @@
     <Position X="9" Y="2.25" Width="1.5" />
     <InheritanceLine Type="DeKrekelGroup5.Models.Domain.Item" FixedToPoint="true">
       <Path>
-        <Point X="7.5" Y="2.25" />
-        <Point X="7.5" Y="2.058" />
+        <Point X="7.12" Y="2.25" />
+        <Point X="7.12" Y="2.058" />
+        <Point X="7.417" Y="2.058" Type="JumpStart" />
+        <Point X="7.583" Y="2.058" Type="JumpEnd" />
         <Point X="9.75" Y="2.058" />
         <Point X="9.75" Y="2.25" />
       </Path>
@@ -36,60 +38,82 @@
     <Position X="10.75" Y="2.25" Width="1.5" />
     <InheritanceLine Type="DeKrekelGroup5.Models.Domain.Item" FixedToPoint="true">
       <Path>
-        <Point X="7.906" Y="2.25" />
-        <Point X="7.906" Y="2.058" />
+        <Point X="7.937" Y="2.25" />
+        <Point X="7.937" Y="2.058" />
         <Point X="11.5" Y="2.058" />
         <Point X="11.5" Y="2.25" />
       </Path>
     </InheritanceLine>
+    <AssociationLine Name="Items" Type="DeKrekelGroup5.Models.Domain.Item" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.75" Y="3.059" />
+        <Point X="10.627" Y="3.059" />
+        <Point X="10.627" Y="4.438" />
+        <Point X="8.25" Y="4.438" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEIAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAACEIAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Domain\VertelTas.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Items" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="DeKrekelGroup5.Models.Domain.Uitlener">
-    <Position X="9" Y="4.5" Width="1.5" />
+    <Position X="9" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAACAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQCAAAACCAAAAAAAAAABAAAAAgAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Models\Domain\Uitlener.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DeKrekelGroup5.Models.Domain.Item">
     <Position X="6.75" Y="2.25" Width="1.5" />
-    <AssociationLine Name="Themaa" Type="DeKrekelGroup5.Models.Domain.Thema" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="8.25" Y="4.312" />
-        <Point X="11.5" Y="4.312" />
-        <Point X="11.5" Y="4.5" />
-      </Path>
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.214" Y="-0.263" />
-      </MemberNameLabel>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAEACAAAAAAAAAAABABAAAAAAAAAIAAQAAA=</HashCode>
+      <HashCode>AAQAAAAAAAEACAAAAAAAAAAAAABAAAAAAAAAIAASAAA=</HashCode>
       <FileName>Models\Domain\Item.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Themaa" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="DeKrekelGroup5.Models.Domain.Thema">
-    <Position X="10.75" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
-      <FileName>Models\Domain\Thema.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DeKrekelGroup5.Models.Domain.Uitlening">
-    <Position X="6.75" Y="5.25" Width="1.5" />
-    <AssociationLine Name="Uitlenerr" Type="DeKrekelGroup5.Models.Domain.Uitlener">
+    <Position X="10.75" Y="5" Width="1.5" />
+    <AssociationLine Name="Items" Type="DeKrekelGroup5.Models.Domain.Item" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.313" Y="5" />
+        <Point X="11.313" Y="4.625" />
+        <Point X="8.25" Y="4.625" />
+      </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
-        <Position X="-0.453" Y="-0.575" Height="0.182" Width="1.141" />
+        <Position X="2.433" Y="0.477" Height="0.182" Width="1.501" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAICAAAACAAAAAAAwAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAAAEACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Models\Domain\Thema.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Items" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DeKrekelGroup5.Models.Domain.Uitlening">
+    <Position X="4.5" Y="5.5" Width="1.5" />
+    <AssociationLine Name="Itemm" Type="DeKrekelGroup5.Models.Domain.Item" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6" Y="5.938" />
+        <Point X="6.302" Y="5.937" Type="JumpStart" />
+        <Point X="6.469" Y="5.938" Type="JumpEnd" />
+        <Point X="6.495" Y="5.938" />
+        <Point X="6.495" Y="5.942" />
+        <Point X="7.5" Y="5.942" />
+        <Point X="7.5" Y="5.344" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Uitlenerr" Type="DeKrekelGroup5.Models.Domain.Uitlener">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.547" Y="-0.273" Height="0.182" Width="1.141" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgAAAAAAICAAAACAAAAAAAwAAAAAEAAA=</HashCode>
       <FileName>Models\Domain\Uitlening.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -101,23 +125,14 @@
     <Position X="4.5" Y="0.5" Width="1.5" />
     <AssociationLine Name="Items" Type="DeKrekelGroup5.Models.Domain.Item" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="6" Y="0.788" />
-        <Point X="6.375" Y="0.788" />
+        <Point X="6" Y="0.772" />
+        <Point X="6.375" Y="0.772" />
         <Point X="6.375" Y="4.017" />
         <Point X="6.75" Y="4.017" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
         <Position X="-0.661" Y="1.966" Height="0.182" Width="0.975" />
       </MemberNameLabel>
-    </AssociationLine>
-    <AssociationLine Name="Instellingen" Type="DeKrekelGroup5.Models.Domain.Instellingen" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="4.5" Y="2.139" />
-        <Point X="4.062" Y="2.139" />
-        <Point X="4.062" Y="2.243" />
-        <Point X="2.917" Y="2.243" />
-        <Point X="2.917" Y="2.18" />
-      </Path>
     </AssociationLine>
     <AssociationLine Name="Themas" Type="DeKrekelGroup5.Models.Domain.Thema" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
@@ -126,14 +141,28 @@
         <Point X="12.528" Y="0.26" />
         <Point X="12.528" Y="4.34" />
         <Point X="11.938" Y="4.34" />
-        <Point X="11.938" Y="4.5" />
+        <Point X="11.938" Y="5" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.588" Y="0.216" />
+        <Position X="-1.255" Y="0.466" />
       </MemberNameLabel>
     </AssociationLine>
+    <AssociationLine Name="Uitleningen" Type="DeKrekelGroup5.Models.Domain.Uitlening">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.075" Y="0.256" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Uitleners" Type="DeKrekelGroup5.Models.Domain.Uitlener" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.75" Y="3.786" />
+        <Point X="5.75" Y="4.354" />
+        <Point X="6.385" Y="4.354" />
+        <Point X="6.385" Y="6.273" />
+        <Point X="9" Y="6.273" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACQAAAAAEiCEAggAAgIAAAAAAAAAAAAAAAIAAAACA=</HashCode>
+      <HashCode>AAACQAAAAAEiCEAhgAAgIAAAAAAAAAAAAQAAIAAAACA=</HashCode>
       <FileName>Models\Domain\LetterTuin.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -141,8 +170,9 @@
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Items" />
-      <Property Name="Uitleningen" />
       <Property Name="Themas" />
+      <Property Name="Uitleningen" />
+      <Property Name="Uitleners" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="DeKrekelGroup5.Models.Domain.CD">
@@ -168,15 +198,8 @@
   </Class>
   <Class Name="DeKrekelGroup5.Models.Domain.Gebruiker">
     <Position X="2" Y="3" Width="2" />
-    <AssociationLine Name="LetterTuin" Type="DeKrekelGroup5.Models.Domain.LetterTuin" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="4" Y="5.367" />
-        <Point X="4.844" Y="5.367" />
-        <Point X="4.844" Y="3.594" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>BAIWAAAAYAAkAYIwQAAAAAAkgAAAAAAEAAAAEAAABVA=</HashCode>
+      <HashCode>BAIWAAAAYAAkAYswQAAAAAAkgAAAEAAEAAkAEEABBVA=</HashCode>
       <FileName>Models\Domain\Gebruiker.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
