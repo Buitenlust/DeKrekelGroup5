@@ -108,6 +108,7 @@ namespace DeKrekelGroup5.Models.Domain
             return Items.OfType<VertelTas>().Take(25);
         }
 
+        
 
         /// <summary> Get the first thema that matches the thema search parameter </summary>
         /// <param name="thema"> search keyword </param>

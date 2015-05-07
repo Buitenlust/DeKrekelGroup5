@@ -22,7 +22,8 @@ namespace DeKrekelGroup5.ViewModel
         public ThemaViewModel ThemaViewModel { get; set; }
 
 
-        
+        public UitleningViewModel UitleningViewModel { get; set; }
+        public UitleningenLijstViewModel UitleningenLijstViewModel { get; set; }
 
 
         public MainViewModel()
@@ -34,6 +35,8 @@ namespace DeKrekelGroup5.ViewModel
             //SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
+            UitleningViewModel = new UitleningViewModel();
+            UitleningenLijstViewModel = new UitleningenLijstViewModel();
             ItemViewModel = new ItemViewModel();
             InfoViewModel = new InfoViewModel();
             ThemaViewModel = new ThemaViewModel();
@@ -56,6 +59,8 @@ namespace DeKrekelGroup5.ViewModel
             //SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
+            UitleningViewModel = new UitleningViewModel();
+            UitleningenLijstViewModel = new UitleningenLijstViewModel();
             ItemViewModel = new ItemViewModel();
             InfoViewModel = new InfoViewModel();
             ThemaViewModel = new ThemaViewModel();
@@ -81,6 +86,12 @@ namespace DeKrekelGroup5.ViewModel
         public object SetNewUitlenersLijstVm(IEnumerable<Uitlener> uitleners)
         {
             UitlenersLijstViewModel = new UitlenersLijstViewModel(uitleners);
+            return this;
+        }
+
+        public object SetNewUitleningenLijstVm(IEnumerable<Uitlening> uitleningen)
+        {
+            UitleningenLijstViewModel = new UitleningenLijstViewModel(uitleningen);
             return this;
         }
 
@@ -125,6 +136,11 @@ namespace DeKrekelGroup5.ViewModel
         public void SetUitLenerViewModel(Uitlener uitlener)
         {
             UitlenerViewModel = new UitlenerViewModel(uitlener);
+        }
+
+        public void SetUitleningViewModel(Uitlening uitlening)
+        {
+            UitleningViewModel = new UitleningViewModel(uitlening);
         }
 
         public Object SetNewInfo(String info, bool isError=false,bool isDialogBox=false, string callBackAction= null)

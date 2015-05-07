@@ -25,6 +25,35 @@ namespace DeKrekelGroup5.Controllers
             gebruikersRep = gebruikerRepository;
         }
 
+        // GET: Uitleningen
+        public ActionResult Index(Gebruiker gebruiker, String search = null)
+        {
+            try
+            {
+                IEnumerable<Uitlening> uitleningen;
+                if (!String.IsNullOrEmpty(search))
+                {
+                    uitleningen = gebruiker.GetUitleningen(search);
+                    ViewBag.Selection = "Alle uitleningen met " + search;
+                }
+                else
+                {
+                    uitleningen = gebruiker.GetUitleningen(null);
+                    ViewBag.Selection = "Alle uitleningen";
+                }
+
+                if (Request.IsAjaxRequest())
+                    return PartialView("UitleningenLijst", new MainViewModel(gebruiker).SetNewUitleningenLijstVm(uitleningen));
+
+                return View(new MainViewModel(gebruiker).SetNewUitleningenLijstVm(uitleningen));
+            }
+            catch (Exception)
+            {
+
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
+
         // GET: Uitleningen/Create
         public ActionResult Create(Gebruiker gebruiker, int id=0, string search=null)
         {
@@ -293,6 +322,8 @@ namespace DeKrekelGroup5.Controllers
             }
             return PartialView(new MainViewModel().SetNewInfo("Ik ben vergeten waar u het over heeft!", true));
         }
+
+
 
    
         
