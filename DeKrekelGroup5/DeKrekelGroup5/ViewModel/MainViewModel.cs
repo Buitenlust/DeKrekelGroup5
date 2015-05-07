@@ -89,6 +89,12 @@ namespace DeKrekelGroup5.ViewModel
             return this;
         }
 
+        public object SetNewUitleningenLijstVm(IEnumerable<Uitlening> uitleningen)
+        {
+            UitleningenLijstViewModel = new UitleningenLijstViewModel(uitleningen);
+            return this;
+        }
+
         public object SetBoekViewModel(Boek boek)
         {
             BoekViewModel = new BoekViewModel()
@@ -130,6 +136,11 @@ namespace DeKrekelGroup5.ViewModel
         public void SetUitLenerViewModel(Uitlener uitlener)
         {
             UitlenerViewModel = new UitlenerViewModel(uitlener);
+        }
+
+        public void SetUitleningViewModel(Uitlening uitlening)
+        {
+            UitleningViewModel = new UitleningViewModel(uitlening);
         }
 
         public Object SetNewInfo(String info, bool isError=false,bool isDialogBox=false, string callBackAction= null)
