@@ -22,11 +22,11 @@
                 <a href='@Url.Action("index", "home")'><img src="~/Images/home.png"/></a>
                 @if (Model.GebruikerViewModel != null)
                 {
-                    if (!Model.GebruikerViewModel.IsBeheerder || !Model.GebruikerViewModel.IsBibliothecaris)
+                    if (!Model.GebruikerViewModel.IsBeheerder && !Model.GebruikerViewModel.IsBibliothecaris)
                     {
                         <a href='#' id="loginBib"><img src="~/Images/guest.png"/></a>
                     }
-                    if (!Model.GebruikerViewModel.IsBeheerder || !Model.GebruikerViewModel.IsBibliothecaris)
+                    if (!Model.GebruikerViewModel.IsBeheerder && !Model.GebruikerViewModel.IsBibliothecaris)
                     {
                         <a href='#' id="loginBeh"><img src="~/Images/admin.png"/></a>
                     }

@@ -1,12 +1,16 @@
-﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+﻿@using DeKrekelGroup5.Models.Domain
+@model DeKrekelGroup5.ViewModel.MainViewModel
  
 <div id="content">
     <h4 id="subtitel">Details Boek
-    <div class="floatRight">
-        <a href=' @Url.Action("edit", new {id = Model.BoekViewModel.Exemplaar}) '><img src="~/Images/edit.png"/></a>
+        <div class="floatRight">
 
-        <a href=' @Url.Action("index") '><img src="~/Images/Return.png"/></a>
-    </div>
+            @if (Model.GebruikerViewModel.IsBeheerder)
+            {
+                <a href=' @Url.Action("edit", new {id = Model.BoekViewModel.Exemplaar}) '><img src="~/Images/edit.png"/></a>
+            }
+            <a href=' @Url.Action("index") '><img src="~/Images/Return.png"/></a>
+        </div>
         </h4>
     <hr/>
     <div id="wrapDetails">
@@ -49,20 +53,25 @@
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Omschrijving)</td>
                     <td class="td2 gray">@Html.DisplayFor(model => model.BoekViewModel.Omschrijving)</td>
                 </tr>
-                
+
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Uitgeleend)</td>
-                    <td>
+                    
                         @if (@Model.BoekViewModel.Uitgeleend)
                         {
-                            @Model.BoekViewModel.EindDatumUitlening.ToLongDateString()
+                            <td class="td2 gray">
+                                @Model.BoekViewModel.EindDatumUitlening.ToLongDateString()
+                            </td>
                         }
                         else
                         {
-                            <img src="~/Images/cross.png" class="bigIcon" />
-                        }
-                    </td>
+                                <td><img src="~/Images/cross.png" class="bigIcon" /> </td>
+                            
+                            }
+                       
                 </tr>
+                @if(Model.GebruikerViewModel.IsBeheerder)
+                {
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.BoekViewModel.Beschikbaar)</td>
                     <td>
@@ -72,10 +81,11 @@
                         }
                         else
                         {
-                            <img src="~/Images/cross.png" class="bigIcon" />
+                            <img src="~/Images/cross.png" class="bigIcon"/>
                         }
                     </td>
                 </tr>
+                    }
             </table>
 
             

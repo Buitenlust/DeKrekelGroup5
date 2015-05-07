@@ -35,9 +35,14 @@ a:link{
     color:#000000;
 }
 a:visited {
-    color:#fffaf0;
+    color:#000000;
     text-decoration:none;
 }
+a:hover {
+    color: #00008b;
+    text-decoration:none;
+}
+
 dt{
     background-color: greenyellow;
     border-radius: 5px;

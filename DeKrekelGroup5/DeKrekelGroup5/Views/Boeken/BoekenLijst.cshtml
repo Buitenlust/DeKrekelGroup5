@@ -8,10 +8,11 @@
         <table class="table">
             <tr>
                 <th >
-                    B @Html.DisplayFor(modelItem => item.Exemplaar)
+                    
+                    <a href=' @Url.Action("details", new { id = item.Exemplaar }) '>B @Html.DisplayFor(modelItem => item.Exemplaar)</a>
                 </th>
                 <th>
-                    @Html.DisplayFor(modelItem => item.Titel)
+                    <a href=' @Url.Action("details", new { id = item.Exemplaar }) '>@Html.DisplayFor(modelItem => item.Titel)</a>
                 </th>
                 <th>
                 </th>
@@ -53,7 +54,7 @@
                         }
                     </div>
 
-                    <p><img src="~/Images/auteur.png" class="icon" /> @Html.DisplayFor(modelItem => item.Auteur)</p>
+                    <p>   <img src="~/Images/auteur.png" class="icon" /> <a href=' @Url.Action("index", new { search = item.Auteur }) '>@Html.DisplayFor(modelItem => item.Auteur)</a></p>
 
                     <p><strong>Is uitgegeven door uitgeverij @Html.DisplayFor(modelItem => item.Uitgever)</strong></p>
 
@@ -66,7 +67,7 @@
                         @foreach (var thema in item.Themas)
                         {
                             counter++;
-                            <span style="font-style: italic">@thema.Themaa</span> @(counter < item.Themas.Count ? "|" : "")
+                            <span style="font-style: italic"><a href=' @Url.Action("index", new { search = thema.Themaa }) '>@thema.Themaa</a></span> @(counter < item.Themas.Count ? "|" : "")
                         }
                     </p>
 
@@ -77,7 +78,7 @@
                 <td id="right">
                     <div class="wrapper-image">
 
-                        <a href=' @Url.Action("details", new { id = item.Exemplaar }) '><img src="~/Images/details.png" class="iconRight" /></a>
+                       
                         @if (Model.GebruikerViewModel.IsBeheerder)
                         {
                             <a href=' @Url.Action("edit", new { id = item.Exemplaar }) '><img src="~/Images/edit.png" class="iconRight" /></a>
