@@ -24,7 +24,8 @@ namespace DeKrekelGroup5.ViewModel
         public UitlenerViewModel UitlenerViewModel { get; set; }
         public UitlenersLijstViewModel UitlenersLijstViewModel { get; set; }
 
-        
+        public UitleningViewModel UitleningViewModel { get; set; }
+        public UitleningenLijstViewModel UitleningenLijstViewModel { get; set; }
 
 
         public MainViewModel()
@@ -36,6 +37,8 @@ namespace DeKrekelGroup5.ViewModel
             SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
+            UitleningViewModel = new UitleningViewModel();
+            UitleningenLijstViewModel = new UitleningenLijstViewModel();
             ItemViewModel = new ItemViewModel();
             InfoViewModel = new InfoViewModel();
         }
@@ -57,6 +60,8 @@ namespace DeKrekelGroup5.ViewModel
             SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
+            UitleningViewModel = new UitleningViewModel();
+            UitleningenLijstViewModel = new UitleningenLijstViewModel();
             ItemViewModel = new ItemViewModel();
             InfoViewModel = new InfoViewModel();
         }

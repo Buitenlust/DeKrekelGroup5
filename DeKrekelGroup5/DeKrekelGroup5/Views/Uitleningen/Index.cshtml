@@ -1,1 +1,35 @@
-﻿
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+
+<div id="content">
+    <table>
+        <tr>
+            <td>
+                <div id="searchBar">
+                    @using (Ajax.BeginForm("Index",
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "Get",
+                            UpdateTargetId = "Uitleningen"
+                        }
+                        ))
+                    {
+                        <input type="search" name="search" id="search" onclick="this.select();" />
+                        <input type="submit" value="Zoek item" class="btn btn-default" id="searchSubmit" />
+                    }
+
+
+                </div>
+            </td>
+            <td>            
+                    <a href=' @Url.Action("create") '><img src="~/Images/create.png" class="createNew" /></a>  
+            </td>
+        </tr>
+
+    </table>
+    <div id="Uitleningen">
+        @Html.Partial("UitleningenLijst", Model)
+    </div>
+</div>
+
+
