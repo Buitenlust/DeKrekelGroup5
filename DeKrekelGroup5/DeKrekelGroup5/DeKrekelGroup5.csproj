@@ -196,6 +196,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\BoekenController.cs" />
+    <Compile Include="Controllers\CDController.cs" />
+    <Compile Include="Controllers\DVDController.cs" />
+    <Compile Include="Controllers\SpellenController.cs" />
     <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\ThemasController.cs" />
     <Compile Include="Controllers\UitlenersController.cs" />

@@ -25,6 +25,8 @@ namespace DeKrekelGroup5.ViewModel
         public DVDCreateViewModel DVDCreateViewModel { get; set; }
 
         public SpelViewModel SpelViewModel { get; set; }
+        public SpellenLijstViewModel SpellenLijstViewModel { get; set; }
+        public SpelCreateViewModel SpelCreateViewModel { get; set; }
 
         public UitlenerViewModel UitlenerViewModel { get; set; }
         public UitlenersLijstViewModel UitlenersLijstViewModel { get; set; }
@@ -48,6 +50,8 @@ namespace DeKrekelGroup5.ViewModel
             CDLijstViewModel = new CDLijstViewModel();
             CDCreateViewModel = new CDCreateViewModel();
             SpelViewModel = new SpelViewModel();
+            SpellenLijstViewModel = new SpellenLijstViewModel();
+            SpelCreateViewModel = new SpelCreateViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
             ItemViewModel = new ItemViewModel();
@@ -76,6 +80,8 @@ namespace DeKrekelGroup5.ViewModel
             DVDLijstViewModel = new DVDLijstViewModel();
             DVDCreateViewModel = new DVDCreateViewModel();
             SpelViewModel = new SpelViewModel();
+            SpellenLijstViewModel = new SpellenLijstViewModel();
+            SpelCreateViewModel = new SpelCreateViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
             ItemViewModel = new ItemViewModel();
@@ -97,6 +103,12 @@ namespace DeKrekelGroup5.ViewModel
         public object SetNewBoekenLijstVm(IEnumerable<Boek> boeken)
         {
                 BoekenLijstViewModel = new BoekenLijstViewModel(boeken);
+            return this;
+        }
+
+        public object SetNewSpellenLijstVm(IEnumerable<Spel> spellen)
+        {
+            SpellenLijstViewModel = new SpellenLijstViewModel(spellen);
             return this;
         }
 

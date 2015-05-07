@@ -13,6 +13,25 @@ namespace DeKrekelGroup5.ViewModel
         [Required(ErrorMessage = "Geef een uitgever in aub...")]
         [MaxLength(45, ErrorMessage = "De naam van de uitgever is te lang (max. 45 tekens)")]
         public string Uitgever { get; set; }
+
+        public SpelViewModel() 
+        {
+             
+        }
+
+        public Spel MapToSpel(SpelViewModel vm, Thema thema)
+        {
+            return new Spel()
+            {
+                Exemplaar = vm.Exemplaar,
+                Beschikbaar = vm.Beschikbaar,
+                Leeftijd = vm.Leeftijd,
+                Omschrijving = vm.Omschrijving,
+                Titel = vm.Titel,
+                Themaa = thema,
+                Uitgever = Uitgever
+            };
+        }
     }
 
     public class SpellenLijstViewModel
@@ -27,8 +46,16 @@ namespace DeKrekelGroup5.ViewModel
                 Omschrijving = spel.Omschrijving, 
                 Uitgever = spel.Uitgever,
                 Leeftijd = spel.Leeftijd, 
-                Thema = spel.Themaa.Themaa
+                Thema = spel.Themaa.Themaa,
+                Beschikbaar = spel.Beschikbaar,
+                EindDatumUitlening = spel.Uitleningen.Count == 0 ? new DateTime() : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = spel.Uitleningen.Count == 0 ? false : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             });
+        }
+
+        public SpellenLijstViewModel()
+        {
+            Spellen = new List<SpelViewModel>();
         }
     }
   
@@ -47,10 +74,20 @@ namespace DeKrekelGroup5.ViewModel
                 Titel = spel.Titel, 
                 Uitgever = spel.Uitgever,
                 Leeftijd = spel.Leeftijd,
-                Thema = (spel.Themaa == null ? "" : spel.Themaa.Themaa)
+                Thema = (spel.Themaa == null ? "" : spel.Themaa.Themaa),
+                Beschikbaar = spel.Beschikbaar,
+                EindDatumUitlening = (spel.Uitleningen == null || spel.Uitleningen.Count == 0) ? new DateTime() : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = (spel.Uitleningen == null || spel.Uitleningen.Count == 0) ? false : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             };
 
             Themas = new SelectList(themas, "Themaa", "Themaa", Spel.Thema ?? "");
+        }
+
+        public SpelCreateViewModel()
+        {
+            Spel = new SpelViewModel();
+            IEnumerable<Thema> themas = new List<Thema>();
+            Themas = new SelectList(themas, "", "", "");
         }
     }
 
