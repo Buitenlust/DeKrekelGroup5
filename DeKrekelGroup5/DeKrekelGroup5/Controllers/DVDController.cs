@@ -17,63 +17,84 @@ namespace DeKrekelGroup5.Controllers
 {
     public class DVDController : Controller
     {
-        private IGebruikerRepository gebruikerRepository;
-        private Gebruiker Gebruiker;
-        
+        private IGebruikerRepository gebruikersRep; 
 
         public DVDController(IGebruikerRepository gebruikerRepository)
         {
-            this.gebruikerRepository = gebruikerRepository;
-
-            Gebruiker = gebruikerRepository.GetGebruiker(1); //Anonymous
-            if (Gebruiker == null)
-            {
-                Gebruiker = new Gebruiker(){AdminRechten = true, BibliotheekRechten = true, GebruikersNaam = "Anonymous", LetterTuin = new LetterTuin()};
-                Gebruiker.VeranderPaswoord("Annymous");
-                Gebruiker.LetterTuin.Instellingen = new Instellingen(){MaxVerlengingen = 2, BedragBoetePerDag = 1, UitleenDagen = 14};
-                gebruikerRepository.AddGebruiker(Gebruiker);
-                gebruikerRepository.SaveChanges();
-                Gebruiker = gebruikerRepository.GetGebruiker(1);
-            }
+            gebruikersRep = gebruikerRepository;
         }
 
-        // GET: DVDs
-        public ActionResult Index(String search = null)
+        // GET: DVD
+        public ActionResult Index( Gebruiker gebruiker, String search=null)
         {
-            //LetterTuin letterTuin = Gebruiker.
-
-            IEnumerable<DVD> dvds;
-            if (!String.IsNullOrEmpty(search))
+            if(gebruiker == null)
+                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
             {
-                dvds = Gebruiker.LetterTuin.GetDVDs(search);
-                ViewBag.Selection = "Alle boeken met " + search;
-            }
-            else
-            {
-                dvds = Gebruiker.LetterTuin.GetDVDs(null);
-                ViewBag.Selection = "Alle boeken";
-            }
-            if (Request.IsAjaxRequest())
-                return PartialView("DVDLijst", new DVDLijstViewModel(dvds));
+                IEnumerable<DVD> dvds;
+                if (!String.IsNullOrEmpty(search))
+                {
+                    dvds = gebruiker.LetterTuin.GetDVDs(search);
+                    ViewBag.Selection = "Alle DVDs met " + search;
+                }
+                else
+                {
+                    dvds = gebruiker.LetterTuin.GetDVDs(null);
+                    ViewBag.Selection = "Alle dvds";
+                }
 
-            return View(new DVDLijstViewModel(dvds));
+                if (Request.IsAjaxRequest())
+                    return PartialView("DVDLijst", new MainViewModel(gebruiker).SetNewDVDLijstVm(dvds));
+
+                return View(new MainViewModel(gebruiker).SetNewDVDLijstVm(dvds));
+            }
+            catch (Exception)
+            {
+
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+            
+            
         }
 
         // GET: DVD/Details/5
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(Gebruiker gebruiker, int id = 0)
         {
-            if (id == 0)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            DVD dvd = Gebruiker.LetterTuin.GetItem(id) as DVD;
-            if (dvd == null)
-                return HttpNotFound();
-            return View(dvd);
+            if (gebruiker == null)
+                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
+            {
+                if (id == 0)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                DVD dvd = gebruiker.LetterTuin.GetItem(id) as DVD;
+                if (dvd == null)
+                    return HttpNotFound();
+                return View(new MainViewModel(gebruiker).SetDVDViewModel(dvd));
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+            
         }
 
         // GET: DVD/Create
-        public ActionResult Create(Gebruiker gebruiker = null)
+        public ActionResult Create(Gebruiker gebruiker)
         {
-            return View(new DVDCreateViewModel(Gebruiker.LetterTuin.Themas.ToList(), new DVD()));
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
+            {
+                return View(new MainViewModel(gebruiker).SetDVDCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new DVD()));
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         // POST: DVD/Create
@@ -81,39 +102,52 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Prefix = "DVD")] DVDViewModel dvd, Gebruiker gebruiker = null)
+        public ActionResult Create([Bind(Prefix = "DVDCreateViewModel")] DVDCreateViewModel dvd, Gebruiker gebruiker)
         {
-            if (ModelState.IsValid)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (ModelState.IsValid && dvd != null && dvd.DVD.Exemplaar <=0)
             {
-                DVD newDVD = new DVD()
+                try
                 {
-                    Titel = dvd.Titel,
-                    Leeftijd = dvd.Leeftijd,
-                    Beschikbaar = true,
-                    Themaa = Gebruiker.LetterTuin.GetThemaByName(dvd.Thema),
-                    Omschrijving = dvd.Omschrijving,
-                    Exemplaar = 0,
-                    Uitgever = dvd.Uitgever
-                };
-
-                Gebruiker.AddItem(newDVD);
-                gebruikerRepository.DoNotDuplicateThema(newDVD);
-                gebruikerRepository.SaveChanges();
-                TempData["Info"] = "De dvd werd toegevoegd...";
-                return RedirectToAction("Index");
+                    MainViewModel mvm = new MainViewModel(gebruiker);
+                    DVD newDVD = dvd.DVD.MapToDVD(dvd.DVD, gebruiker.LetterTuin.GetThemaByName(dvd.DVD.Thema));
+                    gebruiker.AddItem(newDVD);
+                    gebruikersRep.DoNotDuplicateThema(newDVD);
+                    gebruikersRep.SaveChanges();
+                    mvm.SetNewInfo("DVD" + dvd.DVD.Titel + " werd toegevoegd...");
+                    return View("Index", mvm );
+                }
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+                
             }
             return RedirectToAction("Create");
         }
 
         // GET: DVD/Edit/5
-        public ActionResult Edit(Gebruiker gebruiker = null, int id = 0)
+        public ActionResult Edit(Gebruiker gebruiker,int id=0)
         {
-            if (id == 0)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            DVD dvd = Gebruiker.LetterTuin.GetItem(id) as DVD;
-            if (dvd == null)
-                return HttpNotFound();
-            return View(new DVDCreateViewModel(Gebruiker.LetterTuin.Themas, dvd));
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
+            {
+                if (id <= 0)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                DVD dvd = gebruiker.LetterTuin.GetItem(id) as DVD;
+                if (dvd == null)
+                    return HttpNotFound();
+                return View(new MainViewModel(gebruiker).SetDVDCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), dvd));
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+            
         }
 
         // POST: DVD/Edit/5
@@ -121,41 +155,51 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Prefix = "DVD")] DVDViewModel dvd, Gebruiker gebruiker = null)
+        public ActionResult Edit([Bind(Prefix = "DVDCreateViewModel")] DVDCreateViewModel dvd, Gebruiker gebruiker)
         {
-            if (ModelState.IsValid)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (ModelState.IsValid && dvd!= null && dvd.DVD.Exemplaar > 0)
             {
-                DVD newDVD = new DVD()
+                try
                 {
-                    Titel = dvd.Titel,
-                    Leeftijd = dvd.Leeftijd,
-                    Beschikbaar = true, 
-                    Themaa = Gebruiker.LetterTuin.GetThemaByName(dvd.Thema),
-                    Omschrijving = dvd.Omschrijving,
-                    Exemplaar = dvd.Exemplaar,
-                    Uitgever = dvd.Uitgever
-
-                };
-                Gebruiker.UpdateDVD(newDVD);
-                gebruikerRepository.DoNotDuplicateThema(newDVD);
-                gebruikerRepository.SaveChanges();
-                return RedirectToAction("Index");
+                    MainViewModel mvm = new MainViewModel(gebruiker);
+                    DVD newDVD = dvd.DVD.MapToDVD(dvd.DVD, gebruiker.LetterTuin.GetThemaByName(dvd.DVD.Thema));
+                    gebruiker.UpdateDVD(newDVD);
+                    gebruikersRep.DoNotDuplicateThema(newDVD);
+                    mvm.SetNewInfo("DVD " + dvd.DVD.Titel + " werd aangepast...");
+                    gebruikersRep.SaveChanges();
+                    return View("Index", mvm);
+                }
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
             }
-            return View(dvd);
+            return View(new MainViewModel(gebruiker){DVDCreateViewModel = dvd});
         }
 
         // GET: DVD/Delete/5
-        public ActionResult Delete(Gebruiker gebruiker = null, int id = 0)
+        public ActionResult Delete(Gebruiker gebruiker, int id=0)
         {
-            if (id == 0)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (id <= 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            DVD dvd = Gebruiker.LetterTuin.GetItem(id) as DVD;
-            if (dvd == null)
+            try
             {
-                return HttpNotFound();
+                DVD dvd = gebruiker.LetterTuin.GetItem(id) as DVD;
+                if (dvd == null)
+                    return HttpNotFound();
+                return View(new MainViewModel(gebruiker).SetDVDViewModel(dvd));
             }
-            return View(dvd);
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         // POST: DVD/Delete/5
@@ -163,10 +207,30 @@ namespace DeKrekelGroup5.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (id <= 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            try
+            {
+                MainViewModel mvm = new MainViewModel(gebruiker);
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+                DVD dvd = gebruiker.LetterTuin.GetItem(id) as DVD;
+                if (dvd == null)
+                    return HttpNotFound();
+                gebruiker.RemoveItem(dvd);
+                gebruikersRep.SaveChanges();
+                mvm.SetNewInfo("DVD" +dvd.Titel+ " werd verwijderd...");
+                return View("Index", mvm);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+
             
-            Gebruiker.RemoveItem(gebruiker.LetterTuin.GetItem(id));
-            gebruikerRepository.SaveChanges();
-            return RedirectToAction("Index");
         }
     }
 }

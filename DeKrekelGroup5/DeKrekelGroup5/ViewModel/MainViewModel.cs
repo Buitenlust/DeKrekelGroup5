@@ -15,10 +15,14 @@ namespace DeKrekelGroup5.ViewModel
         public BoekViewModel BoekViewModel { get; set; }
         public BoekenLijstViewModel BoekenLijstViewModel { get; set; }
         public BoekCreateViewModel BoekCreateViewModel { get; set; }
-
+        
         public CDViewModel CDViewModel { get; set; }
         public CDLijstViewModel CDLijstViewModel { get; set; }
         public CDCreateViewModel CDCreateViewModel { get; set; }
+
+        public DVDViewModel DVDViewModel { get; set; }
+        public DVDLijstViewModel DVDLijstViewModel { get; set; }
+        public DVDCreateViewModel DVDCreateViewModel { get; set; }
 
         public SpelViewModel SpelViewModel { get; set; }
 
@@ -37,6 +41,9 @@ namespace DeKrekelGroup5.ViewModel
             BoekViewModel = new BoekViewModel();
             BoekenLijstViewModel = new BoekenLijstViewModel();
             BoekCreateViewModel = new BoekCreateViewModel();
+            DVDViewModel = new DVDViewModel();
+            DVDLijstViewModel = new DVDLijstViewModel();
+            DVDCreateViewModel = new DVDCreateViewModel();
             CDViewModel = new CDViewModel();
             CDLijstViewModel = new CDLijstViewModel();
             CDCreateViewModel = new CDCreateViewModel();
@@ -65,6 +72,9 @@ namespace DeKrekelGroup5.ViewModel
             CDViewModel = new CDViewModel();
             CDLijstViewModel = new CDLijstViewModel();
             CDCreateViewModel = new CDCreateViewModel();
+            DVDViewModel = new DVDViewModel();
+            DVDLijstViewModel = new DVDLijstViewModel();
+            DVDCreateViewModel = new DVDCreateViewModel();
             SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
@@ -93,6 +103,12 @@ namespace DeKrekelGroup5.ViewModel
         public object SetNewCDLijstVm(IEnumerable<CD> cds)
         {
             CDLijstViewModel = new CDLijstViewModel(cds);
+            return this;
+        }
+
+        public object SetNewDVDLijstVm(IEnumerable<DVD> dvds)
+        {
+            DVDLijstViewModel = new DVDLijstViewModel(dvds);
             return this;
         }
 
@@ -147,6 +163,29 @@ namespace DeKrekelGroup5.ViewModel
         public object SetCDCreateViewModel(IEnumerable<Thema> themas, CD cd)
         {
             CDCreateViewModel = new CDCreateViewModel(themas, cd);
+            return this;
+        }
+
+        public object SetDVDViewModel(DVD dvd)
+        {
+            DVDViewModel = new DVDViewModel()
+            {
+                Exemplaar = dvd.Exemplaar,
+                Omschrijving = dvd.Omschrijving,
+                Titel = dvd.Titel,
+                Uitgever = dvd.Uitgever,
+                Leeftijd = dvd.Leeftijd,
+                Thema = dvd.Themaa.Themaa,
+                Beschikbaar = dvd.Beschikbaar,
+                EindDatumUitlening = dvd.Uitleningen.Count == 0 ? new DateTime() : dvd.Uitleningen.SingleOrDefault(d => d.Id == dvd.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = dvd.Uitleningen.Count == 0 ? false : dvd.Uitleningen.SingleOrDefault(d => d.Id == dvd.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+            };
+            return this;
+        }
+
+        public object SetDVDCreateViewModel(IEnumerable<Thema> themas, DVD dvd)
+        {
+            DVDCreateViewModel = new DVDCreateViewModel(themas, dvd);
             return this;
         }
 
