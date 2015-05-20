@@ -16,13 +16,18 @@ namespace DeKrekelGroup5.ViewModel
         public BoekenLijstViewModel BoekenLijstViewModel { get; set; }
         public BoekCreateViewModel BoekCreateViewModel { get; set; }
         //public SpelViewModel SpelViewModel { get; set; }
+
+        public VertelTasViewModel VertelTasViewModel { get; set; }
+        public VertelTasLijstViewModel VertelTasLijstViewModel { get; set; }
+        public VertelTasCreateViewModel VertelTasCreateViewModel { get; set; }
+
         public UitlenerViewModel UitlenerViewModel { get; set; }
         public UitlenersLijstViewModel UitlenersLijstViewModel { get; set; }
         public List<Thema> Themas { get; set; }
         public ThemaViewModel ThemaViewModel { get; set; }
 
 
-        
+
 
 
         public MainViewModel()
@@ -31,6 +36,9 @@ namespace DeKrekelGroup5.ViewModel
             BoekViewModel = new BoekViewModel();
             BoekenLijstViewModel = new BoekenLijstViewModel();
             BoekCreateViewModel = new BoekCreateViewModel();
+            VertelTasViewModel = new VertelTasViewModel();
+            VertelTasLijstViewModel = new VertelTasLijstViewModel();
+            VertelTasCreateViewModel = new VertelTasCreateViewModel();
             //SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
@@ -41,7 +49,7 @@ namespace DeKrekelGroup5.ViewModel
 
         public MainViewModel(Gebruiker gebruiker)
         {
-            if(gebruiker == null)
+            if (gebruiker == null)
                 gebruiker = new Gebruiker();
             GebruikerViewModel = new GebruikerViewModel()
             {
@@ -53,6 +61,9 @@ namespace DeKrekelGroup5.ViewModel
             BoekViewModel = new BoekViewModel();
             BoekenLijstViewModel = new BoekenLijstViewModel();
             BoekCreateViewModel = new BoekCreateViewModel();
+            VertelTasViewModel = new VertelTasViewModel();
+            VertelTasLijstViewModel = new VertelTasLijstViewModel();
+            VertelTasCreateViewModel = new VertelTasCreateViewModel();
             //SpelViewModel = new SpelViewModel();
             UitlenerViewModel = new UitlenerViewModel();
             UitlenersLijstViewModel = new UitlenersLijstViewModel();
@@ -74,7 +85,13 @@ namespace DeKrekelGroup5.ViewModel
 
         public object SetNewBoekenLijstVm(IEnumerable<Boek> boeken)
         {
-                BoekenLijstViewModel = new BoekenLijstViewModel(boeken);
+            BoekenLijstViewModel = new BoekenLijstViewModel(boeken);
+            return this;
+        }
+
+        public object SetNewVerteltasLijstVm(IEnumerable<VertelTas> verteltassen)
+        {
+            VertelTasLijstViewModel = new VertelTasLijstViewModel(verteltassen);
             return this;
         }
 
@@ -96,15 +113,54 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = boek.Leeftijd,
                 Themas = boek.Themas,
                 Beschikbaar = boek.Beschikbaar,
-                EindDatumUitlening = boek.Uitleningen.Count == 0 ? new DateTime() : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).EindDatum,
-                Uitgeleend = boek.Uitleningen.Count == 0 ? false : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+                EindDatumUitlening =
+                    boek.Uitleningen.Count == 0
+                        ? new DateTime()
+                        : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend =
+                    boek.Uitleningen.Count == 0
+                        ? false
+                        : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id))
+                            .BinnenGebracht.Year == 1
             };
             return this;
         }
 
         public object SetBoekCreateViewModel(IEnumerable<Thema> themas, Boek boek)
         {
-             BoekCreateViewModel = new BoekCreateViewModel(themas, boek);
+            BoekCreateViewModel = new BoekCreateViewModel(themas, boek);
+            return this;
+        }
+
+        public object SetVerteltasViewModel(VertelTas verteltas)
+        {
+
+            VertelTasViewModel = new VertelTasViewModel()
+            {
+                Exemplaar = verteltas.Exemplaar,
+                Omschrijving = verteltas.Omschrijving,
+                Titel = verteltas.Titel,
+                Leeftijd = verteltas.Leeftijd,
+                Themas = verteltas.Themas,
+                Items = verteltas.Items,
+                Beschikbaar = verteltas.Beschikbaar,
+                EindDatumUitlening =
+                    verteltas.Uitleningen.Count == 0
+                        ? new DateTime()
+                        : verteltas.Uitleningen.SingleOrDefault(d => d.Id == verteltas.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend =
+                    verteltas.Uitleningen.Count == 0
+                        ? false
+                        : verteltas.Uitleningen.SingleOrDefault(d => d.Id == verteltas.Uitleningen.Max(c => c.Id))
+                            .BinnenGebracht.Year == 1
+            };
+            return this;
+        }
+
+
+        public object SetVerteltasCreateViewModel(IEnumerable<Thema> themas, VertelTas verteltas, IEnumerable<Item> items)
+        {
+            VertelTasCreateViewModel = new VertelTasCreateViewModel(themas, verteltas, items);
             return this;
         }
 
@@ -117,9 +173,16 @@ namespace DeKrekelGroup5.ViewModel
                 Titel = item.Titel,
                 Leeftijd = item.Leeftijd,
                 Themas = item.Themas,
-                EindDatumUitlening = item.Uitleningen.Count == 0 ? new DateTime() : item.Uitleningen.SingleOrDefault(d => d.Id == item.Uitleningen.Max(c => c.Id)).EindDatum,
-                Uitgeleend = item.Uitleningen.Count == 0 ? false : item.Uitleningen.SingleOrDefault(d => d.Id == item.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
-            }; 
+                EindDatumUitlening =
+                    item.Uitleningen.Count == 0
+                        ? new DateTime()
+                        : item.Uitleningen.SingleOrDefault(d => d.Id == item.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend =
+                    item.Uitleningen.Count == 0
+                        ? false
+                        : item.Uitleningen.SingleOrDefault(d => d.Id == item.Uitleningen.Max(c => c.Id))
+                            .BinnenGebracht.Year == 1
+            };
         }
 
         public void SetUitLenerViewModel(Uitlener uitlener)
@@ -127,19 +190,20 @@ namespace DeKrekelGroup5.ViewModel
             UitlenerViewModel = new UitlenerViewModel(uitlener);
         }
 
-        public Object SetNewInfo(String info, bool isError=false,bool isDialogBox=false, string callBackAction= null)
+        public Object SetNewInfo(String info, bool isError = false, bool isDialogBox = false,
+            string callBackAction = null)
         {
             InfoViewModel = new InfoViewModel()
             {
                 Info = info,
                 IsError = isError,
-                IsDialogBox = isDialogBox, 
+                IsDialogBox = isDialogBox,
                 CallBackAction = callBackAction
             };
             return this;
         }
-    }
 
-    
+
+    }
 
 }
