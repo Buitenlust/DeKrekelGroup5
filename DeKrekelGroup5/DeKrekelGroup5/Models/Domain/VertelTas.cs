@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace DeKrekelGroup5.Models.Domain
 {
-    public class VertelTas : Item
+    public class VertelTas
     {
         public string Bevat { get; set; }
         public virtual ICollection<Boek> Boeken { get; set; }
