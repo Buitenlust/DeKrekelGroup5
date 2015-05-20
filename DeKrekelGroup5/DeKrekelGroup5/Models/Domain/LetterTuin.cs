@@ -20,6 +20,7 @@ namespace DeKrekelGroup5.Models.Domain
         public virtual ICollection<Thema> Themas { get; set; }
         public virtual ICollection<Uitlening> Uitleningen { get; set; }
         public virtual ICollection<Uitlener> Uitleners { get; set; }
+        public virtual ICollection<VertelTas> VertelTassen { get; set; }
         public virtual Instellingen Instellingen { get; set; }
 
         public LetterTuin()
@@ -133,6 +134,13 @@ namespace DeKrekelGroup5.Models.Domain
         {
             if (id > 0)
                 return Items.SingleOrDefault(i => i.Exemplaar == id);
+            return null;
+        }
+
+        public VertelTas GetVertelTas(int id)
+        {
+            if (id > 0)
+                return VertelTassen.SingleOrDefault(i => i.Exemplaar == id);
             return null;
         }
 

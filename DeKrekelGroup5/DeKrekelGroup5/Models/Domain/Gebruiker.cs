@@ -79,6 +79,17 @@ namespace DeKrekelGroup5.Models.Domain
                 }
                 return false;
         }
+
+        public bool AddVertelTas(VertelTas vertelTas)
+        {
+            CheckAdminRechten();
+            if (vertelTas != null && vertelTas.Exemplaar == 0)
+            {
+                LetterTuin.VertelTassen.Add(vertelTas);
+                    return true;
+            }
+            return false;
+        }
  
         /// <summary> Update de parameters van een boek</summary>
         /// <returns> Geeft true weer als het boek is aangepast. Exemplaar van het boek moet > 0 </returns>
@@ -139,6 +150,21 @@ namespace DeKrekelGroup5.Models.Domain
             return false;
         }
 
+        public bool UpdateVertelTas(VertelTas vertelTas)
+        {
+            CheckAdminRechten();
+            if (vertelTas != null && vertelTas.Exemplaar > 0)
+            {
+                var newVertelTas = LetterTuin.GetVertelTas(vertelTas.Exemplaar);
+                if (newVertelTas != null)
+                {
+                    newVertelTas.Update(vertelTas);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <summary> Removes an item from the collection </summary>
         /// <returns>returns true if item is succesfully removed from the collection. Exemplaar must be > 0 </returns>
         /// <param name="id"> id van te verwijderen item </param>
@@ -148,6 +174,17 @@ namespace DeKrekelGroup5.Models.Domain
             if (item != null && item.Exemplaar > 0)
             {
                 LetterTuin.Items.Remove(item);
+                return true;
+            }
+            return false;
+        }
+
+        public bool RemoveVertelTas(VertelTas vertelTas)
+        {
+            CheckAdminRechten();
+            if (vertelTas != null && vertelTas.Exemplaar > 0)
+            {
+                LetterTuin.VertelTassen.Remove(vertelTas);
                 return true;
             }
             return false;
@@ -448,5 +485,9 @@ namespace DeKrekelGroup5.Models.Domain
             return new List<Thema>();
         }
 
+
+
+
+        
     }
 }
