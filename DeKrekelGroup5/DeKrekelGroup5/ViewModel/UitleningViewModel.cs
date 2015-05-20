@@ -1,5 +1,6 @@
 ﻿using DeKrekelGroup5.Models.Domain;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace DeKrekelGroup5.ViewModel
         public Item Itemm { get; set; }
         [Required(ErrorMessage = "Uitlener is vereist...")]
         public Uitlener Uitlenerr { get; set; }
+        [Range(0, 2, ErrorMessage = "Een item kan maximaal 2 keer worden uitgeleend")]
         public int Verlenging { get; set; }
 
         public UitleningViewModel()
@@ -54,27 +56,42 @@ namespace DeKrekelGroup5.ViewModel
         }
     }
 
-    public class UitleningenLijstViewModel
+    public class UitleningenLijstViewModel : IEnumerable<UitleningViewModel>
     {
         public IEnumerable<UitleningViewModel> Uitleningen { get; set; }
 
         public UitleningenLijstViewModel(IEnumerable<Uitlening> uitleningen)
         {
-            Uitleningen = uitleningen.Select(b => new UitleningViewModel()
-                {
-                    Id = b.Id,
-                    StartDatum = b.StartDatum,
-                    BinnenGebracht = b.BinnenGebracht,
-                    EindDatum = b.EindDatum,
-                    Itemm = b.Itemm,
-                    Uitlenerr = b.Uitlenerr,
-                    Verlenging = b.Verlenging
-                });
+            if (uitleningen == null)
+                Uitleningen = new List<UitleningViewModel>();
+            else
+            {
+                Uitleningen = uitleningen.Select(b => new UitleningViewModel()
+                    {
+                        Id = b.Id,
+                        StartDatum = b.StartDatum,
+                        BinnenGebracht = b.BinnenGebracht,
+                        EindDatum = b.EindDatum,
+                        Itemm = b.Itemm,
+                        Uitlenerr = b.Uitlenerr,
+                        Verlenging = b.Verlenging
+                    });
+            }
         }
 
         public UitleningenLijstViewModel()
         {
             Uitleningen = new List<UitleningViewModel>();
+        }
+
+        public IEnumerator<UitleningViewModel> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

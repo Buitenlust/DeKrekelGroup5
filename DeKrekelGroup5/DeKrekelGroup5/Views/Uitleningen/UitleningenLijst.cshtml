@@ -1,4 +1,72 @@
-﻿@using DeKrekelGroup5.ViewModel
+﻿@using DeKrekelGroup5.Models.Domain
+@using DeKrekelGroup5.ViewModel
 @model DeKrekelGroup5.ViewModel.MainViewModel
 
 
+<table class="table">
+    <tr>
+        <th>
+            ItemType
+        </th>
+        <th>
+            ItemTitel
+        </th>
+        <th>
+            BeginDatum
+        </th>
+        <th>
+            EindDatum
+        </th>
+        <th>
+            Binnengebracht op:
+        </th>
+        <th>
+            Aantal keer verlengd
+        </th>
+
+    </tr>
+@foreach(var item in Model.UitleningenLijstViewModel.Uitleningen)
+{
+   <tr>
+       <td>
+           @*@if (item.Itemm.GetType() == typeof(Boek))
+           {<p>Boek</p>}
+           else if (item.Itemm.GetType() == typeof(CD))
+           {<p>CD</p>}
+           else if (item.Itemm.GetType() == typeof(DVD))
+           {<p>DVD</p>}
+           else if (item.Itemm.GetType() == typeof(Spel))
+           {<p>Spel</p>}
+           else if (item.Itemm.GetType() == typeof(VertelTas))
+           {<p>VertelTas</p>}*@
+           @Html.DisplayFor(modelItem => item.Itemm.GetType())
+       </td>
+       <td>
+           @Html.DisplayFor(modelItem => item.Itemm.Titel)
+       </td>
+       <td>
+           @Html.DisplayFor(modelItem => item.StartDatum)
+       </td>
+       <td>
+           @Html.DisplayFor(modelItem => item.EindDatum)
+       </td>
+       <td>
+           @if(item.BinnenGebracht > item.EindDatum)
+           {
+              <span><font color="red">@Html.DisplayFor(modelItem => item.BinnenGebracht)</font></span>
+           }
+           else if(item.BinnenGebracht == null && item.EindDatum < DateTime.Today)
+           {
+               <span style="background-color:red">niet binnengebracht</span>
+           }
+           else
+           {
+               @Html.DisplayFor(modelItem => item.BinnenGebracht)
+           }
+       </td>
+       <td>
+            @Html.DisplayFor(modelItem => item.Verlenging) keer verlengd
+       </td>
+   </tr>
+}
+</table>

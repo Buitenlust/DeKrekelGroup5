@@ -17,11 +17,23 @@
                         <input type="search" name="search" id="search" onclick="this.select();" />
                         <input type="submit" value="Zoek item" class="btn btn-default" id="searchSubmit" />
                     }
+                    <label>
+                        Te laat binnen
+                        <input type="checkbox" id="laat" class="check"/>
+                    </label>
+                    <label>
+                        Niet binnen
+                        <input type="checkbox" id="niet" class="check"/>
+                    </label>
+                    <label>
+                        beide
+                        <input type="checkbox" id="beide" class="check"/>
+                    </label>
 
-
-                </div>
+</div>
             </td>
-            <td>            
+            <td>
+         
                     <a href=' @Url.Action("create") '><img src="~/Images/create.png" class="createNew" /></a>  
             </td>
         </tr>

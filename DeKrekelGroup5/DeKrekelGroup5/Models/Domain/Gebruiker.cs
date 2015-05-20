@@ -246,7 +246,7 @@ namespace DeKrekelGroup5.Models.Domain
                 return LetterTuin.Uitleningen.Where(p => p.Itemm.Titel.ToLower().Contains(search.ToLower()) ||
                                               p.Uitlenerr.Naam.ToLower().Contains(search.ToLower()) ||
                                               p.Uitlenerr.VoorNaam.ToLower().Contains(search.ToLower()) ||
-                                              p.Itemm.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.EindDatum);
+                                              p.Itemm.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.StartDatum);
             return null;
         }
 

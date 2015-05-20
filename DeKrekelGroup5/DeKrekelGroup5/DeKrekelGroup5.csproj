@@ -250,6 +250,7 @@
     <Compile Include="ViewModel\GebruikerViewModel.cs" />
     <Compile Include="ViewModel\BoekViewModel.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
+    <Compile Include="ViewModel\UitleningViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -394,6 +395,7 @@
     <Content Include="Views\Themas\ThemaLijst.cshtml" />
     <None Include="Views\Uitleners\CreateGroup.cshtml" />
     <Content Include="Views\Uitleners\ImportUitlenersLijst.cshtml" />
+    <Content Include="Views\Uitleningen\UitleningenLijst.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

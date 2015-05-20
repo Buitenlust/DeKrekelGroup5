@@ -18,7 +18,7 @@ namespace DeKrekelGroup5.Controllers
     public class UitleningenController : Controller
     { 
 
-        private IGebruikerRepository gebruikersRep; 
+        private readonly IGebruikerRepository gebruikersRep; 
 
         public UitleningenController(IGebruikerRepository gebruikerRepository)
         {
@@ -26,31 +26,23 @@ namespace DeKrekelGroup5.Controllers
         }
 
         // GET: Uitleningen
-        public ActionResult Index(Gebruiker gebruiker, String search = null)
+        public ActionResult Index(Gebruiker gebruiker, MainViewModel mvm, String search = null)
         {
+            if (gebruiker == null || gebruiker.BibliotheekRechten == false)
+                return View(mvm.SetNewInfo("U dient eerst in te loggen", true));
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
             try
             {
-                IEnumerable<Uitlening> uitleningen;
-                if (!String.IsNullOrEmpty(search))
-                {
-                    uitleningen = gebruiker.GetUitleningen(search);
-                    ViewBag.Selection = "Alle uitleningen met " + search;
-                }
-                else
-                {
-                    uitleningen = gebruiker.GetUitleningen(null);
-                    ViewBag.Selection = "Alle uitleningen";
-                }
-
+                mvm.SetNewUitleningenLijstVm(gebruiker.GetUitleningen(search).ToList());
                 if (Request.IsAjaxRequest())
-                    return PartialView("UitleningenLijst", new MainViewModel(gebruiker).SetNewUitleningenLijstVm(uitleningen));
-
-                return View(new MainViewModel(gebruiker).SetNewUitleningenLijstVm(uitleningen));
+                    return PartialView("UitleningenLijst", mvm);
+                return View(mvm);
             }
             catch (Exception)
             {
-
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                return PartialView(mvm.SetNewInfo("De server kan uw aanvraag niet behandelen.", true));
             }
         }
 
