@@ -12,8 +12,7 @@ namespace DeKrekelGroup5.Models.Domain
     public class VertelTas
     {
         public string Bevat { get; set; }
-        public virtual ICollection<Boek> Boeken { get; set; }
-        public virtual ICollection<Spel> Spellen { get; set; }
+
         public virtual ICollection<Item> Items { get; set; }    // is mogelijk/voldoende?
     }
 }
