@@ -109,13 +109,14 @@
     <script type="text/javascript">
         var datavar = "";
         var counter = 0;
+        var item = "";
         $("#searchBook").click(function() {
             var url = "https://www.googleapis.com/books/v1/volumes?q=";
             var searchstring = $("#searchBookField").val();
             if (searchstring.length > 1)
                 $.ajax({
                     url: url + searchstring,
-                    success: function (data) {
+                    success: function(data) {
                         datavar = data;
                         handleResponse(data);
                     }
@@ -123,53 +124,50 @@
         });
 
         function handleResponse(response) {
-            //    for (var i = 0; i < response.items.length; i++) {
-            var item = response.items[counter];
-            $("#auteurInput").val(item.volumeInfo.authors);
-            $("#uitgeverInput").val(item.volumeInfo.publisher);
-            $("#titelInput").val(item.volumeInfo.title);
-            $("#omschrijvingInput").val(item.volumeInfo.description);
-            $("#imageInput").val(item.volumeInfo.imageLinks.thumbnail);
-            $("#picItem").attr("src", item.volumeInfo.imageLinks.thumbnail);
+            counter = 0;
+            item = response.items[counter];
+            vulFormulier();
             if (response.items.length > 1) {
                 $("#leftBtn").show();
                 $("#rightBtn").show();
             }
-            //}
         }
 
-        $("#rightBtn").click(function () {
+        function vulFormulier() {
+            $("#auteurInput").val(item.volumeInfo.authors);
+            $("#uitgeverInput").val(item.volumeInfo.publisher);
+            $("#titelInput").val(item.volumeInfo.title);
+            $("#omschrijvingInput").val(item.volumeInfo.description);
+            if (typeof (item.volumeInfo.imageLinks) != "undefined") {
+                $("#imageInput").val(item.volumeInfo.imageLinks.thumbnail);
+                $("#picItem").attr("src", item.volumeInfo.imageLinks.thumbnail);
+            } else {
+                $("#imageInput").val("");
+                $("#picItem").attr("src", "/Images/krekelFoto.png");
+            }
+        }
+
+        $("#rightBtn").click(function() {
             if (datavar.items.length > counter) {
                 counter += 1;
-                var item = datavar.items[counter];
+                item = datavar.items[counter];
             } else {
                 counter = 0;
-                var item = datavar.items[counter];
+                item = datavar.items[counter];
             }
-            $("#auteurInput").val(item.volumeInfo.authors);
-            $("#uitgeverInput").val(item.volumeInfo.publisher);
-            $("#titelInput").val(item.volumeInfo.title);
-            $("#omschrijvingInput").val(item.volumeInfo.description);
-            $("#imageInput").val(item.volumeInfo.imageLinks.thumbnail);
-            $("#picItem").attr("src", item.volumeInfo.imageLinks.thumbnail);
+            vulFormulier();
         });
 
-        $("#leftBtn").click(function () {
+        $("#leftBtn").click(function() {
             if (counter === 0) {
-                counter = datavar.items.length-1;
-                var item = datavar.items[counter];
+                counter = datavar.items.length - 1;
+                item = datavar.items[counter];
             } else {
                 counter -= 1;
-                var item = datavar.items[counter];
+                item = datavar.items[counter];
             }
-            $("#auteurInput").val(item.volumeInfo.authors);
-            $("#uitgeverInput").val(item.volumeInfo.publisher);
-            $("#titelInput").val(item.volumeInfo.title);
-            $("#omschrijvingInput").val(item.volumeInfo.description);
-            $("#imageInput").val(item.volumeInfo.imageLinks.thumbnail);
-            $("#picItem").attr("src", item.volumeInfo.imageLinks.thumbnail);
+            vulFormulier();
         });
-
 
         $(function() {
             $('.multiselect').multiSelect({ keepOrder: true });

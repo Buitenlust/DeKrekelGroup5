@@ -15,7 +15,14 @@
     <hr/>
     <div id="wrapDetails">
         <div id="leftCol">
-            <img src="@Url.Content("/FTP/Images/"+Model.BoekViewModel.image)" alt="Model.BoekViewModel.image" style="max-width: 70%" />
+            @if (Model.BoekViewModel == null || string.IsNullOrEmpty(Model.BoekViewModel.image))
+            {
+                <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
+            }
+            else
+            {
+                <img src="@Url.Content("/FTP/Images/" + Model.BoekViewModel.image)" alt="Model.BoekViewModel.image" style="max-width: 70%" />
+            }
         </div>
 
         <div id="mainCol">
