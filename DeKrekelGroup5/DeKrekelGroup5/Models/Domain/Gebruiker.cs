@@ -115,6 +115,11 @@ namespace DeKrekelGroup5.Models.Domain
                 if (newItem != null)
                 {
                     newItem.Update(cd);
+                    newItem.Themas.Clear();
+                    foreach (Thema thema in cd.Themas)
+                    {
+                        newItem.Themas.Add(thema);
+                    }
                     return true;
                 }
             }
@@ -133,6 +138,11 @@ namespace DeKrekelGroup5.Models.Domain
                 if (newItem != null)
                 {
                     newItem.Update(dvd);
+                    newItem.Themas.Clear();
+                    foreach (Thema thema in dvd.Themas)
+                    {
+                        newItem.Themas.Add(thema);
+                    }
                     return true;
                 }
             }
@@ -151,6 +161,11 @@ namespace DeKrekelGroup5.Models.Domain
                 if (newItem != null)
                 {
                     newItem.Update(spel);
+                    newItem.Themas.Clear();
+                    foreach (Thema thema in spel.Themas)
+                    {
+                        newItem.Themas.Add(thema);
+                    }
                     return true;
                 }
             }

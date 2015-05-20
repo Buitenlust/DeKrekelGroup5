@@ -19,7 +19,7 @@ namespace DeKrekelGroup5.ViewModel
              
         }
 
-        public Spel MapToSpel(SpelViewModel vm, Thema thema)
+        public Spel MapToSpel(SpelViewModel vm, List<Thema> themas)
         {
             return new Spel()
             {
@@ -28,7 +28,8 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = vm.Leeftijd,
                 Omschrijving = vm.Omschrijving,
                 Titel = vm.Titel,
-                Themaa = thema,
+                Themas = themas,
+                ImageString = image,
                 Uitgever = Uitgever
             };
         }
@@ -46,10 +47,11 @@ namespace DeKrekelGroup5.ViewModel
                 Omschrijving = spel.Omschrijving, 
                 Uitgever = spel.Uitgever,
                 Leeftijd = spel.Leeftijd, 
-                Thema = spel.Themaa.Themaa,
+                Themas = spel.Themas,
+                image = spel.ImageString,
                 Beschikbaar = spel.Beschikbaar,
-                EindDatumUitlening = spel.Uitleningen.Count == 0 ? new DateTime() : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).EindDatum,
-                Uitgeleend = spel.Uitleningen.Count == 0 ? false : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+                EindDatumUitlening = (spel.Uitleningen == null || spel.Uitleningen.Count == 0) ? new DateTime() : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = (spel.Uitleningen == null || spel.Uitleningen.Count == 0) ? false : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             });
         }
 
@@ -62,6 +64,9 @@ namespace DeKrekelGroup5.ViewModel
 
     public class SpelCreateViewModel
     {
+        public MultiSelectList AllThemas { get; set; }
+        public List<int> SubmittedThemas { get; set; }
+
         public SelectList Themas { get; set; }
         public SpelViewModel Spel { get; set; }
 
@@ -74,13 +79,14 @@ namespace DeKrekelGroup5.ViewModel
                 Titel = spel.Titel, 
                 Uitgever = spel.Uitgever,
                 Leeftijd = spel.Leeftijd,
-                Thema = (spel.Themaa == null ? "" : spel.Themaa.Themaa),
+                image = spel.ImageString,
+                Themas = themas.ToList(),
                 Beschikbaar = spel.Beschikbaar,
                 EindDatumUitlening = (spel.Uitleningen == null || spel.Uitleningen.Count == 0) ? new DateTime() : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).EindDatum,
                 Uitgeleend = (spel.Uitleningen == null || spel.Uitleningen.Count == 0) ? false : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             };
 
-            Themas = new SelectList(themas, "Themaa", "Themaa", Spel.Thema ?? "");
+            AllThemas = new MultiSelectList(themas.ToList(), "IdThema", "Themaa", (spel.Themas == null || spel.Themas.Count == 0) ? null : spel.Themas.Select(t => t.IdThema));
         }
 
         public SpelCreateViewModel()
@@ -88,6 +94,8 @@ namespace DeKrekelGroup5.ViewModel
             Spel = new SpelViewModel();
             IEnumerable<Thema> themas = new List<Thema>();
             Themas = new SelectList(themas, "", "", "");
+            AllThemas = new SelectList(themas, "", "", "");
+            SubmittedThemas = new List<int>();
         }
     }
 

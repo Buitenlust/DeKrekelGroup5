@@ -1,98 +1,110 @@
-﻿@using DeKrekelGroup5.ViewModel
+﻿@using DeKrekelGroup5.Models.Domain
+@using DeKrekelGroup5.ViewModel
 @model DeKrekelGroup5.ViewModel.MainViewModel
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.SpellenLijstViewModel.Spellen.FirstOrDefault().Exemplaar)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpellenLijstViewModel.Spellen.FirstOrDefault().Titel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpellenLijstViewModel.Spellen.FirstOrDefault().Omschrijving)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpellenLijstViewModel.Spellen.FirstOrDefault().Uitgever)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpellenLijstViewModel.Spellen.FirstOrDefault().Leeftijd)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpellenLijstViewModel.Spellen.FirstOrDefault().Thema)
-        </th>
-        <th>
-            Beschikbaar
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.SpellenLijstViewModel.Spellen)
-    {
+@foreach (var item in Model.SpellenLijstViewModel.Spellen)
+{
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Exemplaar)
-            </td>
-            <td>
+            <th>
+                S @Html.DisplayFor(modelItem => item.Exemplaar)
+            </th>
+            <th>
                 @Html.DisplayFor(modelItem => item.Titel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Omschrijving)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Uitgever)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Leeftijd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Thema)
-            </td>
-            <td>
-                @if (item.Beschikbaar)
+            </th>
+            <th>
+            </th>
+        </tr>
+        <tr>
+            <td id="left">
+                @if (string.IsNullOrEmpty(item.image))
                 {
-                    if (item.Uitgeleend)
-                    {
-                        @item.GetStringDate()
-                        if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
-                        {
-                            @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modal" }, new { @class = "icon" })
-                        }
-                    }
-                    else
-                    {
-                        <img src="~/Images/tick.png" class="icon" />
-                    }
+                    <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
                 }
                 else
                 {
-                    <img src="~/Images/cross.png" class="icon" />
+
+                    <img src='@Url.Content("~/FTP/Images/"+item.image)' alt="item.image" />
                 }
             </td>
-            <td>
-                @if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
-                {
-                    if (item.Uitgeleend)
-                    {
-                        @Ajax.ImageActionLink("/Images/binnen.png", "EindeUitlening", "EindeUitlening", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modal" }, new { @class = "icon" })
-
-                    }
-                    else
-                    {
-                        if (item.Beschikbaar)
+            <td id="middle">
+                <div class="middleDiv">
+                    <div class="beschikbaar">
+                        @if (item.Beschikbaar)
                         {
-                            <a href=' @Url.Action("Create", "Uitleningen", new { id = item.Exemplaar }) '><img src="~/Images/buiten.png" class="icon" /></a>
+                            if (item.Uitgeleend)
+                            {
+                                <span>Beschikbaar vanaf: </span>@item.GetStringDate()
+                                if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
+                                {
+                                    @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "icon" })
+                                }
+                            }
+                            else
+                            {
+                                <span>Beschikbaar: </span> <img src="~/Images/tick.png" class="icon" />
+                            }
+                        }
+                        else
+                        {
+                            <span>Beschikbaar: </span>
+                            <img src="~/Images/cross.png" class="icon" />
+                        }
+                    </div>
+
+                    @*<p><img src="~/Images/auteur.png" class="icon" /> @Html.DisplayFor(modelItem => item.Auteur)</p>*@
+
+                    <p><strong>Is uitgegeven door uitgeverij @Html.DisplayFor(modelItem => item.Uitgever)</strong></p>
+
+                    <p><strong>Leeftijd: </strong> @Html.DisplayFor(modelItem => item.Leeftijd) jaar</p>
+
+                    <p><strong>Omschrijving: </strong> <span style="font-size: medium">@Html.DisplayFor(modelItem => item.Omschrijving)</span></p>
+
+                    <p id="themap">
+                        @{ int counter = 0; }
+                        @foreach (var thema in item.Themas)
+                        {
+                            counter++;
+                            <span style="font-style: italic">@thema.Themaa</span> @(counter < item.Themas.Count ? "|" : "")
+                        }
+                    </p>
+
+
+
+                </div>
+            </td>
+            <td id="right">
+                <div class="wrapper-image">
+
+                    <a href=' @Url.Action("details", new { id = item.Exemplaar }) '><img src="~/Images/details.png" class="iconRight" /></a>
+                    @if (Model.GebruikerViewModel.IsBeheerder)
+                    {
+                        <a href=' @Url.Action("edit", new { id = item.Exemplaar }) '><img src="~/Images/edit.png" class="iconRight" /></a>
+                        <a href=' @Url.Action("delete", new { id = item.Exemplaar }) '><img src="~/Images/delete.png" class="iconRight" /></a>
+                    }
+
+
+                    @if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
+                    {
+                        if (item.Uitgeleend)
+                        {
+                            @Ajax.ImageActionLink("/Images/binnen.png", "EindeUitlening", "EindeUitlening", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "doorImg" })
+
+                        }
+                        else
+                        {
+                            if (item.Beschikbaar)
+                            {
+                                <a href=' @Url.Action("Create", "Uitleningen", new { id = item.Exemplaar }) ' class="doorImg"><img src="~/Images/buiten.png" /></a>
+                            }
                         }
                     }
-                }
-                <a href=' @Url.Action("details", new { id = item.Exemplaar }) '><img src="~/Images/details.png" class="icon" /></a>
-                @if (Model.GebruikerViewModel.IsBeheerder)
-                {
-                    <a href=' @Url.Action("edit", new { id = item.Exemplaar }) '><img src="~/Images/edit.png" class="icon" /></a>
-                    <a href=' @Url.Action("delete", new { id = item.Exemplaar }) '><img src="~/Images/delete.png" class="icon" /></a>
-                }
+                </div>
             </td>
         </tr>
-    }
+    </table>
+}
 
-</table>
+
+
+

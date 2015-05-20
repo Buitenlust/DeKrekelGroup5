@@ -244,10 +244,13 @@
     <Compile Include="Models\Domain\Thema.cs" />
     <Compile Include="Models\Domain\Uitlening.cs" />
     <Compile Include="Models\Domain\VertelTas.cs" />
+    <Compile Include="ViewModel\CDViewModel.cs" />
+    <Compile Include="ViewModel\DVDViewModel.cs" />
     <Compile Include="ViewModel\Helper.cs" />
     <Compile Include="ViewModel\ImageActionLinkHelper.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SpelViewModel.cs" />
     <Compile Include="ViewModel\ThemaViewModel.cs" />
     <Compile Include="ViewModel\UitlenerViewModel.cs" />
     <Compile Include="ViewModel\GebruikerViewModel.cs" />

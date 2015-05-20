@@ -9,44 +9,73 @@
     <hr />
     <div id="wrapDetails">
         <div id="leftCol">
-            <img src="~/Images/default.jpg" alt="krekelSchool">
+            @Html.Partial("upload", Model)
         </div>
 
         <div id="mainCol">
             <table id="details">
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.SpelViewModel.Exemplaar)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.SpelViewModel.Exemplaar)</td>
-                </tr>
-                <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.SpelViewModel.Uitgever)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.SpelViewModel.Uitgever)</td>
-                </tr>
-                <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.SpelViewModel.Leeftijd)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.SpelViewModel.Leeftijd)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.SpelViewModel.Exemplaar)</td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.SpelViewModel.Titel)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.SpelViewModel.Titel)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.SpelViewModel.Titel)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.SpelViewModel.Uitgever)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.SpelViewModel.Uitgever)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.SpelViewModel.Leeftijd)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.SpelViewModel.Leeftijd)</td>
+                </tr>
+                <tr>
+                    <td class="td1">Themas</td>
+                    <td class="td2 gray">
+                        @{ int counter = 0; }
+                        @foreach (var thema in Model.SpelViewModel.Themas)
+                        {
+                            counter++;
+                            <span>@thema.Themaa</span> @(counter < Model.SpelViewModel.Themas.Count ? "|" : "")
+                        }
+                    </td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.SpelViewModel.Omschrijving)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.SpelViewModel.Omschrijving)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.SpelViewModel.Omschrijving)</td>
                 </tr>
-                <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.SpelViewModel.Thema)</td>
-                    <td class="td2">@Html.DisplayNameFor(model => model.SpelViewModel.Thema)</td>
-                </tr>
+
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.SpelViewModel.Uitgeleend)</td>
-                    <td>@Html.DisplayFor(model => model.SpelViewModel.Uitgeleend)</td>
+                    <td>
+                        @if (@Model.SpelViewModel.Uitgeleend)
+                        {
+                            @Model.SpelViewModel.EindDatumUitlening.ToLongDateString()
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="bigIcon" />
+                        }
+                    </td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.SpelViewModel.Beschikbaar)</td>
-                    <td>@Html.DisplayFor(model => model.SpelViewModel.Beschikbaar)</td>
+                    <td>
+                        @if (@Model.SpelViewModel.Beschikbaar)
+                        {
+                            <img src="~/Images/tick.png" class="bigIcon" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="bigIcon" />
+                        }
+                    </td>
                 </tr>
             </table>
+
+
+
 
 
             @using (Html.BeginForm())
@@ -65,4 +94,3 @@
 
 
 </div>
-

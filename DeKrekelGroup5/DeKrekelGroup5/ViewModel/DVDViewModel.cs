@@ -19,7 +19,7 @@ namespace DeKrekelGroup5.ViewModel
              
         }
 
-        public DVD MapToDVD(DVDViewModel vm, Thema thema)
+        public DVD MapToDVD(DVDViewModel vm, List<Thema> themas)
         {
             return new DVD()
             {
@@ -28,8 +28,9 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = vm.Leeftijd,
                 Omschrijving = vm.Omschrijving,
                 Titel = vm.Titel,
-                Themaa = thema,
-                Uitgever = Uitgever
+                Themas = themas,
+                Uitgever = Uitgever,
+                ImageString = image
             };
         }
     }
@@ -47,10 +48,11 @@ namespace DeKrekelGroup5.ViewModel
                 Omschrijving = b.Omschrijving,
                 Uitgever = b.Uitgever,
                 Leeftijd = b.Leeftijd,
-                Thema = b.Themaa.Themaa,
+                Themas = b.Themas,
+                image = b.ImageString,
                 Beschikbaar = b.Beschikbaar,
-                EindDatumUitlening = b.Uitleningen.Count == 0 ? new DateTime() : b.Uitleningen.SingleOrDefault(d => d.Id == b.Uitleningen.Max(c => c.Id)).EindDatum,
-                Uitgeleend = b.Uitleningen.Count == 0 ? false : b.Uitleningen.SingleOrDefault(d => d.Id == b.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+                EindDatumUitlening = (b.Uitleningen == null || b.Uitleningen.Count == 0) ? new DateTime() : b.Uitleningen.SingleOrDefault(d => d.Id == b.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = (b.Uitleningen == null || b.Uitleningen.Count == 0) ? false : b.Uitleningen.SingleOrDefault(d => d.Id == b.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             });
         }
 
@@ -62,6 +64,8 @@ namespace DeKrekelGroup5.ViewModel
 
     public class DVDCreateViewModel
     {
+        public MultiSelectList AllThemas { get; set; }
+        public List<int> SubmittedThemas { get; set; }
         public SelectList Themas { get; set; }
         public DVDViewModel DVD { get; set; }
 
@@ -74,13 +78,14 @@ namespace DeKrekelGroup5.ViewModel
                 Titel = dvd.Titel,
                 Uitgever = dvd.Uitgever,
                 Leeftijd = dvd.Leeftijd,
-                Thema = (dvd.Themaa == null ? "" : dvd.Themaa.Themaa),
+                image = dvd.ImageString,
+                Themas = themas.ToList(),
                 Beschikbaar = dvd.Beschikbaar,
                 EindDatumUitlening = (dvd.Uitleningen == null || dvd.Uitleningen.Count == 0) ? new DateTime() : dvd.Uitleningen.SingleOrDefault(d => d.Id == dvd.Uitleningen.Max(c => c.Id)).EindDatum,
                 Uitgeleend = (dvd.Uitleningen == null || dvd.Uitleningen.Count == 0) ? false : dvd.Uitleningen.SingleOrDefault(d => d.Id == dvd.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             };
 
-            Themas = new SelectList(themas, "Themaa", "Themaa", DVD.Thema ?? "");
+            AllThemas = new MultiSelectList(themas.ToList(), "IdThema", "Themaa", (dvd.Themas == null || dvd.Themas.Count == 0) ? null : dvd.Themas.Select(t => t.IdThema));
         }
 
         public DVDCreateViewModel()
@@ -88,6 +93,8 @@ namespace DeKrekelGroup5.ViewModel
             DVD = new DVDViewModel();
             IEnumerable<Thema> themas = new List<Thema>();
             Themas = new SelectList(themas, "", "", "");
+            AllThemas = new SelectList(themas, "", "", "");
+            SubmittedThemas = new List<int>();
         }
     }
 }

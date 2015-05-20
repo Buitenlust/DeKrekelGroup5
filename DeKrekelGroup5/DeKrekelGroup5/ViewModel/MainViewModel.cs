@@ -164,7 +164,7 @@ namespace DeKrekelGroup5.ViewModel
                 Artiest = cd.Artiest,
                 Uitgever = cd.Uitgever,
                 Leeftijd = cd.Leeftijd,
-                Thema = cd.Themaa.Themaa,
+                Themas = cd.Themas,
                 Beschikbaar = cd.Beschikbaar,
                 EindDatumUitlening = cd.Uitleningen.Count == 0 ? new DateTime() : cd.Uitleningen.SingleOrDefault(d => d.Id == cd.Uitleningen.Max(c => c.Id)).EindDatum,
                 Uitgeleend = cd.Uitleningen.Count == 0 ? false : cd.Uitleningen.SingleOrDefault(d => d.Id == cd.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
@@ -187,7 +187,7 @@ namespace DeKrekelGroup5.ViewModel
                 Titel = dvd.Titel,
                 Uitgever = dvd.Uitgever,
                 Leeftijd = dvd.Leeftijd,
-                Thema = dvd.Themaa.Themaa,
+                Themas = dvd.Themas,
                 Beschikbaar = dvd.Beschikbaar,
                 EindDatumUitlening = dvd.Uitleningen.Count == 0 ? new DateTime() : dvd.Uitleningen.SingleOrDefault(d => d.Id == dvd.Uitleningen.Max(c => c.Id)).EindDatum,
                 Uitgeleend = dvd.Uitleningen.Count == 0 ? false : dvd.Uitleningen.SingleOrDefault(d => d.Id == dvd.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
@@ -198,6 +198,29 @@ namespace DeKrekelGroup5.ViewModel
         public object SetDVDCreateViewModel(IEnumerable<Thema> themas, DVD dvd)
         {
             DVDCreateViewModel = new DVDCreateViewModel(themas, dvd);
+            return this;
+        }
+
+        public object SetSpelViewModel(Spel spel)
+        {
+            SpelViewModel = new SpelViewModel()
+            {
+                Exemplaar = spel.Exemplaar,
+                Omschrijving = spel.Omschrijving,
+                Titel = spel.Titel,
+                Uitgever = spel.Uitgever,
+                Leeftijd = spel.Leeftijd,
+                Themas = spel.Themas,
+                Beschikbaar = spel.Beschikbaar,
+                EindDatumUitlening = spel.Uitleningen.Count == 0 ? new DateTime() : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = spel.Uitleningen.Count == 0 ? false : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+            };
+            return this;
+        }
+
+        public object SetSpelCreateViewModel(IEnumerable<Thema> themas, Spel spel)
+        {
+            SpelCreateViewModel = new SpelCreateViewModel(themas, spel);
             return this;
         }
 

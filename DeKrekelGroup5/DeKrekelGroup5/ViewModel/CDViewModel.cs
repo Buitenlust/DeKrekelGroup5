@@ -23,7 +23,7 @@ namespace DeKrekelGroup5.ViewModel
 
             }
 
-            public CD MapToCD(CDViewModel vm, Thema thema)
+            public CD MapToCD(CDViewModel vm, List<Thema> themas)
             {
                 return new CD()
                 {
@@ -33,8 +33,9 @@ namespace DeKrekelGroup5.ViewModel
                     Leeftijd = vm.Leeftijd,
                     Omschrijving = vm.Omschrijving,
                     Titel = vm.Titel,
-                    Themaa = thema,
-                    Uitgever = Uitgever
+                    Themas = themas,
+                    Uitgever = Uitgever,
+                    ImageString = image
                 };
             }
         }
@@ -53,10 +54,11 @@ namespace DeKrekelGroup5.ViewModel
                     Artiest = c.Artiest,
                     Uitgever = c.Uitgever,
                     Leeftijd = c.Leeftijd,
-                    Thema = c.Themaa.Themaa,
+                    Themas = c.Themas,
+                    image = c.ImageString,
                     Beschikbaar = c.Beschikbaar,
-                EindDatumUitlening = c.Uitleningen.Count == 0? new DateTime() : c.Uitleningen.SingleOrDefault(d => d.Id == c.Uitleningen.Max(b => b.Id)).EindDatum,
-                Uitgeleend = c.Uitleningen.Count == 0? false: c.Uitleningen.SingleOrDefault(d => d.Id == c.Uitleningen.Max(b => b.Id)).BinnenGebracht.Year == 1
+                    EindDatumUitlening = (c.Uitleningen == null || c.Uitleningen.Count == 0) ? new DateTime() : c.Uitleningen.SingleOrDefault(d => d.Id == c.Uitleningen.Max(b => b.Id)).EindDatum,
+                    Uitgeleend = (c.Uitleningen == null || c.Uitleningen.Count == 0) ? false : c.Uitleningen.SingleOrDefault(d => d.Id == c.Uitleningen.Max(b => b.Id)).BinnenGebracht.Year == 1
                 });
             }
 
@@ -69,6 +71,8 @@ namespace DeKrekelGroup5.ViewModel
 
         public class CDCreateViewModel
         {
+            public MultiSelectList AllThemas { get; set; }
+            public List<int> SubmittedThemas { get; set; }
             public SelectList Themas { get; set; }
             public CDViewModel CD { get; set; }
 
@@ -82,13 +86,13 @@ namespace DeKrekelGroup5.ViewModel
                     Artiest = cd.Artiest,
                     Uitgever = cd.Uitgever,
                     Leeftijd = cd.Leeftijd,
-                    Thema = (cd.Themaa == null ? "" : cd.Themaa.Themaa),
+                    Themas = themas.ToList(),
                     Beschikbaar = cd.Beschikbaar,
                     EindDatumUitlening = (cd.Uitleningen == null || cd.Uitleningen.Count == 0) ? new DateTime() : cd.Uitleningen.SingleOrDefault(d => d.Id == cd.Uitleningen.Max(c => c.Id)).EindDatum,
                     Uitgeleend = (cd.Uitleningen == null || cd.Uitleningen.Count == 0) ? false : cd.Uitleningen.SingleOrDefault(d => d.Id == cd.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
                 };
 
-                Themas = new SelectList(themas, "Themaa", "Themaa", CD.Thema ?? "");
+                AllThemas = new MultiSelectList(themas.ToList(), "IdThema", "Themaa", (cd.Themas == null || cd.Themas.Count == 0) ? null : cd.Themas.Select(t => t.IdThema));
             }
 
             public CDCreateViewModel()
@@ -96,6 +100,8 @@ namespace DeKrekelGroup5.ViewModel
                 CD = new CDViewModel();
                 IEnumerable<Thema> themas = new List<Thema>();
                 Themas = new SelectList(themas, "", "", "");
+                AllThemas = new SelectList(themas, "", "", "");
+                SubmittedThemas = new List<int>();
             }
         }
     

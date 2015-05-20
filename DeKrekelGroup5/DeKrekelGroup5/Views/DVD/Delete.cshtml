@@ -5,48 +5,77 @@
 }
 
 <div id="content">
-    <h4 id="subtitel">Ben je zeker dat je deze DVD wil verwijderen? <a href=' @Url.Action("index") '><img src="~/Images/Return.png" class="floatRight" /></a></h4>
+    <h4 id="subtitel">Ben je zeker dat je deze dvd wil verwijderen? <a href=' @Url.Action("index") '><img src="~/Images/Return.png" class="floatRight" /></a></h4>
     <hr />
     <div id="wrapDetails">
         <div id="leftCol">
-            <img src="~/Images/default.jpg" alt="krekelSchool">
+            @Html.Partial("upload", Model)
         </div>
 
         <div id="mainCol">
             <table id="details">
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.DVDViewModel.Exemplaar)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.DVDViewModel.Exemplaar)</td>
-                </tr>
-                <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.DVDViewModel.Uitgever)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.DVDViewModel.Uitgever)</td>
-                </tr>
-                <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.DVDViewModel.Leeftijd)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.DVDViewModel.Leeftijd)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.DVDViewModel.Exemplaar)</td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.DVDViewModel.Titel)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.DVDViewModel.Titel)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.DVDViewModel.Titel)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.DVDViewModel.Uitgever)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.DVDViewModel.Uitgever)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.DVDViewModel.Leeftijd)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.DVDViewModel.Leeftijd)</td>
+                </tr>
+                <tr>
+                    <td class="td1">Themas</td>
+                    <td class="td2 gray">
+                        @{ int counter = 0; }
+                        @foreach (var thema in Model.DVDViewModel.Themas)
+                        {
+                            counter++;
+                            <span>@thema.Themaa</span> @(counter < Model.DVDViewModel.Themas.Count ? "|" : "")
+                        }
+                    </td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.DVDViewModel.Omschrijving)</td>
-                    <td class="td2">@Html.DisplayFor(model => model.DVDViewModel.Omschrijving)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.DVDViewModel.Omschrijving)</td>
                 </tr>
-                <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.DVDViewModel.Thema)</td>
-                    <td class="td2">@Html.DisplayNameFor(model => model.DVDViewModel.Thema)</td>
-                </tr>
+
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.DVDViewModel.Uitgeleend)</td>
-                    <td>@Html.DisplayFor(model => model.DVDViewModel.Uitgeleend)</td>
+                    <td>
+                        @if (@Model.DVDViewModel.Uitgeleend)
+                        {
+                            @Model.DVDViewModel.EindDatumUitlening.ToLongDateString()
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="bigIcon" />
+                        }
+                    </td>
                 </tr>
                 <tr>
                     <td class="td1">@Html.DisplayNameFor(model => model.DVDViewModel.Beschikbaar)</td>
-                    <td>@Html.DisplayFor(model => model.DVDViewModel.Beschikbaar)</td>
+                    <td>
+                        @if (@Model.DVDViewModel.Beschikbaar)
+                        {
+                            <img src="~/Images/tick.png" class="bigIcon" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="bigIcon" />
+                        }
+                    </td>
                 </tr>
             </table>
+
+
+
 
 
             @using (Html.BeginForm())
@@ -65,4 +94,3 @@
 
 
 </div>
-

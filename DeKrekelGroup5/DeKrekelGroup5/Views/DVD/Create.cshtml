@@ -1,66 +1,63 @@
 ﻿@using DeKrekelGroup5.ViewModel
 @model DeKrekelGroup5.ViewModel.MainViewModel
-
+@Styles.Render("~/Content/uploadfile.css")
+@Styles.Render("~/Content/multi-select.css")
 <div id="content">
-    <h4 id="subtitel">DVD aanmaken</h4>
+    <h4 id="subtitel">
+        DVD aanmaken
+        <div class="floatRight">
+            <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
+        </div>
+    </h4>
     <hr />
     <div id="wrapDetails">
         <div id="leftCol">
-            <img src="~/Images/krekel.png" alt="krekelSchool">
+            @Html.Partial("upload", Model)
         </div>
 
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-
-
             <div id="mainCol">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.DVDCreateViewModel.DVD.image)
                 <table id="details">
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Uitgever)</td>
+                        <td class="td1">Uitgever</td>
                         <td>
                             @Html.EditorFor(model => model.DVDCreateViewModel.DVD.Uitgever, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Uitgever, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Leeftijd)</td>
+                        <td class="td1">Leeftijd</td>
                         <td>
                             @Html.EditorFor(model => model.DVDCreateViewModel.DVD.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Leeftijd, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Titel)</td>
+                        <td class="td1">Titel</td>
                         <td>
-                            @Html.EditorFor(model => model.DVDCreateViewModel.DVD.Titel, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.DVDCreateViewModel.DVD.Titel, new { htmlAttributes = new { @class = "form-control", id = "titelInput" } })
                             @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Titel, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Omschrijving)</td>
+                        <td class="td1">Omschrijving</td>
                         <td class="textArea">
                             @Html.TextAreaFor(model => model.DVDCreateViewModel.DVD.Omschrijving, new { rows = "10", columns = "300" })
                             @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Omschrijving, "", new { @class = "text-danger" })
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.LabelFor(model => model.DVDCreateViewModel.DVD.Thema, htmlAttributes: new { @class = "editLabel" })</td>
+                        <td class="td1">Themas</td>
                         <td>
-                            @Html.DropDownListFor(model => model.DVDCreateViewModel.DVD.Thema, Model.DVDCreateViewModel.Themas, " --Selecteer een Thema--")
-                            @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Thema)
+                            @Html.ListBoxFor(model => model.DVDCreateViewModel.SubmittedThemas, Model.DVDCreateViewModel.AllThemas, new { multiple = "multiple", @class = "multiselect" })
                         </td>
                     </tr>
                     <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Uitgeleend)</td>
-                        <td>
-                            @Html.EditorFor(model => model.DVDCreateViewModel.DVD.Uitgeleend, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Uitgeleend, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td1">@Html.DisplayNameFor(model => model.DVDCreateViewModel.DVD.Beschikbaar)</td>
+                        <td class="td1">Beschikbaar</td>
                         <td>
                             @Html.EditorFor(model => model.DVDCreateViewModel.DVD.Beschikbaar, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.DVDCreateViewModel.DVD.Beschikbaar, "", new { @class = "text-danger" })
@@ -68,17 +65,29 @@
                     </tr>
                 </table>
                 <p>
-                    <a href='@Url.Action("index")' class="floatRight"><img src="~/Images/Return.png" /></a>
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-default" />
+                        <div class="button green" style="position: relative; overflow: hidden; cursor: default;">
+                            <img src="~/Images/tick.png" />Ok!
+                            <input type="submit" value="Create" style="position: absolute; cursor: pointer; top: 0px; width: 100%; height: 100%; left: 0px; z-index: 100; opacity: 0;" />
                         </div>
                     </div>
                 </p>
             </div>
         }
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-        }
     </div>
 </div>
+
+@section JavaScript
+ {
+    <script src="/Scripts/upload.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+    <script src="/Scripts/jQuery.MultiFile.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.multi-select.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.multiselect').multiSelect({ keepOrder: true });
+        });
+    </script>
+
+}

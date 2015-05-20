@@ -5,15 +5,15 @@
         <tr>
             <td>
                 <div id="searchBar">
-@using (Ajax.BeginForm("Index",
-        new AjaxOptions
-        {
-            InsertionMode = InsertionMode.Replace,
-            HttpMethod = "Get",
-                            UpdateTargetId = "DVD"
-        }
-        ))
-{
+                    @using (Ajax.BeginForm("Index",
+                    new AjaxOptions
+                            {
+                                InsertionMode = InsertionMode.Replace,
+                                HttpMethod = "Get",
+                                                UpdateTargetId = "DVD"
+                            }
+                            ))
+                    {
                         <input type="search" name="search" id="search" placeholder='Zoeken' onclick="this.select();" />
                         <input type="submit" value="Zoek item" class="btn btn-default" id="searchSubmit" />
                     }
