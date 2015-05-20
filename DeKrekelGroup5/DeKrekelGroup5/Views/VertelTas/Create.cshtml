@@ -1,0 +1,110 @@
+﻿@using DeKrekelGroup5.ViewModel
+@model DeKrekelGroup5.ViewModel.MainViewModel
+@Styles.Render("~/Content/uploadfile.css")
+@Styles.Render("~/Content/multi-select.css")
+<div id="content">
+    <h4 id="subtitel">
+        Verteltas aanmaken
+        <div class="floatRight">
+            <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
+        </div>
+    </h4>
+    <hr />
+    <div id="wrapDetails">
+        <div id="leftCol">
+            @Html.Partial("upload", Model)
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div id="mainCol">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.VertelTasCreateViewModel.Verteltas.image)
+                <table id="details">
+                    <tr>
+                        <td class="td1">Leeftijd</td>
+                        <td>
+                            @Html.EditorFor(model => model.VertelTasCreateViewModel.Verteltas.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.VertelTasCreateViewModel.Verteltas.Leeftijd, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">Titel</td>
+                        <td>
+                            @Html.EditorFor(model => model.VertelTasCreateViewModel.Verteltas.Titel, new { htmlAttributes = new { @class = "form-control", id = "titelInput" } })
+                            @Html.ValidationMessageFor(model => model.VertelTasCreateViewModel.Verteltas.Titel, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">Omschrijving</td>
+                        <td class="textArea">
+                            @Html.TextAreaFor(model => model.VertelTasCreateViewModel.Verteltas.Omschrijving, new { rows = "10", columns = "300" })
+                            @Html.ValidationMessageFor(model => model.VertelTasCreateViewModel.Verteltas.Omschrijving, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">Themas</td>
+                        <td>
+                            @Html.ListBoxFor(model => model.VertelTasCreateViewModel.SubmittedThemas, Model.VertelTasCreateViewModel.AllThemas, new { multiple = "multiple", @class = "multiselect" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">Boeken Toevoegen</td>
+                        <td>
+                            @Html.ListBoxFor(model => model.VertelTasCreateViewModel.SubmittedBoeken, Model.VertelTasCreateViewModel.AllBoeken, new { multiple = "multiple", @class = "multiselect" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">Spellen Toevoegen</td>
+                        <td>
+                            @Html.ListBoxFor(model => model.VertelTasCreateViewModel.SubmittedSpellen, Model.VertelTasCreateViewModel.AllSpellen, new { multiple = "multiple", @class = "multiselect" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">CDs Toevoegen</td>
+                        <td>
+                            @Html.ListBoxFor(model => model.VertelTasCreateViewModel.SubmittedCDs, Model.VertelTasCreateViewModel.AllCDs, new { multiple = "multiple", @class = "multiselect" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">DVDs Toevoegen</td>
+                        <td>
+                            @Html.ListBoxFor(model => model.VertelTasCreateViewModel.SubmittedDVDs, Model.VertelTasCreateViewModel.AllDVDs, new { multiple = "multiple", @class = "multiselect" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">Beschikbaar</td>
+                        <td>
+                            @Html.EditorFor(model => model.VertelTasCreateViewModel.Verteltas.Beschikbaar, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.VertelTasCreateViewModel.Verteltas.Beschikbaar, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                </table>
+                <p>
+                    <div class="form-group">
+                        <div class="button green" style="position: relative; overflow: hidden; cursor: default;">
+                            <img src="~/Images/tick.png" />Ok!
+                            <input type="submit" value="Create" style="position: absolute; cursor: pointer; top: 0px; width: 100%; height: 100%; left: 0px; z-index: 100; opacity: 0;" />
+                        </div>
+                    </div>
+                </p>
+            </div>
+        }
+    </div>
+</div>
+
+@section JavaScript
+ {
+    <script src="/Scripts/upload.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+    <script src="/Scripts/jQuery.MultiFile.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.multi-select.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.multiselect').multiSelect({ keepOrder: true });
+        });
+    </script>
+
+}
