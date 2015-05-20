@@ -1,0 +1,59 @@
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+
+<div id="content">
+    <h4 id="subtitel">
+        Details Instellingen
+        <div class="floatRight">
+
+            @if (Model.GebruikerViewModel.IsBeheerder)
+            {
+                <a href=' @Url.Action("edit") '><img src="~/Images/edit.png" /></a>
+            }
+            <a href='@Url.Action("index", "home")'><img src="~/Images/Return.png" /></a>
+        </div>
+    </h4>
+    <hr />
+    <div id="wrapDetails">
+        <div id="leftCol">
+                <img src="~/Images/settings.png" alt="krekelSchool settings" id="picItem" />
+        </div>
+        <div id="mainCol">
+            <table id="details">
+                <tr>
+                    <td class="td1">Max. uitleendagen</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.InstellingenViewModel.UitleenDagen)</td>
+                </tr>
+                <tr>
+                    <td class="td1">Max. verlengingen</td>
+                    <td class="td2 gray"> @Html.DisplayFor(model => model.InstellingenViewModel.MaxVerlengingen)</td>
+                </tr>
+
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td class="td1">Beheerder</td>
+                </tr>
+                <tr>
+                    <td class="td1">Paswoord <small>(6-12 tekens)</small></td>
+                    <td class="td2 gray"> ****** </td>
+                </tr>
+ 
+
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td class="td1">Bibliothecaris</td>
+                </tr>
+                <tr>
+                    <td class="td1">Paswoord <small>(6-12 tekens)</small></td>
+
+                    <td class="td2 gray"> ****** </td>
+                </tr>
+ 
+
+
+            </table>
+    </div>
+</div>
+</div>
+

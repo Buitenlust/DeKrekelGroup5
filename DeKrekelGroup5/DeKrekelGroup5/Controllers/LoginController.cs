@@ -54,8 +54,8 @@ namespace DeKrekelGroup5.Controllers
             if (Request.IsAjaxRequest())
             {
                 Gebruiker gebruiker = gebruikers.SingleOrDefault(g => g.GebruikersNaam == logon.Username);
-
-                if (gebruiker != null && gebruiker.PaswoordHashed == gebruiker.HashPassword(logon.Paswoord))
+                string hashedpassword = gebruiker.HashPassword(logon.Paswoord);
+                if (gebruiker != null && gebruiker.PaswoordHashed == hashedpassword )
                 {
                     if (HttpContext.Session != null)
                     {

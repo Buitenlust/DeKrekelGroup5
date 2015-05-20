@@ -46,9 +46,13 @@ namespace DeKrekelGroup5.Models.Domain
 
         /// <summary> Past het paswoord van de beheerder aan.</summary> 
         /// <param name="paswoord"> nieuw paswoord </param>
-        public void VeranderPaswoord(string paswoord)
+        /// <param name="beheerder"> beheerder moet meegegeven worden om rechten te controleren </param>
+        public void VeranderPaswoord(string paswoord, Gebruiker beheerder=null)
         {
-            CheckAdminRechten();
+            if(beheerder!=null)
+                beheerder.CheckAdminRechten();
+            else
+                CheckAdminRechten();
             string hashed = HashPassword(paswoord);
             PaswoordHashed = hashed;
         }
@@ -448,5 +452,21 @@ namespace DeKrekelGroup5.Models.Domain
             return new List<Thema>();
         }
 
+
+        /// <summary> Geeft de instellingen terug</summary>
+        /// <returns>Geeft de instellingen terug</returns> 
+        public Instellingen GetInstellingen()
+        {
+            return LetterTuin.Instellingen;
+        }
+
+        /// <summary> Past de basisinstellingen van de lettertuin aan</summary> 
+        /// <param name="instellingenVm"> Het viewmodel van instellingen </param> 
+        public void UpdateInstellingen(InstellingenViewModel instellingenVm)
+        {
+            Instellingen instellingen = LetterTuin.Instellingen;
+            instellingen.UitleenDagen = instellingenVm.UitleenDagen;
+            instellingen.MaxVerlengingen = instellingen.MaxVerlengingen;
+        }
     }
 }

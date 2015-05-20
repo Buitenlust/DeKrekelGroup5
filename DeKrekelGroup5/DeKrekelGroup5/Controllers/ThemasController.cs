@@ -16,7 +16,6 @@ namespace DeKrekelGroup5.Controllers
     public class ThemasController : Controller
     {
         private IGebruikerRepository gebruikersRep;
-        private Gebruiker Gebruiker;
 
         public ThemasController(IGebruikerRepository lt)
         {

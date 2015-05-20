@@ -1,0 +1,118 @@
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+<div id="content">
+    <h4 id="subtitel">
+        Aanpassen instellingen
+        <div class="floatRight">
+            <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
+        </div>
+    </h4>
+    <hr />
+    <div id="wrapDetails">
+        <div id="leftCol">
+            <img src="~/Images/settings.png" alt="krekelSchool settings" id="picItem" />
+        </div>
+        @if (Model.InstellingenViewModel != null)
+        {
+            using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" }) 
+                <div id="mainCol">
+                    <table id="details">
+                        <tr>
+                            <td class="td1">Max. uitleendagen</td>
+                            <td>
+                                @Html.EditorFor(model => model.InstellingenViewModel.UitleenDagen, new { htmlAttributes = new { @class = "form-control"} })
+                                @Html.ValidationMessageFor(model => model.InstellingenViewModel.UitleenDagen, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Max. verlengingen</td>
+                            <td>
+                                @Html.EditorFor(model => model.InstellingenViewModel.MaxVerlengingen, new {htmlAttributes = new {@class = "form-control"}})
+                                @Html.ValidationMessageFor(model => model.InstellingenViewModel.MaxVerlengingen, "", new {@class = "text-danger"})
+                            </td>
+                        </tr>
+
+                        <tr></tr><tr></tr>
+                        <tr>
+                            <td class="td1">Beheerder</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Paswoord <small>(6-12 tekens)</small></td>
+                            <td>
+                                @Html.PasswordFor(model => model.InstellingenViewModel.BeheerderPaswoord, new  {@class = "form-control", id="passBeheerder"})
+                                @Html.ValidationMessageFor(model => model.InstellingenViewModel.BeheerderPaswoord, "", new {@class = "text-danger"})
+                            </td>
+                        </tr>
+                        <tr id="passBeheerderBev">
+                            <td class="td1">Paswoord bevestigen</td>
+                            <td>
+                                @Html.PasswordFor(model => model.InstellingenViewModel.BeheerderPaswoordBevestigd, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.InstellingenViewModel.BeheerderPaswoordBevestigd, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+
+
+                        <tr></tr><tr></tr>
+                        <tr>
+                            <td class="td1">Bibliothecaris</td>
+                        </tr>
+                        <tr>
+                            <td class="td1">Paswoord <small>(6-12 tekens)</small></td>
+                            <td>
+                                @Html.PasswordFor(model => model.InstellingenViewModel.BibliothecarisPaswoord, new { @class = "form-control", id = "passBib" })
+                                @Html.ValidationMessageFor(model => model.InstellingenViewModel.BibliothecarisPaswoord, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                        <tr id="passBibBev">
+                            <td class="td1">Paswoord bevestigen</td>
+                            <td>
+                                @Html.PasswordFor(model => model.InstellingenViewModel.BibliothecarisPaswoordBevestigd, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.InstellingenViewModel.BibliothecarisPaswoordBevestigd, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+
+                    </table>
+                    <p>
+                        <div class="form-group">
+                            <div class="button green" style="position: relative; overflow: hidden; cursor: default;">
+                                <img src="~/Images/tick.png" />Ok!
+                                <input type="submit" value="Save" class="btn btn-default" style="position: absolute; cursor: pointer; top: 0px; width: 100%; height: 100%; left: 0px; z-index: 100; opacity: 0;" />
+                            </div>
+                        </div>
+                    </p>
+
+                </div>
+            }
+        }
+    </div>
+</div>
+@section JavaScript
+ {
+
+
+    <script src="/Scripts/upload.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.validate.js" type="text/javascript"></script>
+    <script src="/Scripts/validation_addition.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.multiselect').multiSelect();
+        });
+        $("#passBeheerderBev").hide();
+        $("#passBibBev").hide();
+
+        $("#passBeheerder").on("input", null, null, function () {
+            if ($("#passBeheerder").val().length > 5) {
+                $("#passBeheerderBev").show();
+            }
+        });
+
+        $("#passBib").on("input", null, null, function () { 
+            if ($("#passBib").val().length > 5) {
+                $("#passBibBev").show();
+            }
+        });
+    </script>
+}

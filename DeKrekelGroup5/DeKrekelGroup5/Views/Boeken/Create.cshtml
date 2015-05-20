@@ -27,7 +27,8 @@
                <div id="searchBar">
                     <input type="search" name="search" id="searchBookField" placeholder='Zoeken' onclick=" this.select(); " style="min-width: 200px; width: 250px; margin: 5px; height: 30px;"/>
                     <a href="#" id="searchBook"><img src="~/Images/searchWeb.png" style="margin-top: 35px; height: 30px;"/></a>
-                    <a href="#" id="leftBtn" style="display: none"><img src="~/Images/arrowleft.png" style="margin-left: 35px; height: 30px;" /></a>
+                   <a href="#" id="leftBtn" style="display: none"><img src="~/Images/arrowleft.png" style="margin-left: 35px; height: 30px;"/></a>
+                   <strong id="spanItems" style="color: white; font-size: x-large; margin-left: 35px;"></strong>
                     <a href="#" id="rightBtn" style="display: none"><img src="~/Images/arrowright.png" style="margin-left: 35px; height: 30px;" /></a>
                 </div>
 
@@ -125,6 +126,7 @@
 
         function handleResponse(response) {
             counter = 0;
+            $("#spanItems").text(counter + 1 + " / " + response.items.length);
             item = response.items[counter];
             vulFormulier();
             if (response.items.length > 1) {
@@ -134,6 +136,7 @@
         }
 
         function vulFormulier() {
+            $("#spanItems").text(counter + 1 + " / " + (datavar.items.length+1));
             $("#auteurInput").val(item.volumeInfo.authors);
             $("#uitgeverInput").val(item.volumeInfo.publisher);
             $("#titelInput").val(item.volumeInfo.title);
