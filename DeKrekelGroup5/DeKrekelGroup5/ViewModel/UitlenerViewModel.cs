@@ -13,17 +13,17 @@ namespace DeKrekelGroup5.ViewModel
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Vul een naam in aub...")]
-        [MaxLength(45, ErrorMessage = "naam is te lang (max. 45 tekens)")]
+        [MaxLength(100, ErrorMessage = "naam is te lang (max. 100 tekens)")]
         public String Naam { get; set; }
         [Required(ErrorMessage = "Vul een voornaam in aub...")]
-        [MaxLength(12, ErrorMessage = "Voornaam is te lang (max. 12 tekens)")]
+        [MaxLength(100, ErrorMessage = "Voornaam is te lang (max. 100 tekens)")]
         public String VoorNaam { get; set; }
 
-        [MaxLength(8, ErrorMessage = "Klas is te lang (max. 8 tekens)")]
+        [MaxLength(20, ErrorMessage = "Klas is te lang (max. 20 tekens)")]
         public String Klas { get; set; }
-        [MaxLength(20, ErrorMessage = "Adres is te lang (max. 20 tekens)")]
+        [MaxLength(200, ErrorMessage = "Adres is te lang (max. 200 tekens)")]
         public String Adres { get; set; }
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Vul een geldig email adres in aub.")]
         public String Email { get; set; }
 
 

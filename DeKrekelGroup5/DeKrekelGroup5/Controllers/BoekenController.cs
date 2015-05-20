@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -108,7 +109,7 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Prefix = "BoekCreateViewModel")] BoekCreateViewModel boek, Gebruiker gebruiker, MainViewModel mvm)
+        public ActionResult Create([Bind(Prefix = "BoekCreateViewModel")] BoekCreateViewModel boek, Gebruiker gebruiker, MainViewModel mvm, string image=null)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
@@ -116,8 +117,30 @@ namespace DeKrekelGroup5.Controllers
             if (ModelState.IsValid && boek != null && boek.Boek.Exemplaar <=0)
             {
                 try
-                { 
-                    boek.Boek.image = mvm.BoekCreateViewModel.Boek.image;
+                {
+                    if (!image.IsNullOrWhiteSpace())
+                    {
+                        WebClient Client = new WebClient();
+                        //WebRequest request = FtpWebRequest.Create(image);
+
+                        //using (WebResponse response = request.GetResponse())
+                        //{
+                        //    Stream responseStream = response.GetResponseStream();
+                        //    responseStream.CopyTo();
+                        //    fb.InputStream.Read() = responseStream;
+                        //}
+
+                        //HttpPostedFileBase fb = new HttpPostedFileWrapper();
+                        //fb.InputStream.BeginRead(); 
+                        boek.Boek.image = boek.Boek.Titel.Replace(" ", "_") + ".jpg";
+                        string path = System.IO.Path.Combine(Server.MapPath("~/FTP/Images"), boek.Boek.image);
+                        Client.DownloadFile(image, path );
+                    }
+                    else
+                    {
+                        boek.Boek.image = mvm.BoekCreateViewModel.Boek.image;
+                    }
+
                     List<Thema> themas = gebruiker.GetThemaListFromSelectedList(boek.SubmittedThemas);
                     Boek newBoek = boek.Boek.MapToBoek(boek.Boek, themas);
                     
@@ -127,7 +150,7 @@ namespace DeKrekelGroup5.Controllers
                     mvm.SetNewInfo("Boek" + boek.Boek.Titel + " werd toegevoegd...");
                     return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Items.Max(b => b.Exemplaar) });
                 }
-                catch (Exception)
+                catch (NullReferenceException)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }

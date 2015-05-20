@@ -19,8 +19,11 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
             HasKey(u => u.Id);
 
             //Props
-            Property(u => u.Naam).HasMaxLength(45);
-            Property(u => u.VoorNaam).HasMaxLength(45);
+            Property(u => u.Naam).HasMaxLength(125);
+            Property(u => u.VoorNaam).HasMaxLength(125);
+            Property(u => u.Adres).HasMaxLength(255);
+            Property(u => u.Email).HasMaxLength(125);
+            Property(u => u.Klas).HasMaxLength(45);
         }
     }
 }

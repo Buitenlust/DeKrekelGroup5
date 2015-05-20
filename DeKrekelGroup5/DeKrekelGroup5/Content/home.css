@@ -42,13 +42,8 @@ td div {
     background: orangered;
 }
 td:hover {
-    background-color: #B3D524;
-    -webkit-transform:rotate(20deg);
-    transform:rotate(20deg);
+    background-color: red;
+    -webkit-transform:scale(1.1);
+    transform:scale(1.1);
 }
 
-.tr1td1:hover, .tr1td3:hover, .tr1td5:hover {
-    background-color: #B3D524;
-    -webkit-transform:rotate(-20deg);
-    transform:rotate(-20deg);
-}

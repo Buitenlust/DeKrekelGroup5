@@ -11,12 +11,12 @@ namespace DeKrekelGroup5.ViewModel
     {
         public int Exemplaar { get; set; }
         [Required(ErrorMessage = "Vul een titel in aub...")]
-        [MaxLength(45, ErrorMessage = "De titel is te lang (max. 45 tekens)")]
+        [MaxLength(200, ErrorMessage = "De titel is te lang (max. 200 tekens)")]
         public string Titel { get; set; }
-        [MaxLength(1000, ErrorMessage = "De omschrijving is te lang (max. 1000 tekens)")]
+        [MaxLength(4000, ErrorMessage = "De omschrijving is te lang (max. 4000 tekens)")]
         public string Omschrijving { get; set; }
         [Required(ErrorMessage = "Vul een jaartal tussen 0 & 99 in aub...")]
-        [Range(0, 99)]
+        [Range(0, 99, ErrorMessage = "Vul een jaartal tussen 0 & 99 in aub...")]
         public int Leeftijd { get; set; }
 
         public HttpPostedFileBase ImageFile { get; set; }

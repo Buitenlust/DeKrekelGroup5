@@ -9,9 +9,9 @@ namespace DeKrekelGroup5.ViewModel
     public class GebruikerViewModel
     {
         public string Username { get; set; }
-        [Required(ErrorMessage = "Tes vandoen")]
-        [MaxLength(10, ErrorMessage = " max 10 tekens")]
-        [MinLength(6, ErrorMessage = " min 6 tekens")]
+        [Required(ErrorMessage = "Vul een paswoord in (tussen 6 & 10 tekens)")]
+        [MaxLength(10, ErrorMessage = "Tussen 6 & 10 tekens")]
+        [MinLength(6, ErrorMessage = "Tussen 6 & 10 tekens")]
         public string Paswoord { get; set; }
 
         public bool IsBeheerder { get; set; }

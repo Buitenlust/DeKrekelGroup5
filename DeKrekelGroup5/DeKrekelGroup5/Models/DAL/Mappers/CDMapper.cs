@@ -16,10 +16,10 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
             ToTable("CD");
 
             //properties
-            Property(c => c.Omschrijving).HasMaxLength(1023);
-            Property(c => c.Titel).HasMaxLength(55).IsRequired();
-            Property(c => c.Uitgever).HasMaxLength(55);
-            Property(b => b.ImageString).HasMaxLength(55);
+            Property(c => c.Omschrijving).HasMaxLength(5000);
+            Property(c => c.Titel).HasMaxLength(250).IsRequired();
+            Property(c => c.Uitgever).HasMaxLength(250);
+            Property(b => b.ImageString).HasMaxLength(254);
             //Primary Key
             HasKey(c => c.Exemplaar);
         }

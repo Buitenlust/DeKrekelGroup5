@@ -17,10 +17,10 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
             ToTable("DVD");
 
             //properties
-            Property(d => d.Omschrijving).HasMaxLength(1023);
-            Property(d => d.Titel).HasMaxLength(55).IsRequired();
-            Property(d => d.Uitgever).HasMaxLength(55);            
-            Property(b => b.ImageString).HasMaxLength(55);
+            Property(d => d.Omschrijving).HasMaxLength(5000);
+            Property(d => d.Titel).HasMaxLength(250).IsRequired();
+            Property(d => d.Uitgever).HasMaxLength(250);            
+            Property(b => b.ImageString).HasMaxLength(254);
             //Primary Key
             HasKey(d => d.Exemplaar);
 

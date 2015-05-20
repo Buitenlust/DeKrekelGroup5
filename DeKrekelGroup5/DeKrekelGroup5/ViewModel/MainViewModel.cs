@@ -96,6 +96,7 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = boek.Leeftijd,
                 Themas = boek.Themas,
                 Beschikbaar = boek.Beschikbaar,
+                image = boek.ImageString,
                 EindDatumUitlening = boek.Uitleningen.Count == 0 ? new DateTime() : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).EindDatum,
                 Uitgeleend = boek.Uitleningen.Count == 0 ? false : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             };

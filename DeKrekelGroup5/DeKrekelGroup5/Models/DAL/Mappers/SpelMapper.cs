@@ -15,10 +15,10 @@ namespace DeKrekelGroup5.Models.DAL.Mappers
             ToTable("Spel");
 
             //properties
-            Property(s => s.Omschrijving).HasMaxLength(1023);
-            Property(s => s.Titel).HasMaxLength(55).IsRequired();
-            Property(s => s.Uitgever).HasMaxLength(55);
-            Property(b => b.ImageString).HasMaxLength(55);
+            Property(s => s.Omschrijving).HasMaxLength(5000);
+            Property(s => s.Titel).HasMaxLength(250).IsRequired();
+            Property(s => s.Uitgever).HasMaxLength(250);
+            Property(b => b.ImageString).HasMaxLength(254);
             //Primary Key
             HasKey(spel => spel.Exemplaar);
         }

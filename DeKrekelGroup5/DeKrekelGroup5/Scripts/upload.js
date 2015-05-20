@@ -13,6 +13,7 @@ $(document).ready(function () {
         dragDropStr: "",
         onSuccess: function (files, data, xhr) {
             $("#status").show(500);
+            $("#imageInput").val("");
             console.log(files.toString());
             $("#picItem").attr("src", "/FTP/Images/" + data.imagePath);
         },

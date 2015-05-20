@@ -13,10 +13,9 @@ namespace DeKrekelGroup5.ViewModel
     public class BoekViewModel:ItemViewModel
     {
         [Required(ErrorMessage = "Geef een auteur in aub...")]
-        [MaxLength(45, ErrorMessage = "De naam van de auteur is te lang (max. 45 tekens)")]
-        public string Auteur { get; set; }
-        [Required(ErrorMessage = "Geef een uitgever in aub...")]
-        [MaxLength(45, ErrorMessage = "De naam van de uitgever is te lang (max. 45 tekens)")]
+        [MaxLength(200, ErrorMessage = "De naam van de auteur is te lang (max. 200 tekens)")]
+        public string Auteur { get; set; } 
+        [MaxLength(200, ErrorMessage = "De naam van de uitgever is te lang (max. 200 tekens)")]
         public string Uitgever { get; set; }
 
         public BoekViewModel() 
@@ -53,7 +52,7 @@ namespace DeKrekelGroup5.ViewModel
             Boeken = boeken.Select(b => new BoekViewModel(){
                 Exemplaar = b.Exemplaar,
                 Titel = b.Titel,
-                Omschrijving = b.Omschrijving,
+                Omschrijving = b.Omschrijving.Length > 700?  b.Omschrijving.Substring(0, 700)+"...": b.Omschrijving,
                 Auteur = b.Auteur,
                 Uitgever = b.Uitgever,
                 Leeftijd = b.Leeftijd, 

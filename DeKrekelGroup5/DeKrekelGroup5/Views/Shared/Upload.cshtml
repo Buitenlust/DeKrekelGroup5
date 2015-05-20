@@ -4,12 +4,18 @@
 
     @if (Model.BoekCreateViewModel == null || string.IsNullOrEmpty(Model.BoekCreateViewModel.Boek.image))
     {
-        <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
+        if(Model.BoekViewModel == null|| string.IsNullOrEmpty(Model.BoekViewModel.image))
+        {
+            <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
+        }
+        else
+        {
+            <img src="@Url.Content("/FTP/Images/"+Model.BoekViewModel.image)" alt="Model.BoekCreateViewModel.Boek.image" style="max-width: 70%" />
+        }
     }
     else
     {
-
-        <img src="@Url.Content("/FTP/Images/"+Model.BoekCreateViewModel.Boek.image)" alt="Model.BoekCreateViewModel.Boek.image" style="max-width: 70%" />
+        <img src="@Url.Content("/FTP/Images/"+Model.BoekCreateViewModel.Boek.image)" alt="Model.BoekCreateViewModel.Boek.image" style="max-width: 70%"/>
     }
     
     <div id="multiplefileuploader"></div>
