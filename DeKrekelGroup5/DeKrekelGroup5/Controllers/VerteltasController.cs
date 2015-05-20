@@ -15,7 +15,7 @@ using Microsoft.Ajax.Utilities;
 
 namespace DeKrekelGroup5.Controllers
 {
-    public class VertelTasController: Controller
+    public class VertelTasController : Controller
     {
         private IGebruikerRepository gebruikersRep;
 
@@ -29,25 +29,21 @@ namespace DeKrekelGroup5.Controllers
         {
             if (gebruiker == null)
                 gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
-            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            else
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+
             try
             {
                 IEnumerable<VertelTas> verteltassen;
-                if (!String.IsNullOrEmpty(search))
-                {
-                    verteltassen = gebruiker.LetterTuin.GetVertelTassen(search);
-                    ViewBag.Selection = "Alle verteltassen met " + search;
-                }
-                else
-                {
-                    verteltassen = gebruiker.LetterTuin.GetVertelTassen(null);
-                    ViewBag.Selection = "Alle verteltassen";
-                }
+
+                verteltassen = gebruiker.LetterTuin.GetVertelTassen(search).ToList();
+                //ViewBag.Selection = "Alle verteltassen met " + search;
+
 
                 if (Request.IsAjaxRequest())
-                    return PartialView("VertelTasLijst", new VertelTasLijstViewModel(verteltassen) { IsAdmin = gebruiker.AdminRechten, IsBibliothecaris = gebruiker.BibliotheekRechten });
+                    return PartialView("VertelTasLijst", new MainViewModel(gebruiker).SetNewVerteltasLijstVm(verteltassen));
 
-                return View(new VertelTasLijstViewModel(verteltassen) { IsAdmin = gebruiker.AdminRechten, IsBibliothecaris = gebruiker.BibliotheekRechten });
+                return View(new MainViewModel(gebruiker).SetNewVerteltasLijstVm(verteltassen));
             }
             catch (Exception)
             {
@@ -69,7 +65,7 @@ namespace DeKrekelGroup5.Controllers
                 VertelTas vertelTas = gebruiker.LetterTuin.GetItem(id) as VertelTas;
                 if (vertelTas == null)
                     return HttpNotFound();
-                return View(vertelTas);
+                return View(new MainViewModel(gebruiker).SetVerteltasViewModel(vertelTas));
             }
             catch (Exception)
             {
@@ -83,10 +79,11 @@ namespace DeKrekelGroup5.Controllers
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
 
             try
             {
-                return View(new VertelTasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new VertelTas()));
+                return View(new MainViewModel(gebruiker).SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new VertelTas(), gebruiker.LetterTuin.Items));
             }
             catch (Exception)
             {
@@ -96,21 +93,20 @@ namespace DeKrekelGroup5.Controllers
 
         //POST : VertelTassen/Create
         [HttpPost]
-        public ActionResult Create([Bind(Prefix = "Boek")] VertelTasViewModel vertelTas, Gebruiker gebruiker)
+        public ActionResult Create([Bind(Prefix = "VertelTasCreateViewModel")] VertelTasCreateViewModel vertelTas, Gebruiker gebruiker)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            if (ModelState.IsValid && vertelTas != null && vertelTas.Exemplaar <= 0)
+            if (ModelState.IsValid && vertelTas != null && vertelTas.Verteltas.Exemplaar <= 0)
             {
                 try
                 {
-                    VertelTas newVertelTas = vertelTas.MapToVerteltas(vertelTas, gebruiker.LetterTuin.GetThemaByName(vertelTas.Thema));
-                    gebruiker.AddItem(newVertelTas);
-                    gebruikersRep.DoNotDuplicateThema(newVertelTas);
+                    MainViewModel mvm = new MainViewModel(gebruiker);
+                    gebruiker.CreateVertelTas(vertelTas);
                     gebruikersRep.SaveChanges();
-                    TempData["Info"] = "Verteltas" + vertelTas.Titel + " werd toegevoegd...";
-                    return RedirectToAction("Index");
+                    mvm.SetNewInfo("Verteltas " + vertelTas.Verteltas.Titel + " werd toegevoegd...");
+                    return View("Index", mvm);
                 }
                 catch (Exception)
                 {
@@ -134,7 +130,7 @@ namespace DeKrekelGroup5.Controllers
                 VertelTas vertelTas = gebruiker.LetterTuin.GetItem(id) as VertelTas;
                 if (vertelTas == null)
                     return HttpNotFound();
-                return View(new VertelTasCreateViewModel(gebruiker.LetterTuin.Themas, vertelTas)); 
+                return View(new MainViewModel(gebruiker).SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), vertelTas, gebruiker.LetterTuin.Items));
             }
             catch (Exception)
             {
@@ -146,30 +142,29 @@ namespace DeKrekelGroup5.Controllers
         //POST : Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Prefix = "VertelTas")] VertelTasViewModel vertelTas, Gebruiker gebruiker)
+        public ActionResult Edit([Bind(Prefix = "VertelTasCreateViewModel")] VertelTasCreateViewModel vertelTas, Gebruiker gebruiker)
         {
             if (gebruiker == null || gebruiker.AdminRechten == false)
                 return new HttpUnauthorizedResult();
             gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-            if (ModelState.IsValid && vertelTas != null && vertelTas.Exemplaar > 0)
+            if (ModelState.IsValid && vertelTas != null && vertelTas.Verteltas.Exemplaar > 0)
             {
                 try
                 {
-                    vertelTas.Uitgeleend = false;
-                    vertelTas.Beschikbaar = true;
-                    VertelTas newVertelTas = vertelTas.MapToVertelTas(vertelTas, gebruiker.LetterTuin.GetThemaByName(vertelTas.Thema));
-                    gebruiker.UpdateVertelTas(newVertelTas);
-                    gebruikersRep.DoNotDuplicateThema(newVertelTas);
-                    TempData["Info"] = "VertelTas " + vertelTas.Titel + " werd aangepast...";
+                    MainViewModel mvm = new MainViewModel(gebruiker);
+                    // VertelTas newVertelTas = vertelTas.Verteltas.MapToVertelTas(vertelTas.Verteltas, gebruiker.LetterTuin.GetThemaByName(vertelTas.Verteltas.Thema));
+                    // gebruiker.UpdateVerteltas(newVertelTas);
+                    //gebruikersRep.DoNotDuplicateThema(newVertelTas);
+                    mvm.SetNewInfo("Verteltas " + vertelTas.Verteltas.Titel + " werd aangepast...");
                     gebruikersRep.SaveChanges();
-                    return RedirectToAction("Index");
+                    return View("Index", mvm);
                 }
                 catch (Exception)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }
             }
-            return View(vertelTas);
+            return View(new MainViewModel(gebruiker) { VertelTasCreateViewModel = vertelTas });
         }
 
 
@@ -187,7 +182,7 @@ namespace DeKrekelGroup5.Controllers
                 VertelTas vertelTas = gebruiker.LetterTuin.GetItem(id) as VertelTas;
                 if (vertelTas == null)
                     return HttpNotFound();
-                return View(vertelTas);
+                return View(new MainViewModel(gebruiker).SetVerteltasViewModel(vertelTas));
             }
             catch (Exception)
             {
