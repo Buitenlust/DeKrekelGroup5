@@ -201,6 +201,7 @@
     <Compile Include="Controllers\UitlenersController.cs" />
     <Compile Include="Controllers\UitleningenController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="Controllers\VerteltasController.cs" />
     <Compile Include="Infrastructure\HelperModelBinder.cs" />
     <Compile Include="Infrastructure\MainViewModelBinder.cs" />
     <Compile Include="Infrastructure\GebruikerModelBinder.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="ViewModel\GebruikerViewModel.cs" />
     <Compile Include="ViewModel\BoekViewModel.cs" />
     <Compile Include="ViewModel\ItemViewModel.cs" />
+    <Compile Include="ViewModel\VertelTasViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -400,7 +402,7 @@
     <Content Include="Views\VertelTas\Details.cshtml" />
     <Content Include="Views\VertelTas\Edit.cshtml" />
     <Content Include="Views\VertelTas\Index.cshtml" />
-    <Content Include="Views\VertelTas\VerteltasLijst.cshtml" />
+    <Content Include="Views\VertelTas\VertelTasLijst.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
