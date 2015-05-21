@@ -39,12 +39,12 @@ namespace DeKrekelGroup5.Controllers
                 if (!String.IsNullOrEmpty(search))
                 {
                     verteltassen = gebruiker.LetterTuin.GetVertelTassen(search).ToList();
-                    //ViewBag.Selection = "Alle boeken met " + search;
+                    //ViewBag.Selection = "Alle verteltassen met " + search;
                 }
                 else
                 {
                     verteltassen = gebruiker.LetterTuin.GetVertelTassen(null).ToList();
-                    //ViewBag.Selection = "Alle boeken";
+                    //ViewBag.Selection = "Alle verteltassen";
                 }
 
 

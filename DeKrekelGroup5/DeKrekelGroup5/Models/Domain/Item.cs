@@ -27,6 +27,8 @@ namespace DeKrekelGroup5.Models.Domain
 
         public virtual List<Uitlening> Uitleningen { get; set; }
 
+        
+
 
         public Item()
         { 

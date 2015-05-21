@@ -102,11 +102,11 @@ namespace DeKrekelGroup5.Models.Domain
         public IEnumerable<VertelTas> GetVertelTassen(string search)
         {
             if (search != null && !search.Trim().IsEmpty())
-                return Items.OfType<VertelTas>().Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
+                return VertelTassen.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
                                                             p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
                                                             p.Omschrijving.ToLower().Contains(search.ToLower()))
                     .OrderBy(p => p.Titel);
-            return Items.OfType<VertelTas>().Take(25);
+            return VertelTassen.Take(25);
         }
 
 

@@ -2,42 +2,42 @@
 @using DeKrekelGroup5.ViewModel
 @model DeKrekelGroup5.ViewModel.MainViewModel
 
-@foreach (var item in Model.BoekenLijstViewModel.Boeken)
+@foreach (var verteltas in Model.VertelTasLijstViewModel.VertelTassen)
 {
     <table class="table">
         <tr>
             <th>
-                B @Html.DisplayFor(modelItem => item.Exemplaar)
+                B @Html.DisplayFor(modelItem => verteltas.Exemplaar)
             </th>
             <th>
-                @Html.DisplayFor(modelItem => item.Titel)
+                @Html.DisplayFor(modelItem => verteltas.Titel)
             </th>
             <th>
             </th>
         </tr>
         <tr>
             <td id="left">
-                @if (string.IsNullOrEmpty(item.image))
+                @if (string.IsNullOrEmpty(verteltas.image))
                 {
                     <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
                 }
                 else
                 {
 
-                    <img src='@Url.Content("~/FTP/Images/"+item.image)' alt="item.image" />
+                    <img src='@Url.Content("~/FTP/Images/"+verteltas.image)' alt="item.image" />
                 }
             </td>
             <td id="middle">
                 <div class="middleDiv">
                     <div class="beschikbaar">
-                        @if (item.Beschikbaar)
+                        @if (verteltas.Beschikbaar)
                         {
-                            if (item.Uitgeleend)
+                            if (verteltas.Uitgeleend)
                             {
-                                <span>Beschikbaar vanaf: </span>@item.GetStringDate()
+                                <span>Beschikbaar vanaf: </span>@verteltas.GetStringDate()
                                 if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
                                 {
-                                    @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "icon" })
+                                    @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new { exemplaar = verteltas.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "icon" })
                                 }
                             }
                             else
@@ -52,16 +52,16 @@
                         }
                     </div>
 
-                    <p><strong>Leeftijd: </strong> @Html.DisplayFor(modelItem => item.Leeftijd) jaar</p>
+                    <p><strong>Leeftijd: </strong> @Html.DisplayFor(modelItem => verteltas.Leeftijd) jaar</p>
 
-                    <p><strong>Omschrijving: </strong> <span style="font-size: medium">@Html.DisplayFor(modelItem => item.Omschrijving)</span></p>
+                    <p><strong>Omschrijving: </strong> <span style="font-size: medium">@Html.DisplayFor(modelItem => verteltas.Omschrijving)</span></p>
 
                     <p id="themap">
                         @{ int counter = 0; }
-                        @foreach (var thema in item.Themas)
+                        @foreach (var thema in verteltas.Themas)
                         {
                             counter++;
-                            <span style="font-style: italic">@thema.Themaa</span> @(counter < item.Themas.Count ? "|" : "")
+                            <span style="font-style: italic">@thema.Themaa</span> @(counter < verteltas.Themas.Count ? "|" : "")
                         }
                     </p>
 
@@ -72,26 +72,26 @@
             <td id="right">
                 <div class="wrapper-image">
 
-                    <a href=' @Url.Action("details", new { id = item.Exemplaar }) '><img src="~/Images/details.png" class="iconRight" /></a>
+                    <a href=' @Url.Action("details", new { id = verteltas.Exemplaar }) '><img src="~/Images/details.png" class="iconRight" /></a>
                     @if (Model.GebruikerViewModel.IsBeheerder)
                     {
-                        <a href=' @Url.Action("edit", new { id = item.Exemplaar }) '><img src="~/Images/edit.png" class="iconRight" /></a>
-                        <a href=' @Url.Action("delete", new { id = item.Exemplaar }) '><img src="~/Images/delete.png" class="iconRight" /></a>
+                        <a href=' @Url.Action("edit", new { id = verteltas.Exemplaar }) '><img src="~/Images/edit.png" class="iconRight" /></a>
+                        <a href=' @Url.Action("delete", new { id = verteltas.Exemplaar }) '><img src="~/Images/delete.png" class="iconRight" /></a>
                     }
 
 
                     @if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
                     {
-                        if (item.Uitgeleend)
+                        if (verteltas.Uitgeleend)
                         {
-                            @Ajax.ImageActionLink("/Images/binnen.png", "EindeUitlening", "EindeUitlening", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "doorImg" })
+                            @Ajax.ImageActionLink("/Images/binnen.png", "EindeUitlening", "EindeUitlening", "Uitleningen", new { exemplaar = verteltas.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "doorImg" })
 
                         }
                         else
                         {
-                            if (item.Beschikbaar)
+                            if (verteltas.Beschikbaar)
                             {
-                                <a href=' @Url.Action("Create", "Uitleningen", new { id = item.Exemplaar }) ' class="doorImg"><img src="~/Images/buiten.png" /></a>
+                                <a href=' @Url.Action("Create", "Uitleningen", new { id = verteltas.Exemplaar }) ' class="doorImg"><img src="~/Images/buiten.png" /></a>
                             }
                         }
                     }
