@@ -1,0 +1,103 @@
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div id="content">
+    <h4 id="subtitel">Ben je zeker dat je Deze Verteltas wil verwijderen? <a href=' @Url.Action("index") '><img src="~/Images/Return.png" class="floatRight" /></a></h4>
+    <hr />
+    <div id="wrapDetails">
+        <div id="leftCol">
+            @Html.Partial("upload", Model)
+        </div>
+
+        <div id="mainCol">
+            <table id="details">
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasViewModel.Exemplaar)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.VertelTasViewModel.Exemplaar)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasViewModel.Titel)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.VertelTasViewModel.Titel)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasViewModel.Leeftijd)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.VertelTasViewModel.Leeftijd)</td>
+                </tr>
+                <tr>
+                    <td class="td1">Themas</td>
+                    <td class="td2 gray">
+                        @{ int counter = 0; }
+                        @foreach (var thema in Model.VertelTasViewModel.Themas)
+                        {
+                            counter++;
+                            <span>@thema.Themaa</span> @(counter < Model.VertelTasViewModel.Themas.Count ? "|" : "")
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">Items</td>
+                    <td class="td2 gray">
+                        @{ int counter1 = 0;}
+                        @foreach (var item in Model.VertelTasViewModel.Items)
+                        {
+                            counter1++;
+                            <span>@item.Titel</span> @(counter1 < Model.VertelTasViewModel.Items.Count ? "|" : "")
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasViewModel.Omschrijving)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.VertelTasViewModel.Omschrijving)</td>
+                </tr>
+
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasViewModel.Uitgeleend)</td>
+                    <td>
+                        @if (@Model.VertelTasViewModel.Uitgeleend)
+                        {
+                            @Model.VertelTasViewModel.EindDatumUitlening.ToLongDateString()
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="bigIcon" />
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.VertelTasViewModel.Beschikbaar)</td>
+                    <td>
+                        @if (@Model.VertelTasViewModel.Beschikbaar)
+                        {
+                            <img src="~/Images/tick.png" class="bigIcon" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/cross.png" class="bigIcon" />
+                        }
+                    </td>
+                </tr>
+            </table>
+
+
+
+
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <p class="floatRight">
+
+                    <button type="submit" value="Delete" class="button green close"><img src="~/Images/tick.png">Verwijder!</button>
+
+                </p>
+            }
+
+        </div>
+    </div>
+
+
+
+</div>

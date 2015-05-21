@@ -52,7 +52,7 @@ namespace DeKrekelGroup5.Models.Domain
             if(beheerder!=null)
                 beheerder.CheckAdminRechten();
             else
-                CheckAdminRechten();
+            CheckAdminRechten();
             string hashed = HashPassword(paswoord);
             PaswoordHashed = hashed;
         }
@@ -82,6 +82,17 @@ namespace DeKrekelGroup5.Models.Domain
                     return true;
                 }
                 return false;
+        }
+ 
+        public bool AddVertelTas(VertelTas vertelTas)
+        {
+            CheckAdminRechten();
+            if (vertelTas != null && vertelTas.Exemplaar == 0)
+            {
+                LetterTuin.VertelTassen.Add(vertelTas);
+                    return true;
+            }
+            return false;
         }
  
         /// <summary> Update de parameters van een boek</summary>
@@ -143,6 +154,21 @@ namespace DeKrekelGroup5.Models.Domain
             return false;
         }
 
+        public bool UpdateVertelTas(VertelTas vertelTas)
+        {
+            CheckAdminRechten();
+            if (vertelTas != null && vertelTas.Exemplaar > 0)
+            {
+                var newVertelTas = LetterTuin.GetVertelTas(vertelTas.Exemplaar);
+                if (newVertelTas != null)
+                {
+                    newVertelTas.Update(vertelTas);
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         /// <summary> Update de parameters van een spel</summary>
         /// <returns> Geeft true weer als het spel is aangepast. Exemplaar van het spel moet > 0 </returns>
@@ -171,6 +197,17 @@ namespace DeKrekelGroup5.Models.Domain
             if (item != null && item.Exemplaar > 0)
             {
                 LetterTuin.Items.Remove(item);
+                return true;
+            }
+            return false;
+        }
+
+        public bool RemoveVertelTas(VertelTas vertelTas)
+        {
+            CheckAdminRechten();
+            if (vertelTas != null && vertelTas.Exemplaar > 0)
+            {
+                LetterTuin.VertelTassen.Remove(vertelTas);
                 return true;
             }
             return false;
@@ -471,6 +508,10 @@ namespace DeKrekelGroup5.Models.Domain
             return new List<Thema>();
         }
 
+
+
+
+        
 
         /// <summary> Geeft de instellingen terug</summary>
         /// <returns>Geeft de instellingen terug</returns> 
