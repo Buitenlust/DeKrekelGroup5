@@ -1,65 +1,104 @@
-﻿@model DeKrekelGroup5.Models.Domain.CD
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
 
-@{
-    ViewBag.Title = "Delete";
-}
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>CD</h4>
+ <div id="content">
+    <h4 id="subtitel">Ben je zeker dat je deze CD wil verwijderen? <a href=' @Url.Action("index") '><img src="~/Images/Return.png" class="floatRight" /></a></h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Artiest)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Artiest)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Uitgever)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Uitgever)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Leeftijd)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Leeftijd)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Titel)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Titel)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Omschrijving)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Omschrijving)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+    <div id="wrapDetails">
+        <div id="leftCol">
+            @if (Model.CdViewModel == null || string.IsNullOrEmpty(Model.CdViewModel.image))
+            {
+                <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
+            }
+            else
+            {
+                <img src="@Url.Content("/FTP/Images/" + Model.CdViewModel.image)" alt="Model.CdViewModel.image" style="max-width: 70%" />
+            }
         </div>
-    }
+
+        <div id="mainCol">
+            <table id="details">
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Exemplaar)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Exemplaar)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Titel)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Titel)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Artiest)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Artiest)</td>
+                </tr> 
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Uitgever)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Uitgever)</td>
+                </tr>
+                <tr>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Leeftijd)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Leeftijd)</td>
+                </tr>
+                <tr>
+                    <td class="td1">Themas</td>
+                    <td class="td2 gray">
+                        @{ int counter = 0; }
+                    @foreach (var thema in Model.CdViewModel.Themas)
+                    {
+                        counter++;
+                        <span>@thema.Themaa</span> @(counter < Model.CdViewModel.Themas.Count ? "|" : "")
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Omschrijving)</td>
+                <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Omschrijving)</td>
+            </tr>
+
+            <tr>
+                <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Uitgeleend)</td>
+                <td>
+                    @if (@Model.CdViewModel.Uitgeleend)
+                    {
+                        @Model.CdViewModel.EindDatumUitlening.ToLongDateString()
+                    }
+                    else
+                    {
+                        <img src="~/Images/cross.png" class="bigIcon" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Beschikbaar)</td>
+                <td>
+                    @if (@Model.CdViewModel.Beschikbaar)
+                    {
+                        <img src="~/Images/tick.png" class="bigIcon" />
+                    }
+                    else
+                    {
+                        <img src="~/Images/cross.png" class="bigIcon" />
+                    }
+                </td>
+            </tr>
+        </table>
+
+
+
+
+
+                    @using (Html.BeginForm())
+                    {
+                    @Html.AntiForgeryToken()
+    <p class="floatRight">
+
+        <button type="submit" value="Delete" class="button green close"><img src="~/Images/tick.png">Verwijder!</button>
+        
+    </p>
+                    }
+
+            </div>
+    </div>
+
+   
+
 </div>
+

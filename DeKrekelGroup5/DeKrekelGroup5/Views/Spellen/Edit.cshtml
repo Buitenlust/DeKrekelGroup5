@@ -1,74 +1,136 @@
-﻿@model DeKrekelGroup5.ViewModel.SpelCreateViewModel
-
-@{
-    ViewBag.Title = "Edit";
-} 
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Spel.Exemplaar)
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Spel.Uitgever, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Spel.Uitgever, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Spel.Uitgever, "", new { @class = "text-danger" })
-            </div>
+﻿@using DeKrekelGroup5.ViewModel
+@model DeKrekelGroup5.ViewModel.MainViewModel
+@Styles.Render("~/Content/uploadfile.css")
+@Styles.Render("~/Content/multi-select.css")
+<div id="content">
+    <h4 id="subtitel">
+        Aanpassen Spel
+        <div class="floatRight">
+            <a href=' @Url.Action("index") '><img src="~/Images/Return.png" /></a>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Spel.Leeftijd, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Spel.Leeftijd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Spel.Leeftijd, "", new { @class = "text-danger" })
-            </div>
+    </h4>
+    <hr/>
+    <div id="wrapDetails">
+        <div id="leftCol">
+          @if (Model.SpelViewModel == null || string.IsNullOrEmpty(Model.SpelViewModel.image))
+          {
+            <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
+          }
+          else
+          {
+            <img src="@Url.Content("/FTP/Images/" + Model.SpelViewModel.image)" alt="Model.SpelViewModel.image" style="max-width: 70%" />
+          }
         </div>
+        @if (Model.SpelCreateViewModel != null)
+        {
+       using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.SpelCreateViewModel.Spel.image)
+            <div id="mainCol">
+                <table id="details">
+                    <tr>
+                        <td class="td1">Exemplaar</td>
+                        <td class="td2 gray">
+                            <strong>@Html.DisplayFor(model => model.SpelCreateViewModel.Spel.Exemplaar)</strong>
+                            @Html.HiddenFor(model => model.SpelCreateViewModel.Spel.Exemplaar)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">Titel</td>
+                        <td>
+                            @Html.EditorFor(model => model.SpelCreateViewModel.Spel.Titel, new { htmlAttributes = new { @class = "form-control", id = "titelInput" } })
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Titel, "", new { @class = "text-danger" })
+                        </td>
+                    </tr> 
+                    <tr>
+                        <td class="td1">Uitgever</td>
+                        <td>
+                            @Html.EditorFor(model => model.SpelCreateViewModel.Spel.Uitgever, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Uitgever, "", new {@class = "text-danger"})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">Leeftijd</td>
+                        <td>
+                            @Html.EditorFor(model => model.SpelCreateViewModel.Spel.Leeftijd, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Leeftijd, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
 
- 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Spel.Titel, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Spel.Titel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Spel.Titel, "", new { @class = "text-danger" })
+                    <tr>
+                        <td class="td1">Themas</td>
+                        <td>
+                            @Html.ListBoxFor(model => model.SpelCreateViewModel.SubmittedThemas, Model.SpelCreateViewModel.AllThemas, new { multiple = "multiple", @class = "multiselect" })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="td1">Omschrijving</td>
+                        <td class="textArea">
+                            @Html.TextAreaFor(model => model.SpelCreateViewModel.Spel.Omschrijving, new { rows = "10", columns = "300" })
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Omschrijving, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td1">Uitgeleend</td>
+                        
+                            @if (@Model.SpelCreateViewModel.Spel.Uitgeleend)
+                            {
+                                <td class="td2 gray">
+                                    @Model.SpelCreateViewModel.Spel.EindDatumUitlening.ToLongDateString()
+                                </td>
+                            }
+                            else
+                            {
+<td>
+                                    <img src="~/Images/cross.png" class="icon" />
+                                </td>
+                            }
+                                
+                    </tr>
+                    <tr>
+                        <td class="td1">Beschikbaar</td>
+                        <td>
+                            @Html.EditorFor(model => model.SpelCreateViewModel.Spel.Beschikbaar, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.SpelCreateViewModel.Spel.Beschikbaar, "", new {@class = "text-danger"})
+                        </td>
+                    </tr>
+                </table>
+                <p >
+                    <div class="form-group">
+                        <div class="button green" style="position: relative; overflow: hidden; cursor: default;">
+                            <img src="~/Images/tick.png"/>Ok!
+                            <input type="submit" value="Save" class="btn btn-default" style="position: absolute; cursor: pointer; top: 0px; width: 100%; height: 100%; left: 0px; z-index: 100; opacity: 0;"/>
+                        </div>
+                    </div>
+                </p>
+                
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Spel.Omschrijving, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Spel.Omschrijving, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Spel.Omschrijving, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Spel.Thema, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Spel.Thema, Model.Themas, " --Selecteer een Thema--")
-                @Html.ValidationMessageFor(model => model.Spel.Thema)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+        }
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+ @section JavaScript
+ {
+      
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+     <script src="/Scripts/upload.js" type="text/javascript"></script>
+     <script src="/Scripts/jquery.validate.js" type="text/javascript"></script>
+     <script src="/Scripts/validation_addition.js" type="text/javascript"></script>
+     <script src="/Scripts/jquery.validate.unobtrusive.js" type="text/javascript"></script>
+     <script src="/Scripts/jQuery.MultiFile.min.js" type="text/javascript"></script>
+    <script src="/Scripts/jquery.multi-select.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.multiselect').multiSelect(); 
+        });
+    </script>
+
+
+
+
+     
+ }

@@ -7,11 +7,7 @@ namespace DeKrekelGroup5.Models.Domain
 {
    public class CD : Item
     {
-
         public string Artiest { get; set; }
         public string Uitgever { get; set; }
-
-
-        
     }
 }

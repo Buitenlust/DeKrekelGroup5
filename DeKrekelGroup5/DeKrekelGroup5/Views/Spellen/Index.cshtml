@@ -1,27 +1,33 @@
-﻿@model DeKrekelGroup5.ViewModel.SpellenLijstViewModel
-@Styles.Render("~/Content/masterLayout.css")
-@{
-    ViewBag.Title = "Spellenlijst";
-}
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+<div id="content">
+    <table>
+        <tr>
+            <td>
+                <div id="searchBar">
+                    @using (Ajax.BeginForm("Index",
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "Get",
+                            UpdateTargetId = "Spellen"
+                        }
+                        ))
+                    {
+                        <input type="search" name="search" id="search" placeholder='Zoeken' onclick="this.select();" />
+                            <input type="submit" value="Zoek item" class="btn btn-default" id="searchSubmit"/>
+                    }
+                </div>
+            </td>
+            <td>
+                @if (Model.GebruikerViewModel.IsBeheerder)
+                 {
+                     <a href=' @Url.Action("create") '><img src="~/Images/create.png" class="createNew"/></a>
+                 }
+            </td>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-@using (Ajax.BeginForm("Index",
-        new AjaxOptions
-        {
-            InsertionMode = InsertionMode.Replace,
-            HttpMethod = "Get",
-            UpdateTargetId = "Spellen"//,
-            //OnComplete = "clearMessage"
-        }
-        ))
-{
-    <input type="search" name="search" id="search" />
-    <input type="submit" value="Search in all products" class="btn btn-default" />
-}
-
-<div  id="Spellen">
-    @Html.Partial("SpellenLijst", Model)
+    </table>
+    <div id="Spellen">
+        @Html.Partial("SpellenLijst", Model)
+    </div>
 </div>

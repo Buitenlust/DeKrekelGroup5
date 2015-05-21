@@ -3,7 +3,7 @@
 @using DeKrekelGroup5.ViewModel
 @model DeKrekelGroup5.ViewModel.MainViewModel
 
-    @foreach (var item in Model.SpellenLijstViewModel.Spellen)
+    @foreach (var item in Model.DVDsLijstViewModel.DVDs)
     {
         <table class="table">
             <tr>
@@ -36,16 +36,15 @@
                         {
                             if (item.Uitgeleend)
                             {
-                                <span>Beschikbaar vanaf: </span>@item.GetStringDate()
+                                <span>Beschikbaar vanaf: </span>@item.GetStringDate() 
                                 if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
                                 {
-                                    @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new {exemplaar = item.Exemplaar}, new AjaxOptions {HttpMethod = "Get", UpdateTargetId = "infomodal"}, new {@class = "icon"})
+                                     @Ajax.ImageActionLink("/Images/extraTijd.png", "Verlengen", "Verlengen", "Uitleningen", new {exemplaar = item.Exemplaar}, new AjaxOptions {HttpMethod = "Get", UpdateTargetId = "infomodal"}, new {@class = "icon"})
                                 }
                             }
                             else
                             {
-                                <span>Beschikbaar: </span>
-                                <img src="~/Images/tick.png" class="icon"/>
+                                <span>Beschikbaar: </span> <img src="~/Images/tick.png" class="icon"/>
                             }
                         }
                         else
@@ -55,6 +54,7 @@
                         }
                     </div>
 
+                 
                     <p><strong>Is uitgegeven door uitgeverij @Html.DisplayFor(modelItem => item.Uitgever)</strong></p>
 
                     <p><strong>Leeftijd: </strong> @Html.DisplayFor(modelItem => item.Leeftijd) jaar</p>

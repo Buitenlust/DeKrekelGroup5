@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -10,31 +12,63 @@ namespace DeKrekelGroup5.ViewModel
 {
     public class DVDViewModel : ItemViewModel
     {
-        [Required(ErrorMessage = "Geef een uitgever in aub...")]
-        [MaxLength(45, ErrorMessage = "De naam van de uitgever is te lang (max. 45 tekens)")]
+        [MaxLength(200, ErrorMessage = "De naam van de uitgever is te lang (max. 200 tekens)")]
         public string Uitgever { get; set; }
-    }
 
-    public class DVDLijstViewModel
-    {
-        public IEnumerable<DVDViewModel> DVDs { get; set; }
-
-        public DVDLijstViewModel(IEnumerable<DVD> dvds)
+        public DVDViewModel()
         {
-            DVDs = dvds.Select(b => new DVDViewModel()
+
+        }
+
+        public DVD MapToDVD(DVDViewModel vm, List<Thema> themas)
+        {
+            return new DVD()
             {
-                Exemplaar = b.Exemplaar,
-                Titel = b.Titel,
-                Omschrijving = b.Omschrijving,
-                Uitgever = b.Uitgever,
-                Leeftijd = b.Leeftijd,
-                Thema = b.Themaa.Themaa
-            });
+                Exemplaar = vm.Exemplaar,
+                Beschikbaar = vm.Beschikbaar,
+                Leeftijd = vm.Leeftijd,
+                Omschrijving = vm.Omschrijving,
+                Titel = vm.Titel,
+                Themas = themas,
+                Uitgever = Uitgever,
+                ImageString = image
+            };
         }
     }
 
+    public class DVDsLijstViewModel
+    {
+        public IEnumerable<DVDViewModel> DVDs { get; set; }
+
+        public DVDsLijstViewModel(IEnumerable<DVD> dvden)
+        {
+            DVDs = dvden.Select(b => new DVDViewModel()
+            {
+                Exemplaar = b.Exemplaar,
+                Titel = b.Titel,
+                Omschrijving = b.Omschrijving.Length > 700 ? b.Omschrijving.Substring(0, 700) + "..." : b.Omschrijving,
+                Uitgever = b.Uitgever,
+                Leeftijd = b.Leeftijd,
+                Themas = b.Themas,
+                image = b.ImageString,
+                Beschikbaar = b.Beschikbaar,
+                EindDatumUitlening = (b.Uitleningen == null || b.Uitleningen.Count == 0) ? new DateTime() : b.Uitleningen.SingleOrDefault(d => d.Id == b.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = (b.Uitleningen == null || b.Uitleningen.Count == 0) ? false : b.Uitleningen.SingleOrDefault(d => d.Id == b.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+            });
+        }
+
+        public DVDsLijstViewModel()
+        {
+            DVDs = new List<DVDViewModel>();
+        }
+    }
+
+
     public class DVDCreateViewModel
     {
+        public MultiSelectList AllThemas { get; set; }
+        public List<int> SubmittedThemas { get; set; }
+
         public SelectList Themas { get; set; }
         public DVDViewModel DVD { get; set; }
 
@@ -47,10 +81,26 @@ namespace DeKrekelGroup5.ViewModel
                 Titel = dvd.Titel,
                 Uitgever = dvd.Uitgever,
                 Leeftijd = dvd.Leeftijd,
-                Thema = (dvd.Themaa == null ? "" : dvd.Themaa.Themaa)
+                image = dvd.ImageString,
+                Themas = themas.ToList(),
+                Beschikbaar = dvd.Beschikbaar,
+                EindDatumUitlening = (dvd.Uitleningen == null || dvd.Uitleningen.Count == 0) ? new DateTime() : dvd.Uitleningen.SingleOrDefault(d => d.Id == dvd.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = (dvd.Uitleningen == null || dvd.Uitleningen.Count == 0) ? false : dvd.Uitleningen.SingleOrDefault(d => d.Id == dvd.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
             };
 
-            Themas = new SelectList(themas, "Themaa", "Themaa", DVD.Thema ?? "");
+            //Themas = new SelectList(themas, "Themaa", "Themaa", DVD.Thema ?? "");
+            AllThemas = new MultiSelectList(themas.ToList(), "IdThema", "Themaa", (dvd.Themas == null || dvd.Themas.Count == 0) ? null : dvd.Themas.Select(t => t.IdThema));
+        }
+
+        public DVDCreateViewModel()
+        {
+            DVD = new DVDViewModel();
+            IEnumerable<Thema> themas = new List<Thema>();
+            Themas = new SelectList(themas, "", "", "");
+            AllThemas = new SelectList(themas, "", "", "");
+            SubmittedThemas = new List<int>();
         }
     }
+
+
 }

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using DeKrekelGroup5.Models;
@@ -17,60 +20,88 @@ namespace DeKrekelGroup5.Controllers
 {
     public class CDController : Controller
     {
-        private IGebruikerRepository gebruikerRepository;
-        private Gebruiker Gebruiker;
+        private IGebruikerRepository gebruikersRep;
 
         public CDController(IGebruikerRepository gebruikerRepository)
         {
-            this.gebruikerRepository = gebruikerRepository;
-
-            Gebruiker = gebruikerRepository.GetGebruiker(1); //Anonymous
-            if (Gebruiker == null)
-            {
-                Gebruiker = new Gebruiker(){AdminRechten = true, BibliotheekRechten = true, GebruikersNaam = "Anonymous", LetterTuin = new LetterTuin()};
-                Gebruiker.VeranderPaswoord("Annymous");
-                Gebruiker.LetterTuin.Instellingen = new Instellingen(){MaxVerlengingen = 2, BedragBoetePerDag = 1, UitleenDagen = 14};
-                gebruikerRepository.AddGebruiker(Gebruiker);
-                gebruikerRepository.SaveChanges();
-                Gebruiker = gebruikerRepository.GetGebruiker(1);
-            }
+            gebruikersRep = gebruikerRepository;
         }
 
-        // GET: CD
-        public ActionResult Index(String search = null)
+        // GET: CDs
+        public ActionResult Index(Gebruiker gebruiker, String search = null)
         {
-            IEnumerable<CD> cds;
-            if (!String.IsNullOrEmpty(search))
-            {
-                cds = Gebruiker.LetterTuin.GetCDs(search);
-                ViewBag.Selection = "Alle CDs met " + search;
-            }
+            if (gebruiker == null)
+                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
             else
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
             {
-                cds = Gebruiker.LetterTuin.GetCDs(null);
-                ViewBag.Selection = "Alle CDs";
-            }
-            if (Request.IsAjaxRequest())
-                return PartialView("CDLijst", new CDLijstViewModel(cds));
+                IEnumerable<CD> cds;
+                if (!String.IsNullOrEmpty(search))
+                {
+                    cds = gebruiker.LetterTuin.GetCDs(search).ToList();
+                    //ViewBag.Selection = "Alle cds met " + search;
+                }
+                else
+                {
+                    cds = gebruiker.LetterTuin.GetCDs(null).ToList();
+                    //ViewBag.Selection = "Alle cds";
+                }
 
-            return View(new CDLijstViewModel(cds));
+                if (Request.IsAjaxRequest())
+                    return PartialView("CDsLijst", new MainViewModel(gebruiker).SetNewCDsLijstVm(cds));
+
+                return View(new MainViewModel(gebruiker).SetNewCDsLijstVm(cds));
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         // GET: CDs/Details/5
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(Gebruiker gebruiker, MainViewModel mvm, int id = 0)
         {
-            if (id == 0)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            CD cd = Gebruiker.LetterTuin.GetItem(id) as CD;
-            if (cd == null)
-                return HttpNotFound();
-            return View(cd);
+            if (gebruiker == null)
+                gebruiker = gebruikersRep.GetGebruikerByName("Anonymous");
+            else
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            mvm.SetGebruikerToVm(gebruiker);
+            mvm.InfoViewModel.Info = null;
+            try
+            {
+                if (id == 0)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                CD cd = gebruiker.LetterTuin.GetItem(id) as CD;
+                if (cd == null)
+                    mvm.SetNewInfo("CD niet gevonden");
+                return View("Details", mvm.SetCDViewModel(cd));
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+
         }
 
         // GET: CDs/Create
-        public ActionResult Create(Gebruiker gebruiker = null)
+        public ActionResult Create(Gebruiker gebruiker)
         {
-            return View(new CDCreateViewModel(Gebruiker.LetterTuin.Themas.ToList(), new CD()));
+            MainViewModel mvm = new MainViewModel(gebruiker);
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            try
+            {
+
+                mvm.SetCDCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new CD());
+                HttpContext.Session["main"] = mvm;
+                return View(mvm);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
         // POST: CDs/Create
@@ -78,95 +109,197 @@ namespace DeKrekelGroup5.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Prefix = "CD")] CDViewModel cd, Gebruiker gebruiker = null)
+        public ActionResult Create([Bind(Prefix = "CDCreateViewModel")] CDCreateViewModel cd, Gebruiker gebruiker, MainViewModel mvm, string image = null)
         {
-            if (ModelState.IsValid)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (ModelState.IsValid && cd != null && cd.CD.Exemplaar <= 0)
             {
-                CD newCD = new CD()
+                try
                 {
-                    Titel = cd.Titel,
-                    Artiest = cd.Artiest,
-                    Leeftijd = cd.Leeftijd,
-                    Beschikbaar = true,
-                    Themaa = Gebruiker.LetterTuin.GetThemaByName(cd.Thema),
-                    Omschrijving = cd.Omschrijving,
-                    Exemplaar = 0,
-                    Uitgever = cd.Uitgever
+                    if (!image.IsNullOrWhiteSpace())
+                    {
+                        WebClient Client = new WebClient();
+                        //WebRequest request = FtpWebRequest.Create(image);
 
-                };
+                        //using (WebResponse response = request.GetResponse())
+                        //{
+                        //    Stream responseStream = response.GetResponseStream();
+                        //    responseStream.CopyTo();
+                        //    fb.InputStream.Read() = responseStream;
+                        //}
 
-                Gebruiker.AddItem(newCD);
-                gebruikerRepository.DoNotDuplicateThema(newCD);
-                gebruikerRepository.SaveChanges();
-                TempData["Info"] = "De CD werd toegevoegd...";
-                return RedirectToAction("Index");
+                        //HttpPostedFileBase fb = new HttpPostedFileWrapper();
+                        //fb.InputStream.BeginRead(); 
+                        cd.CD.image = cd.CD.Titel.Replace(" ", "_") + ".jpg";
+                        string path = System.IO.Path.Combine(Server.MapPath("~/FTP/Images"), cd.CD.image);
+                        Client.DownloadFile(image, path);
+                    }
+                    else
+                    {
+                        cd.CD.image = mvm.CDCreateViewModel.CD.image;
+                    }
+
+                    List<Thema> themas = gebruiker.GetThemaListFromSelectedList(cd.SubmittedThemas);
+                    CD newCD = cd.CD.MapToCD(cd.CD, themas);
+
+                    gebruiker.AddItem(newCD);
+                    //gebruikersRep.DoNotDuplicateThema(newCD);
+                    gebruikersRep.SaveChanges();
+                    mvm.SetNewInfo("CD" + cd.CD.Titel + " werd toegevoegd...");
+                    return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Items.Max(b => b.Exemplaar) });
+                }
+                catch (NullReferenceException)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+
             }
             return RedirectToAction("Create");
         }
 
         // GET: CDs/Edit/5
-        public ActionResult Edit(Gebruiker gebruiker = null, int id = 0)
+        public ActionResult Edit(Gebruiker gebruiker, int id = 0)
         {
-            if (id == 0)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            CD cd = Gebruiker.LetterTuin.GetItem(id) as CD;
-            if (cd == null)
-                return HttpNotFound();
-            return View(new CDCreateViewModel(Gebruiker.LetterTuin.Themas,cd));
+
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            MainViewModel mvm = new MainViewModel(gebruiker);
+            mvm.InfoViewModel.Info = null;
+            mvm.SetGebruikerToVm(gebruiker);
+            try
+            {
+                if (id <= 0)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                CD cd = gebruiker.LetterTuin.GetItem(id) as CD;
+                if (cd == null)
+                    return HttpNotFound();
+                mvm.SetCDCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), cd);
+                HttpContext.Session["main"] = mvm;
+
+                return View(mvm);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+
         }
 
-        // POST: Boeken/Edit/5
+        // POST: CDs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Prefix = "CD")] CDViewModel cd, Gebruiker gebruiker = null)
+        public ActionResult Edit([Bind(Prefix = "CDCreateViewModel")] CDCreateViewModel cd, Gebruiker gebruiker, MainViewModel mvm, HttpPostedFileBase newimage = null)
         {
-            if (ModelState.IsValid)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            mvm.InfoViewModel.Info = null;
+            mvm.SetGebruikerToVm(gebruiker);
+            if (newimage != null)
             {
-                CD newCD = new CD()
-                {
-                    Titel = cd.Titel,
-                    Artiest = cd.Artiest,
-                    Leeftijd = cd.Leeftijd,
-                    Beschikbaar = true,
-                    Themaa = Gebruiker.LetterTuin.GetThemaByName(cd.Thema),
-                    Omschrijving = cd.Omschrijving,
-                    Exemplaar = cd.Exemplaar,
-                    Uitgever = cd.Uitgever
-
-                };
-                Gebruiker.UpdateCD(newCD);
-                gebruikerRepository.DoNotDuplicateThema(newCD);
-                gebruikerRepository.SaveChanges();
-                return RedirectToAction("Index");
+                return UploadImage(gebruiker, mvm, newimage);
             }
-            return View(cd);
+            else
+            {
+                if (ModelState.IsValid && cd != null && cd.CD.Exemplaar > 0)
+                {
+                    try
+                    {
+                        cd.CD.image = mvm.CDCreateViewModel.CD.image;
+
+                        List<Thema> themas = gebruiker.GetThemaListFromSelectedList(cd.SubmittedThemas);
+                        CD newCD = cd.CD.MapToCD(cd.CD, themas);
+                        gebruiker.UpdateCD(newCD);
+                        //gebruikersRep.DoNotDuplicateThema(newCD);
+                        mvm.SetNewInfo("CD " + cd.CD.Titel + " werd aangepast...");
+                        gebruikersRep.SaveChanges();
+                        return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = newCD.Exemplaar });
+                    }
+                    catch (Exception)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                    }
+                }
+                mvm.CDCreateViewModel.Themas = new SelectList(gebruiker.LetterTuin.Themas.ToList());
+                return View(new MainViewModel(gebruiker) { CDCreateViewModel = cd });
+            }
+
+
+
         }
 
-        // GET: CD/Delete/5
-        public ActionResult Delete(Gebruiker gebruiker = null, int id = 0)
+        // GET: CDs/Delete/5
+        public ActionResult Delete(Gebruiker gebruiker, int id = 0)
         {
-            if (id == 0)
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (id <= 0)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            CD cd = Gebruiker.LetterTuin.GetItem(id) as CD;
-            if (cd == null)
+            try
             {
-                return HttpNotFound();
+                CD cd = gebruiker.LetterTuin.GetItem(id) as CD;
+                if (cd == null)
+                    return HttpNotFound();
+                return View(new MainViewModel(gebruiker).SetCDViewModel(cd));
             }
-            return View(cd);
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
         }
 
-        // POST: CD/Delete/5
+        // POST: CDs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Gebruiker gebruiker, int id)
         {
-            CD cd = gebruiker.LetterTuin.GetItem(id) as CD;
-            Gebruiker.RemoveItem(cd);
-            gebruikerRepository.SaveChanges();
-            return RedirectToAction("Index");
+            if (gebruiker == null || gebruiker.AdminRechten == false)
+                return PartialView(new MainViewModel().SetNewInfo("U moet hiervoor inloggen!", true));
+            gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+            if (id <= 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            try
+            {
+                MainViewModel mvm = new MainViewModel(gebruiker);
+                gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
+                CD cd = gebruiker.LetterTuin.GetItem(id) as CD;
+                if (cd == null)
+                    return HttpNotFound();
+                gebruiker.RemoveItem(cd);
+                gebruikersRep.SaveChanges();
+                mvm.SetNewInfo("CD" + cd.Titel + " werd verwijderd...");
+                return View("Index", mvm);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UploadImage(Gebruiker gebruiker, MainViewModel mvm, HttpPostedFileBase newimage)
+        {
+            if (newimage != null)
+            {
+                int rnd = new Random().Next(99999);
+                string pic = System.IO.Path.GetFileName(newimage.FileName);
+                string path = System.IO.Path.Combine(Server.MapPath("~/FTP/Images"), rnd + pic);
+                ;
+
+                // file is uploaded
+                newimage.SaveAs(path);
+                mvm.CDCreateViewModel.CD.image = rnd + pic;
+                return Json(new { imagePath = rnd + pic });
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.NoContent);
         }
     }
 }

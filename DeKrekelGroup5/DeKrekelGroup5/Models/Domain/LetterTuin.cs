@@ -47,9 +47,6 @@ namespace DeKrekelGroup5.Models.Domain
                                                        p.Uitgever.ToLower().Contains(search.ToLower()) ||
                                                        p.Auteur.ToLower().Contains(search.ToLower()) ||
                                                        p.Omschrijving.ToLower().Contains(search.ToLower()));
-                     
-
-
             return Items.OfType<Boek>().Take(25);
         }
 
@@ -64,6 +61,12 @@ namespace DeKrekelGroup5.Models.Domain
                                                        p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
                                                        p.Omschrijving.ToLower().Contains(search.ToLower()))
                     .OrderBy(p => p.Titel);
+
+            //var result = from a in Items
+            //             where a.GetType() == typeof(Spel)
+            //             select a;
+
+
             return Items.OfType<Spel>().Take(25);
         }
 

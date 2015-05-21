@@ -15,7 +15,15 @@ namespace DeKrekelGroup5.ViewModel
         public BoekViewModel BoekViewModel { get; set; }
         public BoekenLijstViewModel BoekenLijstViewModel { get; set; }
         public BoekCreateViewModel BoekCreateViewModel { get; set; }
-        //public SpelViewModel SpelViewModel { get; set; }
+        public CDViewModel CdViewModel { get; set; }
+        public CDsLijstViewModel CDsLijstViewModel { get; set; }
+        public CDCreateViewModel CDCreateViewModel { get; set; }
+        public DVDViewModel DVDViewModel { get; set; }
+        public DVDsLijstViewModel DVDsLijstViewModel { get; set; }
+        public DVDCreateViewModel DVDCreateViewModel { get; set; }
+        public SpelViewModel SpelViewModel { get; set; }
+        public SpellenLijstViewModel SpellenLijstViewModel { get; set; }
+        public SpelCreateViewModel SpelCreateViewModel { get; set; }
         public UitlenerViewModel UitlenerViewModel { get; set; }
         public UitlenersLijstViewModel UitlenersLijstViewModel { get; set; }
         public List<Thema> Themas { get; set; }
@@ -78,6 +86,24 @@ namespace DeKrekelGroup5.ViewModel
             return this;
         }
 
+        public object SetNewSpellenLijstVm(IEnumerable<Spel> spellen)
+        {
+            SpellenLijstViewModel = new SpellenLijstViewModel(spellen);
+            return this;
+        }
+
+        public object SetNewCDsLijstVm(IEnumerable<CD> cds)
+        {
+            CDsLijstViewModel = new CDsLijstViewModel(cds);
+            return this;
+        }
+
+        public object SetNewDVDsLijstVm(IEnumerable<DVD> dvds)
+        {
+            DVDsLijstViewModel = new DVDsLijstViewModel(dvds);
+            return this;
+        }
+
         public object SetNewUitlenersLijstVm(IEnumerable<Uitlener> uitleners)
         {
             UitlenersLijstViewModel = new UitlenersLijstViewModel(uitleners);
@@ -103,9 +129,81 @@ namespace DeKrekelGroup5.ViewModel
             return this;
         }
 
+        public object SetSpelViewModel(Spel spel)
+        {
+            SpelViewModel = new SpelViewModel()
+            {
+                Exemplaar = spel.Exemplaar,
+                Omschrijving = spel.Omschrijving,
+                Titel = spel.Titel, 
+                Uitgever = spel.Uitgever,
+                Leeftijd = spel.Leeftijd,
+                Themas = spel.Themas,
+                Beschikbaar = spel.Beschikbaar,
+                image = spel.ImageString,
+                EindDatumUitlening = spel.Uitleningen.Count == 0 ? new DateTime() : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = spel.Uitleningen.Count == 0 ? false : spel.Uitleningen.SingleOrDefault(d => d.Id == spel.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+            };
+            return this;
+        }
+
+        public object SetCDViewModel(CD cd)
+        {
+            CdViewModel = new CDViewModel()
+            {
+                Exemplaar = cd.Exemplaar,
+                Omschrijving = cd.Omschrijving,
+                Titel = cd.Titel,
+                Uitgever = cd.Uitgever,
+                Artiest = cd.Artiest,
+                Leeftijd = cd.Leeftijd,
+                Themas = cd.Themas,
+                Beschikbaar = cd.Beschikbaar,
+                image = cd.ImageString,
+                EindDatumUitlening = cd.Uitleningen.Count == 0 ? new DateTime() : cd.Uitleningen.SingleOrDefault(d => d.Id == cd.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = cd.Uitleningen.Count == 0 ? false : cd.Uitleningen.SingleOrDefault(d => d.Id == cd.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+            };
+            return this;
+        }
+
+        public object SetDVDViewModel(DVD dvd)
+        {
+            DVDViewModel = new DVDViewModel()
+            {
+                Exemplaar = dvd.Exemplaar,
+                Omschrijving = dvd.Omschrijving,
+                Titel = dvd.Titel,
+                Uitgever = dvd.Uitgever, 
+                Leeftijd = dvd.Leeftijd,
+                Themas = dvd.Themas,
+                Beschikbaar = dvd.Beschikbaar,
+                image = dvd.ImageString,
+                EindDatumUitlening = dvd.Uitleningen.Count == 0 ? new DateTime() : dvd.Uitleningen.SingleOrDefault(d => d.Id == dvd.Uitleningen.Max(c => c.Id)).EindDatum,
+                Uitgeleend = dvd.Uitleningen.Count == 0 ? false : dvd.Uitleningen.SingleOrDefault(d => d.Id == dvd.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
+            };
+            return this;
+        }
         public object SetBoekCreateViewModel(IEnumerable<Thema> themas, Boek boek)
         {
              BoekCreateViewModel = new BoekCreateViewModel(themas, boek);
+            return this;
+        }
+
+        public object SetSpelCreateViewModel(IEnumerable<Thema> themas, Spel spel)
+        {
+            SpelCreateViewModel = new SpelCreateViewModel(themas, spel);
+            return this;
+        }
+
+        public object SetCDCreateViewModel(IEnumerable<Thema> themas, CD cd)
+        {
+            CDCreateViewModel = new CDCreateViewModel(themas, cd);
+            return this;
+        }
+
+        public object SetDVDCreateViewModel(IEnumerable<Thema> themas, DVD dvd)
+        {
+            DVDCreateViewModel = new DVDCreateViewModel(themas, dvd);
             return this;
         }
 
@@ -140,7 +238,4 @@ namespace DeKrekelGroup5.ViewModel
             return this;
         }
     }
-
-    
-
 }
