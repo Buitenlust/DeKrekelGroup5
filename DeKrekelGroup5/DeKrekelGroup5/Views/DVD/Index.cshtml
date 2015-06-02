@@ -6,13 +6,13 @@
             <td>
                 <div id="searchBar">
                     @using (Ajax.BeginForm("Index",
-                    new AjaxOptions
-                            {
-                                InsertionMode = InsertionMode.Replace,
-                                HttpMethod = "Get",
-                                                UpdateTargetId = "DVD"
-                            }
-                            ))
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "Get",
+                            UpdateTargetId = "DVD"
+                        }
+                        ))
                     {
                         <input type="search" name="search" id="search" placeholder='Zoeken' onclick="this.select();" />
                         <input type="submit" value="Zoek item" class="btn btn-default" id="searchSubmit" />
@@ -25,24 +25,12 @@
                 @if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
                 {
                     <a href=' @Url.Action("create") '><img src="~/Images/create.png" class="createNew" /></a>
-}
-            </td>
-        </tr>
-
-<div id="Boeken">
-    @Html.Partial("BoekenLijst", Model)
-</div>
-            </td>
-            <td>
-                @if (Model.GebruikerViewModel.IsBibliothecaris || Model.GebruikerViewModel.IsBeheerder)
-                {
-                    <a href=' @Url.Action("create") '><img src="~/Images/create.png" class="createNew" /></a>
                 }
             </td>
         </tr>
 
     </table>
-    <div id="DVD">
+    <div id="DVDs">
         @Html.Partial("DVDLijst", Model)
     </div>
 </div>
