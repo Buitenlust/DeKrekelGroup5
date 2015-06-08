@@ -35,7 +35,8 @@ namespace DeKrekelGroup5.Controllers
             mvm.InfoViewModel.Info = null;
             try
             {
-                mvm.SetNewUitleningenLijstVm(gebruiker.GetUitleningen(search).ToList());
+
+                //mvm.SetNewUitleningenLijstVm(gebruiker.GetUitleningen(search).ToList());
                 if (Request.IsAjaxRequest())
                     return PartialView("UitleningenLijst", mvm);
                 return View(mvm);
