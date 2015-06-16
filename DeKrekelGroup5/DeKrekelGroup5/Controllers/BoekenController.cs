@@ -72,7 +72,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 if (id == 0)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
+                Boek boek = gebruiker.LetterTuin.GetBoek(id);
                 if (boek == null)
                     mvm.SetNewInfo("Boek niet gevonden");
                 return View("Details", mvm.SetBoekViewModel(boek));
@@ -144,11 +144,11 @@ namespace DeKrekelGroup5.Controllers
                     List<Thema> themas = gebruiker.GetThemaListFromSelectedList(boek.SubmittedThemas);
                     Boek newBoek = boek.Boek.MapToBoek(boek.Boek, themas);
                     
-                    gebruiker.AddItem(newBoek);
+                    gebruiker.AddBoek(newBoek);
                     //gebruikersRep.DoNotDuplicateThema(newBoek);
                     gebruikersRep.SaveChanges();
                     mvm.SetNewInfo("Boek" + boek.Boek.Titel + " werd toegevoegd...");
-                    return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Items.Max(b => b.Exemplaar) });
+                    return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Boeken.Max(b => b.Exemplaar) });
                 }
                 catch (NullReferenceException)
                 {
@@ -173,7 +173,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 if (id <= 0)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
+                Boek boek = gebruiker.LetterTuin.GetBoek(id);
                 if (boek == null)
                     return HttpNotFound();
                 mvm.SetBoekCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), boek);
@@ -243,7 +243,7 @@ namespace DeKrekelGroup5.Controllers
 
             try
             {
-                Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
+                Boek boek = gebruiker.LetterTuin.GetBoek(id);
                 if (boek == null)
                     return HttpNotFound();
                 return View(new MainViewModel(gebruiker).SetBoekViewModel(boek));
@@ -269,10 +269,10 @@ namespace DeKrekelGroup5.Controllers
             {
                 MainViewModel mvm = new MainViewModel(gebruiker);
                 gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-                Boek boek = gebruiker.LetterTuin.GetItem(id) as Boek;
+                Boek boek = gebruiker.LetterTuin.GetBoek(id);
                 if (boek == null)
                     return HttpNotFound();
-                gebruiker.RemoveItem(boek);
+                gebruiker.RemoveBoek(boek);
                 gebruikersRep.SaveChanges();
                 mvm.SetNewInfo("Boek" +boek.Titel+ " werd verwijderd...");
                 return View("Index", mvm);

@@ -7,7 +7,7 @@
     <table class="table">
         <tr>
             <th>
-                B @Html.DisplayFor(modelItem => verteltas.Exemplaar)
+                V @Html.DisplayFor(modelItem => verteltas.Exemplaar)
             </th>
             <th>
                 @Html.DisplayFor(modelItem => verteltas.Titel)
@@ -55,13 +55,66 @@
                     <p><strong>Leeftijd: </strong> @Html.DisplayFor(modelItem => verteltas.Leeftijd) jaar</p>
 
                     <p><strong>Omschrijving: </strong> <span style="font-size: medium">@Html.DisplayFor(modelItem => verteltas.Omschrijving)</span></p>
+                    
+                    <table style="margin-top: 0px;">
+                        <tr>
+                            <td style="width: 70px;"><strong>Boeken: </strong></td>
+                            <td>
+                                <ul style="list-style-type: none; font-style: italic">
+                                    @foreach (var boek in verteltas.Boeken)
+                                    {
+                                        <li>@boek.Titel</li>
+                                    }
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 70px;"><strong>Films: </strong></td>
+                            <td>
+                                <ul style="list-style-type: none; font-style: italic">
+                                    @foreach (var boek in verteltas.DVDs)
+                                    {
+                                        <li>@boek.Titel</li>
+                                    }
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 70px;"><strong>Muziek: </strong></td>
+                            <td>
+                                <ul style="list-style-type: none; font-style: italic">
+                                    @foreach (var cd in verteltas.CDs)
+                                    {
+                                        <li>@cd.Titel</li>
+                                    }
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 70px;"><strong>Spellen: </strong></td>
+                            <td>
+                                <ul style="list-style-type: none; font-style: italic">
+                                    @foreach (var spel in verteltas.Spellen)
+                                    {
+                                        <li>@spel.Titel</li>
+                                    }
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+ 
 
+
+
+
+
+                    <br/><br/>
                     <p id="themap">
                         @{ int counter = 0; }
                         @foreach (var thema in verteltas.Themas)
                         {
                             counter++;
-                            <span style="font-style: italic">@thema.Themaa</span> @(counter < verteltas.Themas.Count ? "|" : "")
+                            <span style="font-style: italic; margin-top: 15px;">@thema.Themaa</span> @(counter < verteltas.Themas.Count ? "|" : "")
                         }
                     </p>
 

@@ -40,7 +40,7 @@
                     <tr>
                         <td class="td1">Artiest</td>
                         <td>
-                            @Html.EditorFor(model => model.CDCreateViewModel.CD.Artiest new { htmlAttributes = new { @class = "form-control", id = "titelInput" } })
+                            @Html.EditorFor(model => model.CDCreateViewModel.CD.Artiest, new { htmlAttributes = new { @class = "form-control", id = "artiestInput" } })
                             @Html.ValidationMessageFor(model => model.CDCreateViewModel.CD.Artiest, "", new { @class = "text-danger" })
                         </td>
                     </tr>

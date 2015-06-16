@@ -29,6 +29,7 @@ namespace DeKrekelGroup5.ViewModel
             return new CD()
             {
                 Exemplaar = vm.Exemplaar, 
+                Artiest = vm.Artiest,
                 Beschikbaar = vm.Beschikbaar,
                 Leeftijd = vm.Leeftijd,
                 Omschrijving = vm.Omschrijving,

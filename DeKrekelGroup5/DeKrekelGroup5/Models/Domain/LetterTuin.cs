@@ -17,6 +17,11 @@ namespace DeKrekelGroup5.Models.Domain
     {
         public int Id { get; set; }
         public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<Boek> Boeken { get; set; }
+        public virtual ICollection<CD> Cds { get; set; }
+        public virtual ICollection<DVD> Dvds { get; set; }
+        public virtual ICollection<Spel> Spellen { get; set; }
+
         public virtual ICollection<Thema> Themas { get; set; }
         public virtual ICollection<Uitlening> Uitleningen { get; set; }
         public virtual ICollection<Uitlener> Uitleners { get; set; }
@@ -40,76 +45,72 @@ namespace DeKrekelGroup5.Models.Domain
         /// <summary> Get all boeken that contains a search keyword in Titel, Uitgever, Auteur, Thema or omschrijving </summary>
         /// <returns>Returns a IEnumerable of Boeken</returns>
         /// <param name="search"> search keyword </param>
-        public IEnumerable<Boek> GetBoeken(string search)
+        public IEnumerable<Boek> GetBoeken(string search=null)
         {
             if (search != null && !search.Trim().IsEmpty())
-                return Items.OfType<Boek>().Where(p => p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
+                return Boeken.Where(p => p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
                                                        p.Titel.ToLower().Contains(search.ToLower()) ||
                                                        p.Uitgever.ToLower().Contains(search.ToLower()) ||
                                                        p.Auteur.ToLower().Contains(search.ToLower()) ||
-                                                       p.Omschrijving.ToLower().Contains(search.ToLower()));
-            return Items.OfType<Boek>().Take(25);
+                                                       p.Omschrijving.ToLower().Contains(search.ToLower()))
+                                                       .OrderBy(p => p.Titel); ;
+            return Boeken.OrderBy(p => p.Titel); ;
         }
 
         /// <summary> Get all spellen that contains a search keyword in Titel, Uitgever, Thema or omschrijving </summary>
         /// <returns>Returns a IEnumerable of Spellen</returns>
         /// <param name="search"> search keyword </param>
-        public IEnumerable<Spel> GetSpellen(string search)
+        public IEnumerable<Spel> GetSpellen(string search=null)
         {
             if (search != null && !search.Trim().IsEmpty())
-                return Items.OfType<Spel>().Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
+                return Spellen.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
                                                        p.Uitgever.ToLower().Contains(search.ToLower()) ||
                                                        p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
                                                        p.Omschrijving.ToLower().Contains(search.ToLower()))
-                    .OrderBy(p => p.Titel);
+                                                       .OrderBy(p => p.Titel);
 
-            //var result = from a in Items
-            //             where a.GetType() == typeof(Spel)
-            //             select a;
-
-
-            return Items.OfType<Spel>().Take(25);
+            return Spellen.OrderBy(p => p.Titel);;
         }
 
         /// <summary> Get all cd's that contains a search keyword in Titel, Uitgever, Thema or omschrijving </summary>
         /// <returns>Returns a IEnumerable of Cd's</returns>
         /// <param name="search"> search keyword </param>
-        public IEnumerable<CD> GetCDs(string search)
+        public IEnumerable<CD> GetCDs(string search=null)
         {
             if (search != null && !search.Trim().IsEmpty())
-                return Items.OfType<CD>().Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
+                return Cds.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
                                                      p.Uitgever.ToLower().Contains(search.ToLower()) ||
                                                      p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
                                                      p.Omschrijving.ToLower().Contains(search.ToLower()))
-                    .OrderBy(p => p.Titel);
-            return Items.OfType<CD>().Take(25);
+                                                     .OrderBy(p => p.Titel);
+            return Cds.OrderBy(p => p.Titel);
         }
 
         /// <summary> Get all dvd's that contains a search keyword in Titel, Uitgever, Thema or omschrijving </summary>
         /// <returns>Returns a IEnumerable of DVD's</returns>
         /// <param name="search"> search keyword </param>
-        public IEnumerable<DVD> GetDVDs(string search)
+        public IEnumerable<DVD> GetDVDs(string search=null)
         {
             if (search != null && !search.Trim().IsEmpty())
-                return Items.OfType<DVD>().Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
+                return Dvds.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
                                                       p.Uitgever.ToLower().Contains(search.ToLower()) ||
                                                       p.Themas.Any(t => t.Themaa.Contains(search)) ||
                                                       p.Omschrijving.ToLower().Contains(search.ToLower()))
-                    .OrderBy(p => p.Titel);
-            return Items.OfType<DVD>().Take(25);
+                                                      .OrderBy(p => p.Titel);
+            return Dvds.OrderBy(p => p.Titel); ;
         }
 
         /// <summary> Get all verteltassen that contains a search keyword in Titel, Uitgever, Thema or omschrijving </summary>
         /// <returns>Returns a IEnumerable of Verteltassen</returns>
         /// <param name="search"> search keyword </param>
-        public IEnumerable<VertelTas> GetVertelTassen(string search)
+        public IEnumerable<VertelTas> GetVertelTassen(string search=null)
         {
             if (search != null && !search.Trim().IsEmpty())
                 return VertelTassen.Where(p => p.Titel.ToLower().Contains(search.ToLower()) ||
                                                             p.Themas.Any(t => t.Themaa.ToLower().Contains(search.ToLower())) ||
                                                             p.Omschrijving.ToLower().Contains(search.ToLower()))
-                    .OrderBy(p => p.Titel);
-            return VertelTassen.Take(25);
+                                                            .OrderBy(p => p.Titel);
+            return VertelTassen.OrderBy(p => p.Titel); ;
         }
 
 
@@ -139,6 +140,44 @@ namespace DeKrekelGroup5.Models.Domain
                 return Items.SingleOrDefault(i => i.Exemplaar == id);
             return null;
         }
+
+        /// <summary> Get the first cd that matches the item id  parameter </summary>
+        /// <param name="id"> search keyword </param>
+        public CD GetCD(int id)
+        {
+            if (id > 0)
+                return Cds.SingleOrDefault(i => i.Exemplaar == id);
+            return null;
+        }
+
+        /// <summary> Get the first dvd that matches the item id  parameter </summary>
+        /// <param name="id"> search keyword </param>
+        public DVD GetDVD(int id)
+        {
+            if (id > 0)
+                return Dvds.SingleOrDefault(i => i.Exemplaar == id);
+            return null;
+        }
+
+        /// <summary> Get the first cd that matches the item id  parameter </summary>
+        /// <param name="id"> search keyword </param>
+        public Spel GetSpel(int id)
+        {
+            if (id > 0)
+                return Spellen.SingleOrDefault(i => i.Exemplaar == id);
+            return null;
+        }
+
+        /// <summary> Get the first cd that matches the item id  parameter </summary>
+        /// <param name="id"> search keyword </param>
+        public Boek GetBoek(int id)
+        {
+            if (id > 0)
+                return Boeken.SingleOrDefault(i => i.Exemplaar == id);
+            return null;
+        }
+
+
 
         public VertelTas GetVertelTas(int id)
         {

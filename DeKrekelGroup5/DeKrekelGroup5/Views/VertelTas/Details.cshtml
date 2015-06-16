@@ -41,13 +41,51 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="td1">Items</td>
+                    <td class="td1">Boeken</td>
                     <td class="td2 gray">
                         @{ int counter1 = 0;}
-                        @foreach (var item in Model.VertelTasViewModel.Items)
+                        @foreach (var item in Model.VertelTasViewModel.Boeken)
                         {
                             counter1++;
-                            <span>@item.Titel</span> @(counter1 < Model.VertelTasViewModel.Items.Count ? "|" : "")
+                            <span>@item.Titel</span>
+                            @(counter1 < Model.VertelTasViewModel.Boeken.Count ? "|" : "")
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="td1">Films</td>
+                    <td class="td2 gray">
+                        @{ int counter2 = 0;}
+                        @foreach (var item in Model.VertelTasViewModel.DVDs)
+                        {
+                            counter2++;
+                            <span>@item.Titel</span>
+                            @(counter1 < Model.VertelTasViewModel.DVDs.Count ? "|" : "")
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="td1">Spellen</td>
+                    <td class="td2 gray">
+                        @{ int counter3 = 0;}
+                        @foreach (var item in Model.VertelTasViewModel.Spellen)
+                        {
+                            counter3++;
+                            <span>@item.Titel</span> @(counter1 < Model.VertelTasViewModel.Spellen.Count ? "|" : "")
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="td1">Muziek</td>
+                    <td class="td2 gray">
+                        @{ int counter4 = 0;}
+                        @foreach (var item in Model.VertelTasViewModel.CDs)
+                        {
+                            counter4++;
+                            <span>@item.Titel</span> @(counter1 < Model.VertelTasViewModel.CDs.Count ? "|" : "")
                         }
                     </td>
                 </tr>

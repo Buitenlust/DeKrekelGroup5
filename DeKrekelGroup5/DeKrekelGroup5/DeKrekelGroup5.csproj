@@ -422,7 +422,7 @@
     <Content Include="Views\Uitleners\UitlenersLijst.cshtml" />
     <Content Include="Views\Uitleningen\UitlenersSelectLijst.cshtml" />
     <Content Include="Views\Shared\_info.cshtml" />
-    <Content Include="Views\Shared\Upload.cshtml" />
+    <Content Include="Views\Boeken\Upload.cshtml" />
     <Content Include="Views\Themas\ThemaLijst.cshtml" />
     <Content Include="Views\Instellingen\Index.cshtml" />
     <Content Include="Views\Instellingen\Edit.cshtml" />
@@ -444,6 +444,9 @@
     <Content Include="Views\DVD\Edit.cshtml" />
     <Content Include="Views\DVD\Index.cshtml" />
     <Content Include="Views\DVD\DvdsLijst.cshtml" />
+    <Content Include="Views\CD\Upload.cshtml" />
+    <Content Include="Views\DVD\Upload.cshtml" />
+    <Content Include="Views\Spellen\Upload.cshtml" />
     <None Include="Views\Uitleners\CreateGroup.cshtml" />
     <Content Include="Views\Uitleners\ImportUitlenersLijst.cshtml" />
     <Content Include="Views\VertelTas\Create.cshtml" />
@@ -452,6 +455,7 @@
     <Content Include="Views\VertelTas\Edit.cshtml" />
     <Content Include="Views\VertelTas\Index.cshtml" />
     <Content Include="Views\VertelTas\VertelTasLijst.cshtml" />
+    <Content Include="Views\VertelTas\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

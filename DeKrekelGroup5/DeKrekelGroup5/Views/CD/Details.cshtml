@@ -7,7 +7,7 @@
 
             @if (Model.GebruikerViewModel.IsBeheerder)
             {
-                <a href=' @Url.Action("edit", new {id = Model.CdViewModel.Exemplaar}) '><img src="~/Images/edit.png"/></a>
+                <a href=' @Url.Action("edit", new {id = Model.CDViewModel.Exemplaar}) '><img src="~/Images/edit.png"/></a>
             }
             <a href=' @Url.Action("index") '><img src="~/Images/Return.png"/></a>
         </div>
@@ -15,59 +15,59 @@
     <hr/>
     <div id="wrapDetails">
         <div id="leftCol">
-            @if (Model.CdViewModel == null || string.IsNullOrEmpty(Model.CdViewModel.image))
+            @if (Model.CDViewModel == null || string.IsNullOrEmpty(Model.CDViewModel.image))
             {
                 <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
             }
             else
             {
-                <img src="@Url.Content("/FTP/Images/" + Model.CdViewModel.image)" alt="Model.CdViewModel.image" style="max-width: 70%" />
+                <img src="@Url.Content("/FTP/Images/" + Model.CDViewModel.image)" alt="Model.CDViewModel.image" style="max-width: 70%" />
             }
         </div>
 
         <div id="mainCol">
             <table id="details">
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Exemplaar)</td>
-                    <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Exemplaar)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Exemplaar)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.CDViewModel.Exemplaar)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Titel)</td>
-                    <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Titel)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Titel)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.CDViewModel.Titel)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Artiest)</td>
-                    <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Artiest)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Artiest)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.CDViewModel.Artiest)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Uitgever)</td>
-                    <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Uitgever)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Uitgever)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.CDViewModel.Uitgever)</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Leeftijd)</td>
-                    <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Leeftijd)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Leeftijd)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.CDViewModel.Leeftijd)</td>
                 </tr>
                 <tr>
                     <td class="td1">Themas</td>
                     <td class="td2 gray">@{ int counter = 0; }
-                    @foreach (var thema in Model.CdViewModel.Themas)
+                    @foreach (var thema in Model.CDViewModel.Themas)
                     {
                         counter++;
-                        <span>@thema.Themaa</span> @(counter < Model.CdViewModel.Themas.Count ? "|" : "")
+                        <span>@thema.Themaa</span> @(counter < Model.CDViewModel.Themas.Count ? "|" : "")
                     }</td>
                 </tr>
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Omschrijving)</td>
-                    <td class="td2 gray">@Html.DisplayFor(model => model.CdViewModel.Omschrijving)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Omschrijving)</td>
+                    <td class="td2 gray">@Html.DisplayFor(model => model.CDViewModel.Omschrijving)</td>
                 </tr>
 
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Uitgeleend)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Uitgeleend)</td>
                     
-                        @if (@Model.CdViewModel.Uitgeleend)
+                        @if (@Model.CDViewModel.Uitgeleend)
                         {
                             <td class="td2 gray">
-                                @Model.CdViewModel.EindDatumUitlening.ToLongDateString()
+                                @Model.CDViewModel.EindDatumUitlening.ToLongDateString()
                             </td>
                         }
                         else
@@ -80,9 +80,9 @@
                 @if(Model.GebruikerViewModel.IsBeheerder)
                 {
                 <tr>
-                    <td class="td1">@Html.DisplayNameFor(model => model.CdViewModel.Beschikbaar)</td>
+                    <td class="td1">@Html.DisplayNameFor(model => model.CDViewModel.Beschikbaar)</td>
                     <td>
-                        @if (@Model.CdViewModel.Beschikbaar)
+                        @if (@Model.CDViewModel.Beschikbaar)
                         {
                             <img src="~/Images/tick.png" class="bigIcon"/>
                         }

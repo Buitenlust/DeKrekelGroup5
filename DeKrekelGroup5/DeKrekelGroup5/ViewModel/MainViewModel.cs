@@ -21,7 +21,7 @@ namespace DeKrekelGroup5.ViewModel
         public VertelTasLijstViewModel VertelTasLijstViewModel { get; set; }
         public VertelTasCreateViewModel VertelTasCreateViewModel { get; set; }
 
-        public CDViewModel CdViewModel { get; set; }
+        public CDViewModel CDViewModel { get; set; }
         public CDsLijstViewModel CDsLijstViewModel { get; set; }
         public CDCreateViewModel CDCreateViewModel { get; set; }
         public DVDViewModel DVDViewModel { get; set; }
@@ -139,6 +139,7 @@ namespace DeKrekelGroup5.ViewModel
                 Uitgever = boek.Uitgever,
                 Leeftijd = boek.Leeftijd,
                 Themas = boek.Themas,
+                image = boek.ImageString,
                 Beschikbaar = boek.Beschikbaar,
                 EindDatumUitlening = boek.Uitleningen.Count == 0 ? new DateTime() : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).EindDatum,
                 Uitgeleend = boek.Uitleningen.Count == 0 ? false : boek.Uitleningen.SingleOrDefault(d => d.Id == boek.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
@@ -166,7 +167,7 @@ namespace DeKrekelGroup5.ViewModel
 
         public object SetCDViewModel(CD cd)
         {
-            CdViewModel = new CDViewModel()
+            CDViewModel = new CDViewModel()
             {
                 Exemplaar = cd.Exemplaar,
                 Omschrijving = cd.Omschrijving,
@@ -215,8 +216,11 @@ namespace DeKrekelGroup5.ViewModel
                 Omschrijving = verteltas.Omschrijving,
                 Titel = verteltas.Titel,
                 Leeftijd = verteltas.Leeftijd,
-                Themas = verteltas.Themas,
-                Items = verteltas.Items,
+                Themas = verteltas.Themas, 
+                Boeken = verteltas.Boeken,
+                Spellen = verteltas.Spellen,
+                DVDs = verteltas.DVDs,
+                CDs = verteltas.CDs,
                 Beschikbaar = verteltas.Beschikbaar,
                 EindDatumUitlening =
                     verteltas.Uitleningen.Count == 0
@@ -232,9 +236,9 @@ namespace DeKrekelGroup5.ViewModel
         }
 
 
-        public object SetVerteltasCreateViewModel(IEnumerable<Thema> themas, VertelTas verteltas, IEnumerable<Item> items)
+        public object SetVerteltasCreateViewModel(IEnumerable<Thema> themas, VertelTas verteltas, IEnumerable<Boek> boeken, IEnumerable<DVD> dvds, IEnumerable<CD> cds, IEnumerable<Spel> spellen)
         {
-            VertelTasCreateViewModel = new VertelTasCreateViewModel(themas, verteltas, items);
+            VertelTasCreateViewModel = new VertelTasCreateViewModel(themas, verteltas, boeken, dvds, cds, spellen);
             return this;
         }
 

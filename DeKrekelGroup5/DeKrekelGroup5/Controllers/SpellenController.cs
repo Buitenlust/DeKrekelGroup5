@@ -72,7 +72,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 if (id == 0)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                Spel spel = gebruiker.LetterTuin.GetItem(id) as Spel;
+                Spel spel = gebruiker.LetterTuin.GetSpel(id) as Spel;
                 if (spel == null)
                     mvm.SetNewInfo("Spel niet gevonden");
                 return View("Details", mvm.SetSpelViewModel(spel));
@@ -144,11 +144,11 @@ namespace DeKrekelGroup5.Controllers
                     List<Thema> themas = gebruiker.GetThemaListFromSelectedList(spel.SubmittedThemas);
                     Spel newSpel = spel.Spel.MapToSpel(spel.Spel, themas);
 
-                    gebruiker.AddItem(newSpel);
+                    gebruiker.AddSpel(newSpel);
                     //gebruikersRep.DoNotDuplicateThema(newSpel);
                     gebruikersRep.SaveChanges();
                     mvm.SetNewInfo("Spel" + spel.Spel.Titel + " werd toegevoegd...");
-                    return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Items.Max(b => b.Exemplaar) });
+                    return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Spellen.Max(b => b.Exemplaar) });
                 }
                 catch (NullReferenceException)
                 {
@@ -173,7 +173,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 if (id <= 0)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                Spel spel = gebruiker.LetterTuin.GetItem(id) as Spel;
+                Spel spel = gebruiker.LetterTuin.GetSpel(id);
                 if (spel == null)
                     return HttpNotFound();
                 mvm.SetSpelCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), spel);
@@ -243,7 +243,7 @@ namespace DeKrekelGroup5.Controllers
 
             try
             {
-                Spel spel = gebruiker.LetterTuin.GetItem(id) as Spel;
+                Spel spel = gebruiker.LetterTuin.GetSpel(id);
                 if (spel == null)
                     return HttpNotFound();
                 return View(new MainViewModel(gebruiker).SetSpelViewModel(spel));
@@ -269,10 +269,10 @@ namespace DeKrekelGroup5.Controllers
             {
                 MainViewModel mvm = new MainViewModel(gebruiker);
                 gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-                Spel spel = gebruiker.LetterTuin.GetItem(id) as Spel;
+                Spel spel = gebruiker.LetterTuin.GetSpel(id);
                 if (spel == null)
                     return HttpNotFound();
-                gebruiker.RemoveItem(spel);
+                gebruiker.RemoveSpel(spel);
                 gebruikersRep.SaveChanges();
                 mvm.SetNewInfo("Spel" + spel.Titel + " werd verwijderd...");
                 return View("Index", mvm);

@@ -1,0 +1,27 @@
+﻿@model DeKrekelGroup5.ViewModel.MainViewModel
+@Styles.Render("~/Content/uploadfile.css")
+@Scripts.Render("~/bundles/jquery")
+
+    @if (Model.DVDCreateViewModel == null || string.IsNullOrEmpty(Model.DVDCreateViewModel.DVD.image))
+    {
+        if(Model.DVDViewModel == null|| string.IsNullOrEmpty(Model.DVDViewModel.image))
+        {
+            <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
+        }
+        else
+        {
+            <img src="@Url.Content("/FTP/Images/"+Model.DVDViewModel.image)" alt="Model.DVDCreateViewModel.DVD.image" style="max-width: 70%" />
+        }
+    }
+    else
+    {
+        <img src="@Url.Content("/FTP/Images/"+Model.DVDCreateViewModel.DVD.image)" alt="Model.DVDCreateViewModel.DVD.image" style="max-width: 70%"/>
+    }
+    
+    <div id="multiplefileuploader"></div>
+    <div id="status"></div>
+
+
+
+
+<div id='uploadfiles'></div>

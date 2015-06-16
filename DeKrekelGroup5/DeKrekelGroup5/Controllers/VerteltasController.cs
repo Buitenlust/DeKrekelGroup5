@@ -95,7 +95,7 @@ namespace DeKrekelGroup5.Controllers
 
             try
             {
-                mvm.SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(),new VertelTas(),gebruiker.LetterTuin.Items);
+                mvm.SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(),new VertelTas(),gebruiker.LetterTuin.Boeken, gebruiker.LetterTuin.Dvds, gebruiker.LetterTuin.Cds, gebruiker.LetterTuin.Spellen);
                 HttpContext.Session["main"] = mvm;
                 return View(mvm);
             }
@@ -118,7 +118,8 @@ namespace DeKrekelGroup5.Controllers
                 {
                     vertelTas.Verteltas.image = mvm.VertelTasCreateViewModel.Verteltas.image;
                     List<Thema> themas = gebruiker.GetThemaListFromSelectedList(vertelTas.SubmittedThemas);
-                    VertelTas newVertelTas = vertelTas.Verteltas.MapToVertelTas(vertelTas.Verteltas, themas,items:new List<Item>());
+
+                    VertelTas newVertelTas = vertelTas.Verteltas.MapToVertelTas(vertelTas.Verteltas, themas, gebruiker.GetBoekListFromSelectedList(vertelTas.SubmittedBoeken), gebruiker.GetDVDListFromSelectedList(vertelTas.SubmittedDVDs), gebruiker.GetCDListFromSelectedList(vertelTas.SubmittedCDs), gebruiker.GetSpelListFromSelectedList(vertelTas.SubmittedSpellen));
 
                     gebruiker.AddVertelTas(newVertelTas);
                     //gebruikersRep.DoNotDuplicateThema(newBoek);
@@ -152,7 +153,8 @@ namespace DeKrekelGroup5.Controllers
                 VertelTas vertelTas = gebruiker.LetterTuin.GetVertelTas(id);
                 if (vertelTas == null)
                     return HttpNotFound();
-                mvm.SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), new VertelTas(), gebruiker.LetterTuin.Items);
+
+                mvm.SetVerteltasCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), vertelTas, gebruiker.LetterTuin.Boeken, gebruiker.LetterTuin.Dvds, gebruiker.LetterTuin.Cds, gebruiker.LetterTuin.Spellen);
                 HttpContext.Session["main"] = mvm;
 
                 return View(mvm);
@@ -188,7 +190,9 @@ namespace DeKrekelGroup5.Controllers
                         vertelTas.Verteltas.image = mvm.VertelTasCreateViewModel.Verteltas.image;
 
                         List<Thema> themas = gebruiker.GetThemaListFromSelectedList(vertelTas.SubmittedThemas);
-                        VertelTas newVertelTas = vertelTas.Verteltas.MapToVertelTas(vertelTas.Verteltas, themas,new List<Item>());
+
+
+                        VertelTas newVertelTas = vertelTas.Verteltas.MapToVertelTas(vertelTas.Verteltas, themas, gebruiker.GetBoekListFromSelectedList(vertelTas.SubmittedBoeken), gebruiker.GetDVDListFromSelectedList(vertelTas.SubmittedDVDs), gebruiker.GetCDListFromSelectedList(vertelTas.SubmittedCDs), gebruiker.GetSpelListFromSelectedList(vertelTas.SubmittedSpellen));
                         gebruiker.UpdateVertelTas(newVertelTas);
                         //gebruikersRep.DoNotDuplicateThema(newBoek);
                         mvm.SetNewInfo("Verteltas " + vertelTas.Verteltas.Titel + " werd aangepast...");
@@ -273,7 +277,7 @@ namespace DeKrekelGroup5.Controllers
 
                 // file is uploaded
                 newimage.SaveAs(path);
-                mvm.BoekCreateViewModel.Boek.image = rnd + pic;
+                mvm.VertelTasCreateViewModel.Verteltas.image = rnd + pic;
                 return Json(new { imagePath = rnd + pic });
             }
 

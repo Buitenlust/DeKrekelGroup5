@@ -83,6 +83,63 @@ namespace DeKrekelGroup5.Models.Domain
                 }
                 return false;
         }
+
+        /// <summary> Adds a spel to the collection </summary>
+        /// <returns>returns true if item is succesfully added to the collection. Exemplaar must be = 0 </returns>
+        /// <param name="item"> toe te voegen Item </param>
+        public bool AddBoek(Boek boek)
+        {
+            CheckAdminRechten();
+            if (boek != null && boek.Exemplaar == 0)
+            {
+                LetterTuin.Boeken.Add(boek);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary> Adds a cd to the collection </summary>
+        /// <returns>returns true if item is succesfully added to the collection. Exemplaar must be = 0 </returns>
+        /// <param name="item"> toe te voegen Item </param>
+        public bool AddCD(CD cd)
+        {
+            CheckAdminRechten();
+            if (cd != null && cd.Exemplaar == 0)
+            {
+                LetterTuin.Cds.Add(cd);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary> Adds a dvd to the collection </summary>
+        /// <returns>returns true if item is succesfully added to the collection. Exemplaar must be = 0 </returns>
+        /// <param name="item"> toe te voegen Item </param>
+        public bool AddDVD(DVD dvd)
+        {
+            CheckAdminRechten();
+            if (dvd != null && dvd.Exemplaar == 0)
+            {
+                LetterTuin.Dvds.Add(dvd);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary> Adds a spel to the collection </summary>
+        /// <returns>returns true if item is succesfully added to the collection. Exemplaar must be = 0 </returns>
+        /// <param name="item"> toe te voegen Item </param>
+        public bool AddSpel(Spel spel)
+        {
+            CheckAdminRechten();
+            if (spel != null && spel.Exemplaar == 0)
+            {
+                LetterTuin.Spellen.Add(spel);
+                return true;
+            }
+            return false;
+        }
+ 
  
         public bool AddVertelTas(VertelTas vertelTas)
         {
@@ -103,7 +160,7 @@ namespace DeKrekelGroup5.Models.Domain
             CheckAdminRechten();
             if (boek != null && boek.Exemplaar > 0)
             {
-                var newItem = LetterTuin.GetItem(boek.Exemplaar) as Boek;
+                var newItem = LetterTuin.GetBoek(boek.Exemplaar);
                 if (newItem != null)
                 {
                     newItem.Update(boek);
@@ -126,10 +183,15 @@ namespace DeKrekelGroup5.Models.Domain
             CheckAdminRechten();
             if (cd != null && cd.Exemplaar > 0)
             {
-                var newItem = LetterTuin.GetItem(cd.Exemplaar) as CD;
+                var newItem = LetterTuin.GetCD(cd.Exemplaar);
                 if (newItem != null)
                 {
                     newItem.Update(cd);
+                    newItem.Themas.Clear();
+                    foreach (Thema thema in cd.Themas)
+                    {
+                        newItem.Themas.Add(thema);
+                    }
                     return true;
                 }
             }
@@ -144,10 +206,15 @@ namespace DeKrekelGroup5.Models.Domain
             CheckAdminRechten();
             if (dvd != null && dvd.Exemplaar > 0)
             {
-                var newItem = LetterTuin.GetItem(dvd.Exemplaar) as DVD;
+                var newItem = LetterTuin.GetDVD(dvd.Exemplaar);
                 if (newItem != null)
                 {
                     newItem.Update(dvd);
+                    newItem.Themas.Clear();
+                    foreach (Thema thema in dvd.Themas)
+                    {
+                        newItem.Themas.Add(thema);
+                    }
                     return true;
                 }
             }
@@ -163,6 +230,34 @@ namespace DeKrekelGroup5.Models.Domain
                 if (newVertelTas != null)
                 {
                     newVertelTas.Update(vertelTas);
+                    newVertelTas.Themas.Clear();
+                    newVertelTas.Boeken.Clear();
+                    newVertelTas.DVDs.Clear();
+                    newVertelTas.CDs.Clear();
+                    newVertelTas.Spellen.Clear();
+                    foreach (Thema thema in vertelTas.Themas)
+                    {
+                        newVertelTas.Themas.Add(thema);
+                    }
+                    foreach (Boek boek in vertelTas.Boeken)
+                    {
+                        newVertelTas.Boeken.Add(boek);
+                    }
+                    foreach (DVD dvd in vertelTas.DVDs)
+                    {
+                        newVertelTas.DVDs.Add(dvd);
+                    }
+                    foreach (CD cd in vertelTas.CDs)
+                    {
+                        newVertelTas.CDs.Add(cd);
+                    }
+                    foreach (Spel spel in vertelTas.Spellen)
+                    {
+                        newVertelTas.Spellen.Add(spel);
+                    }
+
+
+
                     return true;
                 }
             }
@@ -178,7 +273,7 @@ namespace DeKrekelGroup5.Models.Domain
             CheckAdminRechten();
             if (spel != null && spel.Exemplaar > 0)
             {
-                var newItem = LetterTuin.GetItem(spel.Exemplaar) as Spel;
+                var newItem = LetterTuin.GetSpel(spel.Exemplaar);
                 if (newItem != null)
                 {
                     newItem.Update(spel);
@@ -188,15 +283,56 @@ namespace DeKrekelGroup5.Models.Domain
             return false;
         }
 
-        /// <summary> Removes an item from the collection </summary>
-        /// <returns>returns true if item is succesfully removed from the collection. Exemplaar must be > 0 </returns>
+        /// <summary> Removes a spel from the collection </summary>
+        /// <returns>returns true if spel is succesfully removed from the collection. Exemplaar must be > 0 </returns>
         /// <param name="id"> id van te verwijderen item </param>
-        public bool RemoveItem(Item item)
+        public bool RemoveSpel(Spel spel)
         {
             CheckAdminRechten();
-            if (item != null && item.Exemplaar > 0)
+            if (spel != null && spel.Exemplaar > 0)
             {
-                LetterTuin.Items.Remove(item);
+                LetterTuin.Spellen.Remove(spel);
+                return true;
+            }
+            return false;
+        }
+        /// <summary> Removes a boek from the collection </summary>
+        /// <returns>returns true if boek is succesfully removed from the collection. Exemplaar must be > 0 </returns>
+        /// <param name="id"> id van te verwijderen item </param>
+        public bool RemoveBoek(Boek boek)
+        {
+            CheckAdminRechten();
+            if (boek != null && boek.Exemplaar > 0)
+            {
+                LetterTuin.Boeken.Remove(boek);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary> Removes a cd from the collection </summary>
+        /// <returns>returns true if cd is succesfully removed from the collection. Exemplaar must be > 0 </returns>
+        /// <param name="id"> id van te verwijderen item </param>
+        public bool RemoveCD(CD cd)
+        {
+            CheckAdminRechten();
+            if (cd != null && cd.Exemplaar > 0)
+            {
+                LetterTuin.Cds.Remove(cd);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary> Removes an dvd from the collection </summary>
+        /// <returns>returns true if dvd is succesfully removed from the collection. Exemplaar must be > 0 </returns>
+        /// <param name="id"> id van te verwijderen item </param>
+        public bool RemoveDVD(DVD dvd)
+        {
+            CheckAdminRechten();
+            if (dvd != null && dvd.Exemplaar > 0)
+            {
+                LetterTuin.Dvds.Remove(dvd);
                 return true;
             }
             return false;
@@ -495,6 +631,26 @@ namespace DeKrekelGroup5.Models.Domain
         public List<Thema> GetThemaListFromSelectedList(List<int> submittedThemas)
         {
             return  submittedThemas.Select(id => LetterTuin.GetThemaById(id)).ToList();
+        }
+
+        public List<Boek> GetBoekListFromSelectedList(List<int> submittedBoeken)
+        {
+            return submittedBoeken.Select(id => LetterTuin.GetBoeken().SingleOrDefault(e => e.Exemplaar == id)).ToList();
+        }
+
+        public List<CD> GetCDListFromSelectedList(List<int> submittedCDs)
+        {
+            return submittedCDs.Select(id => LetterTuin.GetCDs().SingleOrDefault(e => e.Exemplaar == id)).ToList();
+        }
+
+        public List<DVD> GetDVDListFromSelectedList(List<int> submittedDvds)
+        {
+            return submittedDvds.Select(id => LetterTuin.GetDVDs().SingleOrDefault(e => e.Exemplaar == id)).ToList();
+        }
+
+        public List<Spel> GetSpelListFromSelectedList(List<int> submittedSpellen)
+        {
+            return submittedSpellen.Select(id => LetterTuin.GetSpellen().SingleOrDefault(e => e.Exemplaar == id)).ToList();
         }
 
 

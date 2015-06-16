@@ -72,7 +72,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 if (id == 0)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                CD cd = gebruiker.LetterTuin.GetItem(id) as CD;
+                CD cd = gebruiker.LetterTuin.GetCD(id);
                 if (cd == null)
                     mvm.SetNewInfo("CD niet gevonden");
                 return View("Details", mvm.SetCDViewModel(cd));
@@ -144,11 +144,11 @@ namespace DeKrekelGroup5.Controllers
                     List<Thema> themas = gebruiker.GetThemaListFromSelectedList(cd.SubmittedThemas);
                     CD newCD = cd.CD.MapToCD(cd.CD, themas);
 
-                    gebruiker.AddItem(newCD);
+                    gebruiker.AddCD(newCD);
                     //gebruikersRep.DoNotDuplicateThema(newCD);
                     gebruikersRep.SaveChanges();
                     mvm.SetNewInfo("CD" + cd.CD.Titel + " werd toegevoegd...");
-                    return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Items.Max(b => b.Exemplaar) });
+                    return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Cds.Max(b => b.Exemplaar) });
                 }
                 catch (NullReferenceException)
                 {
@@ -173,7 +173,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 if (id <= 0)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                CD cd = gebruiker.LetterTuin.GetItem(id) as CD;
+                CD cd = gebruiker.LetterTuin.GetCD(id);
                 if (cd == null)
                     return HttpNotFound();
                 mvm.SetCDCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), cd);
@@ -243,7 +243,7 @@ namespace DeKrekelGroup5.Controllers
 
             try
             {
-                CD cd = gebruiker.LetterTuin.GetItem(id) as CD;
+                CD cd = gebruiker.LetterTuin.GetCD(id);
                 if (cd == null)
                     return HttpNotFound();
                 return View(new MainViewModel(gebruiker).SetCDViewModel(cd));
@@ -269,10 +269,10 @@ namespace DeKrekelGroup5.Controllers
             {
                 MainViewModel mvm = new MainViewModel(gebruiker);
                 gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-                CD cd = gebruiker.LetterTuin.GetItem(id) as CD;
+                CD cd = gebruiker.LetterTuin.GetCD(id);
                 if (cd == null)
                     return HttpNotFound();
-                gebruiker.RemoveItem(cd);
+                gebruiker.RemoveCD(cd);
                 gebruikersRep.SaveChanges();
                 mvm.SetNewInfo("CD" + cd.Titel + " werd verwijderd...");
                 return View("Index", mvm);

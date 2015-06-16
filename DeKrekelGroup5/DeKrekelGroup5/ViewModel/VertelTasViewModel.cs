@@ -15,7 +15,7 @@ namespace DeKrekelGroup5.ViewModel
 
         }
 
-        public VertelTas MapToVertelTas(VertelTasViewModel vm, List<Thema> themas, List<Item> items)
+        public VertelTas MapToVertelTas(VertelTasViewModel vm, List<Thema> themas, List<Boek> boeken, List<DVD> dvds, List<CD> cds, List<Spel> spellen)
         {
             return new VertelTas()
             {
@@ -25,21 +25,23 @@ namespace DeKrekelGroup5.ViewModel
                 Omschrijving = vm.Omschrijving,
                 Titel = vm.Titel,
                 Themas = themas,
-                Items = items,
+                Boeken = boeken,
+                Spellen = spellen,
+                DVDs = dvds,
+                CDs = cds,
                 ImageString = image
             };
         }
 
+ 
 
-        public ICollection<Item> Items { get; set; }
+        public ICollection<Boek> Boeken { get; set; }
 
-        public List<Boek> Boeken { get; set; }
+        public ICollection<Spel> Spellen { get; set; }
 
-        public List<Spel> Spellen { get; set; }
+        public ICollection<CD> CDs { get; set; }
 
-        public List<CD> CDs { get; set; }
-
-        public List<DVD> DVDs { get; set; }
+        public ICollection<DVD> DVDs { get; set; }
     }
 
     public class VertelTasLijstViewModel
@@ -56,7 +58,10 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = v.Leeftijd,
                 Themas = v.Themas,
                 image = v.ImageString,
-                Items = v.Items,
+                Boeken = v.Boeken,
+                Spellen = v.Spellen,
+                DVDs = v.DVDs,
+                CDs = v.CDs, 
                 Beschikbaar = v.Beschikbaar,
 
                 EindDatumUitlening = v.Uitleningen.Count == 0
@@ -99,7 +104,7 @@ namespace DeKrekelGroup5.ViewModel
         public SelectList DVDs { get; set; }
         public VertelTasViewModel Verteltas { get; set; }
 
-        public VertelTasCreateViewModel(IEnumerable<Thema> themas, VertelTas vertelTas, IEnumerable<Item> items)
+        public VertelTasCreateViewModel(IEnumerable<Thema> themas, VertelTas vertelTas, IEnumerable<Boek> boeken, IEnumerable<DVD> dvds,IEnumerable<CD> cds,IEnumerable<Spel> spellen)
         {
             Verteltas = new VertelTasViewModel()
             {
@@ -109,10 +114,10 @@ namespace DeKrekelGroup5.ViewModel
                 Leeftijd = vertelTas.Leeftijd,
                 Themas = themas.ToList(),
                 image = vertelTas.ImageString,
-                Boeken = items.OfType<Boek>().ToList(),
-                Spellen = items.OfType<Spel>().ToList(),
-                CDs = items.OfType<CD>().ToList(),
-                DVDs = items.OfType<DVD>().ToList(),
+                Boeken = boeken.ToList(),
+                Spellen = spellen.ToList(),
+                CDs = cds.ToList(),
+                DVDs = dvds.ToList(),
                 Beschikbaar = vertelTas.Beschikbaar,
                 EindDatumUitlening = (vertelTas.Uitleningen == null || vertelTas.Uitleningen.Count == 0) ? new DateTime() : vertelTas.Uitleningen.SingleOrDefault(d => d.Id == vertelTas.Uitleningen.Max(c => c.Id)).EindDatum,
                 Uitgeleend = (vertelTas.Uitleningen == null || vertelTas.Uitleningen.Count == 0) ? false : vertelTas.Uitleningen.SingleOrDefault(d => d.Id == vertelTas.Uitleningen.Max(c => c.Id)).BinnenGebracht.Year == 1
@@ -120,10 +125,10 @@ namespace DeKrekelGroup5.ViewModel
 
             //Themas = new SelectList(themas, "Themaa", "Themaa", Boek.Thema ?? "");
             AllThemas = new MultiSelectList(themas.ToList(), "IdThema", "Themaa", (vertelTas.Themas == null || vertelTas.Themas.Count == 0) ? null : vertelTas.Themas.Select(t => t.IdThema));
-            AllBoeken = new MultiSelectList(items.OfType<Boek>().ToList(), "Exemplaar", "Titel", (vertelTas.Items == null || vertelTas.Items.Count == 0) ? null : vertelTas.Items.Select(b => b.Titel));
-            AllSpellen = new MultiSelectList(items.OfType<Spel>().ToList(), "Exemplaar", "Titel", (vertelTas.Items == null || vertelTas.Items.Count() == 0) ? null : vertelTas.Items.Select(s => s.Titel));
-            AllCDs = new MultiSelectList(items.OfType<CD>().ToList(), "Exemplaar", "Titel", (vertelTas.Items == null || vertelTas.Items.Count() == 0) ? null : vertelTas.Items.Select(c => c.Titel));
-            AllDVDs = new MultiSelectList(items.OfType<DVD>().ToList(), "Exemplaar", "Titel", (vertelTas.Items == null || vertelTas.Items.Count() == 0) ? null : vertelTas.Items.Select(d => d.Titel));
+            AllBoeken = new MultiSelectList(boeken, "Exemplaar", "Titel", (vertelTas.Boeken == null || vertelTas.Boeken.Count == 0) ? null : vertelTas.Boeken.Select(b => b.Exemplaar));
+            AllSpellen = new MultiSelectList(spellen, "Exemplaar", "Titel", (vertelTas.Spellen == null || !vertelTas.Spellen.Any()) ? null : vertelTas.Spellen.Select(s => s.Exemplaar));
+            AllCDs = new MultiSelectList(cds, "Exemplaar", "Titel", (vertelTas.CDs == null || !vertelTas.CDs.Any()) ? null : vertelTas.CDs.Select(c => c.Exemplaar));
+            AllDVDs = new MultiSelectList(dvds.ToList(), "Exemplaar", "Titel", (vertelTas.DVDs == null || !vertelTas.DVDs.Any()) ? null : vertelTas.DVDs.Select(d => d.Exemplaar));
         }
 
         public VertelTasCreateViewModel()

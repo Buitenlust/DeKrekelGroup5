@@ -26,7 +26,10 @@ namespace DeKrekelGroup5.Models.Domain
 
         public virtual List<Uitlening> Uitleningen { get; set; }
 
-        public virtual ICollection<Item> Items { get; set; } // is mogelijk/voldoende?
+        public virtual ICollection<Boek> Boeken { get; set; }
+        public virtual ICollection<DVD> DVDs { get; set; }
+        public virtual ICollection<CD> CDs { get; set; }
+        public virtual ICollection<Spel> Spellen { get; set; } 
 
             public void Update(VertelTas vertelTas)
         {

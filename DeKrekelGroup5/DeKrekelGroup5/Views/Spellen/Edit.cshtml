@@ -12,14 +12,7 @@
     <hr/>
     <div id="wrapDetails">
         <div id="leftCol">
-          @if (Model.SpelViewModel == null || string.IsNullOrEmpty(Model.SpelViewModel.image))
-          {
-            <img src="~/Images/krekelFoto.png" alt="krekelSchool" id="picItem" />
-          }
-          else
-          {
-            <img src="@Url.Content("/FTP/Images/" + Model.SpelViewModel.image)" alt="Model.SpelViewModel.image" style="max-width: 70%" />
-          }
+            @Html.Partial("upload", Model)
         </div>
         @if (Model.SpelCreateViewModel != null)
         {

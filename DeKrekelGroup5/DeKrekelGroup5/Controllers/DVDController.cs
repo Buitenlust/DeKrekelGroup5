@@ -72,7 +72,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 if (id == 0)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                DVD dvd = gebruiker.LetterTuin.GetItem(id) as DVD;
+                DVD dvd = gebruiker.LetterTuin.GetDVD(id);
                 if (dvd == null)
                     mvm.SetNewInfo("DVD niet gevonden");
                 return View("Details", mvm.SetDVDViewModel(dvd));
@@ -144,11 +144,11 @@ namespace DeKrekelGroup5.Controllers
                     List<Thema> themas = gebruiker.GetThemaListFromSelectedList(dvd.SubmittedThemas);
                     DVD newDVD = dvd.DVD.MapToDVD(dvd.DVD, themas);
 
-                    gebruiker.AddItem(newDVD);
+                    gebruiker.AddDVD(newDVD);
                     //gebruikersRep.DoNotDuplicateThema(newDVD);
                     gebruikersRep.SaveChanges();
                     mvm.SetNewInfo("DVD" + dvd.DVD.Titel + " werd toegevoegd...");
-                    return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Items.Max(b => b.Exemplaar) });
+                    return RedirectToAction("Details", new { gebruiker = gebruiker, mvm = mvm, id = gebruiker.LetterTuin.Dvds.Max(b => b.Exemplaar) });
                 }
                 catch (NullReferenceException)
                 {
@@ -173,7 +173,7 @@ namespace DeKrekelGroup5.Controllers
             {
                 if (id <= 0)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                DVD dvd = gebruiker.LetterTuin.GetItem(id) as DVD;
+                DVD dvd = gebruiker.LetterTuin.GetDVD(id);
                 if (dvd == null)
                     return HttpNotFound();
                 mvm.SetDVDCreateViewModel(gebruiker.LetterTuin.Themas.ToList(), dvd);
@@ -243,7 +243,7 @@ namespace DeKrekelGroup5.Controllers
 
             try
             {
-                DVD dvd = gebruiker.LetterTuin.GetItem(id) as DVD;
+                DVD dvd = gebruiker.LetterTuin.GetDVD(id);
                 if (dvd == null)
                     return HttpNotFound();
                 return View(new MainViewModel(gebruiker).SetDVDViewModel(dvd));
@@ -269,10 +269,10 @@ namespace DeKrekelGroup5.Controllers
             {
                 MainViewModel mvm = new MainViewModel(gebruiker);
                 gebruiker = gebruikersRep.GetGebruikerByName(gebruiker.GebruikersNaam);
-                DVD dvd = gebruiker.LetterTuin.GetItem(id) as DVD;
+                DVD dvd = gebruiker.LetterTuin.GetDVD(id);
                 if (dvd == null)
                     return HttpNotFound();
-                gebruiker.RemoveItem(dvd);
+                gebruiker.RemoveDVD(dvd);
                 gebruikersRep.SaveChanges();
                 mvm.SetNewInfo("DVD" + dvd.Titel + " werd verwijderd...");
                 return View("Index", mvm);

@@ -9,7 +9,7 @@
             <tr>
                 <th >
                     
-                    <a href=' @Url.Action("details", new { id = item.Exemplaar }) '>B @Html.DisplayFor(modelItem => item.Exemplaar)</a>
+                    <a href=' @Url.Action("details", new { id = item.Exemplaar }) '>S @Html.DisplayFor(modelItem => item.Exemplaar)</a>
                 </th>
                 <th>
                     <a href=' @Url.Action("details", new { id = item.Exemplaar }) '>@Html.DisplayFor(modelItem => item.Titel)</a>
@@ -60,7 +60,7 @@
                     <p><strong>Leeftijd: </strong> @Html.DisplayFor(modelItem => item.Leeftijd) jaar</p>
                     
                     <p><strong>Omschrijving: </strong> <span style="font-size: medium">@Html.DisplayFor(modelItem => item.Omschrijving)</span></p>
-
+                    <br/><br/>
                     <p id="themap">
                         @{ int counter = 0; }
                         @foreach (var thema in item.Themas)

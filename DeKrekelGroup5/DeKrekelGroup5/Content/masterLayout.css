@@ -240,8 +240,11 @@ input[type=file]{
 }
 table {
     width: 100%;
+    vertical-align: top;
 }
-
+table tr td {
+    vertical-align: top; 
+}
 .table{
     border-collapse: collapse;
     width: 80%;
@@ -250,6 +253,7 @@ table {
     margin: 20px;
     margin-left: auto;
     margin-right: auto;
+    
 }
 th{
     font-weight: bolder;
@@ -309,9 +313,13 @@ th{
     margin: 15px;
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 100%;
     font-size: larger;
 }
+ul {
+    margin: 0px;
+}
+
 .middleDiv p {
     margin: 5px;
 }
