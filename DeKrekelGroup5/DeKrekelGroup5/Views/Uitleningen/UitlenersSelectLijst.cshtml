@@ -1,7 +1,7 @@
 ﻿
 @using DeKrekelGroup5.ViewModel
 @model DeKrekelGroup5.ViewModel.MainViewModel
-@Html.HiddenFor(modelItem => modelItem.ItemViewModel.Exemplaar)
+@Html.HiddenFor(modelItem => modelItem.BoekViewModel.Exemplaar)
 
 
 <table class="table">
@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => uitlener.Klas)
             </td>
             <td>
-                @Ajax.ImageActionLink("/Images/tick.png", "SelectUitlener", "SelectUitlener", "Uitleningen", new { exemplaar = Model.ItemViewModel.Exemplaar, gebruikerId = uitlener.Id }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "icon" })
+                @Ajax.ImageActionLink("/Images/tick.png", "SelectUitlener", "SelectUitlener", "Uitleningen", new { exemplaar = Model.BoekViewModel.Exemplaar, gebruikerId = uitlener.Id }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "icon" })
             </td>
         </tr>
     }
