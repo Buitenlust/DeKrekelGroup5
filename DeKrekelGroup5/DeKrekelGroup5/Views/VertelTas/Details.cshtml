@@ -61,7 +61,7 @@
                         {
                             counter2++;
                             <span>@item.Titel</span>
-                            @(counter1 < Model.VertelTasViewModel.DVDs.Count ? "|" : "")
+                            @(counter2 < Model.VertelTasViewModel.DVDs.Count ? "|" : "")
                         }
                     </td>
                 </tr>
@@ -73,7 +73,7 @@
                         @foreach (var item in Model.VertelTasViewModel.Spellen)
                         {
                             counter3++;
-                            <span>@item.Titel</span> @(counter1 < Model.VertelTasViewModel.Spellen.Count ? "|" : "")
+                            <span>@item.Titel</span> @(counter3 < Model.VertelTasViewModel.Spellen.Count ? "|" : "")
                         }
                     </td>
                 </tr>
@@ -85,7 +85,7 @@
                         @foreach (var item in Model.VertelTasViewModel.CDs)
                         {
                             counter4++;
-                            <span>@item.Titel</span> @(counter1 < Model.VertelTasViewModel.CDs.Count ? "|" : "")
+                            <span>@item.Titel</span> @(counter4 < Model.VertelTasViewModel.CDs.Count ? "|" : "")
                         }
                     </td>
                 </tr>

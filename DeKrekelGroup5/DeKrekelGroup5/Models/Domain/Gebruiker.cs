@@ -446,6 +446,30 @@ namespace DeKrekelGroup5.Models.Domain
             return null;
         }
 
+        /// <summary> Gets all uitleningen that contains a search keyword in Titel, naam or voornaam uitlener or omschrijving </summary>
+        /// <returns>Returns a IEnumerable of Spellen or null if not found</returns>
+        /// <param name="search"> search keyword </param>
+        public IEnumerable<Uitlening> GetUitleningenByFilters(DateTime start, DateTime eind, bool teLaat=false, string typeItem = null,string search=null)
+        { 
+            CheckBibliotheekRechten();
+            IEnumerable<Uitlening> uitleningen;
+            if (teLaat == false)
+                //uitleningen = LetterTuin.Boeken.Where(u => u.Uitleningen.Where(v => v.StartDatum == start));
+
+            if(teLaat==true)
+                uitleningen = LetterTuin.Uitleningen.Where(u => u.StartDatum >= start && u.EindDatum <= eind);
+ 
+
+
+            if (search != null && !search.Trim().IsEmpty())
+                return LetterTuin.Uitleningen.Where(p => p.Itemm.Titel.ToLower().Contains(search.ToLower()) ||
+                                              p.Uitlenerr.Naam.ToLower().Contains(search.ToLower()) ||
+                                              p.Uitlenerr.VoorNaam.ToLower().Contains(search.ToLower()) ||
+                                              p.Itemm.Omschrijving.ToLower().Contains(search.ToLower())).OrderBy(p => p.EindDatum);
+            return null;
+        }
+
+
         /// <summary> return an uitlening matching the parameter id.</summary>
         /// <returns>Returns a IEnumerable of Spellen or null if not found</returns>
         /// <param name="id"> search keyword </param>
@@ -684,5 +708,7 @@ namespace DeKrekelGroup5.Models.Domain
             instellingen.UitleenDagen = instellingenVm.UitleenDagen;
             instellingen.MaxVerlengingen = instellingenVm.MaxVerlengingen;
         }
+
+ 
     }
 }

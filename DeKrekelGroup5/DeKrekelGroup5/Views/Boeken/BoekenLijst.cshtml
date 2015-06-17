@@ -90,7 +90,7 @@
                         {
                             if (item.Uitgeleend)
                             {
-                                @Ajax.ImageActionLink("/Images/binnen.png", "EindeUitlening", "EindeUitlening", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "infomodal" }, new { @class = "doorImg" })
+                                @Ajax.ImageActionLink("/Images/binnen.png", "EindeUitlening", "EindeUitlening", "Uitleningen", new { exemplaar = item.Exemplaar }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "modal" }, new { @class = "doorImg" })
 
                             }
                             else

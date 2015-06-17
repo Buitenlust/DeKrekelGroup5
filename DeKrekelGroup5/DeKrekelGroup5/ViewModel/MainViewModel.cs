@@ -35,6 +35,7 @@ namespace DeKrekelGroup5.ViewModel
         public List<Thema> Themas { get; set; }
         public ThemaViewModel ThemaViewModel { get; set; }
         public InstellingenViewModel InstellingenViewModel { get; set; }
+        public UitleningenLijstViewModel UitleningenLijstViewModel { get; set; }
 
 
         public MainViewModel()
@@ -300,6 +301,11 @@ namespace DeKrekelGroup5.ViewModel
         }
 
 
+        public object SetNewUitleningenLijstVm(IEnumerable<Uitlening> uitleningen)
+        {
+            UitleningenLijstViewModel = new UitleningenLijstViewModel(uitleningen);
+            return this;
+        }
     }
 
     
